@@ -1,0 +1,15 @@
+from turtle import *
+window = Screen()
+window.bgcolor("black")
+pencolor("white")
+pensize(10)
+pu()
+fd(-100)
+lt(90)
+fd(50)
+rt(90)
+pd()
+for i in range(5):
+    fd(200)
+    rt(144)
+done()
