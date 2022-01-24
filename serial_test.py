@@ -24,3 +24,5 @@ if ser.isOpen():
     print("Send:", data) # "a"
     rec = ser.read()
     print("Receive:", rec) # "b"
+else:
+    print("Serial not open.")

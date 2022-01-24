@@ -1,7 +1,7 @@
 from turtle import *
 window = Screen()
 window.bgcolor("black")
-pencolor("white")
+pencolor("red")
 pensize(10)
 pu()
 fd(-100)
