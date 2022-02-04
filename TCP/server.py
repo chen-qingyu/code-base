@@ -1,21 +1,21 @@
 import socket
 
-HOST = '127.0.0.1'
+HOST = "127.0.0.1"
 PORT = 9999
+BUFFER_SIZE = 1024
 
-i = 1
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
-    print('Server start: %s:%s' % (HOST, PORT))
+    print("Server start at IP %s, port %s\n" % (HOST, PORT))
     while True:
         conn, addr = s.accept()
         with conn:
-            recv_data = conn.recv(1024)
-            if (recv_data.decode() == "exit"):
-                print('Bye!')
-                conn.send('Bye!'.encode())
+            recv_data = conn.recv(BUFFER_SIZE)
+            if (recv_data.decode() == "shutdown"):
+                print("Server shutdown.")
+                conn.sendall("Server shutdown.".encode())
                 break
-            print('#%d @%s: %s\n' % (i, addr, recv_data.decode()))
-            conn.send(('#%d Got it!' % i).encode())
-            i += 1
+            print("From IP %s, port %s: %s" % (addr[0].strip("'"), addr[1], recv_data.decode()))
+            print()
+            conn.sendall("Server received.".encode())
