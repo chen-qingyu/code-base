@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Judge whether two strings are equal
 // Because "!strcmp(s1, s2)" representing equality is not intuitive
@@ -130,6 +131,7 @@ int main(void)
     assert(str_eq(s = str_replace(s, "HELLO", "Hi"), "Hi WORLD!"));
     assert(str_eq(s = str_replace(s, "Hi", "Beautiful"), "Beautiful WORLD!"));
     assert(str_eq(s = str_replace_i(s, "world", "girl"), "Beautiful girl!"));
+    assert(str_eq(s = str_replace_i(s, "i", "woooooooooow"), "Beautwoooooooooowful gwoooooooooowrl!"));
 
     free(s);
 
