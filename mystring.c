@@ -62,6 +62,8 @@ int str_cmp_i(const char *_str1, const char *_str2)
 {
     char *s1 = str_dump(_str1);
     char *s2 = str_dump(_str2);
+    str_lower(s1);
+    str_lower(s2);
     int ret = strcmp(s1, s2);
     free(s1);
     free(s2);
