@@ -49,6 +49,7 @@ def delEmptyDirs(root):
         if root[-4:] == ".git":
             continue
         for d in dirs:
+            # Delete empty folders recursively
             if os.listdir(os.path.join(root, d)) == []:
                 os.removedirs(os.path.join(root, d))
                 print(os.path.join(root, d)+" deleted.")
