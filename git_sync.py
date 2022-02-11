@@ -1,4 +1,14 @@
+# FileName: git_sync.py
+# Brief: Python3 script for automating batch synchronization of Git remote repositories
+# Author: Qing Yu
+# CreateDate: 2022.02.11
+# Functions:
+#   - delete specific suffix files,
+#   - delete empty folders,
+#   - batch synchronize Git remote repositories
+
 import os
+
 
 gitPaths = ["F:/C/C Primer Plus",
             "F:/C/C Programs",
@@ -23,6 +33,9 @@ emptyDirsPaths = ["F:/Projects/BadApple",
                   "F:/STM32/CODE"]
 
 
+syncCmd = "git add . && git commit -m \"update\" && git push && git status"
+
+
 def delUnnecessaryFiles(path):
     os.chdir(path)
     os.system("killer.bat")
@@ -31,6 +44,7 @@ def delUnnecessaryFiles(path):
 def delEmptyDirs(root):
     os.chdir(root)
     for root, dirs, files in os.walk(root):
+        # Ignore git directory
         if root[-4:] == ".git":
             continue
         for d in dirs:
@@ -39,10 +53,10 @@ def delEmptyDirs(root):
                 print(os.path.join(root, d)+" deleted.")
 
 
-def gitSync(path):
+def gitSync(path, cmd):
     os.chdir(path)
     print("[Start syncing \"" + path + "\"]")
-    os.system("git add . && git commit -m \"update\" && git push && git status")
+    os.system(cmd)
     print("[Sync completed]\n")
 
 
@@ -61,7 +75,7 @@ def main():
 
     print(pattern, "Start synchronize", pattern)
     for path in gitPaths:
-        gitSync(path)
+        gitSync(path, syncCmd)
     print(pattern, "Synchronize completed, {} repositories are synchronized".format(len(gitPaths)), pattern)
 
     input()
