@@ -1,0 +1,67 @@
+import os
+
+gitPaths = ["F:/C/C Primer Plus",
+            "F:/C/C Programs",
+            "F:/Java",
+            "F:/OSTEP",
+            "F:/Projects/BadApple",
+            "F:/Projects/Data Structure and Algorithm",
+            "F:/Projects/HelloWorld",
+            "F:/Projects/LinearAlgebra",
+            "F:/Projects/Love Miao",
+            "F:/Python/Python Programs",
+            "F:/Racket/HtDP",
+            "F:/STM32/CODE"]
+
+
+killersPaths = ["F:/C",
+                "F:/Projects/BadApple",
+                "F:/STM32/CODE"]
+
+
+emptyDirsPaths = ["F:/Projects/BadApple",
+                  "F:/STM32/CODE"]
+
+
+def delUnnecessaryFiles(path):
+    os.chdir(path)
+    os.system("killer.bat")
+
+
+def delEmptyDirs(root):
+    os.chdir(root)
+    for root, dirs, files in os.walk(root):
+        for d in dirs:
+            if not os.listdir(os.path.join(root, d)):
+                os.removedirs(os.path.join(root, d))
+                print(os.path.join(root, d)+" deleted.")
+
+
+def gitSync(path):
+    os.chdir(path)
+    print("[Start syncing \"" + path + "\"]")
+    os.system("git add . && git commit -m \"update\" && git push && git status")
+    print("[Sync completed]\n")
+
+
+def main():
+    pattern = ("=" * 5)
+
+    print(pattern, "Start deleting unnecessary files", pattern)
+    for path in killersPaths:
+        delUnnecessaryFiles(path)
+    print(pattern, "The unnecessary files are deleted", pattern)
+
+    print(pattern, "Start deleting empty folders", pattern)
+    for path in emptyDirsPaths:
+        delEmptyDirs(path)
+    print(pattern, "The empty folders are deleted", pattern)
+
+    print(pattern, "Start synchronize", pattern)
+    for path in gitPaths:
+        gitSync(path)
+    print(pattern, "Synchronize completed", pattern)
+
+
+if __name__ == '__main__':
+    main()
