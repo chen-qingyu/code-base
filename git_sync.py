@@ -26,7 +26,8 @@ gitPaths = ["F:/C/C Primer Plus",
 
 killersPaths = ["F:/C",
                 "F:/Projects/BadApple",
-                "F:/STM32/CODE"]
+                "F:/STM32/CODE",
+                "F:/Projects/Data Structure and Algorithm/C"]
 
 
 emptyDirsPaths = ["F:/Projects/BadApple",
