@@ -62,7 +62,7 @@ def main():
     print(pattern, "Start synchronize", pattern)
     for path in gitPaths:
         gitSync(path)
-    print(pattern, "Synchronize completed", pattern)
+    print(pattern, "Synchronize completed, {} repositories are synchronized".format(len(gitPaths)), pattern)
 
     input()
 
