@@ -31,6 +31,8 @@ def delUnnecessaryFiles(path):
 def delEmptyDirs(root):
     os.chdir(root)
     for root, dirs, files in os.walk(root):
+        if root[-4:] == ".git":
+            continue
         for d in dirs:
             if not os.listdir(os.path.join(root, d)):
                 os.removedirs(os.path.join(root, d))
@@ -61,6 +63,8 @@ def main():
     for path in gitPaths:
         gitSync(path)
     print(pattern, "Synchronize completed", pattern)
+
+    input()
 
 
 if __name__ == '__main__':
