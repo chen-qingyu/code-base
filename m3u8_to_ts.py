@@ -1,7 +1,7 @@
 import os
 
 BeginOfSlices = 1
-EndOfSlices = 240
+EndOfSlices = 999
 VideoName = "new.ts"
 
 result = "copy /b "
