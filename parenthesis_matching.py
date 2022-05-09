@@ -1,26 +1,25 @@
-def check1(s):
-    SYMBOLS = {'}': '{', ']': '[', ')': '(', '>': '<'}
-    SYMBOLS_L, SYMBOLS_R = SYMBOLS.values(), SYMBOLS.keys()
+def check1(s: str) -> int:
+    SYMBOLS = {'{': '}', '[': ']', '(': ')', '<': '>'}
+    SYMBOLS_L, SYMBOLS_R = SYMBOLS.keys(), SYMBOLS.values()
     stack = []
     depth = 0
     max_depth = 0
 
     for c in s:
-        if c in SYMBOLS_L:
+        if c in SYMBOLS_L:  # is an opening grouping symbol
             stack.append(c)
             depth += 1
             max_depth = max(depth, max_depth)
-        elif c in SYMBOLS_R:
-            if stack != [] and stack[-1] == SYMBOLS[c]:
-                stack.pop()
+        elif c in SYMBOLS_R:  # is a closing grouping symbol
+            if stack != [] and SYMBOLS[stack.pop()] == c:
                 depth -= 1
-            else:
+            else:  # nothing to match with or wrong type of closing symbol
                 return 0
 
-    return max_depth if stack == [] else 0
+    return max_depth if stack == [] else 0  # every symbol matched if stack is empty
 
 
-def check2(s):
+def check2(s: str) -> int:
     SYMBOLS = {'}': '{', ']': '[', ')': '(', '>': '<'}
     depth = 0
     max_depth = 0
@@ -50,8 +49,10 @@ print(check1("<>()"))
 print(check1("{[()()]}"))
 print(check1("{ [}]"))
 print(check1("{ [hello]} "))
+print(check1("( [ ( a + b ) * c + d * e ] / { ( f + g ) – h } )"))
 print()
 print(check2("<>()"))
 print(check2("{[()()]}"))
 print(check2("{ [}]"))
 print(check2("{ [hello]} "))
+print(check2("( [ ( a + b ) * c + d * e ] / { ( f + g ) – h } )"))
