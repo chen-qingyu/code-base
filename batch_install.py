@@ -5,7 +5,7 @@ libs = {
     "scipy", "matplotlib", "wordcloud", "jieba",
     "imageio", "requests", "beautifulsoup4", "scrapy",
     "aiohttp", "jinja2", "aiomysql", "opencv-python",
-    "django", "pyautogui", "youtube-dl"
+    "django", "pyautogui", "pikachupytools"
 }
 
 os.system("python -m pip install --upgrade pip setuptools wheel -i https://pypi.doubanio.com/simple")
