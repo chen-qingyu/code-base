@@ -1,20 +1,38 @@
 import os
 
-libs = {
-    "PyInstaller", "pygame", "numba", "numpy",
-    "scipy", "matplotlib", "wordcloud", "jieba",
-    "imageio", "requests", "beautifulsoup4", "scrapy",
-    "aiohttp", "jinja2", "aiomysql", "opencv-python",
-    "django", "pyautogui", "pikachupytools"
-}
+libs = [
+    "numpy",
+    "matplotlib",
+    "scipy",
+    "pandas",
 
-os.system("python -m pip install --upgrade pip setuptools wheel -i https://pypi.doubanio.com/simple")
-print("=" * 30)
+    "pillow",  # PIL
+    "pyinstaller",
+    "pygame",
+    "pyautogui",
+    "pyserial",  # serial
+
+    "wordcloud",
+    "jieba",
+
+    "requests",
+    "beautifulsoup4",  # bs4
+
+    "opencv-python",  # cv2
+
+    # TODO
+    # "tensorflow",
+]
+
+
+accelerate = " -i https://pypi.tuna.tsinghua.edu.cn/simple/"
+os.system("python -m pip install --upgrade pip setuptools wheel")
+print("=" * 40)
 
 for lib in libs:
     print("Now install/upgrade " + lib)
-    os.system("pip install --upgrade " + lib + " -i https://pypi.doubanio.com/simple")
-    print("=" * 30)
+    os.system("python -m pip install --upgrade " + lib)
+    print("=" * 40)
 
 print("共安装/升级{}个库:".format(len(libs)), libs)
-input()
+input("按任意键关闭窗口")
