@@ -9,8 +9,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
     print('Server start: %s:%s' % (HOST, PORT))
     while True:
         recv_data, addr = s.recvfrom(1024)
-        if (recv_data.decode() == "exit"):
-            print('Bye!')
+        if recv_data.decode() == "shutdown":
+            print("Server shutdown.")
             break
         print('#%d @%s: %s\n' % (i, addr, recv_data.decode()))
         i += 1

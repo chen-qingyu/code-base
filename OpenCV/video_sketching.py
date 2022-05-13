@@ -1,6 +1,6 @@
 import cv2
 
-cap = cv2.VideoCapture("VID.mp4")  # 实例化一个视频对象
+cap = cv2.VideoCapture("test.mp4")  # 实例化一个视频对象
 
 while True:
     ret, frame = cap.read()  # 读取视频的每一帧

@@ -1,4 +1,4 @@
-def fac(n):
+def fac(n: int) -> int:
     if n == 0:
         return 1
     else:
@@ -11,11 +11,8 @@ try:
         n = eval(input())
         if isinstance(n, int):
             if n < 0:
-                print("Please enter a positive integer.\n")
-                continue
-            if n > 20:
-                print("%d! is too huge to calculate. >_<\n" % n)
+                print("Please enter a positive integer.>_<\n")
                 continue
             print("{}! = {}\n".format(n, fac(n)))
 except Exception:
-    input("\nBye~")
+    print("\nBye~")

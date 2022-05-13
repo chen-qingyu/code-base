@@ -10,16 +10,16 @@ while True:
     if circles is None:
         if cv2.waitKey(20) == ord(' '):
             break
-        cv2.imshow('res', frame)
+        cv2.imshow('circle detection', frame)
         continue
-    print("Sum:%d" % len(circles[0]))
+    print("total: %d" % len(circles[0]))
     for circle in circles[0]:
         x, y = int(circle[0]), int(circle[1])
         r = int(circle[2])
         frame = cv2.circle(frame, (x, y), r, (0, 0, 255), 3)
         frame = cv2.circle(frame, (x, y), 2, (255, 255, 0), -1)
         print("x = %d, y = %d, r = %d" % (x, y, r))
-    cv2.imshow('res', frame)
+    cv2.imshow('circle detection', frame)
 
     if cv2.waitKey(20) == ord(' '):  # 刷新周期为20ms，即FPS为50，按空格退出
         break

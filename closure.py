@@ -1,9 +1,9 @@
-''' 求任意一元二次函数的值 '''
+""" 求任意一元二次函数的值 """
 
 
 # 过程式
 def curve(x, a, b, c):
-    return a*x*x + b*x + c
+    return a * x * x + b * x + c
 
 
 print("过程式：")
@@ -14,14 +14,14 @@ print("y = ", curve(6, a=1, b=0, c=0))
 
 
 # 面向对象
-class Curve():
+class Curve:
     def __init__(self, a, b, c):
         self.a = a
         self.b = b
         self.c = c
 
     def getY(self, x):
-        return self.a*x*x + self.b*x + self.c
+        return self.a * x * x + self.b * x + self.c
 
 
 print("面向对象：")
@@ -36,7 +36,8 @@ print("y = ", curve_a1b0c0.getY(6))
 # 函数式
 def curve_conf(a, b, c):
     def curve(x):
-        return a*x*x + b*x + c
+        return a * x * x + b * x + c
+
     return curve
 
 

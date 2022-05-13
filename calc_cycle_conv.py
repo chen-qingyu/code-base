@@ -14,21 +14,19 @@ def cycle_conv(x1, x2):
             x1.append(0)
 
     # 序列x1周期延拓，以y轴为对称轴对称变换，截取0~N-1的序列
-    temp_x1 = []
-    temp_x1.append(x1[0])
+    temp_x1 = [x1[0]]
     for i in range(1, len(x1)):
-        temp_x1.append(x1[N-i])
+        temp_x1.append(x1[N - i])
 
     # 对周期延拓后的x1进行0~N-1的循环移动，计算得到一个N*N的cycle_matrix矩阵
     x1 = temp_x1
-    cycle_matrix = []
-    cycle_matrix.append(x1)
+    cycle_matrix = [x1]
     for step in range(1, N):
         temp = []
         for i in range(0, N):
             temp.append(0)
         for i in range(0, N):
-            temp[(i+step) % N] = x1[i]
+            temp[(i + step) % N] = x1[i]
         cycle_matrix.append(temp)
 
     cycle_matrix = np.array(cycle_matrix)

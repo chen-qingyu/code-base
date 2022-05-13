@@ -31,11 +31,10 @@ def printUnivList(ls, num):
 def main():
     univNum = 20
     info = []
-    url = "http://www.zuihaodaxue.com/zuihaodaxuepaiming2019.html"
+    url = "https://www.shanghairanking.cn/rankings/bcur/2022"  # TODO 网站更新了
     text = getHTMLText(url)
     fillUnivList(info, text)
     printUnivList(info, univNum)
-    input()
 
 
 if __name__ == "__main__":

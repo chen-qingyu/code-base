@@ -6,7 +6,7 @@
 #         return Fibonacci(n - 1) + Fibonacci(n - 2)
 
 
-def Fibonacci(n):
+def Fibonacci(n: int) -> int:
     t1 = 1
     t2 = 1
     if n > 2:
