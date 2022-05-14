@@ -7,15 +7,17 @@ BUFFER_SIZE = 1024
 
 def main():
     print("Welcome to the TCP simulation applet.")
-    print("cmd:")
+    print("Commands:")
     print("  find <key> - Find the value for the given key.")
     print("  write <key: value> - Write key-value pair.")
+    print("  update <key: value> - Update key-value pair.")
     print("  exit - Exit the client.")
     print("  shutdown - Shut down the server.")
+    print("In addition to the above, the data sent will be received by the server without response.")
     print("To IP %s, port %s" % (HOST, PORT))
     print()
     while True:
-        send_data = input("cmd: ")
+        send_data = input(">>> ")
         if send_data.strip() == "":
             continue
         if send_data == "exit":
