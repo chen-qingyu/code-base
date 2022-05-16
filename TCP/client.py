@@ -11,6 +11,7 @@ def main():
     print("  find <key> - Find the value for the given key.")
     print("  write <key: value> - Write key-value pair.")
     print("  update <key: value> - Update key-value pair.")
+    print("  delete <key> - Delete key-value pair.")
     print("  exit - Exit the client.")
     print("  shutdown - Shut down the server.")
     print("In addition to the above, the data sent will be received by the server without response.")

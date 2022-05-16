@@ -12,12 +12,12 @@ sql_cur = sql_conn.cursor()
 # create a data table if it doesn't exist.
 sql_cur.execute("SELECT * FROM sqlite_master WHERE type = 'table' AND name = 'data';")
 if sql_cur.fetchone() is None:
-    sql_cur.execute("CREATE TABLE data (key text primary key, value text not null);")
+    sql_cur.execute("CREATE TABLE data (key text PRIMARY KEY, value text NOT NULL);")
     sql_conn.commit()
 
 
 def find_data(key: str) -> str:
-    sql_cur.execute("SELECT value FROM data where key=?", (key,))
+    sql_cur.execute("SELECT value FROM data WHERE key=?;", (key,))
     value = sql_cur.fetchone()
     return value[0] if value is not None else ("Not found: " + key)
 
@@ -32,7 +32,7 @@ def write_data(key: str, value: str) -> str:
 
 
 def update_data(key: str, value: str) -> str:
-    sql_cur.execute("UPDATE data SET value=? where key=?;", (value, key))
+    sql_cur.execute("UPDATE data SET value=? WHERE key=?;", (value, key))
     sql_conn.commit()
     if sql_cur.rowcount == 1:
         return "Update data finished"
@@ -40,10 +40,20 @@ def update_data(key: str, value: str) -> str:
         return "Update data failure: key does not exist"
 
 
+def delete_data(key: str) -> str:
+    sql_cur.execute("DELETE FROM data WHERE key=?;", (key,))
+    sql_conn.commit()
+    if sql_cur.rowcount == 1:
+        return "Delete data finished"
+    else:
+        return "Delete data failure: key does not exist"
+
+
 def process_cmd(cmd: str) -> str:
     find = "find "
     write = "write "
     update = "update "
+    delete = "delete "
     delimiter = ": "
     try:
         if cmd[:len(find)] == find:
@@ -54,12 +64,15 @@ def process_cmd(cmd: str) -> str:
         elif cmd[:len(update)] == update:
             key, value = cmd[len(update):].split(delimiter)
             return update_data(key, value)
+        elif cmd[:len(delete)] == delete:
+            return delete_data(cmd[len(delete):])
     except ValueError:
         return '''
 syntax: 
     "find <key>", for example: "find foo"
     "write <key: value>", for example: "write foo: bar"
     "update <key: value>", for example: "update foo: bar"
+    "delete <key>", for example: "delete foo"
 '''
     return "Server received."
 

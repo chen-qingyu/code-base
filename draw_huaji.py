@@ -1,4 +1,6 @@
 from turtle import *
+
+speed(0)
 penup()
 fd(75)
 pendown()

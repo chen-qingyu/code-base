@@ -1,19 +1,23 @@
-dic1 = {"a": 1, "b": 2}
-dic2 = {"a": 11, "c": 3}
+def dict_merge(*dicts: dict) -> dict:
+    """ Merge multiple dictionaries """
+    new_dict = dict()
+    for d in dicts:
+        for k, v in d.items():
+            if k not in new_dict.keys():  # key not in dict
+                new_dict[k] = v
+            else:  # key in dict
+                if isinstance(new_dict[k], list) and v not in new_dict[k]:  # multiple value
+                    new_dict[k].append(v)
+                elif v != new_dict[k]:  # single value
+                    new_dict[k] = [new_dict[k], v]
+    return new_dict
 
-dic = {}
-for key in dic1:
-    if dic2.get(key):
-        ls = []
-        ls.append(dic1[key])
-        ls.append(dic2[key])
-        dic[key] = ls
-    else:
-        dic[key] = dic1[key]
-for key in dic2:
-    if dic1.get(key):
-        pass
-    else:
-        dic[key] = dic2[key]
 
+dic1 = {"A": 1, "B": 2, "C": 3, "D": 4}
+dic2 = {"A": 123, "B": 2}
+dic3 = {"A": 456, "C": 3}
+dic4 = {"A": 789, "D": 4}
+dic5 = {"A": [1], "B": [2], "C": [3], "D": [4]}
+dic6 = {"A": [], "B": [], "C": [], "D": []}
+dic = dict_merge(dic1, dic2, dic3, dic4, dic5, dic6)
 print(dic)

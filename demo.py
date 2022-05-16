@@ -1,4 +1,6 @@
-﻿''' 进制格式化输出 '''
+﻿""" demo """
+
+''' 进制格式化输出 '''
 # print("bin:{:6b},{:6b},{:6b},{:6b}".format(2, 4, 8, 16))
 # print("oct:{:6o},{:6o},{:6o},{:6o}".format(2, 4, 8, 16))
 # print("dec:{:6d},{:6d},{:6d},{:6d}".format(2, 4, 8, 16))
@@ -20,6 +22,8 @@
 #         result += arg
 #     print(args)
 #     return result
+#
+#
 # def testDict(**kwargs):
 #     # **kwargs 代表一个字典类型，是默认参数
 #     result = ""
@@ -27,6 +31,8 @@
 #         result += arg
 #     print(kwargs)
 #     return result
+#
+#
 # print(testTuple(1, 2, 3, 4))
 # print(testDict(m=1, n=2))
 
@@ -83,7 +89,7 @@
 ''' switch '''
 # case = input("Please input a case: ")
 # switch = {'1': 'case 1', '2': 'case 2', '3': 'case 3', '4': 'case 4'}
-# print(switch.get(case,'Invalid input'))
+# print(switch.get(case, 'Invalid input'))
 
 ''' 提取每一位数字 '''
 # print(list(map(eval, list(str(2333)))))
@@ -92,7 +98,20 @@
 # def num_map(x, x_min, x_max, y_min, y_max):
 #     slope = (y_max - y_min) / (x_max - x_min)
 #     return y_min + round(slope * (x - x_min))
-
-
+#
+#
 # print(num_map(5, 0, 10, 0, 100))  # => 50
 # print(num_map(128, 0, 256, 0, 1024))  # => 512
+
+''' 参数类型声明 '''
+# def f(*x: int):
+#     print(x)
+# f(1, 2, 3)
+#
+# def g(x: tuple[int, ...]):
+#     print(x)
+# g((1, 2, 3))
+#
+# def h(x: list[int, any, ...]):
+#     print(x)
+# h([1, "1", 1.0])
