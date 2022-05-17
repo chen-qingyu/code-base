@@ -63,4 +63,4 @@ cout2 = Stream()
 
 cout << "Hello" << " " << "World" << "!" << '\n'
 cout2 << "Python" << " " << "cout" << "~" << '\n'
-print("cout is cout2:", cout is cout2)
+cout << "cout is cout2: " << (cout is cout2)
