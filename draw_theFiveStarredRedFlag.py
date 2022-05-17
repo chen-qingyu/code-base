@@ -51,8 +51,7 @@ T = [
 # 五角星绘制起始弧度（以X轴正向为0）
 A = [T[i] + math.radians(18) for i in range(len(T))]
 
-# 五角星绘制起始点（以旗面中心为原点，X轴正向向右，Y轴正向向上）
-# 主星上顶点，小五角星最接近主星的角
+# 五角星绘制起始点：主星为上顶点，小五角星为最接近主星的角
 S = [Point(C[0].x + (C[0].distance_to(C[i]) - R[i]) * math.cos(T[i]),
            C[0].y + (C[0].distance_to(C[i]) - R[i]) * math.sin(T[i])) for i in range(len(T))]
 
