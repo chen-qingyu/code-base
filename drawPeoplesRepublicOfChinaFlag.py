@@ -1,6 +1,6 @@
 """
 Copyright (c) 2022.
-FileName: draw_theFiveStarredRedFlag.py
+FileName: drawPeoplesRepublicOfChinaFlag.py
 Brief: 依据中华人民共和国国家标准GB 12982-2004《国旗》绘制五星红旗
 Author: 青羽
 Blog: https://chen-qingyu.github.io
@@ -27,7 +27,6 @@ class Point:
 
 
 # 五角星中心点坐标（以旗面中心为原点，X轴正向向右，Y轴正向向上）
-# 一开始是以左上角为原点，X轴正向向右，Y轴正向向下的，各个坐标计算好后准备写代码，但是turtle库居然不支持这种坐标系，无奈只好重新设计了
 C = [
     Point(UNIT * -10, UNIT * 5),  # 主星中心点
     Point(UNIT * -5, UNIT * 8),  # 纵向第一个小五角星中心点
@@ -58,26 +57,39 @@ S = [Point(C[0].x + (C[0].distance_to(C[i]) - R[i]) * math.cos(T[i]),
 # 五角星绘制边长长度
 L = [R[i] * 2 * math.cos(math.radians(18)) for i in range(len(R))]
 
+# 颜色 https://www.schemecolor.com/peoples-republic-of-china-flag-colors.php
+colors = {"Maximum Red": "#DE2910", "Golden Yellow": "#FFDE00"}
+
 # Initial
 turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
 turtle.radians()  # Set the angle measurement units to radians
 turtle.speed("fast")
 turtle.title("五星红旗")
-turtle.setup(WIDTH, HEIGHT)
-turtle.bgcolor("red")
-turtle.pencolor("yellow")
-turtle.fillcolor("yellow")
+turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
+turtle.bgcolor("#FAFAFA")
+turtle.penup()
 
 # Draw
+turtle.fillcolor(colors["Maximum Red"])
+turtle.goto(-WIDTH / 2, HEIGHT / 2)
+turtle.setheading(0)
+turtle.begin_fill()
+for i in range(2):
+    turtle.forward(WIDTH)
+    turtle.right(math.pi / 2)
+    turtle.forward(HEIGHT)
+    turtle.right(math.pi / 2)
+turtle.end_fill()
+
+turtle.fillcolor(colors["Golden Yellow"])
 for i in range(len(C)):
-    turtle.penup()
     turtle.goto(S[i].x, S[i].y)
     turtle.setheading(A[i])
-    turtle.pendown()
     turtle.begin_fill()
     for j in range(5):
         turtle.forward(L[i])
         turtle.right(math.radians(144))
     turtle.end_fill()
+
 turtle.hideturtle()
 turtle.mainloop()
