@@ -23,12 +23,11 @@ L = HEIGHT / 13
 B_W = WIDTH * (2 / 5)  # 宽度
 B_H = HEIGHT * (7 / 13)  # 高度
 
-B_T = B_H / 10  # 横向等分线
 B_L = B_W / 12  # 纵向等分线
+B_T = B_H / 10  # 横向等分线
 
 # 五角星外接圆半径
 R = 0.0616 * HEIGHT / 2
-
 
 def my_range(start: float, stop: float, step: float = 1) -> list[float, ...]:
     ls = []
@@ -36,7 +35,6 @@ def my_range(start: float, stop: float, step: float = 1) -> list[float, ...]:
         ls.append(start)
         start += step
     return ls
-
 
 # 等分线交叉点（非常优雅）
 B_C = [[(-WIDTH / 2 + x, HEIGHT / 2 - y) for x in my_range(B_L, B_W, B_L)] for y in my_range(B_T, B_H, B_T)]
@@ -80,8 +78,8 @@ turtle.end_fill()
 turtle.fillcolor(colors["White"])
 i = 0
 for x, y in B_C:
-    turtle.goto(x, y + R)
     if i % 2 == 0:
+        turtle.goto(x, y + R)
         turtle.setheading(-(90 - 18))
         turtle.begin_fill()
         for j in range(5):
