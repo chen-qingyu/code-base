@@ -1,16 +1,16 @@
-import pprint
+import matplotlib.pyplot as plt
 
 
-def hailstone(n):
-    length = 1
-    seq = [n]
-    while n > 1:
-        if n % 2 == 1:
-            n = n * 3+1
+def hailstone(x: int):
+    ls = [x]
+    while x > 1:
+        if x % 2 == 1:
+            x = x * 3 + 1
         else:
-            n //= 2
-        seq.append(n)
-    return seq
+            x //= 2
+        ls.append(x)
+    return ls
 
 
-pprint.pprint(hailstone(27))
+plt.stem(hailstone(27))
+plt.show()

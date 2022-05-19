@@ -1,18 +1,20 @@
-count = 0
+def hanoi(layer: int):
+    ls = []
+
+    def _hanoi(layer, src, mid, dst):
+        nonlocal ls
+        if layer == 1:
+            ls.append("layer {}: {}->{}".format(1, src, dst))
+        else:
+            _hanoi(layer - 1, src, dst, mid)
+            ls.append("layer {}: {}->{}".format(layer, src, dst))
+            _hanoi(layer - 1, mid, src, dst)
+
+    _hanoi(layer, "A", "B", "C")
+    return ls
 
 
-def hanoi(n, src, dst, mid):
-    global count
-    if n == 1:
-        print("{}:{}->{}".format(1, src, dst))
-        count += 1
-    else:
-        hanoi(n - 1, src, mid, dst)
-        print("{}:{}->{}".format(n, src, dst))
-        count += 1
-        hanoi(n - 1, mid, dst, src)
-
-
-n = input("Please enter an integer: ")
-hanoi(eval(n), "A", "C", "B")
-print(count)
+n = eval(input("Please enter an integer representing the number of layers in Tower of Hanoi: "))
+steps = hanoi(n)
+print("process:", steps)
+print("total steps:", len(steps))

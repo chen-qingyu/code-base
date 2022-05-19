@@ -25,13 +25,14 @@ libs = [
     "opencv-python",  # cv2
 
     "tensorflow",
+
+    "jupyter"
 ]
 
 if __name__ == '__main__':
     for lib in libs:
         print("Now install/upgrade " + lib)
-        os.system("python -m pip\
-        install --upgrade --upgrade-strategy \"eager\"\
+        os.system("python -m pip install --upgrade \
         -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + lib)
         print("=" * 40)
 

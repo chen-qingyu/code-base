@@ -4,19 +4,19 @@ print("---")
 
 
 def my_map(f, l):
-    if l == []:
+    if not l:
         return []
     else:
         return [f(l[0])] + my_map(f, l[1:])
 
 
-print(list(map(lambda x: x*x, l)))
-print(list(my_map(lambda x: x*x, l)))
+print(list(map(lambda x: x * x, l)))
+print(list(my_map(lambda x: x * x, l)))
 print("---")
 
 
 def my_filter(p, l):
-    if l == []:
+    if not l:
         return []
     elif p(l[0]):
         return [l[0]] + my_filter(p, l[1:])

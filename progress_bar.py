@@ -13,4 +13,3 @@ for i in range(scale + 1):
     sleep(0.02)
 
 print("\n" + "END".center(scale // 2, "-"))
-input()

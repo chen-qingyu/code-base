@@ -1,8 +1,6 @@
 def getNumbers():
-    numStr = input("Please input numbers(split by space): ")
-    nums = numStr.split(' ')
-    nums = list(map(eval, nums))
-    return nums
+    nums = input("Please input numbers(split by space): ").split(' ')
+    return list(map(eval, nums))
 
 
 def getAverage(nums):
@@ -31,4 +29,3 @@ average = getAverage(numbers)
 variance = getVariance(numbers, average)
 median = getMedian(numbers)
 print("平均数：{:.2f} 方差：{:.2f} 中位数：{}".format(average, variance, median))
-input()

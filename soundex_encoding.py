@@ -1,7 +1,7 @@
 import functools
 
 
-def soundex_encoding(string):
+def soundex_encoding(string: str):
     SOUNDEX_MAP = {
         'A': '0', 'B': '1', 'C': '2', 'D': '3', 'E': '0',
         'F': '1', 'G': '2', 'H': '0', 'I': '0', 'J': '2',

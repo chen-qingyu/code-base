@@ -1,4 +1,4 @@
-'''
+"""
 ref https://www.bilibili.com/video/BV11x411f7vz
 
 1: 领导者。
@@ -59,27 +59,24 @@ ref https://www.bilibili.com/video/BV11x411f7vz
 有疗愈的天性
 老灵魂了
 
-11:
-星际种子
+11: 星际种子。
 强大的灵性洞察力
 通灵能力
 从精神上照亮他人
 领导、鼓舞
 直觉力
 
-22:
-星际种子
+22: 星际种子。
 创造一些为世界带来积极改变的东西
 和别人不一样
 
-33:
-星际种子
+33: 星际种子。
 灵性导师
 传授知识
-'''
+"""
 
 
-def lifeNumber(name, birthday):
+def lifeNumber(name: str, birthday: int):
     # 算生命灵数的函数
     # name: string.
     # birthday: 8-digit number, format: yyyymmdd.
@@ -91,3 +88,5 @@ def lifeNumber(name, birthday):
         path.append(num)
     print(name + "的生命灵数路径是：", path)
 
+
+lifeNumber('小陈', 19981001)

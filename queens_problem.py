@@ -25,6 +25,7 @@ def queens(num, queen=()):
 def draw(solution):
     def line(pos, length=len(solution)):
         return '. ' * (pos - 1) + '$ ' + '. ' * (length - pos)
+
     for pos in solution:
         print(line(pos))
 

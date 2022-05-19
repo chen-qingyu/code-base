@@ -9,20 +9,20 @@ if ser.isOpen():
 
     data = binascii.a2b_hex("01")
     ser.write(data)
-    print("Send:", data) # 0x01
+    print("Send:", data)  # 0x01
     rec = ser.read()
-    print("Receive:", rec) # 0x02
+    print("Receive:", rec)  # 0x02
 
-    data = binascii.a2b_hex("41") 
+    data = binascii.a2b_hex("41")
     ser.write(data)
-    print("Send:", data) # "A"
+    print("Send:", data)  # "A"
     rec = ser.read()
-    print("Receive:", rec) # "B"
+    print("Receive:", rec)  # "B"
 
     data = binascii.a2b_hex("61")
     ser.write(data)
-    print("Send:", data) # "a"
+    print("Send:", data)  # "a"
     rec = ser.read()
-    print("Receive:", rec) # "b"
+    print("Receive:", rec)  # "b"
 else:
     print("Serial not open.")
