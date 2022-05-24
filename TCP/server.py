@@ -50,31 +50,17 @@ def delete_data(key: str) -> str:
 
 
 def process_cmd(cmd: str) -> str:
-    find = "find "
-    write = "write "
-    update = "update "
-    delete = "delete "
-    delimiter = ": "
-    try:
-        if cmd[:len(find)] == find:
-            return find_data(cmd[len(find):])
-        elif cmd[:len(write)] == write:
-            key, value = cmd[len(write):].split(delimiter)
-            return write_data(key, value)
-        elif cmd[:len(update)] == update:
-            key, value = cmd[len(update):].split(delimiter)
-            return update_data(key, value)
-        elif cmd[:len(delete)] == delete:
-            return delete_data(cmd[len(delete):])
-    except ValueError:
-        return '''
-syntax: 
-    "find <key>", for example: "find foo"
-    "write <key: value>", for example: "write foo: bar"
-    "update <key: value>", for example: "update foo: bar"
-    "delete <key>", for example: "delete foo"
-'''
-    return "Server received."
+    match cmd.split():
+        case ["find", key]:
+            return find_data(key)
+        case ["write", key, value]:
+            return write_data(key[:-1], value)
+        case ["update", key, value]:
+            return update_data(key[:-1], value)
+        case ["delete", key]:
+            return delete_data(key)
+        case _:
+            return "Server received."
 
 
 def main():

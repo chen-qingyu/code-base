@@ -1,4 +1,4 @@
-﻿""" demo """
+""" demo """
 
 ''' 进制格式化输出 '''
 # print("bin:{:6b},{:6b},{:6b},{:6b}".format(2, 4, 8, 16))
@@ -115,3 +115,15 @@
 # def h(x: list[int, any, ...]):
 #     print(x)
 # h([1, "1", 1.0])
+
+''' better switch '''
+# status = 400
+# match status:
+#     case 400:
+#         print("Bad request")
+#     case 404:
+#         print("Not found")
+#     case 418:
+#         print("I'm a teapot")
+#     case _:
+#         print("Something's wrong with the internet")
