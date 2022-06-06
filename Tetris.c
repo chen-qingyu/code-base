@@ -11,18 +11,18 @@ Linux环境下编译运行
 #include <time.h>
 #include <unistd.h>
 
-#define ROW 24 // 游戏区域的行数
+#define ROW 19 // 游戏区域的行数
 #define COL 12 // 游戏区域的列数
-#define NR 6   // 方块数据大小
+#define NR 4   // 方块数据大小
 #define TYPE 7 // 方块类型数
 
 /* 按键枚举 */
 enum key
 {
-    DOWN,   // 上
+    UP,     // 上
+    DOWN,   // 下
     LEFT,   // 左
     RIGHT,  // 右
-    CHANGE, // 变化
     STOP,   // 停止
     EXIT,   // 退出
     UNKNOW, // 未知
@@ -326,32 +326,32 @@ int main(void)
         c = getchar();
         switch (c)
         {
-            case 97:  // 'a' key
-            case 104: // 'h' key
-            case 68:  // left arrow
-            case 52:  // 4 arrow
-                key = LEFT;
+            case 'w':
+            case 'W':
+            case '2':
+                key = UP;
                 break;
-            case 100: // 'd' key
-            case 108: // 'l' key
-            case 67:  // right arrow
-            case 54:  // 6 arrow
-                key = RIGHT;
-                break;
-            case 119: // 'w' key
-            case 107: // 'k' key
-            case 65:  // up arrow
-            case 50:  // 2 arrow
-                key = CHANGE;
-                break;
-            case 115: // 's' key
-            case 106: // 'j' key
-            case 66:  // down arrow
-            case 56:  // 8 arrow
+            case 's':
+            case 'S':
+            case '8':
                 key = DOWN;
                 break;
-            case 32: // space
+            case 'a':
+            case 'A':
+            case '4':
+                key = LEFT;
+                break;
+            case 'd':
+            case 'D':
+            case '6':
+                key = RIGHT;
+                break;
+            case ' ':
                 key = STOP;
+                break;
+            case 'q':
+            case 'Q':
+                key = EXIT;
                 break;
             default:
                 key = UNKNOW;
@@ -368,7 +368,7 @@ int main(void)
             case DOWN:
                 checkMove(bl[type][diret], DOWN);
                 break;
-            case CHANGE:
+            case UP:
                 turnBlock(bl[type][(diret + 1) % 4]);
                 break;
             case STOP:
@@ -641,14 +641,12 @@ void gameStop(void)
     while (1)
     {
         key = getchar();
-        ;
 
         /* 空格开始 */
         if (key == ' ')
             break;
-
         /* q 退出 */
-        else if (key == 'q')
+        else if (key == 'q' || key == 'Q')
             gameEnd();
     }
 
@@ -803,8 +801,8 @@ void showGame(void)
     fprintf(stdout, "\033[4;15H最高记录:\033[35m%u\033[0m\n", maxScore);
     fprintf(stdout, "\033[5;15H当前状态:%s\n", state);
 
-    fprintf(stdout, "\033[7;25H2键翻转");
-    fprintf(stdout, "\033[8;25H4,6,8 左右下");
+    fprintf(stdout, "\033[7;25HW 翻转");
+    fprintf(stdout, "\033[8;25HA,D,S 左,右,下");
     fprintf(stdout, "\033[9;25H空格键暂停");
 }
 
