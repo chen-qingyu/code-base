@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NOT_FOUND -1
+#define NOT_FOUND (-1)
 #define ERROR_MEM_ALLOC "ERROR: Memory allocation failed."
 
 // Judge whether two strings are equal
