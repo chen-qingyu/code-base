@@ -26,7 +26,9 @@ libs = [
 
     "tensorflow",
 
-    "jupyter"
+    "jupyter",
+
+    "autopep8"
 ]
 
 if __name__ == '__main__':
