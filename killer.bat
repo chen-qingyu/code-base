@@ -1,7 +1,7 @@
 @echo off
 
-del *.aux /s
-del *.log /s
-del *.gz /s
+del *.aux
+del *.log
+del *.gz
 
 exit
