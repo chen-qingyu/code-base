@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	$$
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\text{d}#1}
+	% for shorten \int_{0}^{+\infty}
+	\newcommand{\intinf}{\int_{0}^{+\infty}}
+	\begin{aligned}
+		\Gamma(s) =& \intinf e^{-x} x^{s-1} \d \ \ (s > 0)
+		\\
+		=& \intinf -x^{s-1} \d[(e^{-x})]
+		\\
+		=& 0 - \intinf e^{-x} \d[(-x^{s-1})]
+		\\
+		=& \intinf e^{-x} \d[(x^{s-1})]
+		\\
+		=& \intinf e^{-x} (s - 1) x^{s-2} \d
+		\\
+		=& (s - 1) \intinf e^{-x} x^{s-2} \d
+		\\
+		=& (s - 1) \Gamma(s - 1)
+		\\
+		=& (s - 1) (s - 2) \Gamma(s - 2)
+		\\
+		=& (s - 1) (s - 2) \cdots \Gamma(1)
+		\\
+		=& (s - 1) (s - 2) \cdots 1
+		\\
+		=& (s - 1)!
+	\end{aligned}
+	$$
+\end{document}

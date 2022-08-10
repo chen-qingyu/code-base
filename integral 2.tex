@@ -1,0 +1,43 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	$$
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\text{d}#1}
+	% plus constant
+	\renewcommand{\c}{+ C}
+	% for shorten \frac
+	\newcommand{\f}{\frac}
+	\begin{aligned}
+		& \int \sqrt{1 + x^2} \d
+		\\
+		& let\ \ x = \tan{t}
+		\\
+		=& I
+		\\
+		=& \int \sec{t} \d[\tan{t}]
+		\\
+		=& \sec{t} \tan{t} - \int \tan{t} \d[\sec{t}]
+		\\
+		=& \sec{t} \tan{t} - \int \tan^2{t} \sec{t} \d[t]
+		\\
+		=& \sec{t} \tan{t} - \int (\sec^2{t} - 1) \sec{t} \d[t]
+		\\
+		=& \sec{t} \tan{t} - \int \sec^3{t} \d[t] + \int \sec{t} \d[t]
+		\\
+		=& \sec{t} \tan{t} - I + \ln{|\sec{t} + \tan{t}|} \c
+		\\
+		\\
+		I =& \f{1}{2} (\sec{t} \tan{t} + \ln{|\sec{t} + \tan{t}|}) \c
+		\\
+		=& \f{1}{2} (x \sqrt{1 + x^2} + \ln{(x + \sqrt{1 + x^2})}) \c 
+	\end{aligned}
+	$$
+\end{document}
