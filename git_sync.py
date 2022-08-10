@@ -9,7 +9,6 @@
 
 import os
 
-
 gitPaths = ["F:/C/C Primer Plus",
             "F:/C/C Programs",
             "F:/Java",
@@ -21,18 +20,18 @@ gitPaths = ["F:/C/C Primer Plus",
             "F:/Projects/Love Miao",
             "F:/Python/Python Programs",
             "F:/Racket/HtDP",
-            "F:/STM32/CODE"]
+            "F:/STM32/CODE",
+            "F:/TeX"]
 
-
+# "killer.bat"
 killersPaths = ["F:/C",
                 "F:/Projects/BadApple",
                 "F:/STM32/CODE",
-                "F:/Projects/Data Structure and Algorithm/C"]
+                "F:/Projects/Data Structure and Algorithm/C",
+                "F:/TeX"]
 
-
-emptyDirsPaths = ["F:/Projects/BadApple",
-                  "F:/STM32/CODE"]
-
+clearEmptyDirsPaths = ["F:/Projects/BadApple",
+                       "F:/STM32/CODE"]
 
 syncCmd = "git add . && git commit -m \"update\" && git push && git status"
 
@@ -71,7 +70,7 @@ def main():
     print(pattern, "The unnecessary files are deleted", pattern)
 
     print(pattern, "Start deleting empty folders", pattern)
-    for path in emptyDirsPaths:
+    for path in clearEmptyDirsPaths:
         delEmptyDirs(path)
     print(pattern, "The empty folders are deleted", pattern)
 
