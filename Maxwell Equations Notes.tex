@@ -1,0 +1,192 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.8}
+
+% For \oiint
+\usepackage{esint}
+
+% For indentation of the first line
+\usepackage{indentfirst}
+
+% Set title
+\title{Maxwell's Equations Notes}
+\author{Qingyu Chen}
+\date{\today}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 2em
+	\setlength{\baselineskip}{2em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	% basic symbols
+	\newcommand{\Time}{t}
+	\newcommand{\Line}{L}
+	\newcommand{\Surface}{S}
+	
+	\newcommand{\opDivergence}{\nabla \cdot}
+	\newcommand{\opCurl}{\nabla \times}
+	
+	\newcommand{\ElectricCharge}{Q}
+	\newcommand{\ElectricChargeDensity}{\rho_E}
+	\newcommand{\MagneticChargeDensity}{\rho_M}
+	\newcommand{\ElectricCurrent}{I}
+	\newcommand{\ElectricCurrentDensity}{\vec{J}_E}
+	\newcommand{\MagneticCurrentDensity}{\vec{J}_M}
+	\newcommand{\ElectricField}{\vec{E}}
+	\newcommand{\MagneticField}{\vec{H}}
+	\newcommand{\ElectricFluxDensity}{\vec{D}}
+	\newcommand{\MagneticFluxDensity}{\vec{B}}
+	
+	\newcommand{\Permittivity}{\varepsilon}
+	\newcommand{\Permeability}{\mu}
+	\newcommand{\Conductivity}{\sigma}
+	
+	% make title
+	\maketitle
+	
+	% make table of contents
+	\tableofcontents
+	
+	% new page
+	\newpage
+	
+	\section{Basic Concepts}
+	
+	\begin{align*}
+		\Time &: \text{Time} \ (s)
+		\\
+		\Line &: \text{Line} \ (m)
+		\\
+		\Surface &: \text{Surface} \ (m^2)
+		\\
+		\\
+		\opDivergence &: \text{The Divergence Operator}
+		\\
+		\opCurl &: \text{The Curl Operator}
+		\\
+		\\
+		\ElectricCharge &: \text{Electric Charge} \ (C)
+		\\
+		\ElectricChargeDensity &: \text{Electric Charge Density} \ (C/m^3)
+		\\
+		\MagneticChargeDensity &: \text{Magnetic Charge Density (Fictitious)} \ (Wb/m^3)
+		\\
+		\ElectricCurrent &: \text{Electric Current} \ (C/s = A)
+		\\
+		\ElectricCurrentDensity &: \text{Electric Current Density} \ (A/m^2)
+		\\
+		\MagneticCurrentDensity &: \text{Magnetic Current Density (Fictitious)} \ (V/m^2)
+		\\
+		\ElectricField &: \text{Electric Field} \ (V/m = N/C)
+		\\
+		\MagneticField &: \text{Magnetic Field} \ (A/m)
+		\\
+		\ElectricFluxDensity &: \text{Electric Flux Density} \ (C/m^2)
+		\\
+		\MagneticFluxDensity &: \text{Magnetic Flux Density} \ (Wb/m^2 = T)
+		\\
+		\\
+		\Permittivity &: \text{Permittivity} \ (F/m)
+		\\
+		\Permeability &: \text{Permeability} \ (H/m)
+		\\
+		\Conductivity &: \text{Conductivity} \ (S/m)
+	\end{align*}
+	
+	\section{Basic Formula}
+	
+	\begin{align*}
+		\ElectricFluxDensity & = \Permittivity \ElectricField
+		\\
+		\MagneticFluxDensity & = \Permeability \MagneticField
+		\\
+		\ElectricCurrentDensity & = \Conductivity \ElectricField
+		\\
+		\\
+		|\ElectricField| & = \frac{\ElectricCharge}{4 \pi \Permittivity r^2}
+		\\
+		|\MagneticField| & = \frac{\ElectricCurrent}{2 \pi r}
+		\\
+		\ElectricCurrent & = \int_\Surface \ElectricCurrentDensity \d[\Surface]
+	\end{align*}
+	
+	\section{Maxwell's Equations}
+	
+	\subsection{Point Form}
+	The equations are known as ``point form'' because each equality is true at every point in space.
+	\begin{align*}
+		\opDivergence \ElectricFluxDensity & = \ElectricChargeDensity
+		\\
+		\opDivergence \MagneticFluxDensity & = 0
+		\\
+		\opCurl \ElectricField & = - \frac{\partial \MagneticFluxDensity}{\partial \Time}
+		\\
+		\opCurl \MagneticField & = \frac{\partial \ElectricFluxDensity}{\partial \Time} + \ElectricCurrentDensity
+	\end{align*}
+	
+	\subsection{Integral Form}
+	If the point form of Maxwell's Equations are true at every point, then integrate them over any surface and they will still be true.
+	
+	Note that in the first two equations, the surface S is a closed surface, which means it encloses a 3D volume. In the last two equations, the surface S is an open surface, that has a boundary line L.
+	\begin{align*}
+		\oiint_\Surface \ElectricFluxDensity \d[\Surface] & = \ElectricCharge
+		\\
+		\oiint_\Surface \MagneticFluxDensity \d[\Surface] & = 0
+		\\
+		\oint_\Line \ElectricField \d[\Line] & = - \iint_\Surface \frac{\partial \MagneticFluxDensity}{\partial \Time} \d[\Surface]
+		\\
+		\oint_\Line \MagneticField \d[\Line] & = \iint_\Surface \frac{\partial \ElectricFluxDensity}{\Time} \d[\Surface] + \ElectricCurrent
+	\end{align*}
+	
+	\subsection{Time-Harmonic Form}
+	Fourier Transforms says that every signal in time can be rewritten as the sum of sine curve. Using a little more complex math and specify the time variation in terms of the sum of sine curve written in complex form.
+	
+	This form shows that how the waves behave if they are oscillating at a frequency, and all waves can be decomposed into the sum of simple oscillating waves.
+	\begin{align*}
+		\opDivergence \ElectricFluxDensity & = \ElectricChargeDensity
+		\\
+		\opDivergence \MagneticFluxDensity & = 0
+		\\
+		\opCurl \ElectricField & = - i \omega \MagneticFluxDensity
+		\\
+		\opCurl \MagneticField & = i \omega \ElectricFluxDensity + \ElectricCurrentDensity
+	\end{align*}
+	
+	\subsection{Written Only with E and H}
+	Use the first three basic formulas can rewrite Maxwell's Equations with only E and H present.
+	\begin{align*}
+		\opDivergence \ElectricField & = \frac{\ElectricChargeDensity}{\Permittivity}
+		\\
+		\opDivergence \MagneticField & = 0
+		\\
+		\opCurl \ElectricField & = - \Permeability \frac{\partial \MagneticField}{\partial \Time}
+		\\
+		\opCurl \MagneticField & = \Permittivity \frac{\partial \ElectricField}{\partial \Time} + \Conductivity \ElectricField
+	\end{align*}
+	
+	\subsection{Symmetric Form with Magnetic Charge}
+	What if someone finds Magnetic Charge? Then we would also have to alter the equations to allow for magnetic current --- the flow of magnetic charge.
+	
+	This isn't a purely abstract exercise --- some problems in engineering can be solved more simply by assuming a fictitious magnetic charge or magnetic current.
+	\begin{align*}
+		\opDivergence \ElectricFluxDensity & = \ElectricChargeDensity
+		\\
+		\opDivergence \MagneticFluxDensity & = \MagneticChargeDensity
+		\\
+		\opCurl \ElectricField & = - (\frac{\partial \MagneticFluxDensity}{\partial \Time} + \MagneticCurrentDensity)
+		\\
+		\opCurl \MagneticField & = \frac{\partial \ElectricFluxDensity}{\partial \Time} + \ElectricCurrentDensity
+	\end{align*}
+	
+\end{document}

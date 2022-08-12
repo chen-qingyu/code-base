@@ -3,14 +3,23 @@
 % American Mathematical Society
 \usepackage{amsmath}
 
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
 \begin{document}
 	% set the font size to large
 	\large
 	% set the line spacing to 4em
 	\setlength{\baselineskip}{4em}
-	$$
+	
 	% dx or d[#1]
-	\renewcommand{\d}[1][x]{\text{d}#1}
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
 	% plus constant
 	\renewcommand{\c}{+ C}
 	% minus delta
@@ -21,24 +30,24 @@
 	\newcommand{\denA}{x^2 + \f{b}{a} x + \f{c}{a}}
 	% for shorten (x + \f{b}{2 a})^2 + \f{c}{a} - \f{b^2}{4 a^2}
 	\newcommand{\denB}{(x + \f{b}{2 a})^2 + \f{c}{a} - \f{b^2}{4 a^2}}
-	\begin{aligned}
-		& \int \f{mx + n}{a x^2 + b x + c} \d \ \ (a \neq 0)
+	
+	\begin{align*}
+		&\ \int \f{mx + n}{a x^2 + b x + c} \d \ \ (a \neq 0)
 		\\
-		=& \int \f{\f{m}{a} x + \f{n}{a}}{\denA} \d
+		= &\ \int \f{\f{m}{a} x + \f{n}{a}}{\denA} \d
 		\\
-		=& \int \f{\f{m}{a} x + \f{n}{a}}{\denB} \d
+		= &\ \int \f{\f{m}{a} x + \f{n}{a}}{\denB} \d
 		\\
-		=& \f{m}{a} \int \f{x}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
+		= &\ \f{m}{a} \int \f{x}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
 		\\
-		=& \f{m}{2 a} \int \f{2 x + \f{b}{a} - \f{b}{a}}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
+		= &\ \f{m}{2 a} \int \f{2 x + \f{b}{a} - \f{b}{a}}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
 		\\
-		=& \f{m}{2 a} \int \f{2 x + \f{b}{a}}{\denB} \d + \f{2 n a - m b}{2 a^2} \int \f{1}{\denB} \d
+		= &\ \f{m}{2 a} \int \f{2 x + \f{b}{a}}{\denB} \d + \f{2 n a - m b}{2 a^2} \int \f{1}{\denB} \d
 		\\
-		=& \f{m}{2 a} \int \f{1}{\denA} \d[(\denA)] + \f{2 n a - m b}{2 a^2} \int \f{1}{(x + \f{b}{2 a})^2 + (\sqrt{\f{\mdelta}{4 a^2}})^2} \d[(x + \f{b}{2 a})]
+		= &\ \f{m}{2 a} \int \f{1}{\denA} \d[(\denA)] + \f{2 n a - m b}{2 a^2} \int \f{1}{(x + \f{b}{2 a})^2 + (\sqrt{\f{\mdelta}{4 a^2}})^2} \d[(x + \f{b}{2 a})]
 		\\
-		=& \f{m}{2 a} \ln{|\denA|} + \f{2 n a - m b}{2 a^2} \f{1}{\sqrt{\f{\mdelta}{4 a^2}}} \arctan\f{x + \f{b}{2 a}}{\sqrt{\f{\mdelta}{4 a^2}}} \c
+		= &\ \f{m}{2 a} \ln{|\denA|} + \f{2 n a - m b}{2 a^2} \f{1}{\sqrt{\f{\mdelta}{4 a^2}}} \arctan\f{x + \f{b}{2 a}}{\sqrt{\f{\mdelta}{4 a^2}}} \c
 		\\
-		=& \f{m}{2 a} \ln{|a x^2 + b x + c|} + \f{2 n a - m b}{a\sqrt{\mdelta}} \arctan\f{2 a x + b}{\sqrt{\mdelta}} \c
-	\end{aligned}
-	$$
+		= &\ \f{m}{2 a} \ln{|a x^2 + b x + c|} + \f{2 n a - m b}{a\sqrt{\mdelta}} \arctan\f{2 a x + b}{\sqrt{\mdelta}} \c
+	\end{align*}
 \end{document}
