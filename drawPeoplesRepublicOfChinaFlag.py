@@ -26,7 +26,7 @@ class Point:
         return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
 
-# 五角星中心点坐标（以旗面中心为原点，X轴正向向右，Y轴正向向上）
+# 五角星中心点（Center）坐标（以旗面中心为原点，X轴正向向右，Y轴正向向上）
 C = [
     Point(UNIT * -10, UNIT * 5),  # 主星中心点
     Point(UNIT * -5, UNIT * 8),  # 纵向第一个小五角星中心点
@@ -35,10 +35,10 @@ C = [
     Point(UNIT * -5, UNIT * 1),  # 纵向第四个小五角星中心点
 ]
 
-# 五角星外接圆半径
+# 五角星外接圆半径（Radius）
 R = [UNIT * i for i in (3, 1, 1, 1, 1)]
 
-# 五角星绘制起始点朝向主星中心的弧度（以X轴正向为0）
+# 五角星绘制起始点朝向（Towards）主星中心的弧度（以X轴正向为0）
 T = [
     math.radians(-90),
     math.atan(3 / 5),
@@ -47,14 +47,14 @@ T = [
     math.atan(-4 / 5),
 ]
 
-# 五角星绘制起始弧度（以X轴正向为0）
+# 五角星绘制起始弧度（Arc）（以X轴正向为0）
 A = [T[i] + math.radians(18) for i in range(len(T))]
 
-# 五角星绘制起始点：主星为上顶点，小五角星为最接近主星的角
+# 五角星绘制起始点（Start）：主星为上顶点，小五角星为最接近主星的角
 S = [Point(C[0].x + (C[0].distance_to(C[i]) - R[i]) * math.cos(T[i]),
            C[0].y + (C[0].distance_to(C[i]) - R[i]) * math.sin(T[i])) for i in range(len(T))]
 
-# 五角星绘制边长长度
+# 五角星边长长度（Length）
 L = [R[i] * 2 * math.cos(math.radians(18)) for i in range(len(R))]
 
 # 颜色 https://www.schemecolor.com/peoples-republic-of-china-flag-colors.php
@@ -66,7 +66,7 @@ turtle.radians()  # Set the angle measurement units to radians
 turtle.speed("fast")
 turtle.title("五星红旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
-turtle.bgcolor("#FAFAFA")
+turtle.bgcolor("#F0F0F0")
 turtle.penup()
 
 # Draw

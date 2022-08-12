@@ -15,7 +15,7 @@ UNIT = 25
 WIDTH = UNIT * 30  # 旗面宽度
 HEIGHT = UNIT * 20  # 旗面高度
 
-# 中心圆半径
+# 中心圆半径（Radius）
 R = HEIGHT * (3 / 5) / 2
 
 # 颜色 https://www.schemecolor.com/japan-flag-colors.php
@@ -26,7 +26,7 @@ turtle.mode("standard")  # Initial turtle heading: to the right (east), positive
 turtle.speed("fast")
 turtle.title("日本国旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
-turtle.bgcolor("#FAFAFA")
+turtle.bgcolor("#F0F0F0")
 turtle.penup()
 
 # Draw

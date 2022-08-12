@@ -23,7 +23,7 @@ turtle.mode("standard")  # Initial turtle heading: to the right (east), positive
 turtle.speed("fast")
 turtle.title("俄罗斯国旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
-turtle.bgcolor("#FAFAFA")
+turtle.bgcolor("#F0F0F0")
 turtle.penup()
 
 # Draw
