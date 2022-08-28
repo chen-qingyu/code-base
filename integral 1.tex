@@ -20,34 +20,30 @@
 	
 	% dx or d[#1]
 	\renewcommand{\d}[1][x]{\ \text{d}#1}
-	% plus constant
-	\renewcommand{\c}{+ C}
-	% minus delta
+	% for shorten minus delta
 	\newcommand{\mdelta}{4 a c - b^2}
-	% for shorten \frac
-	\newcommand{\f}{\frac}
-	% for shorten x^2 + \f{b}{a} x + \f{c}{a}
-	\newcommand{\denA}{x^2 + \f{b}{a} x + \f{c}{a}}
-	% for shorten (x + \f{b}{2 a})^2 + \f{c}{a} - \f{b^2}{4 a^2}
-	\newcommand{\denB}{(x + \f{b}{2 a})^2 + \f{c}{a} - \f{b^2}{4 a^2}}
+	% for shorten x^2 + \frac{b}{a} x + \frac{c}{a}
+	\newcommand{\denA}{x^2 + \frac{b}{a} x + \frac{c}{a}}
+	% for shorten (x + \frac{b}{2 a})^2 + \frac{c}{a} - \frac{b^2}{4 a^2}
+	\newcommand{\denB}{(x + \frac{b}{2 a})^2 + \frac{c}{a} - \frac{b^2}{4 a^2}}
 	
 	\begin{align*}
-		&\ \int \f{mx + n}{a x^2 + b x + c} \d \ \ (a \neq 0)
+		&\ \int \frac{mx + n}{a x^2 + b x + c} \d \ \ (a \neq 0)
 		\\
-		= &\ \int \f{\f{m}{a} x + \f{n}{a}}{\denA} \d
+		= &\ \int \frac{\frac{m}{a} x + \frac{n}{a}}{\denA} \d
 		\\
-		= &\ \int \f{\f{m}{a} x + \f{n}{a}}{\denB} \d
+		= &\ \int \frac{\frac{m}{a} x + \frac{n}{a}}{\denB} \d
 		\\
-		= &\ \f{m}{a} \int \f{x}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
+		= &\ \frac{m}{a} \int \frac{x}{\denB} \d + \frac{n}{a} \int \frac{1}{\denB} \d
 		\\
-		= &\ \f{m}{2 a} \int \f{2 x + \f{b}{a} - \f{b}{a}}{\denB} \d + \f{n}{a} \int \f{1}{\denB} \d
+		= &\ \frac{m}{2 a} \int \frac{2 x + \frac{b}{a} - \frac{b}{a}}{\denB} \d + \frac{n}{a} \int \frac{1}{\denB} \d
 		\\
-		= &\ \f{m}{2 a} \int \f{2 x + \f{b}{a}}{\denB} \d + \f{2 n a - m b}{2 a^2} \int \f{1}{\denB} \d
+		= &\ \frac{m}{2 a} \int \frac{2 x + \frac{b}{a}}{\denB} \d + \frac{2 n a - m b}{2 a^2} \int \frac{1}{\denB} \d
 		\\
-		= &\ \f{m}{2 a} \int \f{1}{\denA} \d[(\denA)] + \f{2 n a - m b}{2 a^2} \int \f{1}{(x + \f{b}{2 a})^2 + (\sqrt{\f{\mdelta}{4 a^2}})^2} \d[(x + \f{b}{2 a})]
+		= &\ \frac{m}{2 a} \int \frac{1}{\denA} \d[(\denA)] + \frac{2 n a - m b}{2 a^2} \int \frac{1}{(x + \frac{b}{2 a})^2 + (\sqrt{\frac{\mdelta}{4 a^2}})^2} \d[(x + \frac{b}{2 a})]
 		\\
-		= &\ \f{m}{2 a} \ln{|\denA|} + \f{2 n a - m b}{2 a^2} \f{1}{\sqrt{\f{\mdelta}{4 a^2}}} \arctan\f{x + \f{b}{2 a}}{\sqrt{\f{\mdelta}{4 a^2}}} \c
+		= &\ \frac{m}{2 a} \ln{|\denA|} + \frac{2 n a - m b}{2 a^2} \frac{1}{\sqrt{\frac{\mdelta}{4 a^2}}} \arctan\frac{x + \frac{b}{2 a}}{\sqrt{\frac{\mdelta}{4 a^2}}} + C
 		\\
-		= &\ \f{m}{2 a} \ln{|a x^2 + b x + c|} + \f{2 n a - m b}{a\sqrt{\mdelta}} \arctan\f{2 a x + b}{\sqrt{\mdelta}} \c
+		= &\ \frac{m}{2 a} \ln{|a x^2 + b x + c|} + \frac{2 n a - m b}{a\sqrt{\mdelta}} \arctan\frac{2 a x + b}{\sqrt{\mdelta}} + C
 	\end{align*}
 \end{document}

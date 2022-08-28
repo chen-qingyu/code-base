@@ -20,10 +20,6 @@
 	
 	% dx or d[#1]
 	\renewcommand{\d}[1][x]{\ \text{d}#1}
-	% plus constant
-	\renewcommand{\c}{+ C}
-	% for shorten \frac
-	\newcommand{\f}{\frac}
 	
 	\begin{align*}
 		&\ \int \sqrt{1 + x^2} \d
@@ -42,11 +38,11 @@
 		\\
 		= &\ \sec{t} \tan{t} - \int \sec^3{t} \d[t] + \int \sec{t} \d[t]
 		\\
-		= &\ \sec{t} \tan{t} - I + \ln{|\sec{t} + \tan{t}|} \c
+		= &\ \sec{t} \tan{t} - I + \ln{|\sec{t} + \tan{t}|} + C
 		\\
 		\\
-		\Rightarrow I = &\ \f{1}{2} (\sec{t} \tan{t} + \ln{|\sec{t} + \tan{t}|}) \c
+		\Rightarrow I = &\ \frac{1}{2} (\sec{t} \tan{t} + \ln{|\sec{t} + \tan{t}|}) + C
 		\\
-		= &\ \f{1}{2} (x \sqrt{1 + x^2} + \ln{(x + \sqrt{1 + x^2})}) \c 
+		= &\ \frac{1}{2} (x \sqrt{1 + x^2} + \ln{(x + \sqrt{1 + x^2})}) + C 
 	\end{align*}
 \end{document}

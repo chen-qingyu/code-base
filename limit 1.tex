@@ -1,0 +1,36 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	\begin{align*}
+		&\ \lim_{x \to \infty} (\frac{a x + b}{a x + c})^{h x + k} \ \ (a \neq 0)
+		\\
+		= &\ \lim_{x \to \infty} e^{(h x + k) \ln{(\frac{a x + b}{a x + c})}}
+		\\
+		= &\ \lim_{x \to \infty} e^{(h x + k) \ln{(\frac{a x + b + c - c}{a x + c})}}
+		\\
+		= &\ \lim_{x \to \infty} e^{(h x + k) \ln{(1 + \frac{b - c}{a x + c})}}
+		\\
+		= &\ \lim_{x \to \infty} e^{(h x + k) \frac{b - c}{a x + c}}
+		\\
+		= &\ \lim_{x \to \infty} e^{\frac{(b - c) h x + (b - c) k}{a x + c}}
+		\\
+		= &\ e^{\frac{(b - c) h}{a}}
+	\end{align*}
+\end{document}
