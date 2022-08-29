@@ -1,0 +1,64 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+% Insert images
+\usepackage{graphicx}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	Question:
+	\begin{align*}
+		\int_{0}^{+\infty} e^{-x^2} \d
+	\end{align*}
+	
+	Answer:
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.2\linewidth]{img}
+		\caption{$D_1$: small circle. $D_2$: big circle. $S$: Square.}
+		\label{fig:img}
+	\end{figure}
+	\begin{align*}
+		& let
+		\\
+		& \quad f(x, y) = e^{- x^2 - y^2}
+		\\
+		& because
+		\\
+		& \quad R_2 = \sqrt{2} R_1
+		\\
+		& therefore
+		\\
+		& \quad \iint_{D_1} f(x, y) \d[x] \d[y] & & \le \iint_{S} f(x, y) \d[x] \d[y] && \le \iint_{D_2} f(x, y) \d[x] \d[y]
+		\\
+		& \quad \iint_{D_1} e^{- x^2 - y^2} \d[x] \d[y] & & \le \int_{0}^{R_1} e^{-x^2} \d[x] \cdot \int_{0}^{R_1} e^{-y^2} \d[y] && \le \iint_{D_2} e^{- x^2 - y^2} \d[x] \d[y]
+		\\
+		& \quad \frac{\pi}{4} (1 - e^{-R_1^2}) & & \le \left( \int_{0}^{R_1} e^{-x^2} \d[x] \right)^2 && \le \frac{\pi}{4} (1 - e^{-2 R_1^2})
+		\\
+		& \quad \lim_{R_1 \to +\infty} \frac{\pi}{4} (1 - e^{-R_1^2}) & & \le \lim_{R_1 \to +\infty} \left( \int_{0}^{R_1} e^{-x^2} \d[x] \right)^2 && \le \lim_{R_1 \to +\infty} \frac{\pi}{4} (1 - e^{-2 R_1^2})
+		\\
+		& \quad \frac{\pi}{4} & & \le \left( \int_{0}^{+\infty} e^{-x^2} \d[x] \right)^2 && \le \frac{\pi}{4}
+		\\
+		& therefore
+		\\
+		& \quad \int_{0}^{+\infty} e^{-x^2} \d[x] = \frac{\sqrt{\pi}}{2}
+	\end{align*}
+\end{document}
