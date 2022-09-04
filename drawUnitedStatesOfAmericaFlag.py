@@ -10,8 +10,8 @@ CreateDate: 2022.05.18
 import turtle
 import math
 
-# 此变量唯一决定旗面相对大小
-UNIT = 25  # 标准国旗尺寸纵向30/横向20等分方格边长
+# 此变量唯一决定旗面大小
+UNIT = 25
 
 WIDTH = UNIT * 38  # 旗面宽度
 HEIGHT = UNIT * 20  # 旗面高度

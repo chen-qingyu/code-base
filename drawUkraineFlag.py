@@ -9,7 +9,7 @@ CreateDate: 2022.05.18
 
 import turtle
 
-# 此变量唯一决定旗面相对大小
+# 此变量唯一决定旗面大小
 UNIT = 25
 
 WIDTH = UNIT * 30  # 旗面宽度
