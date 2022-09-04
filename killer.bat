@@ -4,6 +4,6 @@ del *.aux
 del *.log
 del *.gz
 del *.toc
-del *.png
+del *.out
 
 exit

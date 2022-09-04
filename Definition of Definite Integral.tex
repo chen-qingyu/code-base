@@ -1,0 +1,100 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% load the tikz package
+\usepackage{tikz}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	\begin{tikzpicture} % TODO
+		\draw[->] (-1,0) -- (10,0) node[right] {$x$};
+		\draw[->] (0,-1) -- (0,10) node[above] {$y$};
+		\filldraw (0,0) circle (2pt);
+		
+		\coordinate (begin) at (1,5);
+		\coordinate (a) at (1,0);
+		\coordinate (end) at (9,8);
+		\coordinate (b) at (9,0);
+		
+		\draw (begin) .. controls (4,10) and (7,2) .. (end) node[right] {$f(x)$};
+		\filldraw (1,0) circle (2pt) node[below] {$a=x_0$};
+		\filldraw (9,0) circle (2pt) node[below] {$b=x_n$};
+		\draw[dotted] (begin) -- (a);
+		\draw[dotted] (end) -- (b);
+	\end{tikzpicture}
+	
+	For each small rectangle, the Width is:
+	\begin{align*}
+		W_i = \frac{b-a}{n} && \text{(Divided evenly into n parts)}
+	\end{align*}
+	
+	And the Height is:
+	\begin{align*}
+		& \text{1. Take the right endpoint } x_i \quad (i = 1, 2, 3, \cdots, n)
+		\\
+		& \quad H_i = f(x_i) = f(a + i \cdot W) = f(a + i \cdot \frac{b-a}{n})
+		\\
+		& \text{2. Take the left endpoint } x_{i-1} \quad (i = 1, 2, 3, \cdots, n)
+		\\
+		& \quad H_i = f(x_{i-1}) = f(a + (i - 1) \cdot W) = f(a + (i - 1) \cdot \frac{b-a}{n})
+		\\
+		& \text{3. Take the middle point } c_i \quad (i = 1, 2, 3, \cdots, n)
+		\\
+		& \quad c_i = \frac{x_{i-1} + x_i}{2} = \frac{a + (i - 1) \cdot \frac{b-a}{n} + a + i \cdot \frac{b-a}{n}}{2} = a + \frac{2i - 1}{2} \cdot \frac{b-a}{n}
+		\\
+		& \quad H_i = f(c_i) = f(a + \frac{2i - 1}{2} \cdot \frac{b-a}{n})
+	\end{align*}
+	
+	So, the Area of the small rectangle is:
+	\begin{align*}
+		A_i & = W_i \cdot H_i \quad (i = 1, 2, 3, \cdots, n)
+		\\
+		& = \left\{\begin{aligned}
+			& \frac{b-a}{n} \cdot f(a + i \cdot \frac{b-a}{n}) && \text{Take the right endpoint } x_i
+			\\
+			& \frac{b-a}{n} \cdot f(a + (i - 1) \cdot \frac{b-a}{n}) && \text{Take the left endpoint } x_{i-1}
+			\\
+			& \frac{b-a}{n} \cdot f(a + \frac{2i - 1}{2} \cdot \frac{b-a}{n}) && \text{Take the middle point } c_i
+		\end{aligned}\right.
+		\\
+	\end{align*}
+	
+	So, the Definite Integral is:
+	\begin{align*}
+		\int_{a}^{b} f(x) \d[x] & = \lim_{n \to \infty} \sum_{i=1}^{n} A_i
+		\\
+		& = \left\{\begin{aligned}
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a + i \cdot \frac{b-a}{n}) && \text{Take the right endpoint } x_i
+			\\
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a + \frac{(i - 1)(b - a)}{n}) && \text{Take the left endpoint } x_{i-1}
+			\\
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a + \frac{(2i - 1)(b - a)}{2n}) && \text{Take the middle point } c_i
+		\end{aligned}\right.
+		\\
+	\end{align*}
+	
+	Specifically, when a = 0 and b = 1:
+	\begin{align*}
+		\int_{0}^{1} f(x) \d[x] & = \lim_{n \to \infty} \sum_{i=1}^{n} A_i
+		\\
+		& = \left\{\begin{aligned}
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{1}{n} \cdot f(\frac{i}{n}) && \text{Take the right endpoint } x_i
+			\\
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{1}{n} \cdot f(\frac{i - 1}{n}) && \text{Take the left endpoint } x_{i-1}
+			\\
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{1}{n} \cdot f(\frac{2i - 1}{2n}) && \text{Take the middle point } c_i
+		\end{aligned}\right.
+	\end{align*}
+\end{document}
