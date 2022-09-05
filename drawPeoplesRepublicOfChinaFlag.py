@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
 FileName: drawPeoplesRepublicOfChinaFlag.py
-Brief: 依据中华人民共和国国家标准GB 12982-2004《国旗》绘制五星红旗
+Brief: 依据中华人民共和国国家标准GB 12982-2004《国旗》绘制五星红旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.05.17
@@ -63,7 +63,7 @@ colors = {"Maximum Red": "#DE2910", "Golden Yellow": "#FFDE00"}
 # Initial
 turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
 turtle.radians()  # Set the angle measurement units to radians
-turtle.speed("fast")
+turtle.speed("fastest")
 turtle.title("五星红旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
 turtle.bgcolor("#F0F0F0")
@@ -72,23 +72,19 @@ turtle.penup()
 # Draw
 turtle.fillcolor(colors["Maximum Red"])
 turtle.goto(-WIDTH / 2, HEIGHT / 2)
-turtle.setheading(0)
 turtle.begin_fill()
-for i in range(2):
-    turtle.forward(WIDTH)
-    turtle.right(math.pi / 2)
-    turtle.forward(HEIGHT)
-    turtle.right(math.pi / 2)
+for i in range(4):
+    turtle.setheading(i * -math.pi / 2)
+    turtle.forward(WIDTH if i % 2 == 0 else HEIGHT)
 turtle.end_fill()
 
 turtle.fillcolor(colors["Golden Yellow"])
 for i in range(len(C)):
     turtle.goto(S[i].x, S[i].y)
-    turtle.setheading(A[i])
     turtle.begin_fill()
     for j in range(5):
+        turtle.setheading(A[i] + j * -math.radians(144))
         turtle.forward(L[i])
-        turtle.right(math.radians(144))
     turtle.end_fill()
 
 turtle.hideturtle()

@@ -20,26 +20,23 @@ colors = {"White": "#FFFFFF", "Dark Powder Blue": "#0033A0", "Maximum Red": "#DA
 
 # Initial
 turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
-turtle.speed("fast")
+turtle.speed("fastest")
 turtle.title("俄罗斯国旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
 turtle.bgcolor("#F0F0F0")
 turtle.penup()
 
 # Draw
-i = 0
+index = 0
 for color in colors.keys():
-    turtle.goto(-WIDTH / 2, HEIGHT / 2 - (HEIGHT / len(colors)) * i)
-    turtle.setheading(0)
     turtle.fillcolor(colors[color])
+    turtle.goto(-WIDTH / 2, HEIGHT / 2 - (HEIGHT / len(colors)) * index)
     turtle.begin_fill()
-    for j in range(2):
-        turtle.forward(WIDTH)
-        turtle.right(90)
-        turtle.forward(HEIGHT / len(colors))
-        turtle.right(90)
+    for j in range(4):
+        turtle.setheading(j * -90)
+        turtle.forward(WIDTH if j % 2 == 0 else HEIGHT / len(colors))
     turtle.end_fill()
-    i += 1
+    index += 1
 
 turtle.hideturtle()
 turtle.mainloop()

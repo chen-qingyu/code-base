@@ -23,7 +23,7 @@ colors = {"White": "#FFFFFF", "Crimson Glory": "#BC002D"}
 
 # Initial
 turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
-turtle.speed("fast")
+turtle.speed("fastest")
 turtle.title("日本国旗")
 turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
 turtle.bgcolor("#F0F0F0")
@@ -32,13 +32,10 @@ turtle.penup()
 # Draw
 turtle.fillcolor(colors["White"])
 turtle.goto(-WIDTH / 2, HEIGHT / 2)
-turtle.setheading(0)
 turtle.begin_fill()
-for i in range(2):
-    turtle.forward(WIDTH)
-    turtle.right(90)
-    turtle.forward(HEIGHT)
-    turtle.right(90)
+for i in range(4):
+    turtle.setheading(i * -90)
+    turtle.forward(WIDTH if i % 2 == 0 else HEIGHT)
 turtle.end_fill()
 
 turtle.fillcolor(colors["Crimson Glory"])

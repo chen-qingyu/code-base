@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
-FileName: draw_rotated_triangle.py
-Brief: 绘制一个超好看的图形——三角旋塔（初中时无聊在纸上画的，如今用计算机加持一下）
+FileName: draw_mirrored_hexagon.py
+Brief: 绘制一个超好看的图形——六芒境域（初中时无聊在纸上画的，如今用计算机加持一下）
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.09.05
@@ -15,12 +15,12 @@ import random
 L = 700
 
 # 此变量决定密度
-density = 100
+density = 10
 
 # Initial
-turtle.title("Rotated Triangle")
+turtle.title("Mirrored Hexagon")
 turtle.setup(L * 1.1, L * 1.1)
-turtle.tracer(100)  # Accelerate the drawing
+turtle.tracer(10)  # Accelerate the drawing
 turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
 turtle.colormode(255)
 turtle.radians()  # Set the angle measurement units to radians
@@ -39,21 +39,37 @@ def draw(r: list[float], g: list[float], b: list[float]):
 
     size = L
 
-    turtle.goto(0, size / 2)
-    turtle.setheading(-math.pi / 3)
-    for i in range(255):
-        delta = size / density
-        beta = math.atan(((size - delta) * math.cos(math.pi / 3) - delta) / ((size - delta) * math.sin(math.pi / 3)))
-        alpha = math.pi / 6 - beta
-        turtle.fillcolor(r[i], g[i], b[i])
+    for loop in range(density):
+        radius = size / 2
+
+        # 画圆
+        turtle.goto(0, radius)
+        turtle.setheading(math.pi)
+        turtle.fillcolor(r[loop * 256 // density], r[loop * 256 // density], r[loop * 256 // density])
         turtle.begin_fill()
-        for _ in range(3):
-            turtle.forward(size)
-            turtle.right(2 * math.pi / 3)
+        turtle.circle(radius)
         turtle.end_fill()
-        turtle.forward(delta)
-        turtle.right(alpha)
-        size = ((size - delta) * math.sin(math.pi / 3)) / math.cos(beta)
+
+        # 画六边形
+        turtle.goto(0, radius)
+        turtle.fillcolor(g[loop * 256 // density], g[loop * 256 // density], g[loop * 256 // density])
+        turtle.begin_fill()
+        for i in range(6):
+            turtle.setheading((-math.pi / 6) + i * (-math.pi / 3))
+            turtle.forward(radius)
+        turtle.end_fill()
+
+        # 画六芒星
+        for i in [1, -1]:
+            turtle.goto(0, i * radius)
+            turtle.fillcolor(b[loop * 256 // density], b[loop * 256 // density], b[loop * 256 // density])
+            turtle.begin_fill()
+            for j in range(3):
+                turtle.setheading(-i * (math.pi / 3 + j * (2 * math.pi / 3)))
+                turtle.forward(math.sqrt(3) * radius)
+            turtle.end_fill()
+
+        size /= 2
 
     done = True
     turtle.update()
@@ -87,8 +103,8 @@ def onclick_right(_, __) -> None:
 if __name__ == '__main__':
     init()
     draw(list(range(256)), list(range(256)), list(range(256)))
-    turtle.goto(0, -L / 2)
-    turtle.write("左键换图形颜色，右键换背景颜色，请欣赏吧~  By 青羽", align="center", font=('楷体', 16, 'normal'))
+    turtle.goto(-L / 2, L / 2)
+    turtle.write("万花筒，请欣赏~  By 青羽", align="left", font=('楷体', 16, 'normal'))
 
     turtle.onscreenclick(onclick_left)
     turtle.onscreenclick(onclick_right, btn=3)
