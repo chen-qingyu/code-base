@@ -9,6 +9,8 @@ CreateDate: 2022.05.18
 
 import turtle
 
+import mytools
+
 # 此变量唯一决定旗面大小
 UNIT = 25
 
@@ -19,24 +21,13 @@ HEIGHT = UNIT * 20  # 旗面高度
 colors = {"White": "#FFFFFF", "Dark Powder Blue": "#0033A0", "Maximum Red": "#DA291C"}
 
 # Initial
-turtle.mode("standard")  # Initial turtle heading: to the right (east), positive angles: counterclockwise
-turtle.speed("fastest")
-turtle.title("俄罗斯国旗")
-turtle.setup(WIDTH * 1.1, HEIGHT * 1.1)
-turtle.bgcolor("#F0F0F0")
-turtle.penup()
+mytools.init_environment("俄罗斯国旗", WIDTH * 1.1, HEIGHT * 1.1)
 
 # Draw
 index = 0
 for color in colors.keys():
-    turtle.fillcolor(colors[color])
-    turtle.goto(-WIDTH / 2, HEIGHT / 2 - (HEIGHT / len(colors)) * index)
-    turtle.begin_fill()
-    for j in range(4):
-        turtle.setheading(j * -90)
-        turtle.forward(WIDTH if j % 2 == 0 else HEIGHT / len(colors))
-    turtle.end_fill()
+    mytools.draw_rect(-WIDTH / 2, HEIGHT * (1 / 2 - index / len(colors)), WIDTH, HEIGHT / len(colors), colors[color])
     index += 1
 
-turtle.hideturtle()
+# Done
 turtle.mainloop()

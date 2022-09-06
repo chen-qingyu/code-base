@@ -44,9 +44,9 @@ colors = {  # https://www.schemecolor.com/shades-of-sky-blue.php
 }
 
 # sky
-r = list(map(int, linear(colors["Blueberry"][0], colors["Non-Photo Blue"][0], HEIGHT)))
-g = list(map(int, linear(colors["Blueberry"][1], colors["Non-Photo Blue"][1], HEIGHT)))
-b = list(map(int, linear(colors["Blueberry"][2], colors["Non-Photo Blue"][2], HEIGHT)))
+r = list(map(int, linear(colors["Blueberry"][0], colors["Non-Photo Blue"][0], HEIGHT - grass_height)))
+g = list(map(int, linear(colors["Blueberry"][1], colors["Non-Photo Blue"][1], HEIGHT - grass_height)))
+b = list(map(int, linear(colors["Blueberry"][2], colors["Non-Photo Blue"][2], HEIGHT - grass_height)))
 
 for i in range(HEIGHT - grass_height):
     turtle.goto(-WIDTH / 2, HEIGHT / 2 - i)
