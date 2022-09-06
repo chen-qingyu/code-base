@@ -23,6 +23,7 @@ def num_map(x, x_min, x_max, y_min, y_max):
     return y_min + round(slope * (x - x_min))
 
 
+# range函数拓展版，支持range函数所有功能加上浮点数
 def my_range(start: float, stop: float, step: float = 1) -> list[float, ...]:
     ls = []
     while (start < stop) if step > 0 else (start > stop):
