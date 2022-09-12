@@ -28,7 +28,9 @@ libs = [
 
     "jupyter",
 
-    "autopep8"
+    "autopep8",
+
+    "easyocr"
 ]
 
 if __name__ == '__main__':

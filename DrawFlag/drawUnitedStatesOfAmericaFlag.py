@@ -30,8 +30,7 @@ B_T = B_H / 10  # 横向 (Transverse) 等分线
 R = 0.0616 * HEIGHT / 2
 
 # 横纵等分线交点 (Intersection) ，非常优雅的写法
-B_I = [[(-WIDTH / 2 + x, HEIGHT / 2 - y) for x in mytools.my_range(B_V, B_W, B_V)] for y in
-       mytools.my_range(B_T, B_H, B_T)]
+B_I = [[(-WIDTH / 2 + x, HEIGHT / 2 - y) for x in mytools.my_range(B_V, B_W, B_V)] for y in mytools.my_range(B_T, B_H, B_T)]
 B_I = sum(B_I, [])  # 嵌套list展开铺平
 
 # 颜色 https://www.schemecolor.com/united-states-of-america-flag-colors.php

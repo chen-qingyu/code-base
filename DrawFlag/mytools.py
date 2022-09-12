@@ -95,7 +95,7 @@ def draw_star(x: float, y: float, radius: float, fillcolor: str, angle: float = 
 def draw_circle(x: float, y: float, radius: float, fillcolor: str, extent: tuple[float, float] = (0, 2 * math.pi),
                 steps: int = None) -> None:
     """
-    画圆。
+    画圆形或圆弧。
 
     :param x: 圆心x坐标
     :param y: 圆心y坐标
