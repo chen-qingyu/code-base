@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
 FileName: drawJapanFlag.py
-Brief: 绘制日本国旗。
+Brief: 依据 https://en.wikipedia.org/wiki/Flag_of_Japan 绘制日本国旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.05.18

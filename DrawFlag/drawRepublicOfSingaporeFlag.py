@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
 FileName: drawRepublicOfSingaporeFlag.py
-Brief: 依据 https://en.wikipedia.org/wiki/File:Construction_Sheet_of_the_Flag_of_Singapore.svg 绘制新加坡国旗。
+Brief: 依据 https://en.wikipedia.org/wiki/Flag_of_Singapore 绘制新加坡国旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.09.06

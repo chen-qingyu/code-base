@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
 FileName: drawRussiaFlag.py
-Brief: 绘制俄罗斯国旗。
+Brief: 依据 https://en.wikipedia.org/wiki/Flag_of_Russia 绘制俄罗斯国旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.05.18

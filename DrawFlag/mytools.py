@@ -111,3 +111,18 @@ def draw_circle(x: float, y: float, radius: float, fillcolor: str, extent: tuple
     turtle.begin_fill()
     turtle.circle(radius, extent[1] - extent[0], steps)
     turtle.end_fill()
+
+
+def draw_polygon(points: list[tuple[float, float], ...], fillcolor: str) -> None:
+    """
+    画多边形。
+
+    :param points: 多边形顶点
+    :param fillcolor: 填充颜色
+    """
+    turtle.goto(points[0][0], points[0][1])
+    turtle.fillcolor(fillcolor)
+    turtle.begin_fill()
+    for i in range(len(points)):
+        turtle.goto(points[i][0], points[i][1])
+    turtle.end_fill()
