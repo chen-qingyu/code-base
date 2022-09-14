@@ -8,6 +8,8 @@
 
 % load the tikz package
 \usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
 
 \begin{document}
 	% set the font size to large
@@ -18,21 +20,26 @@
 	% dx or d[#1]
 	\renewcommand{\d}[1][x]{\ \text{d}#1}
 	
-	\begin{tikzpicture} % TODO
+	\begin{tikzpicture}[>=Stealth, scale=1.2]
+		% coordinate system
 		\draw[->] (-1,0) -- (10,0) node[right] {$x$};
 		\draw[->] (0,-1) -- (0,10) node[above] {$y$};
-		\filldraw (0,0) circle (2pt);
+		\fill (0,0) circle (2pt) node[below left] {$O$};
 		
-		\coordinate (begin) at (1,5);
-		\coordinate (a) at (1,0);
-		\coordinate (end) at (9,8);
-		\coordinate (b) at (9,0);
+		% f(x)
+		\draw[name path=f] (0.9,5) .. controls (4,10) and (7,2) .. (9.1,8) node[right] {$f(x)$};
 		
-		\draw (begin) .. controls (4,10) and (7,2) .. (end) node[right] {$f(x)$};
-		\filldraw (1,0) circle (2pt) node[below] {$a=x_0$};
-		\filldraw (9,0) circle (2pt) node[below] {$b=x_n$};
-		\draw[dotted] (begin) -- (a);
-		\draw[dotted] (end) -- (b);
+		% split lines
+		\foreach \x/\xtext in {1/a=x_0,2/x_1,3/x_2,5/x_{i-1},6/x_i,8/x_{n-1},9/b=x_n}
+		{
+			\path[name path=x] (\x,0) -- (\x,10);
+			\draw[name intersections={of=f and x, by=p}, dashed] (\x,0) -- (p);
+			\fill (\x,0) circle (2pt) node[below] {$\xtext$};
+		}
+		\draw (4,3) node {. . .} (7,3) node {. . .};
+		
+		% text
+		\node at (5,-2) {Figure 1};
 	\end{tikzpicture}
 	
 	For each small rectangle, the Width is:
@@ -76,7 +83,7 @@
 		\int_{a}^{b} f(x) \d[x] & = \lim_{n \to \infty} \sum_{i=1}^{n} A_i
 		\\
 		& = \left\{\begin{aligned}
-			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a + i \cdot \frac{b-a}{n}) && \text{Take the right endpoint } x_i
+			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a +  \frac{i(b-a)}{n}) && \text{Take the right endpoint } x_i
 			\\
 			& \lim_{n \to \infty} \sum_{i=1}^{n} \frac{b-a}{n} \cdot f(a + \frac{(i - 1)(b - a)}{n}) && \text{Take the left endpoint } x_{i-1}
 			\\
