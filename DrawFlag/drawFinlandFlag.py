@@ -12,7 +12,7 @@ import turtle
 import mytools
 
 # 此变量唯一决定旗面大小
-UNIT = 50
+UNIT = 40
 
 WIDTH = 18 * UNIT  # 旗面宽度
 HEIGHT = 11 * UNIT  # 旗面高度

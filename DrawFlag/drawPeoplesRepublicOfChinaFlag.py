@@ -1,7 +1,7 @@
 """
 Copyright (c) 2022.
 FileName: drawPeoplesRepublicOfChinaFlag.py
-Brief: 依据中华人民共和国国家标准GB 12982-2004《国旗》绘制五星红旗。
+Brief: 依据中华人民共和国国家标准GB 12982-2004《国旗》和 https://en.wikipedia.org/wiki/Flag_of_China 绘制五星红旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
 CreateDate: 2022.05.17

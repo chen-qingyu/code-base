@@ -37,8 +37,6 @@ def init_environment(title: str, width: float, height: float) -> None:
     """
     # Initialize turtle heading: to the right (east), positive angles: counterclockwise
     turtle.mode("standard")
-    # Accelerate the drawing
-    turtle.tracer(2)
     # Initialize window title
     turtle.title(title)
     # Initialize window size
@@ -51,6 +49,8 @@ def init_environment(title: str, width: float, height: float) -> None:
     turtle.penup()
     # Hide the turtle
     turtle.hideturtle()
+    # Accelerate the drawing
+    turtle.tracer(2)
 
 
 def draw_rect(x: float, y: float, width: float, height: float, fillcolor: str, angle: float = 0) -> None:
