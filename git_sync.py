@@ -57,13 +57,6 @@ def delEmptyDirs(root):
                 print(os.path.join(root, d) + " deleted.")
 
 
-def gitSync(path, cmd):
-    os.chdir(path)
-    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + "Start syncing \"" + path + "\".")
-    os.system(cmd)
-    print()
-
-
 def main():
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting unnecessary files.")
     for path in killersPaths:
@@ -76,8 +69,11 @@ def main():
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for path in gitPaths:
-        gitSync(path, syncCmd)
+    for i in range(len(gitPaths)):
+        os.chdir(gitPaths[i])
+        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(gitPaths)}) Start syncing \"{gitPaths[i]}\".")
+        os.system(syncCmd)
+        print()
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Synchronize completed, {} repositories are synchronized.".format(len(gitPaths)))
 
     input()

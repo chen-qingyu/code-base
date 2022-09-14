@@ -39,12 +39,12 @@ libs = [
 ]
 
 if __name__ == '__main__':
-    for lib in libs:
-        print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Now install/upgrade " + lib)
-        os.system("python -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + lib)
+    for i in range(len(libs)):
+        print(colorama.Fore.BLUE + colorama.Style.BRIGHT + f"({i + 1}/{len(libs)}) Now install/upgrade {libs[i]}")
+        os.system("python -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + libs[i])
         print()
 
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT
-          + "A total of {} libraries have been installed/upgraded: ".format(len(libs))
-          + str(libs).replace("'",""))
+          + f"A total of {len(libs)} libraries have been installed/upgraded: "
+          + str(libs).replace("'", ""))
     input()
