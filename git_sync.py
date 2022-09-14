@@ -12,7 +12,7 @@ import colorama
 
 colorama.init(autoreset=True)
 
-gitPaths = ["F:/C/C Primer Plus",
+GitPaths = ["F:/C/C Primer Plus",
             "F:/C/C Programs",
             "F:/Java",
             "F:/OSTEP",
@@ -27,16 +27,16 @@ gitPaths = ["F:/C/C Primer Plus",
             "F:/TeX"]
 
 # "killer.bat"
-killersPaths = ["F:/C",
+KillersPaths = ["F:/C",
                 "F:/Projects/BadApple",
                 "F:/STM32/CODE",
                 "F:/Projects/Data Structure and Algorithm/C",
                 "F:/TeX"]
 
-clearEmptyDirsPaths = ["F:/Projects/BadApple",
+ClearEmptyDirsPaths = ["F:/Projects/BadApple",
                        "F:/STM32/CODE"]
 
-syncCmd = "git add . && git commit -m \"update\" && git push && git status"
+SyncCmd = "git add . && git commit -m \"update\" && git push && git status"
 
 
 def delUnnecessaryFiles(path):
@@ -57,24 +57,28 @@ def delEmptyDirs(root):
                 print(os.path.join(root, d) + " deleted.")
 
 
+def gitSync(index, cmd):
+    os.chdir(GitPaths[index])
+    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(GitPaths)}) Start syncing {GitPaths[index]}:")
+    os.system(cmd)
+    print()
+
+
 def main():
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting unnecessary files.")
-    for path in killersPaths:
+    for path in KillersPaths:
         delUnnecessaryFiles(path)
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The unnecessary files are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting empty folders.")
-    for path in clearEmptyDirsPaths:
+    for path in ClearEmptyDirsPaths:
         delEmptyDirs(path)
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for i in range(len(gitPaths)):
-        os.chdir(gitPaths[i])
-        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(gitPaths)}) Start syncing {gitPaths[i]}:")
-        os.system(syncCmd)
-        print()
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Synchronize completed, {} repositories are synchronized.".format(len(gitPaths)))
+    for i in range(len(GitPaths)):
+        gitSync(i, SyncCmd)
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(GitPaths)} repositories are synchronized.")
 
     input()
 
