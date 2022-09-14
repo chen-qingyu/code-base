@@ -30,7 +30,9 @@ libs = [
 
     "autopep8",
 
-    "easyocr"
+    "easyocr",
+
+    "colorama"
 ]
 
 if __name__ == '__main__':
