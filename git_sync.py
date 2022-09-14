@@ -59,9 +59,8 @@ def delEmptyDirs(root):
 
 def gitSync(path, cmd):
     os.chdir(path)
-    print("[Start syncing \"" + path + "\"]")
+    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "[Start syncing \"" + path + "\"]")
     os.system(cmd)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "[Sync completed]\n")
 
 
 def main():

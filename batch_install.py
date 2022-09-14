@@ -43,7 +43,7 @@ if __name__ == '__main__':
         print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Now install/upgrade " + lib)
         os.system("python -m pip install --upgrade \
         -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + lib)
-        print("=" * 40)
+        print()
 
     print("共安装/升级{}个库:".format(len(libs)), libs)
     input("按任意键关闭窗口")
