@@ -58,7 +58,7 @@ def gitSync(path, cmd):
     os.chdir(path)
     print("[Start syncing \"" + path + "\"]")
     os.system(cmd)
-    print("\033[5;32m[Sync completed]\n\033[0m")
+    print("\033[532m[Sync completed]\n\033[0m")
 
 
 def main():
