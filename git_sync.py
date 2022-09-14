@@ -58,7 +58,7 @@ def gitSync(path, cmd):
     os.chdir(path)
     print("[Start syncing \"" + path + "\"]")
     os.system(cmd)
-    print("[Sync completed]\n")
+    print("\033[32m[Sync completed]\n\033[0m")
 
 
 def main():
@@ -77,7 +77,7 @@ def main():
     print(pattern, "Start synchronize", pattern)
     for path in gitPaths:
         gitSync(path, syncCmd)
-    print(pattern, "\033[32mSynchronize completed, {} repositories are synchronized\033[0m".format(len(gitPaths)), pattern)
+    print(pattern, "Synchronize completed, {} repositories are synchronized".format(len(gitPaths)), pattern)
 
     input()
 
