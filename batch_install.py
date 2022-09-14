@@ -1,4 +1,7 @@
 import os
+import colorama
+
+colorama.init(autoreset=True)
 
 libs = [
     "pip",
@@ -37,7 +40,7 @@ libs = [
 
 if __name__ == '__main__':
     for lib in libs:
-        print("Now install/upgrade " + lib)
+        print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Now install/upgrade " + lib)
         os.system("python -m pip install --upgrade \
         -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + lib)
         print("=" * 40)
