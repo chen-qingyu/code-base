@@ -71,7 +71,7 @@ def main():
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
     for i in range(len(gitPaths)):
         os.chdir(gitPaths[i])
-        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(gitPaths)}) Start syncing \"{gitPaths[i]}\".")
+        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(gitPaths)}) Start syncing {gitPaths[i]}.")
         os.system(syncCmd)
         print()
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Synchronize completed, {} repositories are synchronized.".format(len(gitPaths)))
