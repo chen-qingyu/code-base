@@ -45,5 +45,5 @@ if __name__ == '__main__':
         -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + lib)
         print()
 
-    print("共安装/升级{}个库:".format(len(libs)), libs)
-    input("按任意键关闭窗口")
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "A total of {} libraries have been installed/upgraded:".format(len(libs)), libs)
+    input()
