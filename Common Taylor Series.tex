@@ -9,11 +9,6 @@
 % Set page margins
 \geometry{a4paper, scale=0.8}
 
-% Set title
-\title{Advanced Mathematics Notes}
-\author{Qingyu Chen}
-\date{\today}
-
 \begin{document}
 	% set the font size to large
 	\large
@@ -23,23 +18,14 @@
 	% dx or d[#1]
 	\renewcommand{\d}[1][x]{\ \text{d}#1}
 	
-	% make title
-	\maketitle
-	
-	% make table of contents
-	\tableofcontents
-	
-	% new page
-	\newpage
-	
-	\section{Common Taylor Series}
+	\section*{Common Taylor Series}
 	
 	\begin{align}
 		& e^x & & = 1 + x + \frac{1}{2} x^2 + o(x^2) && = \sum_{n = 0}^{\infty} \frac{1}{n!} x^n
 		\\
 		& \sin x & & = x - \frac{1}{6} x^3 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n + 1)!} x^{2n + 1}
 		\\
-		\stackrel{Derivation}{\Longrightarrow} \ & \cos x & & = 1 - \frac{1}{2} x^2 + \frac{1}{24} x^4 + o(x^4) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}
+		\stackrel{Derivation}{\Longrightarrow} \ & \cos x & & = 1 - \frac{1}{2} x^2 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}
 		\\
 		& \arcsin x & & = x + \frac{1}{6} x^3 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(2n)!}{4^n (n!)^2 (2n + 1)} x^{2n + 1}
 		\\
