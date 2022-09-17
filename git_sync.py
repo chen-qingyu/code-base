@@ -76,8 +76,8 @@ def main():
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for i in range(len(GitPaths)):
-        gitSync(i, SyncCmd)
+    for index in range(len(GitPaths)):
+        gitSync(index, SyncCmd)
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(GitPaths)} repositories are synchronized.")
 
     input()
