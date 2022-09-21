@@ -24,8 +24,7 @@ GitPaths = ["F:/C/C Primer Plus",
             "F:/Python/Python Programs",
             "F:/Racket/HtDP",
             "F:/STM32/CODE",
-            "F:/TeX",
-            "G:/备份"]
+            "F:/TeX"]
 
 # "killer.bat"
 KillersPaths = ["F:/C",
