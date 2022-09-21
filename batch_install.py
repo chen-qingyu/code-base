@@ -35,7 +35,10 @@ libs = [
 
     "easyocr",
 
-    "colorama"
+    "colorama",
+
+    "pyside6",  # PySide6
+    "pyqt6"  # PyQt6
 ]
 
 if __name__ == '__main__':

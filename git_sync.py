@@ -24,7 +24,8 @@ GitPaths = ["F:/C/C Primer Plus",
             "F:/Python/Python Programs",
             "F:/Racket/HtDP",
             "F:/STM32/CODE",
-            "F:/TeX"]
+            "F:/TeX",
+            "G:/备份"]
 
 # "killer.bat"
 KillersPaths = ["F:/C",
@@ -36,7 +37,7 @@ KillersPaths = ["F:/C",
 ClearEmptyDirsPaths = ["F:/Projects/BadApple",
                        "F:/STM32/CODE"]
 
-SyncCmd = "git add . && git commit -m \"update\" && git push && git status"
+SyncCmd = "git add . && git commit -m \"batch update\" && git push && git status"
 
 
 def delUnnecessaryFiles(path):
