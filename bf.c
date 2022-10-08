@@ -1,140 +1,169 @@
 /************************************************************
  * File Name: bf.c
- * Author: Chobits
- * Date: 2021.04.25
+ * Author: Qing Yu
+ * Date: 2022.10.08
  * Description: Brainfuck interpreter implementation in C
+ *              reference to http://brainfuck.org/
  ***********************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 
-#define TAPE_SIZE 1024
+#define MEMORY_SIZE (65536 * 2)
+#define MAX_CODE_SIZE 65536
 
-void bf(FILE *fp);
+// Copy of the program readed into memory.
+char code[MAX_CODE_SIZE] = {0};
+int code_ptr = 0;
+int code_length = 0;
 
-int main(int argc, char const *argv[])
+// The memory used by the brainfuck program.
+short int memory[MEMORY_SIZE] = {0};
+int memory_ptr = 0;
+
+// To save matching '[' for each ']' and vice versa.
+int targets[MAX_CODE_SIZE] = {0};
+
+// Read the contents of the file.
+void read_file(char *file);
+
+// Preprocess and check whether the brackets match.
+void preprocess();
+
+// Execute the program.
+void interpret();
+
+int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        fprintf(stderr, "Error: parameter number mismatch.\n");
-        fprintf(stderr, "Usage:\n");
-        fprintf(stderr, "bf <src_file> # Interpret the brainfuck source code.\n");
-        return 1;
+        fprintf(stderr, "Usage: bf <filename>\n");
+        exit(EXIT_FAILURE);
     }
 
-    FILE *fp;
-    fopen_s(&fp, argv[1], "r");
-    if (fp == NULL)
-    {
-        fprintf(stderr, "Error: failed to open file \"%s\".\n", argv[1]);
-        return 2;
-    }
+    read_file(argv[1]);
 
-    bf(fp);
+    preprocess();
 
-    fclose(fp);
+    interpret();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
-void bf(FILE *fp)
+void read_file(char *file)
 {
-    int bracket_cnt;           // count brackets
-    int command;               // current command character
-    int data[TAPE_SIZE] = {0}; // memory data
-    int *data_ptr;             // memory data pointer
-
-    // Move data_ptr to middle of the data tape
-    data_ptr = &data[TAPE_SIZE / 2];
-
-    int c;
-    while ((command = getc(fp)) != EOF)
+    FILE *program;
+    if (fopen_s(&program, file, "r"))
     {
-        switch (command)
+        fprintf(stderr, "Can't open file: \"%s\".\n", file);
+        exit(EXIT_FAILURE);
+    }
+
+    code_length = fread(code, 1, MAX_CODE_SIZE, program);
+    fclose(program);
+}
+
+void preprocess()
+{
+    // To store locations of still-unmatched '['s.
+    int stack[MAX_CODE_SIZE];
+    int stack_ptr = 0;
+
+    for (code_ptr = 0; code_ptr < code_length; code_ptr++)
+    {
+        if (code[code_ptr] == '[') // put each '[' on the stack.
         {
-            /* Move data pointer to next address */
-            case '>':
-                ++data_ptr;
-                break;
+            stack[stack_ptr++] = code_ptr;
+        }
+        if (code[code_ptr] == ']') // if meet a ']',
+        {
+            if (stack_ptr == 0) // and there is no '[' left on the stack, it's an error.
+            {
+                fprintf(stderr, "Unmatched ']' at position %d.", code_ptr);
+                exit(EXIT_FAILURE);
+            }
+            else
+            {
+                targets[code_ptr] = stack[--stack_ptr]; // pop the matching '[', save it as the match for the current ']'
+                targets[stack[stack_ptr]] = code_ptr;   // and save the current ']' as the match for it.
+            }
+        }
+    }
+    if (stack_ptr > 0) // any unmatched '[' still left on the stack raise an error too.
+    {
+        fprintf(stderr, "Unmatched '[' at position %d.", stack[--stack_ptr]);
+        exit(EXIT_FAILURE);
+    }
+}
 
-            /* Move data pointer to previous address */
-            case '<':
-                --data_ptr;
-                break;
-
-            /* Increase value at current data cell by one */
+void interpret()
+{
+    int c;
+    for (code_ptr = 0; code_ptr < code_length; code_ptr++)
+    {
+        switch (code[code_ptr])
+        {
+            // Increase value at current data cell by one.
             case '+':
-                ++*data_ptr;
+                memory[memory_ptr]++;
                 break;
 
-            /* Decrease value at current data cell by one */
+            // Decrease value at current data cell by one.
             case '-':
-                --*data_ptr;
+                memory[memory_ptr]--;
                 break;
 
-            /* Output character at current data cell */
-            case '.':
-                putc(*data_ptr, stdout);
+            // Move data pointer to next address.
+            case '>':
+                memory_ptr++;
                 break;
 
-            /* Accept one character from user and advance to next one */
+            // Move data pointer to previous address.
+            case '<':
+                memory_ptr--;
+                break;
+
+            // Accept one character from user.
             case ',':
-                *data_ptr = getc(stdin);
+                if ((c = getchar()) != EOF)
+                {
+                    memory[memory_ptr] = (c == '\n' ? 10 : c);
+                }
                 break;
 
-            /* When the value at current data cell is 0,
-            advance to next matching ] */
+            // Output character at current data cell.
+            case '.':
+                putchar(memory[memory_ptr] == 10 ? '\n' : memory[memory_ptr]);
+                fflush(stdout);
+                break;
+
+            // Begin loop.
             case '[':
-                if (!*data_ptr)
+                if (!memory[memory_ptr])
                 {
-                    for (bracket_cnt = 1; bracket_cnt; fseek(fp, 1, SEEK_CUR))
-                    {
-                        c = getc(fp);
-                        fseek(fp, -1, SEEK_CUR);
-                        if (c == '[')
-                        {
-                            bracket_cnt++;
-                        }
-                        else if (c == ']')
-                        {
-                            bracket_cnt--;
-                        }
-                    }
+                    code_ptr = targets[code_ptr];
                 }
                 break;
 
-            /* Moves the command pointer back to matching
-            opening [ if the value of current data cell is not 0 */
+            // End loop.
             case ']':
-                if (*data_ptr)
+                if (memory[memory_ptr])
                 {
-                    // Move command pointer just before ]
-                    fseek(fp, -2, SEEK_CUR);
-                    for (bracket_cnt = 1; bracket_cnt; fseek(fp, -1, SEEK_CUR))
-                    {
-                        c = getc(fp);
-                        fseek(fp, -1, SEEK_CUR);
-                        if (c == ']')
-                        {
-                            bracket_cnt++;
-                        }
-                        else if (c == '[')
-                        {
-                            bracket_cnt--;
-                        }
-                    }
-                    // Advance pointer after loop to match with opening [
-                    fseek(fp, 1, SEEK_CUR);
+                    code_ptr = targets[code_ptr];
                 }
                 break;
 
-            /* Single-line comment */
+            // Print the program's internal state for debugging.
             case '#':
-                while ((c = getc(fp)) != '\n' && c != EOF)
+                printf("\n");
+                for (int i = 0; i < 16; i++)
                 {
+                    printf("%4d", (signed char)memory[i]);
                 }
+                printf("\n%*s\n", memory_ptr * 4 + 4, "^");
                 break;
 
-            /* Ignore other characters */
+            // Ignore other characters.
             default:
                 break;
         }
