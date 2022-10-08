@@ -9,10 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MEMORY_SIZE (65536 * 2)
 #define MAX_CODE_SIZE 65536
+#define MEMORY_SIZE (65536 * 2)
 
-// Copy of the program readed into memory.
+// Copy of the program code.
 char code[MAX_CODE_SIZE] = {0};
 int code_ptr = 0;
 int code_length = 0;
