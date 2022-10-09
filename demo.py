@@ -127,3 +127,14 @@
 #         print("I'm a teapot")
 #     case _:
 #         print("Something's wrong with the internet")
+
+''' 从Haskell得到的灵感 '''
+# list comprehension
+# In Haskell: [2^n | n <- [0 .. 20], 2^n > 1000]
+[2**n for n in range(21) if 2**n > 1000]
+# return [1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576]
+
+
+# In Haskell: fac n = product [1 .. n]
+fac = lambda n: 1 if n == 0 else n * fac(n - 1)
+# fac(500) is OK
