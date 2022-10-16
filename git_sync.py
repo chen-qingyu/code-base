@@ -61,7 +61,7 @@ def gitSync(index, cmd):
     os.chdir(GiteePaths[index])
     print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(GiteePaths)}) Start syncing {GiteePaths[index]}:")
     os.system(cmd+" && git push github master" if GiteePaths[index] in GithubPaths else cmd)
-    os.system("git status")
+    # os.system("git status")
     print()
 
 
