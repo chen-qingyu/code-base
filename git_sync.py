@@ -12,7 +12,9 @@ import colorama
 
 colorama.init(autoreset=True)
 
-GitPaths = ["F:/C/C Primer Plus",
+GithubPaths = ["F:/Projects/Data Structure and Algorithm"]
+
+GiteePaths = ["F:/C/C Primer Plus",
             "F:/C/C Programs",
             "F:/Java",
             "F:/OSTEP",
@@ -36,8 +38,6 @@ KillersPaths = ["F:/C",
 ClearEmptyDirsPaths = ["F:/Projects/BadApple",
                        "F:/STM32/CODE"]
 
-SyncCmd = "git add . && git commit -m \"batch update\" && git push && git status"
-
 
 def delUnnecessaryFiles(path):
     os.chdir(path)
@@ -58,9 +58,10 @@ def delEmptyDirs(root):
 
 
 def gitSync(index, cmd):
-    os.chdir(GitPaths[index])
-    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(GitPaths)}) Start syncing {GitPaths[index]}:")
-    os.system(cmd)
+    os.chdir(GiteePaths[index])
+    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(GiteePaths)}) Start syncing {GiteePaths[index]}:")
+    os.system(cmd+" && git push github master" if GiteePaths[index] in GithubPaths else cmd)
+    os.system(" && git status")
     print()
 
 
@@ -76,9 +77,9 @@ def main():
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for index in range(len(GitPaths)):
-        gitSync(index, SyncCmd)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(GitPaths)} repositories are synchronized.")
+    for index in range(len(GiteePaths)):
+        gitSync(index, "git add . && git commit -m \"batch update\" && git push")
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(GiteePaths)} repositories are synchronized.")
 
     input()
 
