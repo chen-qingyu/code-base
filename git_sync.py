@@ -20,11 +20,11 @@ COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 GITHUB = "github master"
 GITEE = "gitee master"
 
-# (path, remote, clean)
+# repositories: ((path, remote, clean), ...)
 # path: string, the path of the local repository.
-# remote: tuple, remote repository address.
+# remote: (string, ...), remote repository address.
 # clean: bool, True if use "killer.bat" to clean up temporary files, and then clean up empty directories.
-repositories = [
+REPOS = (
     ("F:/C/C Primer Plus", (GITEE,), True),
     ("F:/C/C Programs", (GITEE,), True),
     ("F:/Java", (GITEE,), False),
@@ -32,13 +32,13 @@ repositories = [
     ("F:/Projects/BadApple", (GITEE,), True),
     ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
     ("F:/Projects/HelloWorld", (GITEE,), False),
-    ("F:/Projects/LinearAlgebra", (GITEE,), False),
+    ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
     ("F:/Projects/Love Miao", (GITEE,), False),
     ("F:/Python/Python Programs", (GITEE,), False),
     ("F:/Racket/HtDP", (GITEE,), False),
     ("F:/STM32/CODE", (GITEE,), True),
     ("F:/TeX", (GITEE,), True)
-]
+)
 
 
 def clean(path: str):
@@ -68,17 +68,17 @@ def sync(path: str, remote: tuple[str, ...]):
 
 def main():
     print(COLOR_START + "Start cleaning.")
-    for repo in repositories:
+    for repo in REPOS:
         if repo[2]:
             clean(repo[0])
     print(COLOR_FINISH + "Cleaning completed.")
 
     print(COLOR_START + "Start synchronize.")
-    for i in range(len(repositories)):
-        print(COLOR_INFO + f"({i + 1}/{len(repositories)}) Start syncing {repositories[i][0]}:")
-        sync(repositories[i][0], repositories[i][1])
+    for i in range(len(REPOS)):
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {REPOS[i][0]}:")
+        sync(REPOS[i][0], REPOS[i][1])
         print()
-    print(COLOR_FINISH + f"Synchronize completed, {len(repositories)} repositories are synchronized.")
+    print(COLOR_FINISH + f"Synchronize completed, {len(REPOS)} repositories are synchronized.")
 
     input()
 
