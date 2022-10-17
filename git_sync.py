@@ -12,30 +12,31 @@ import colorama
 
 colorama.init(autoreset=True)
 
-GithubPaths = ["F:/Projects/Data Structure and Algorithm"]
+GITHUB = 1
+GITEE = 2
 
-GiteePaths = ["F:/C/C Primer Plus",
-            "F:/C/C Programs",
-            "F:/Java",
-            "F:/OSTEP",
-            "F:/Projects/BadApple",
-            "F:/Projects/Data Structure and Algorithm",
-            "F:/Projects/HelloWorld",
-            "F:/Projects/LinearAlgebra",
-            "F:/Projects/Love Miao",
-            "F:/Python/Python Programs",
-            "F:/Racket/HtDP",
-            "F:/STM32/CODE",
-            "F:/TeX"]
+repositories = [("F:/C/C Primer Plus", (GITEE,)),
+                ("F:/C/C Programs", (GITEE,)),
+                ("F:/Java", (GITEE,)),
+                ("F:/OSTEP", (GITEE, GITHUB)),
+                ("F:/Projects/BadApple", (GITEE,)),
+                ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB)),
+                ("F:/Projects/HelloWorld", (GITEE,)),
+                ("F:/Projects/LinearAlgebra", (GITEE,)),
+                ("F:/Projects/Love Miao", (GITEE,)),
+                ("F:/Python/Python Programs", (GITEE,)),
+                ("F:/Racket/HtDP", (GITEE,)),
+                ("F:/STM32/CODE", (GITEE,)),
+                ("F:/TeX", (GITEE,))]
 
 # "killer.bat"
-KillersPaths = ["F:/C",
+killersPaths = ["F:/C",
                 "F:/Projects/BadApple",
                 "F:/STM32/CODE",
                 "F:/Projects/Data Structure and Algorithm/C",
                 "F:/TeX"]
 
-ClearEmptyDirsPaths = ["F:/Projects/BadApple",
+clearEmptyDirsPaths = ["F:/Projects/BadApple",
                        "F:/STM32/CODE"]
 
 
@@ -58,27 +59,31 @@ def delEmptyDirs(root):
 
 
 def gitSync(index, cmd):
-    os.chdir(GiteePaths[index])
-    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(GiteePaths)}) Start syncing {GiteePaths[index]}:")
-    os.system(cmd+" && git push github master" if GiteePaths[index] in GithubPaths else cmd)
+    os.chdir(repositories[index][0])
+    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(repositories)}) Start syncing {repositories[index][0]}:")
+    if GITHUB in repositories[index][1]:
+        cmd += " && git push github master"
+    if GITEE in repositories[index][1]:
+        cmd += " && git push gitee master"
+    os.system(cmd)
     print()
 
 
 def main():
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting unnecessary files.")
-    for path in KillersPaths:
+    for path in killersPaths:
         delUnnecessaryFiles(path)
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The unnecessary files are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting empty folders.")
-    for path in ClearEmptyDirsPaths:
+    for path in clearEmptyDirsPaths:
         delEmptyDirs(path)
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for index in range(len(GiteePaths)):
-        gitSync(index, "git add . && git commit -m \"batch update\" && git push")
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(GiteePaths)} repositories are synchronized.")
+    for index in range(len(repositories)):
+        gitSync(index, "git add . && git commit -m \"batch update\"")
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(repositories)} repositories are synchronized.")
 
     input()
 
