@@ -12,77 +12,70 @@ import colorama
 
 colorama.init(autoreset=True)
 
-GITHUB = 1
-GITEE = 2
+# remote repository address: "host branch"
+GITHUB = "github master"
+GITEE = "gitee master"
 
-repositories = [("F:/C/C Primer Plus", (GITEE,)),
-                ("F:/C/C Programs", (GITEE,)),
-                ("F:/Java", (GITEE,)),
-                ("F:/OSTEP", (GITEE, GITHUB)),
-                ("F:/Projects/BadApple", (GITEE,)),
-                ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB)),
-                ("F:/Projects/HelloWorld", (GITEE,)),
-                ("F:/Projects/LinearAlgebra", (GITEE,)),
-                ("F:/Projects/Love Miao", (GITEE,)),
-                ("F:/Python/Python Programs", (GITEE,)),
-                ("F:/Racket/HtDP", (GITEE,)),
-                ("F:/STM32/CODE", (GITEE,)),
-                ("F:/TeX", (GITEE,))]
-
-# "killer.bat"
-killersPaths = ["F:/C",
-                "F:/Projects/BadApple",
-                "F:/STM32/CODE",
-                "F:/Projects/Data Structure and Algorithm/C",
-                "F:/TeX"]
-
-clearEmptyDirsPaths = ["F:/Projects/BadApple",
-                       "F:/STM32/CODE"]
+# (path, remote, clean)
+# path: string, the path of the local repository.
+# remote: tuple, remote repositories address.
+# clean: bool, True if use "killer.bat" to clean up temporary files, and then clean up empty directories.
+repositories = [
+    ("F:/C/C Primer Plus", (GITEE,), True),
+    ("F:/C/C Programs", (GITEE,), True),
+    ("F:/Java", (GITEE,), False),
+    ("F:/OSTEP", (GITEE, GITHUB), False),
+    ("F:/Projects/BadApple", (GITEE,), True),
+    ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
+    ("F:/Projects/HelloWorld", (GITEE,), False),
+    ("F:/Projects/LinearAlgebra", (GITEE,), False),
+    ("F:/Projects/Love Miao", (GITEE,), False),
+    ("F:/Python/Python Programs", (GITEE,), False),
+    ("F:/Racket/HtDP", (GITEE,), False),
+    ("F:/STM32/CODE", (GITEE,), True),
+    ("F:/TeX", (GITEE,), True)
+]
 
 
-def delUnnecessaryFiles(path):
+def clean(path: str):
+    # use "killer.bat" to clean up temporary files, and then clean up empty directories.
     os.chdir(path)
     os.system("killer.bat")
-
-
-def delEmptyDirs(root):
-    os.chdir(root)
-    for root, dirs, files in os.walk(root):
+    for path, dirs, files in os.walk(path):
         # Ignore git directory
-        if root[-4:] == ".git":
+        if path[-4:] == ".git":
             continue
         for d in dirs:
             # Delete empty folders recursively
-            if os.listdir(os.path.join(root, d)) == []:
-                os.removedirs(os.path.join(root, d))
-                print(os.path.join(root, d) + " deleted.")
+            if os.listdir(os.path.join(path, d)) == []:
+                os.removedirs(os.path.join(path, d))
+                print(colorama.Fore.BLUE + colorama.Style.BRIGHT + os.path.join(path, d) + " deleted.")
 
 
-def gitSync(index, cmd):
-    os.chdir(repositories[index][0])
-    print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(repositories)}) Start syncing {repositories[index][0]}:")
-    if GITEE in repositories[index][1]:
-        cmd += " && git push gitee master"
-    if GITHUB in repositories[index][1]:
-        cmd += " && git push github master"
+def sync(path: str, remote: tuple[str, ...]):
+    # synchronize Git remote repositories.
+    os.chdir(path)
+    cmd = "git add . && git commit -m \"batch update\""
+    if GITEE in remote:
+        cmd += f" && git push {GITEE}"
+    if GITHUB in remote:
+        cmd += f" && git push {GITHUB}"
+    cmd += " && git status"
     os.system(cmd)
-    print()
 
 
 def main():
-    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting unnecessary files.")
-    for path in killersPaths:
-        delUnnecessaryFiles(path)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The unnecessary files are deleted.")
-
-    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start deleting empty folders.")
-    for path in clearEmptyDirsPaths:
-        delEmptyDirs(path)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "The empty folders are deleted.")
+    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start cleaning.")
+    for repo in repositories:
+        if repo[2]:
+            clean(repo[0])
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Cleaning completed.")
 
     print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
-    for index in range(len(repositories)):
-        gitSync(index, "git add . && git commit -m \"batch update\"")
+    for i in range(len(repositories)):
+        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(repositories)}) Start syncing {repositories[i][0]}:")
+        sync(repositories[i][0], repositories[i][1])
+        print()
     print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(repositories)} repositories are synchronized.")
 
     input()
