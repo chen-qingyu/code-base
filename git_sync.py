@@ -41,25 +41,25 @@ def clean(path: str):
     # use "killer.bat" to clean up temporary files, and then clean up empty directories.
     os.chdir(path)
     os.system("killer.bat")
-    for path, dirs, files in os.walk(path):
-        # Ignore git directory
-        if path[-4:] == ".git":
-            continue
+    for root, dirs, files in os.walk(path):
         for d in dirs:
+            # Ignore git directory
+            if ".git" in os.path.join(root, d):
+                continue
             # Delete empty folders recursively
-            if os.listdir(os.path.join(path, d)) == []:
-                os.removedirs(os.path.join(path, d))
-                print(colorama.Fore.BLUE + colorama.Style.BRIGHT + os.path.join(path, d) + " deleted.")
+            if os.listdir(os.path.join(root, d)) == []:
+                os.removedirs(os.path.join(root, d))
+                print(colorama.Fore.BLUE + colorama.Style.BRIGHT + os.path.join(root, d) + " deleted.")
 
 
 def sync(path: str, remote: tuple[str, ...]):
     # synchronize Git remote repositories.
     os.chdir(path)
-    cmd = "git add . && git commit -m \"batch update\""
+    cmd = "git add . && git commit -m \"batch update\" && echo"
     if GITEE in remote:
-        cmd += f" && git push {GITEE}"
+        cmd += f" && git push {GITEE} && echo"
     if GITHUB in remote:
-        cmd += f" && git push {GITHUB}"
+        cmd += f" && git push {GITHUB} && echo"
     cmd += " && git status"
     os.system(cmd)
 
