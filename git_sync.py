@@ -60,12 +60,11 @@ def clean(path: str):
 def sync(path: str, remote: tuple[str, ...]):
     # synchronize Git remote repositories.
     os.chdir(path)
-    os.system("git add . && git commit -m \"batch update\"")
-    print("---")
-    for address in remote:
-        os.system(f"git push {address}")
-        print("---")
-    os.system("git status")
+    # modified, commit successfully
+    if os.system("git add . && git commit -m \"batch update\"") == 0:
+        for address in remote:
+            print(COLOR_INFO + f"---{address}---")
+            os.system(f"git push {address}")
 
 
 def main():
