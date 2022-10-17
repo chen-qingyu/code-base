@@ -56,10 +56,8 @@ def sync(path: str, remote: tuple[str, ...]):
     # synchronize Git remote repositories.
     os.chdir(path)
     cmd = "git add . && git commit -m \"batch update\" && echo ---"
-    if GITEE in remote:
-        cmd += f" && git push {GITEE} && echo ---"
-    if GITHUB in remote:
-        cmd += f" && git push {GITHUB} && echo ---"
+    for address in remote:
+        cmd += f" && git push {address} && echo ---"
     cmd += " && git status"
     os.system(cmd)
 
