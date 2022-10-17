@@ -29,7 +29,7 @@ REPOS = (
     ("F:/C/C Programs", (GITEE,), True),
     ("F:/Java", (GITEE,), False),
     ("F:/OSTEP", (GITEE, GITHUB), False),
-    ("F:/Projects/BadApple", (GITEE,), True),
+    ("F:/Projects/BadApple", (GITEE, GITHUB), True),
     ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
     ("F:/Projects/HelloWorld", (GITEE,), False),
     ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
