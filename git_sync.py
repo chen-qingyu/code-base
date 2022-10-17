@@ -12,13 +12,17 @@ import colorama
 
 colorama.init(autoreset=True)
 
+COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
+COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
+COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
+
 # remote repository address: "host branch"
 GITHUB = "github master"
 GITEE = "gitee master"
 
 # (path, remote, clean)
 # path: string, the path of the local repository.
-# remote: tuple, remote repositories address.
+# remote: tuple, remote repository address.
 # clean: bool, True if use "killer.bat" to clean up temporary files, and then clean up empty directories.
 repositories = [
     ("F:/C/C Primer Plus", (GITEE,), True),
@@ -49,7 +53,7 @@ def clean(path: str):
             # Delete empty folders recursively
             if os.listdir(os.path.join(root, d)) == []:
                 os.removedirs(os.path.join(root, d))
-                print(colorama.Fore.BLUE + colorama.Style.BRIGHT + os.path.join(root, d) + " deleted.")
+                print(COLOR_INFO + os.path.join(root, d) + " deleted.")
 
 
 def sync(path: str, remote: tuple[str, ...]):
@@ -63,18 +67,18 @@ def sync(path: str, remote: tuple[str, ...]):
 
 
 def main():
-    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start cleaning.")
+    print(COLOR_START + "Start cleaning.")
     for repo in repositories:
         if repo[2]:
             clean(repo[0])
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Cleaning completed.")
+    print(COLOR_FINISH + "Cleaning completed.")
 
-    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "Start synchronize.")
+    print(COLOR_START + "Start synchronize.")
     for i in range(len(repositories)):
-        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({i + 1}/{len(repositories)}) Start syncing {repositories[i][0]}:")
+        print(COLOR_INFO + f"({i + 1}/{len(repositories)}) Start syncing {repositories[i][0]}:")
         sync(repositories[i][0], repositories[i][1])
         print()
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT + f"Synchronize completed, {len(repositories)} repositories are synchronized.")
+    print(COLOR_FINISH + f"Synchronize completed, {len(repositories)} repositories are synchronized.")
 
     input()
 
