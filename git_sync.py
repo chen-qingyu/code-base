@@ -61,10 +61,10 @@ def delEmptyDirs(root):
 def gitSync(index, cmd):
     os.chdir(repositories[index][0])
     print(colorama.Fore.CYAN + colorama.Style.BRIGHT + f"({index + 1}/{len(repositories)}) Start syncing {repositories[index][0]}:")
-    if GITHUB in repositories[index][1]:
-        cmd += " && git push github master"
     if GITEE in repositories[index][1]:
         cmd += " && git push gitee master"
+    if GITHUB in repositories[index][1]:
+        cmd += " && git push github master"
     os.system(cmd)
     print()
 
