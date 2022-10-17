@@ -25,19 +25,20 @@ GITEE = "gitee master"
 # remote: (string, ...), remote repository address.
 # clean: bool, True if use "killer.bat" to clean up temporary files, and then clean up empty directories.
 REPOS = (
-    ("F:/C/C Primer Plus", (GITEE,), True),
-    ("F:/C/C Programs", (GITEE,), True),
-    ("F:/Java", (GITEE,), False),
+    ("F:/C/C Programs", (GITEE, GITHUB), True),
+    ("F:/Python/Python Programs", (GITEE, GITHUB), False),
+    ("F:/Java/Java Programs", (GITEE, GITHUB), False),
+    ("F:/C/C Primer Plus", (GITEE, GITHUB), True),
+    ("F:/Java/StuScore", (GITEE, GITHUB), False),
     ("F:/OSTEP", (GITEE, GITHUB), False),
     ("F:/Projects/BadApple", (GITEE, GITHUB), True),
     ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
-    ("F:/Projects/HelloWorld", (GITEE,), False),
+    ("F:/Projects/HelloWorld", (GITEE, GITHUB), False),
     ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
-    ("F:/Projects/Love Miao", (GITEE,), False),
-    ("F:/Python/Python Programs", (GITEE,), False),
-    ("F:/Racket/HtDP", (GITEE,), False),
-    ("F:/STM32/CODE", (GITEE,), True),
-    ("F:/TeX", (GITEE,), True)
+    ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
+    ("F:/Racket/HtDP", (GITEE, GITHUB), False),
+    ("F:/STM32/CODE", (GITEE, GITHUB), True),
+    ("F:/TeX", (GITEE, GITHUB), True)
 )
 
 
