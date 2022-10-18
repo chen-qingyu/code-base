@@ -1,10 +1,10 @@
 # FileName: git_sync.py
-# Brief: Python3 script for automating batch synchronization of Git remote repositories
+# Brief: Python3 script for automating batch synchronization of Git remote repositories.
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 # Functions:
-#   - delete specific suffix files,
-#   - delete empty folders,
+#   - clean up temporary files,
+#   - clean up empty directories,
 #   - batch synchronize Git remote repositories
 
 import os
