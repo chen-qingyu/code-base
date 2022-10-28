@@ -3,8 +3,8 @@
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 # Functions:
-#   - clean up temporary files,
-#   - clean up empty directories,
+#   - clean up redundant files
+#   - clean up empty directories
 #   - batch synchronize Git remote repositories
 
 import os
@@ -23,7 +23,7 @@ GITEE = "gitee master"
 # repositories: ((path, remote, clean), ...)
 # path: string, the path of the local repository.
 # remote: (string, ...), remote repository address.
-# clean: bool, True if use "killer.bat" to clean up temporary files, and then clean up empty directories.
+# clean: bool, True if use "killer.bat" to clean up redundant files, and then clean up empty directories.
 REPOS = (
     ("F:/C/C Programs", (GITEE, GITHUB), True),
     ("F:/Python/Python Programs", (GITEE, GITHUB), False),
@@ -38,12 +38,13 @@ REPOS = (
     ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
     ("F:/Racket/HtDP", (GITEE, GITHUB), False),
     ("F:/STM32/CODE", (GITEE, GITHUB), True),
-    ("F:/TeX", (GITEE, GITHUB), True)
+    ("F:/TeX", (GITEE, GITHUB), True),
+    ("F:/Projects/TestTime", (GITEE, GITHUB), False)
 )
 
 
 def clean(path: str):
-    # use "killer.bat" to clean up temporary files, and then clean up empty directories.
+    # use "killer.bat" to clean up redundant files, and then clean up empty directories.
     os.chdir(path)
     os.system("killer.bat")
     for root, dirs, files in os.walk(path):

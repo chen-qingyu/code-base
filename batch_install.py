@@ -3,7 +3,7 @@
 # Author: Qing Yu
 # CreateDate: 2020.10.04
 # Functions:
-#   - install libraries,
+#   - install libraries
 #   - upgrade libraries
 
 import os
