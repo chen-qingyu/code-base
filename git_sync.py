@@ -25,24 +25,27 @@ GITEE = "gitee master"
 # remote: (string, ...), remote repository address.
 # clean: bool, True if use "killer.bat" to clean up redundant files, and then clean up empty directories.
 REPOS = (
-    ("F:/C/C Programs", (GITEE, GITHUB), True),
+    ("F:/C/C Programs", (GITEE, GITHUB), False),
     ("F:/Python/Python Programs", (GITEE, GITHUB), False),
     ("F:/Java/Java Programs", (GITEE, GITHUB), False),
-    ("F:/C/C Primer Plus", (GITEE, GITHUB), True),
+    ("F:/C/C Primer Plus", (GITEE, GITHUB), False),
     ("F:/Java/StuScore", (GITEE, GITHUB), False),
     ("F:/OSTEP", (GITEE, GITHUB), False),
-    ("F:/Projects/BadApple", (GITEE, GITHUB), True),
+    ("F:/Projects/BadApple", (GITEE, GITHUB), False),
     ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
     ("F:/Projects/HelloWorld", (GITEE, GITHUB), False),
     ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
     ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
     ("F:/Racket/HtDP", (GITEE, GITHUB), False),
-    ("F:/STM32/CODE", (GITEE, GITHUB), True),
-    ("F:/TeX", (GITEE, GITHUB), True),
+    ("F:/STM32/CODE", (GITEE, GITHUB), False),
+    ("F:/TeX", (GITEE, GITHUB), False),
     ("F:/Projects/TestTime", (GITEE, GITHUB), False)
 )
 
-
+# 1. 直接在Python里面删除文件 os.remove(glob.glob("./**/*.jpg", recursive=True))
+# 2. 判断平台调用killer.bat(del *.xxx /s) or killer.sh(rm -rf *.xxx)删除文件
+# >>> platform.system()
+# 'Windows'
 def clean(path: str):
     # use "killer.bat" to clean up redundant files, and then clean up empty directories.
     os.chdir(path)
