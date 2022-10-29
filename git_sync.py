@@ -65,7 +65,7 @@ def sync():
         print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {root}:")
         os.chdir(root)
         # if modified, commit successfully, or skip remote confirmation
-        if os.system("git add . && git commit -m \"batch synchronize\"") == 0:
+        if os.system("git add . && git commit -m \"batch synchronize\"") != 0:
             for address in remote:
                 print(COLOR_INFO + f"---{address}---")
                 os.system(f"git push {address}")
