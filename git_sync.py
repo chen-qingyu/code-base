@@ -4,89 +4,113 @@
 # CreateDate: 2022.02.11
 # Functions:
 #   - clean up redundant files
-#   - clean up empty directories
+#   - clean up redundant directories
 #   - batch synchronize Git remote repositories
 
 import os
 import colorama
+import glob
+import shutil
 
 colorama.init(autoreset=True)
 
 COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
 COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
+COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 # remote repository address: "host branch"
 GITHUB = "github master"
 GITEE = "gitee master"
 
-# repositories: ((path, remote, clean), ...)
-# path: string, the path of the local repository.
+# repositories: ((root, remote, clean), ...)
+# root: string, the root path of the local repository.
 # remote: (string, ...), remote repository address.
-# clean: bool, True if use "killer.bat" to clean up redundant files, and then clean up empty directories.
+# clean: bool, True if use "root/.gitignore" as pattern to clean up redundant files and directories.
 REPOS = (
-    ("F:/C/C Programs", (GITEE, GITHUB), False),
+    ("F:/C/C Programs", (GITEE, GITHUB), True),
     ("F:/Python/Python Programs", (GITEE, GITHUB), False),
     ("F:/Java/Java Programs", (GITEE, GITHUB), False),
-    ("F:/C/C Primer Plus", (GITEE, GITHUB), False),
+    ("F:/C/C Primer Plus", (GITEE, GITHUB), True),
     ("F:/Java/StuScore", (GITEE, GITHUB), False),
     ("F:/OSTEP", (GITEE, GITHUB), False),
-    ("F:/Projects/BadApple", (GITEE, GITHUB), False),
+    ("F:/Projects/BadApple", (GITEE, GITHUB), True),
     ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
     ("F:/Projects/HelloWorld", (GITEE, GITHUB), False),
     ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
     ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
     ("F:/Racket/HtDP", (GITEE, GITHUB), False),
-    ("F:/STM32/CODE", (GITEE, GITHUB), False),
-    ("F:/TeX", (GITEE, GITHUB), False),
-    ("F:/Projects/TestTime", (GITEE, GITHUB), False)
+    ("F:/STM32/STM32 Programs", (GITEE, GITHUB), True),
+    ("F:/TeX", (GITEE, GITHUB), True),
+    ("F:/Projects/TestTime", (GITEE, GITHUB), True)
 )
 
-# 1. 直接在Python里面删除文件 os.remove(glob.glob("./**/*.jpg", recursive=True))
-# 2. 判断平台调用killer.bat(del *.xxx /s) or killer.sh(rm -rf *.xxx)删除文件
-# >>> platform.system()
-# 'Windows'
-def clean(path: str):
-    # use "killer.bat" to clean up redundant files, and then clean up empty directories.
-    os.chdir(path)
-    os.system("killer.bat")
-    for root, dirs, files in os.walk(path):
-        for d in dirs:
-            # Ignore git directory
-            if ".git" in os.path.join(root, d):
-                continue
-            # Delete empty folders recursively
-            if os.listdir(os.path.join(root, d)) == []:
-                os.removedirs(os.path.join(root, d))
-                print(COLOR_INFO + os.path.join(root, d) + " deleted.")
 
-
-def sync(path: str, remote: tuple[str, ...]):
-    # synchronize Git remote repositories.
-    os.chdir(path)
-    # modified, commit successfully
-    if os.system("git add . && git commit -m \"batch update\"") == 0:
-        for address in remote:
-            print(COLOR_INFO + f"---{address}---")
-            os.system(f"git push {address}")
-
-
-def main():
+def clean():
+    # use "root/.gitignore" as pattern to clean up redundant files and directories.
     print(COLOR_START + "Start cleaning.")
-    for repo in REPOS:
-        if repo[2]:
-            clean(repo[0])
+
+    for root, _, need_clean in REPOS:
+        if need_clean:  # clean = True
+            os.chdir(root)  # cd root/
+
+            # read .gitignore as patterns
+            try:
+                with open(".gitignore") as fo:
+                    patterns = list(map(lambda s: s.strip(), fo.readlines()))
+            except FileNotFoundError as e:
+                print(COLOR_ERROR + str(e) + f" in {root}")
+                continue
+
+            # delete file or dir that match patterns recursively
+            for pattern in patterns:
+                for path in glob.glob("**/" + pattern, recursive=True):
+                    if os.path.isfile(path):
+                        os.remove(path)
+                    elif os.path.isdir(path):
+                        shutil.rmtree(path)
+                    else:
+                        print(COLOR_ERROR + path + " is not a file or directory.")
+                        continue
+                    print(COLOR_INFO + path + " deleted.")
+
     print(COLOR_FINISH + "Cleaning completed.")
 
-    print(COLOR_START + "Start synchronize.")
-    for i in range(len(REPOS)):
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {REPOS[i][0]}:")
-        sync(REPOS[i][0], REPOS[i][1])
-        print()
-    print(COLOR_FINISH + f"Synchronize completed, {len(REPOS)} repositories are synchronized.")
 
-    input()
+def sync():
+    # synchronize Git remote repositories.
+    print(COLOR_START + "Start synchronize.")
+
+    for i in range(len(REPOS)):
+        root = REPOS[i][0]
+        remote = REPOS[i][1]
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {root}:")
+        os.chdir(root)
+        # if modified, commit successfully, or skip remote confirmation
+        if os.system("git add . && git commit -m \"batch update\"") == 0:
+            for address in remote:
+                print(COLOR_INFO + f"---{address}---")
+                os.system(f"git push {address}")
+        print()
+
+    print(COLOR_FINISH + f"Synchronize completed, {len(REPOS)} repositories are synchronized.")
 
 
 if __name__ == '__main__':
-    main()
+    while True:
+        print()
+        print("C: Clean redundant files.")
+        print("S: Synchronize repositories.")
+        print("Q: Quit.")
+
+        x = input("Your choice [C/S(default)/Q]: ").strip()
+        if x in "sS":  # "" in "sS" is True
+            sync()
+        elif x in "cC":
+            clean()
+        elif x in "qQ":
+            break
+        else:
+            print(COLOR_ERROR + "Invalid option: " + x)
+
+    print("Bye!")
