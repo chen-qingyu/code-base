@@ -3,14 +3,11 @@
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 # Functions:
-#   - clean up redundant files
-#   - clean up redundant directories
+#   - clean up redundant files and directories
 #   - batch synchronize Git remote repositories
 
 import os
 import colorama
-import glob
-import shutil
 
 colorama.init(autoreset=True)
 
@@ -53,26 +50,7 @@ def clean():
     for root, _, need_clean in REPOS:
         if need_clean:  # clean = True
             os.chdir(root)  # cd root/
-
-            # read .gitignore as patterns
-            try:
-                with open(".gitignore") as fo:
-                    patterns = list(map(lambda s: s.strip(), fo.readlines()))
-            except FileNotFoundError as e:
-                print(COLOR_ERROR + str(e) + f" in {root}")
-                continue
-
-            # delete file or dir that match patterns recursively
-            for pattern in patterns:
-                for path in glob.glob("**/" + pattern, recursive=True):
-                    if os.path.isfile(path):
-                        os.remove(path)
-                    elif os.path.isdir(path):
-                        shutil.rmtree(path)
-                    else:
-                        print(COLOR_ERROR + path + " is not a file or directory.")
-                        continue
-                    print(COLOR_INFO + path + " deleted.")
+            os.system("git clean -Xdf")
 
     print(COLOR_FINISH + "Cleaning completed.")
 
@@ -87,7 +65,7 @@ def sync():
         print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {root}:")
         os.chdir(root)
         # if modified, commit successfully, or skip remote confirmation
-        if os.system("git add . && git commit -m \"batch update\"") == 0:
+        if os.system("git add . && git commit -m \"batch synchronize\"") == 0:
             for address in remote:
                 print(COLOR_INFO + f"---{address}---")
                 os.system(f"git push {address}")
