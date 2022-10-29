@@ -50,7 +50,7 @@ def clean():
     for root, _, need_clean in REPOS:
         if need_clean:  # clean = True
             os.chdir(root)  # cd root/
-            os.system("git clean -Xdf")
+            os.system("git clean -d -f -X")  # remove files ignored by Git recursively.
 
     print(COLOR_FINISH + "Cleaning completed.")
 
@@ -65,7 +65,7 @@ def sync():
         print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {root}:")
         os.chdir(root)
         # if modified, commit successfully, or skip remote confirmation
-        if os.system("git add . && git commit -m \"batch synchronize\"") != 0:
+        if os.system("git add . && git commit -m \"batch synchronize\"") == 0:
             for address in remote:
                 print(COLOR_INFO + f"---{address}---")
                 os.system(f"git push {address}")
