@@ -20,7 +20,7 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 GITHUB = "github master"
 GITEE = "gitee master"
 
-# repositories: ((root, remote, clean), ...)
+# REPOS: ((root, remote, clean), ...)
 # root: string, the root path of the local repository.
 # remote: (string, ...), remote repository address.
 # clean: bool, True if use "root/.gitignore" as pattern to clean up redundant files and directories.
