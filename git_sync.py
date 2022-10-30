@@ -16,9 +16,11 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
+
 # remote repository address: "host branch"
 GITHUB = "github master"
 GITEE = "gitee master"
+
 
 # REPOS: ((root, remote, clean), ...)
 # root: string, the root path of the local repository.
