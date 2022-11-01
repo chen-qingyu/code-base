@@ -34,7 +34,7 @@ REPOS = (
     ("F:/Java/StuScore", (GITEE, GITHUB), False),
     ("F:/OSTEP", (GITEE, GITHUB), False),
     ("F:/Projects/BadApple", (GITEE, GITHUB), True),
-    ("F:/Projects/Data Structure and Algorithm", (GITEE, GITHUB), False),
+    ("F:/Projects/Data Structure", (GITEE, GITHUB), False),
     ("F:/Projects/HelloWorld", (GITEE, GITHUB), False),
     ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
     ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
