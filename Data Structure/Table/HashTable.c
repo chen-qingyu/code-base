@@ -32,7 +32,7 @@ static int Hash(table_key_t key)
     return index % HASHTABLE_CAPACITY;
 }
 
-static int FindPos(const table_t table, table_key_t key)
+static int FindPos(const table_t *table, table_key_t key)
 {
     int currentPos, newPos;
     int conflictCnt = 0;
@@ -67,9 +67,9 @@ static int FindPos(const table_t table, table_key_t key)
 Interface functions implementation.
 *******************************/
 
-table_t HashTable_Create(void)
+table_t *HashTable_Create(void)
 {
-    table_t table = (table_t)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
+    table_t *table = (table_t *)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
     if (table == NULL)
     {
         fprintf(stderr, "ERROR: There was not enough memory.\n");
@@ -85,7 +85,7 @@ table_t HashTable_Create(void)
     return table;
 }
 
-void HashTable_Destroy(table_t table)
+void HashTable_Destroy(table_t *table)
 {
     for (int i = 0; i < HASHTABLE_CAPACITY; ++i)
     {
@@ -97,14 +97,14 @@ void HashTable_Destroy(table_t table)
     free(table);
 }
 
-table_value_t HashTable_Get(const table_t table, table_key_t key)
+table_value_t HashTable_Get(const table_t *table, table_key_t key)
 {
     int pos = FindPos(table, key);
 
     return table[pos].state == FULL ? table[pos].value : NOT_FOUND;
 }
 
-void HashTable_Modify(table_t table, table_key_t key, table_value_t value)
+void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
 {
     int pos = FindPos(table, key);
 
@@ -118,7 +118,7 @@ void HashTable_Modify(table_t table, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Insert(table_t table, table_key_t key, table_value_t value)
+void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
 {
     int pos = FindPos(table, key);
 
@@ -146,7 +146,7 @@ void HashTable_Insert(table_t table, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Delete(table_t table, table_key_t key)
+void HashTable_Delete(table_t *table, table_key_t key)
 {
     int pos = FindPos(table, key);
 

@@ -17,7 +17,7 @@ typedef char *table_key_t;
 
 typedef int table_value_t;
 
-typedef struct item *table_t;
+typedef struct item table_t;
 
 #define NOT_FOUND (-1) // table_value_t
 
@@ -26,14 +26,14 @@ typedef struct item *table_t;
   Parameter:      空
   Return:         一个指向空散列表的指针
 *************************************************/
-table_t HashTable_Create(void);
+table_t *HashTable_Create(void);
 
 /*************************************************
   Description:    销毁一个散列表 table
   Parameter:      一个指向待销毁散列表的指针 table
   Return:         空
 *************************************************/
-void HashTable_Destroy(table_t table);
+void HashTable_Destroy(table_t *table);
 
 /*************************************************
   Description:    在散列表 table 中取 key 对应的 value
@@ -41,7 +41,7 @@ void HashTable_Destroy(table_t table);
                   一个 key
   Return:         key 对应的 value 或者 NOT_FOUND
 *************************************************/
-table_value_t HashTable_Get(const table_t table, table_key_t key);
+table_value_t HashTable_Get(const table_t *table, table_key_t key);
 
 /*************************************************
   Description:    在散列表 table 中修改 key 对应的 value
@@ -50,7 +50,7 @@ table_value_t HashTable_Get(const table_t table, table_key_t key);
                   一个新的 value
   Return:         空
 *************************************************/
-void HashTable_Modify(table_t table, table_key_t key, table_value_t value);
+void HashTable_Modify(table_t *table, table_key_t key, table_value_t value);
 
 /*************************************************
   Description:    在散列表 table 中插入一个新的键值对
@@ -58,7 +58,7 @@ void HashTable_Modify(table_t table, table_key_t key, table_value_t value);
                   一对新的 key 和 value
   Return:         空
 *************************************************/
-void HashTable_Insert(table_t table, table_key_t key, table_value_t value);
+void HashTable_Insert(table_t *table, table_key_t key, table_value_t value);
 
 /*************************************************
   Description:    在散列表 table 中删除 key 对应的键值对
@@ -66,6 +66,6 @@ void HashTable_Insert(table_t table, table_key_t key, table_value_t value);
                   待删除键值对的 key
   Return:         空
 *************************************************/
-void HashTable_Delete(table_t table, table_key_t key);
+void HashTable_Delete(table_t *table, table_key_t key);
 
 #endif

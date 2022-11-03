@@ -3,7 +3,7 @@
 
 void HashTableTest()
 {
-    table_t table = HashTable_Create();
+    table_t *table = HashTable_Create();
 
     HashTable_Insert(table, "aaa", 1);
     HashTable_Insert(table, "bbb", 2);
