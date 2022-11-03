@@ -1,5 +1,5 @@
 /******************************************
- * FileName: mystring.c
+ * FileName: my_string.h
  * Brief: 自己用的简单C字符串库
  * Author: 青羽
  * Blog: https://chen-qingyu.github.io/
