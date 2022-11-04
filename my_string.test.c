@@ -270,6 +270,23 @@ int main()
     str_destroy_array(str_arr);
 
 
+    // str_strip()
+    str_set(s1, "\t\nhello\t\n");
+    str_strip(s1);
+    str_set(s2, "hello");
+    assert(str_equal(s1, s2) == true);
+
+    str_set(s1, "           hello           ");
+    str_strip(s1);
+    str_set(s2, "hello");
+    assert(str_equal(s1, s2) == true);
+
+    str_set(s1, "\n\n\n\n \t\n\b\n   hello  \n\n\t\n \r\b\n\r");
+    str_strip(s1);
+    str_set(s2, "hello");
+    assert(str_equal(s1, s2) == true);
+
+
     // str_destroy()
     str_destroy(s1);
     str_destroy(s2);

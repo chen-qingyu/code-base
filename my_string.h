@@ -144,7 +144,7 @@ string *str_copy(const string *str);
 order str_compare(const string *str1, const string *str2);
 
 /**
- * @brief Use the KMP algorithm to find the position of the pattern. O(M + N)
+ * @brief Use the KMP algorithm to find the position of the pattern. O(N + M)
  * @param str: A pointer to the string.
  * @param pattern: A pointer to the pattern string.
  * @return Returns the starting substring index or STR_NOT_FOUND.
@@ -152,7 +152,7 @@ order str_compare(const string *str1, const string *str2);
 int str_find(const string *str, const string *pattern);
 
 /**
- * @brief Append new string to the tail. O(M)
+ * @brief Append new string to the tail. O(N)
  * @param str: A pointer to the string.
  * @param new_str: A pointer to the new string.
 */
@@ -195,6 +195,12 @@ void str_destroy_array(string **str_arr);
  * @param str: A pointer to the string to be printed.
 */
 void str_print(const string *str);
+
+/**
+ * @brief Removes leading and trailing blank characters of the string. O(N)
+ * @param str: A pointer to the string.
+*/
+void str_strip(string *str);
 
 /*******************************
  * Helper function declaration.
@@ -506,6 +512,22 @@ void str_destroy_array(string **str_arr)
 void str_print(const string *str)
 {
     printf("%s\n", str->data);
+}
+
+void str_strip(string *str)
+{
+    int i = 0;
+    while (i < str->size && str->data[i] <= 0x20)
+    {
+        ++i;
+    }
+    str_erase(str, 0, i);
+    i = str->size - 1;
+    while (i >= 0  && str->data[i] <= 0x20)
+    {
+        --i;
+    }
+    str_erase(str, i + 1, str->size);
 }
 
 /*******************************
