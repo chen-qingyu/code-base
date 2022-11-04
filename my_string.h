@@ -165,7 +165,7 @@ void str_erase(string *str, int begin, int end);
 
 /**
  * @brief Replace the string. O(N)
- * @param str A pointer to the string to be replaced.
+ * @param str: A pointer to the string to be replaced.
  * @param old_str: Old substring.
  * @param new_str: New substring.
 */
@@ -264,7 +264,7 @@ bool str_equal(const string *str1, const string *str2)
         return false;
     }
 
-    for (int i = 0; i < str1->size; i++)
+    for (int i = 0; i < str1->size; ++i)
     {
         if (str1->data[i] != str2->data[i])
         {
@@ -415,6 +415,7 @@ void str_erase(string *str, int begin, int end)
         str->data[i - (end - begin)] = str->data[i];
     }
     str->size -= (end - begin);
+    str->data[str->size] = '\0';
 }
 
 void str_replace(string *str, const string *old_str, const string *new_str)
