@@ -191,7 +191,7 @@ int main()
     str_set(s4, "how~ how~ how~ ");
     assert(str_equal(s1, s4) == true);
 
-    // str_split()
+    // str_split() str_destroy_array()
     string **str_arr = NULL;
 
     str_set(s1, "this is my code!");
