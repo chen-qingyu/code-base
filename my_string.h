@@ -523,7 +523,7 @@ void str_strip(string *str)
     }
     str_erase(str, 0, i);
     i = str->size - 1;
-    while (i >= 0  && str->data[i] <= 0x20)
+    while (i >= 0 && str->data[i] <= 0x20)
     {
         --i;
     }
