@@ -258,6 +258,17 @@ int main()
     assert(str_arr[1] == NULL);
     str_destroy_array(str_arr);
 
+    str_set(s1, "one, two");
+    str_set(s2, ", ");
+    str_arr = str_split(s1, s2);
+
+    str_set(s3, "one");
+    assert(str_equal(str_arr[0], s3) == true);
+    str_set(s3, "two");
+    assert(str_equal(str_arr[1], s3) == true);
+    assert(str_arr[2] == NULL);
+    str_destroy_array(str_arr);
+
 
     // str_destroy()
     str_destroy(s1);
