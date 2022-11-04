@@ -207,11 +207,7 @@ int main()
     str_set(s3, "code!");
     assert(str_equal(str_arr[3], s3) == true);
     assert(str_arr[4] == NULL);
-    for (int i = 0; i < 4; i++)
-    {
-        str_destroy(str_arr[i]);
-    }
-    free(str_arr);
+    str_destroy_array(str_arr);
 
     str_set(s1, " this is my code! ");
     str_set(s2, " ");
@@ -228,11 +224,7 @@ int main()
     str_set(s3, "code!");
     assert(str_equal(str_arr[4], s3) == true);
     assert(str_arr[5] == NULL);
-    for (int i = 0; i < 5; i++)
-    {
-        str_destroy(str_arr[i]);
-    }
-    free(str_arr);
+    str_destroy_array(str_arr);
 
     str_set(s1, "aaa");
     str_set(s2, "a");
@@ -243,9 +235,8 @@ int main()
     for (int i = 0; i < 3; i++)
     {
         assert(str_equal(str_arr[i], s3) == true);
-        str_destroy(str_arr[i]);
     }
-    free(str_arr);
+    str_destroy_array(str_arr);
 
     str_set(s1, "this is my code!");
     str_set(s2, "this is my code!");
@@ -254,8 +245,7 @@ int main()
     str_set(s3, "");
     assert(str_equal(str_arr[0], s3) == true);
     assert(str_arr[1] == NULL);
-    str_destroy(str_arr[0]);
-    free(str_arr);
+    str_destroy_array(str_arr);
 
     // str_destroy()
     str_destroy(s1);

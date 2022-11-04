@@ -174,12 +174,18 @@ void str_replace(string *str, const string *old_str, const string *new_str);
 /**
  * @brief Split string with separator. O(N)
  *        Example: str_split("one, two", ", ") => ["one", "two"].
- *        Don't forget free(return-value).
+ *        Don't forget use str_destroy_array(return-value).
  * @param str: String to be split.
  * @param sep: Separator string.
  * @return Array of split string pointers.
 */
 string **str_split(const string *str, const string *sep);
+
+/**
+ * @brief Destroy a string array. For str_split(). O(N)
+ * @param str_arr: A pointer to the string array to be destroyed.
+*/
+void str_destroy_array(string **str_arr);
 
 /**
  * @brief Print the contents of the string. O(N)
@@ -480,6 +486,18 @@ string **str_split(const string *str, const string *sep)
     str_arr = (string **)realloc(str_arr, sizeof(string *) * (count + 1)); // count + 1 <= str->size + 1, safe
 
     return str_arr;
+}
+
+void str_destroy_array(string **str_arr)
+{
+    if (str_arr)
+    {
+        for (int i = 0; str_arr[i] != NULL; ++i)
+        {
+            str_destroy(str_arr[i]);
+        }
+        free(str_arr);
+    }
 }
 
 void str_print(const string *str)
