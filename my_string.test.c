@@ -17,6 +17,7 @@ int main()
     assert(str_size(s1) == 12);
     assert(str_is_empty(s1) == false);
 
+
     // str_equal() str_at()
     string *s2 = str_create();
     assert(str_equal(s1, s2) == false);
@@ -26,6 +27,7 @@ int main()
     assert(str_at(s2, 0) == 'H');
     assert(str_at(s2, 5) == ' ');
     assert(str_at(s2, 11) == '!');
+
 
     // str_reverse()
     string *s3 = str_create();
@@ -38,11 +40,13 @@ int main()
     str_reverse(s3);
     assert(str_equal(s3, s4) == true);
 
+
     // str_replace_char()
     str_set(s3, "hahaha");
     str_set(s4, "lalala");
     str_replace_char(s3, 'h', 'l');
     assert(str_equal(s3, s4) == true);
+
 
     // str_lower() str_upper()
     str_set(s3, "hahaha");
@@ -54,9 +58,11 @@ int main()
     str_upper(s4);
     assert(str_equal(s3, s4) == true);
 
+
     // str_copy()
     string *s5 = str_copy(s4);
     assert(str_equal(s4, s5) == true);
+
 
     // str_compare()
     str_set(s2, "ab");
@@ -71,6 +77,7 @@ int main()
     assert(str_compare(s3, s4) == LT);
     str_set(s3, "cbc");
     assert(str_compare(s3, s4) == GT);
+
 
     // str_find()
     str_set(s1, "");
@@ -89,6 +96,7 @@ int main()
     str_set(s1, "ac");
     assert(str_find(s5, s1) == STR_NOT_FOUND);
 
+
     // str_append()
     str_set(s1, "");
     str_set(s5, "");
@@ -100,6 +108,7 @@ int main()
     str_append(s1, s4);
     str_set(s5, "agcde");
     assert(str_equal(s1, s5) == true);
+
 
     // str_erase()
     str_set(s1, "abcdefg");
@@ -126,6 +135,7 @@ int main()
     str_erase(s1, -1, 99);
     str_set(s2, "");
     assert(str_equal(s1, s2) == true);
+
 
     // str_replace()
     str_set(s1, "abcdefg");
@@ -191,6 +201,7 @@ int main()
     str_set(s4, "how~ how~ how~ ");
     assert(str_equal(s1, s4) == true);
 
+
     // str_split() str_destroy_array()
     string **str_arr = NULL;
 
@@ -247,12 +258,14 @@ int main()
     assert(str_arr[1] == NULL);
     str_destroy_array(str_arr);
 
+
     // str_destroy()
     str_destroy(s1);
     str_destroy(s2);
     str_destroy(s3);
     str_destroy(s4);
     str_destroy(s5);
+
 
     printf("Test OK\n");
 
