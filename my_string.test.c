@@ -5,6 +5,7 @@
 int main()
 {
     // str_create() str_size() str_is_empty() str_set()
+
     string *s1 = str_create();
     assert(str_size(s1) == 0);
     assert(str_is_empty(s1) == true);
@@ -17,8 +18,8 @@ int main()
     assert(str_size(s1) == 12);
     assert(str_is_empty(s1) == false);
 
-
     // str_equal() str_at()
+
     string *s2 = str_create();
     assert(str_equal(s1, s2) == false);
     str_set(s2, "Hello World!");
@@ -28,8 +29,8 @@ int main()
     assert(str_at(s2, 5) == ' ');
     assert(str_at(s2, 11) == '!');
 
-
     // str_reverse()
+
     string *s3 = str_create();
     string *s4 = str_create();
     str_reverse(s3);
@@ -40,15 +41,15 @@ int main()
     str_reverse(s3);
     assert(str_equal(s3, s4) == true);
 
-
     // str_replace_char()
+
     str_set(s3, "hahaha");
     str_set(s4, "lalala");
     str_replace_char(s3, 'h', 'l');
     assert(str_equal(s3, s4) == true);
 
-
     // str_lower() str_upper()
+
     str_set(s3, "hahaha");
     str_set(s4, "HAHAHA");
     str_lower(s4);
@@ -58,13 +59,13 @@ int main()
     str_upper(s4);
     assert(str_equal(s3, s4) == true);
 
-
     // str_copy()
+
     string *s5 = str_copy(s4);
     assert(str_equal(s4, s5) == true);
 
-
     // str_compare()
+
     str_set(s2, "ab");
     str_set(s3, "abc");
     str_set(s4, "abc");
@@ -78,8 +79,8 @@ int main()
     str_set(s3, "cbc");
     assert(str_compare(s3, s4) == GT);
 
-
     // str_find()
+
     str_set(s1, "");
     str_set(s2, "a");
     str_set(s3, "g");
@@ -96,8 +97,8 @@ int main()
     str_set(s1, "ac");
     assert(str_find(s5, s1) == STR_NOT_FOUND);
 
-
     // str_append()
+
     str_set(s1, "");
     str_set(s5, "");
     str_append(s1, s5);
@@ -109,8 +110,8 @@ int main()
     str_set(s5, "agcde");
     assert(str_equal(s1, s5) == true);
 
-
     // str_erase()
+
     str_set(s1, "abcdefg");
     str_erase(s1, 0, 1);
     str_set(s2, "bcdefg");
@@ -136,8 +137,8 @@ int main()
     str_set(s2, "");
     assert(str_equal(s1, s2) == true);
 
-
     // str_replace()
+
     str_set(s1, "abcdefg");
     str_set(s2, "a");
     str_set(s3, "g");
@@ -201,8 +202,8 @@ int main()
     str_set(s4, "how~ how~ how~ ");
     assert(str_equal(s1, s4) == true);
 
-
     // str_split() str_destroy_array()
+
     string **str_arr = NULL;
 
     str_set(s1, "this is my code!");
@@ -258,7 +259,7 @@ int main()
     assert(str_arr[1] == NULL);
     str_destroy_array(str_arr);
 
-    str_set(s1, "one, two");
+    str_set(s1, "one, two, three");
     str_set(s2, ", ");
     str_arr = str_split(s1, s2);
 
@@ -266,11 +267,13 @@ int main()
     assert(str_equal(str_arr[0], s3) == true);
     str_set(s3, "two");
     assert(str_equal(str_arr[1], s3) == true);
-    assert(str_arr[2] == NULL);
+    str_set(s3, "three");
+    assert(str_equal(str_arr[2], s3) == true);
+    assert(str_arr[3] == NULL);
     str_destroy_array(str_arr);
 
-
     // str_strip()
+
     str_set(s1, "\t\nhello\t\n");
     str_strip(s1);
     str_set(s2, "hello");
@@ -286,14 +289,13 @@ int main()
     str_set(s2, "hello");
     assert(str_equal(s1, s2) == true);
 
-
     // str_destroy()
+
     str_destroy(s1);
     str_destroy(s2);
     str_destroy(s3);
     str_destroy(s4);
     str_destroy(s5);
-
 
     printf("Test OK\n");
 
