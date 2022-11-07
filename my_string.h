@@ -3,6 +3,7 @@
  * Brief: My simple C string library.
  *        Because the <string.h> is too difficult to use, so I wrote one myself.
  *        Only for C language, so it is named `string`.
+ * Usage: Just use `#include "my_string.h"` and done.
  * Author: 青羽
  * Blog: https://chen-qingyu.github.io/
  * CreateDate: 2022.11.03
@@ -14,7 +15,7 @@
  * - String getter/setter:
  *   - str_get           Get the copy of the content of the string.
  *   - str_set           Set the content of the string using null-terminated byte string.
- * - String examination:
+ * - String examination (will not change the string itself):
  *   - str_print         Print the contents of the string.
  *   - str_size          Find the size of the string.
  *   - str_is_empty      Determine whether the string is empty.
@@ -24,7 +25,7 @@
  *   - str_find          Find the position of the pattern.
  *   - str_split         Split string with separator.
  *   - str_destroy_array Destroy a string array. For str_split().
- * - String manipulation:
+ * - String manipulation (will change the string itself):
  *   - str_lower         Convert the string to lowercase.
  *   - str_upper         Convert the string to uppercase.
  *   - str_append        Append new string to the tail.
@@ -87,10 +88,37 @@ typedef enum
 string *str_create(void);
 
 /**
+ * @brief Copy a string. O(N)
+ * @param str: A pointer to the string.
+ * @return A pointer to the copied string.
+ */
+string *str_copy(const string *str);
+
+/**
  * @brief Destroy a string. O(1)
  * @param str: A pointer to the string to be destroyed.
  */
 void str_destroy(string *str);
+
+/**
+ * @brief Get the copy of the content of the string. O(N)
+ * @param str: A pointer to the string.
+ * @param chars: A null-terminated byte string.
+ */
+char *str_get(const string *str);
+
+/**
+ * @brief Set the content of the string using null-terminated byte string. O(N)
+ * @param str: A pointer to the string to be set.
+ * @param chars: A pointer to a null-terminated byte string.
+ */
+void str_set(string *str, const char *chars);
+
+/**
+ * @brief Print the contents of the string. O(N)
+ * @param str: A pointer to the string to be printed.
+ */
+void str_print(const string *str);
 
 /**
  * @brief Find the size of the string. O(1)
@@ -107,28 +135,6 @@ int str_size(const string *str);
 bool str_is_empty(const string *str);
 
 /**
- * @brief Set the content of the string using null-terminated byte string. O(N)
- * @param str: A pointer to the string to be set.
- * @param chars: A pointer to a null-terminated byte string.
- */
-void str_set(string *str, const char *chars);
-
-/**
- * @brief Get the copy of the content of the string. O(N)
- * @param str: A pointer to the string.
- * @param chars: A null-terminated byte string.
- */
-char *str_get(const string *str);
-
-/**
- * @brief Determine whether the two strings have the same content. O(N)
- * @param str1: A pointer to the first string.
- * @param str2: A pointer to the second string.
- * @return Returns true if the contents of the two strings are the same, false otherwise.
- */
-bool str_equal(const string *str1, const string *str2);
-
-/**
  * @brief Take the i-th character of the string. O(1)
  * @param str: A pointer to the string.
  * @param i: Index (0 <= i < str_size(str)).
@@ -137,37 +143,12 @@ bool str_equal(const string *str1, const string *str2);
 char str_at(const string *str, int i);
 
 /**
- * @brief Reverse the string in place. O(N)
- * @param str: A pointer to the string.
+ * @brief Determine whether the two strings have the same content. O(N)
+ * @param str1: A pointer to the first string.
+ * @param str2: A pointer to the second string.
+ * @return Returns true if the contents of the two strings are the same, false otherwise.
  */
-void str_reverse(string *str);
-
-/**
- * @brief Replace character in the string. O(N)
- * @param str: A pointer to the string.
- * @param old_char: The old character to be replaced.
- * @param new_char: The new character to replace.
- */
-void str_replace_char(string *str, const char old_char, const char new_char);
-
-/**
- * @brief Convert the string to lowercase. O(N)
- * @param str: A pointer to the string.
- */
-void str_lower(string *str);
-
-/**
- * @brief Convert the string to uppercase. O(N)
- * @param str: A pointer to the string.
- */
-void str_upper(string *str);
-
-/**
- * @brief Copy a string. O(N)
- * @param str: A pointer to the string.
- * @return A pointer to the copied string.
- */
-string *str_copy(const string *str);
+bool str_equal(const string *str1, const string *str2);
 
 /**
  * @brief Compare two strings lexicographically. O(N)
@@ -186,29 +167,6 @@ order str_compare(const string *str1, const string *str2);
 int str_find(const string *str, const string *pattern);
 
 /**
- * @brief Append new string to the tail. O(N)
- * @param str: A pointer to the string.
- * @param new_str: A pointer to the new string.
- */
-void str_append(string *str, const string *new_str);
-
-/**
- * @brief Erase the contents of a range of string. O(N)
- * @param str: A pointer to the string to be erased.
- * @param begin: Begin range subscript (included).
- * @param end: End range subscript (not included).
- */
-void str_erase(string *str, int begin, int end);
-
-/**
- * @brief Replace the string. O(N)
- * @param str: A pointer to the string to be replaced.
- * @param old_str: Old substring.
- * @param new_str: New substring.
- */
-void str_replace(string *str, const string *old_str, const string *new_str);
-
-/**
  * @brief Split string with separator. O(N)
  *        Example: str_split("one, two, three", ", ") => ["one", "two", "three", NULL].
  *        Don't forget use str_destroy_array(return-value).
@@ -225,10 +183,53 @@ string **str_split(const string *str, const string *sep);
 void str_destroy_array(string **str_arr);
 
 /**
- * @brief Print the contents of the string. O(N)
- * @param str: A pointer to the string to be printed.
+ * @brief Convert the string to lowercase. O(N)
+ * @param str: A pointer to the string.
  */
-void str_print(const string *str);
+void str_lower(string *str);
+
+/**
+ * @brief Convert the string to uppercase. O(N)
+ * @param str: A pointer to the string.
+ */
+void str_upper(string *str);
+
+/**
+ * @brief Append new string to the tail. O(N)
+ * @param str: A pointer to the string.
+ * @param new_str: A pointer to the new string.
+ */
+void str_append(string *str, const string *new_str);
+
+/**
+ * @brief Erase the contents of a range of string. O(N)
+ * @param str: A pointer to the string to be erased.
+ * @param begin: Begin range subscript (included).
+ * @param end: End range subscript (not included).
+ */
+void str_erase(string *str, int begin, int end);
+
+/**
+ * @brief Reverse the string in place. O(N)
+ * @param str: A pointer to the string.
+ */
+void str_reverse(string *str);
+
+/**
+ * @brief Replace character in the string. O(N)
+ * @param str: A pointer to the string.
+ * @param old_char: The old character to be replaced.
+ * @param new_char: The new character to replace.
+ */
+void str_replace_char(string *str, const char old_char, const char new_char);
+
+/**
+ * @brief Replace the string. O(N)
+ * @param str: A pointer to the string to be replaced.
+ * @param old_str: Old substring.
+ * @param new_str: New substring.
+ */
+void str_replace(string *str, const string *old_str, const string *new_str);
 
 /**
  * @brief Remove leading and trailing blank characters of the string. O(N)
@@ -272,6 +273,23 @@ string *str_create(void)
     return str;
 }
 
+string *str_copy(const string *str)
+{
+    string *copy = (string *)malloc(sizeof(string));
+    _check_pointer(copy);
+    copy->size = str->size;
+    copy->capacity = str->capacity;
+    copy->data = (char *)malloc(sizeof(char) * copy->capacity);
+    _check_pointer(copy->data);
+    for (int i = 0; i < copy->size; i++)
+    {
+        copy->data[i] = str->data[i];
+    }
+    copy->data[copy->size] = '\0';
+
+    return copy;
+}
+
 void str_destroy(string *str)
 {
     if (str != NULL)
@@ -281,14 +299,16 @@ void str_destroy(string *str)
     }
 }
 
-int str_size(const string *str)
+char *str_get(const string *str)
 {
-    return str->size;
-}
-
-bool str_is_empty(const string *str)
-{
-    return str->size == 0;
+    char *chars = (char *)malloc(sizeof(str->size) + 1);
+    _check_pointer(chars);
+    for (int i = 0; i < str->size; ++i)
+    {
+        chars[i] = str->data[i];
+    }
+    chars[str->size] = '\0';
+    return chars;
 }
 
 void str_set(string *str, const char *chars)
@@ -306,16 +326,26 @@ void str_set(string *str, const char *chars)
     str->data[str->size] = '\0';
 }
 
-char *str_get(const string *str)
+void str_print(const string *str)
 {
-    char *chars = (char *)malloc(sizeof(str->size) + 1);
-    _check_pointer(chars);
-    for (int i = 0; i < str->size; ++i)
-    {
-        chars[i] = str->data[i];
-    }
-    chars[str->size] = '\0';
-    return chars;
+    printf("%s\n", str->data);
+}
+
+int str_size(const string *str)
+{
+    return str->size;
+}
+
+bool str_is_empty(const string *str)
+{
+    return str->size == 0;
+}
+
+char str_at(const string *str, int i)
+{
+    _check_bounds(i, 0, str->size);
+
+    return str->data[i];
 }
 
 bool str_equal(const string *str1, const string *str2)
@@ -334,67 +364,6 @@ bool str_equal(const string *str1, const string *str2)
     }
 
     return true;
-}
-
-char str_at(const string *str, int i)
-{
-    _check_bounds(i, 0, str->size);
-
-    return str->data[i];
-}
-
-void str_reverse(string *str)
-{
-    for (int i = 0, j = str->size - 1; i < j; ++i, --j)
-    {
-        char tmp = str->data[i];
-        str->data[i] = str->data[j];
-        str->data[j] = tmp;
-    }
-}
-
-void str_replace_char(string *str, const char old_char, const char new_char)
-{
-    for (int i = 0; i < str->size; ++i)
-    {
-        if (str->data[i] == old_char)
-        {
-            str->data[i] = new_char;
-        }
-    }
-}
-
-void str_lower(string *str)
-{
-    for (int i = 0; i < str->size; ++i)
-    {
-        str->data[i] = (str->data[i] >= 'A' && str->data[i] <= 'Z' ? str->data[i] + ('a' - 'A') : str->data[i]);
-    }
-}
-
-void str_upper(string *str)
-{
-    for (int i = 0; i < str->size; ++i)
-    {
-        str->data[i] = (str->data[i] >= 'a' && str->data[i] <= 'z' ? str->data[i] - ('a' - 'A') : str->data[i]);
-    }
-}
-
-string *str_copy(const string *str)
-{
-    string *copy = (string *)malloc(sizeof(string));
-    _check_pointer(copy);
-    copy->size = str->size;
-    copy->capacity = str->capacity;
-    copy->data = (char *)malloc(sizeof(char) * copy->capacity);
-    _check_pointer(copy->data);
-    for (int i = 0; i < copy->size; i++)
-    {
-        copy->data[i] = str->data[i];
-    }
-    copy->data[copy->size] = '\0';
-
-    return copy;
 }
 
 order str_compare(const string *str1, const string *str2)
@@ -438,74 +407,6 @@ int str_find(const string *str, const string *pattern)
     int m = str_size(pattern);
 
     return _find_pattern(_str, _pattern, n, m);
-}
-
-void str_append(string *str, const string *new_str)
-{
-    if (str->size + new_str->size >= str->capacity)
-    {
-        while (str->size + new_str->size >= str->capacity)
-        {
-            str->capacity *= 2;
-        }
-        char *tmp = (char *)malloc(sizeof(char) * str->capacity);
-        _check_pointer(tmp);
-        for (int i = 0; i < str->size; i++)
-        {
-            tmp[i] = str->data[i];
-        }
-        free(str->data);
-        str->data = tmp;
-    }
-
-    for (int i = 0; i < new_str->size; i++)
-    {
-        str->data[str->size + i] = new_str->data[i];
-    }
-    str->size += new_str->size;
-    str->data[str->size] = '\0';
-}
-
-void str_erase(string *str, int begin, int end)
-{
-    begin = (begin < 0 ? 0 : begin);
-    end = (end > str->size ? str->size : end);
-
-    for (int i = end; i < str->size; i++)
-    {
-        str->data[i - (end - begin)] = str->data[i];
-    }
-    str->size -= (end - begin);
-    str->data[str->size] = '\0';
-}
-
-void str_replace(string *str, const string *old_str, const string *new_str)
-{
-    string *buffer = str_create();
-    string *tmp = str_create();
-
-    int offset = 0;
-    int index = 0;
-    while ((index = _find_pattern(str->data + offset, old_str->data, str->size - offset, old_str->size)) != STR_NOT_FOUND)
-    {
-        index += offset;
-        _copy_range(tmp, str, offset, index);
-        str_append(buffer, tmp);
-        str_append(buffer, new_str);
-        offset = index + old_str->size;
-    }
-    if (offset != str->size)
-    {
-        _copy_range(tmp, str, offset, str->size);
-        str_append(buffer, tmp);
-    }
-    str_destroy(tmp);
-
-    free(str->data);
-    str->data = buffer->data;
-    str->size = buffer->size;
-    str->capacity = buffer->capacity;
-    free(buffer);
 }
 
 string **str_split(const string *str, const string *sep)
@@ -555,9 +456,109 @@ void str_destroy_array(string **str_arr)
     }
 }
 
-void str_print(const string *str)
+void str_lower(string *str)
 {
-    printf("%s\n", str->data);
+    for (int i = 0; i < str->size; ++i)
+    {
+        str->data[i] = (str->data[i] >= 'A' && str->data[i] <= 'Z' ? str->data[i] + ('a' - 'A') : str->data[i]);
+    }
+}
+
+void str_upper(string *str)
+{
+    for (int i = 0; i < str->size; ++i)
+    {
+        str->data[i] = (str->data[i] >= 'a' && str->data[i] <= 'z' ? str->data[i] - ('a' - 'A') : str->data[i]);
+    }
+}
+
+void str_append(string *str, const string *new_str)
+{
+    if (str->size + new_str->size >= str->capacity)
+    {
+        while (str->size + new_str->size >= str->capacity)
+        {
+            str->capacity *= 2;
+        }
+        char *tmp = (char *)malloc(sizeof(char) * str->capacity);
+        _check_pointer(tmp);
+        for (int i = 0; i < str->size; i++)
+        {
+            tmp[i] = str->data[i];
+        }
+        free(str->data);
+        str->data = tmp;
+    }
+
+    for (int i = 0; i < new_str->size; i++)
+    {
+        str->data[str->size + i] = new_str->data[i];
+    }
+    str->size += new_str->size;
+    str->data[str->size] = '\0';
+}
+
+void str_erase(string *str, int begin, int end)
+{
+    begin = (begin < 0 ? 0 : begin);
+    end = (end > str->size ? str->size : end);
+
+    for (int i = end; i < str->size; i++)
+    {
+        str->data[i - (end - begin)] = str->data[i];
+    }
+    str->size -= (end - begin);
+    str->data[str->size] = '\0';
+}
+
+void str_reverse(string *str)
+{
+    for (int i = 0, j = str->size - 1; i < j; ++i, --j)
+    {
+        char tmp = str->data[i];
+        str->data[i] = str->data[j];
+        str->data[j] = tmp;
+    }
+}
+
+void str_replace_char(string *str, const char old_char, const char new_char)
+{
+    for (int i = 0; i < str->size; ++i)
+    {
+        if (str->data[i] == old_char)
+        {
+            str->data[i] = new_char;
+        }
+    }
+}
+
+void str_replace(string *str, const string *old_str, const string *new_str)
+{
+    string *buffer = str_create();
+    string *tmp = str_create();
+
+    int offset = 0;
+    int index = 0;
+    while ((index = _find_pattern(str->data + offset, old_str->data, str->size - offset, old_str->size)) != STR_NOT_FOUND)
+    {
+        index += offset;
+        _copy_range(tmp, str, offset, index);
+        str_append(buffer, tmp);
+        str_append(buffer, new_str);
+        offset = index + old_str->size;
+    }
+    if (offset != str->size)
+    {
+        _copy_range(tmp, str, offset, str->size);
+        str_append(buffer, tmp);
+    }
+    str_destroy(tmp);
+
+    free(str->data);
+    str->data = buffer->data;
+    str->size = buffer->size;
+    str->capacity = buffer->capacity;
+    free(buffer);
 }
 
 void str_strip(string *str)
