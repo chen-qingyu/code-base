@@ -14,6 +14,12 @@
  * Type definition.
  *******************************/
 
+// For HUGE_VAL, NAN and INFINITY (At least the C99 standard is required)
+// HUGE_VAL: Indicates value too big to be representable.
+// NAN: Not a Number.
+// INFINITY: Positive infinity.
+#include <math.h>
+
 // String structure definition.
 struct st_string
 {
@@ -27,19 +33,58 @@ struct st_string
     char *data;
 };
 
+// String initial capacity.
+#define INIT_CAPACITY 8
+
+/*******************************
+ * Helper function declaration.
+ *******************************/
+
+// Check whether the index is valid (begin <= pos < end).
+static inline void _check_bounds(int pos, int begin, int end);
+
+// Check whether the pointer is a non-null pointer.
+static inline void _check_pointer(void *pointer);
+
+// Use the KMP algorithm to find the position of the pattern.
+static inline int _find_pattern(const char *str, const char *pattern, int n, int m);
+
+// Calculate the length of null-terminated byte string (exclude '\0').
+static inline int _length(const char *chars);
+
+// Copy a string range.
+static inline void _copy_range(string *dst, const string *src, int begin, int end);
+
 /*******************************
  * Interface functions definition.
  *******************************/
-
+#include <float.h>
 string *str_create(void)
 {
     string *str = (string *)malloc(sizeof(string));
     _check_pointer(str);
     str->size = 0;
-    str->capacity = 8;
+    str->capacity = INIT_CAPACITY;
     str->data = (char *)malloc(sizeof(char) * str->capacity);
     _check_pointer(str->data);
     str->data[0] = '\0';
+
+    return str;
+}
+
+string *str_init(const char *chars)
+{
+    string *str = (string *)malloc(sizeof(string));
+    _check_pointer(str);
+    str->size = _length(chars);
+    str->capacity = str->size + 1; // '\0'
+    str->data = (char *)malloc(sizeof(char) * str->capacity);
+    _check_pointer(str->data);
+    for (int i = 0; i < str->size; ++i)
+    {
+        str->data[i] = chars[i];
+    }
+    str->data[str->size] = '\0';
 
     return str;
 }
@@ -61,6 +106,23 @@ string *str_copy(const string *str)
     return copy;
 }
 
+string *str_move(string *str)
+{
+    string *move = (string *)malloc(sizeof(string));
+    _check_pointer(move);
+    move->size = str->size;
+    move->capacity = str->capacity;
+    move->data = str->data;
+
+    str->size = 0;
+    str->capacity = INIT_CAPACITY;
+    str->data = (char *)malloc(sizeof(char) * str->capacity);
+    _check_pointer(str->data);
+    str->data[0] = '\0';
+
+    return move;
+}
+
 void str_destroy(string *str)
 {
     if (str != NULL)
@@ -68,6 +130,36 @@ void str_destroy(string *str)
         free(str->data);
         free(str);
     }
+}
+
+void str_copy_assign(string *lhs, const string *rhs)
+{
+    free(lhs->data);
+
+    lhs->size = rhs->size;
+    lhs->capacity = rhs->capacity;
+    lhs->data = (char *)malloc(sizeof(char) * lhs->capacity);
+    _check_pointer(lhs->data);
+    for (int i = 0; i < lhs->size; i++)
+    {
+        lhs->data[i] = rhs->data[i];
+    }
+    lhs->data[lhs->size] = '\0';
+}
+
+void str_move_assign(string *lhs, string *rhs)
+{
+    free(lhs->data);
+
+    lhs->size = rhs->size;
+    lhs->capacity = rhs->capacity;
+    lhs->data = rhs->data;
+
+    rhs->size = 0;
+    rhs->capacity = INIT_CAPACITY;
+    rhs->data = (char *)malloc(sizeof(char) * rhs->capacity);
+    _check_pointer(rhs->data);
+    rhs->data[0] = '\0';
 }
 
 char *str_get(const string *str)
@@ -227,6 +319,18 @@ void str_destroy_array(string **str_arr)
     }
 }
 
+double str_to_decimal(const string *str)
+{
+    // TODO
+    return 0;
+}
+
+long long str_to_integer(const string *str, int base)
+{
+    // TODO
+    return 0;
+}
+
 void str_lower(string *str)
 {
     for (int i = 0; i < str->size; ++i)
@@ -245,7 +349,7 @@ void str_upper(string *str)
 
 void str_append(string *str, const string *new_str)
 {
-    if (str->size + new_str->size >= str->capacity)
+    if (str->size + new_str->size >= str->capacity) // need to expand capacity
     {
         while (str->size + new_str->size >= str->capacity)
         {
@@ -346,6 +450,26 @@ void str_strip(string *str)
         --i;
     }
     str_erase(str, i + 1, str->size);
+}
+
+void str_swap(string *str1, string *str2)
+{
+    int tmp_size = str1->size;
+    str1->size = str2->size;
+    str2->size = tmp_size;
+
+    int tmp_capa = str1->capacity;
+    str1->capacity = str2->capacity;
+    str2->capacity = tmp_capa;
+
+    char *tmp_data = str1->data;
+    str1->data = str2->data;
+    str2->data = tmp_data;
+}
+
+void str_clear(string *str)
+{
+    str_set(str, "");
 }
 
 /*******************************
