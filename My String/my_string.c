@@ -321,11 +321,89 @@ double str_to_decimal(const string *str)
     // TODO
     return 0;
 }
-
+// TODO
+int _check_infinity(const string *str)
+{
+    string *inf = str_create();
+    char *pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
+    char *neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
+    for (int i = 0; i < 12; ++i)
+    {
+        str_set(inf, pos_infs[i]);
+        if (str_equal(str, inf))
+        {
+            str_destroy(inf);
+            return 1; // +infinity
+        }
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        str_set(inf, neg_infs[i]);
+        if (str_equal(str, inf))
+        {
+            str_destroy(inf);
+            return -1; // -infinity
+        }
+    }
+    str_destroy(inf);
+    return 0; // not infinity
+}
+// TODO
+int _char_to_integer(char digit, int base) // 2 <= base <= 36
+{
+    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (int i = 0; i < base; ++i)
+    {
+        if (digit == digits[i])
+        {
+            return i;
+        }
+    }
+    return -1; // not an integer
+}
+// TODO overflow => HUGE
 long long str_to_integer(const string *str, int base)
 {
-    // TODO
-    return 0;
+    if (base < 2 || base > 36)
+    {
+        fprintf(stderr, "ERROR: Invalid base.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // check infinity
+    int inf = _check_infinity(str);
+    if (inf == 1)
+    {
+        return (long long)INFINITY;
+    }
+    else if (inf == -1)
+    {
+        return (long long)-INFINITY;
+    }
+
+    long long result = 0;
+    for (int i = str->size - 1; i >= 0; --i)
+    {
+        int integer = _char_to_integer(str->data[i], base);
+        if (integer == -1) // a symbol appears
+        {
+            if (str->data[i] != '+' && str->data[i] != '-') // not a plus or/and a minus sign
+            {
+                return (long long)NAN;
+            }
+            else if ((str->data[i] == '+' && i > 0) || (str->data[i] == '-' && i > 0)) // [+-] appears on the > 0 index
+            {
+                return (long long)NAN;
+            }
+            else // [+-] appears on the 0 index
+            {
+                integer = (str->data[i] == '+' ? 1 : -1);
+            }
+        }
+        result += integer * (long long)pow(base, str->size - 1 - i);
+    }
+
+    return result;
 }
 
 void str_lower(string *str)

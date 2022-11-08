@@ -290,6 +290,19 @@ int main()
     str_set(s2, "hello");
     assert(str_equal(s1, s2) == true);
 
+    // TODO
+    str_set(s1, "233");
+    assert(str_to_integer(s1, 10) == 233LL);
+    str_set(s1, "1000");
+    assert(str_to_integer(s1, 10) == 1000LL);
+    str_set(s1, "1");
+    assert(str_to_integer(s1, 10) == 1LL);
+    str_set(s1, "0");
+    assert(str_to_integer(s1, 10) == 0LL);
+    str_set(s1, "f");
+    printf("%lld", str_to_integer(s1, 16));
+    // assert(str_to_integer(s1, 16) == 15LL);
+
     // str_destroy()
 
     str_destroy(s1);
