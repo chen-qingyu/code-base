@@ -10,15 +10,12 @@
 
 #include "my_string.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /*******************************
  * Type definition.
  *******************************/
-
-// For HUGE_VAL, NAN and INFINITY (At least the C99 standard is required)
-// HUGE_VAL: Indicates value too big to be representable.
-// NAN: Not a Number.
-// INFINITY: Positive infinity.
-#include <math.h>
 
 // String structure definition.
 struct st_string

@@ -1,7 +1,7 @@
 #include "my_string.h"
 
 #include <assert.h>
-#include <math.h>
+#include <stdio.h>
 
 int main()
 {

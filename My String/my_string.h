@@ -47,13 +47,18 @@
 #ifndef MY_STRING_H
 #define MY_STRING_H
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 /*******************************
  * Type declaration.
  *******************************/
+
+// For true and false.
+#include <stdbool.h>
+
+// For HUGE_VAL, NAN and INFINITY.
+// HUGE_VAL: Indicate the value is too big to be representable.
+// NAN: Not a number.
+// INFINITY: Positive infinity.
+#include <math.h>
 
 // Used for string find.
 #define STR_NOT_FOUND (-1)
