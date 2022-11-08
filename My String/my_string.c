@@ -58,7 +58,7 @@ static inline void _copy_range(string *dst, const string *src, int begin, int en
 /*******************************
  * Interface functions definition.
  *******************************/
-#include <float.h>
+
 string *str_create(void)
 {
     string *str = (string *)malloc(sizeof(string));
