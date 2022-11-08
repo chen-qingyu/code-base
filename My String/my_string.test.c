@@ -290,18 +290,79 @@ int main()
     str_set(s2, "hello");
     assert(str_equal(s1, s2) == true);
 
-    // TODO
+    // str_to_integer()
+
     str_set(s1, "233");
-    assert(str_to_integer(s1, 10) == 233LL);
-    str_set(s1, "1000");
-    assert(str_to_integer(s1, 10) == 1000LL);
+    assert(str_to_integer(s1, 10) == 233);
+    str_set(s1, "FFFFFFFFFFFFFFFFFFF");
+    assert(str_to_integer(s1, 16) == (long long)HUGE_VAL);
+    str_set(s1, "cafebabe");
+    assert(str_to_integer(s1, 16) == 3405691582LL);
+    str_set(s1, "inf");
+    assert(str_to_integer(s1, 10) == (long long)INFINITY);
+    str_set(s1, "hello");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
+    str_set(s1, "z");
+    assert(str_to_integer(s1, 36) == 35);
+
+    str_set(s1, "0001000");
+    assert(str_to_integer(s1, 10) == 1000);
     str_set(s1, "1");
-    assert(str_to_integer(s1, 10) == 1LL);
+    assert(str_to_integer(s1, 10) == 1);
     str_set(s1, "0");
-    assert(str_to_integer(s1, 10) == 0LL);
+    assert(str_to_integer(s1, 10) == 0);
     str_set(s1, "f");
-    printf("%lld", str_to_integer(s1, 16));
-    // assert(str_to_integer(s1, 16) == 15LL);
+    assert(str_to_integer(s1, 16) == 15);
+    str_set(s1, "11");
+    assert(str_to_integer(s1, 2) == 3);
+    str_set(s1, "-inf");
+    assert(str_to_integer(s1, 10) == (long long)-INFINITY);
+    str_set(s1, "zz");
+    assert(str_to_integer(s1, 36) == 35 * 36 + 35);
+    str_set(s1, "-1");
+    assert(str_to_integer(s1, 10) == -1);
+    str_set(s1, "-0");
+    assert(str_to_integer(s1, 10) == 0);
+    str_set(s1, "-10");
+    assert(str_to_integer(s1, 10) == -10);
+    str_set(s1, "-10");
+    assert(str_to_integer(s1, 16) == -16);
+    str_set(s1, "-z");
+    assert(str_to_integer(s1, 36) == -35);
+    str_set(s1, "+1");
+    assert(str_to_integer(s1, 10) == 1);
+    str_set(s1, "+0");
+    assert(str_to_integer(s1, 10) == 0);
+    str_set(s1, "+10");
+    assert(str_to_integer(s1, 10) == 10);
+    str_set(s1, "+10");
+    assert(str_to_integer(s1, 16) == 16);
+    str_set(s1, "+z");
+    assert(str_to_integer(s1, 36) == 35);
+    str_set(s1, "-0101");
+    assert(str_to_integer(s1, 2) == -5);
+    str_set(s1, "-1010");
+    assert(str_to_integer(s1, 2) == -10);
+    str_set(s1, "+0101");
+    assert(str_to_integer(s1, 2) == 5);
+    str_set(s1, "+1010");
+    assert(str_to_integer(s1, 2) == 10);
+    str_set(s1, "\n\r\n\t  233  \t\r\n\r");
+    assert(str_to_integer(s1, 10) == 233);
+    str_set(s1, "-INFINITY");
+    assert(str_to_integer(s1, 10) == (long long)-INFINITY);
+    str_set(s1, "+INFINITY");
+    assert(str_to_integer(s1, 10) == (long long)INFINITY);
+    str_set(s1, "INFINITY!!!");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
+    str_set(s1, "");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
+    str_set(s1, "+");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
+    str_set(s1, "-");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
+    str_set(s1, "hahaha~");
+    assert(str_to_integer(s1, 10) == (long long)NAN);
 
     // str_destroy()
 

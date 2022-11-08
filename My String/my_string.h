@@ -234,7 +234,7 @@ void str_destroy_array(string **str_arr);
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
  *        If the string is too big to be representable will return `HUGE_VAL`.
  *        If the string cannot be interpreted as a number will return `NAN`.
- *        If the string represents infinity will return `INFINITY`.
+ *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `INFINITY`.
  *        Example: string *str1 = str_init("233.33");
  *                 double number = str_to_decimal(str1); // => 233.33
  *                 string *str2 = str_init("1e+300");
@@ -252,7 +252,7 @@ double str_to_decimal(const string *str);
  * @brief Convert the string to an integer number based on 2-36 base. O(N)
  *        If the string is too big to be representable will return `(long long)HUGE_VAL`.
  *        If the string cannot be interpreted as an integer number will return `(long long)NAN`.
- *        If the string represents infinity will return `(long long)INFINITY`.
+ *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `(long long)INFINITY`.
  *        Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).
  *        Example: string *str1 = str_init("233");
  *                 long long number = str_to_integer(str1, 10); // => (long long)233

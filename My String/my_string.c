@@ -10,8 +10,9 @@
 
 #include "my_string.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <math.h>   // pow
+#include <stdio.h>  // fprintf
+#include <stdlib.h> // malloc realloc free exit
 
 /*******************************
  * Type definition.
@@ -361,9 +362,10 @@ int _char_to_integer(char digit, int base) // 2 <= base <= 36
     }
     return -1; // not an integer
 }
-// TODO overflow => HUGE
+
 long long str_to_integer(const string *str, int base)
 {
+    // check base
     if (base < 2 || base > 36)
     {
         fprintf(stderr, "ERROR: Invalid base.\n");
@@ -381,29 +383,37 @@ long long str_to_integer(const string *str, int base)
         return (long long)-INFINITY;
     }
 
-    long long result = 0;
-    for (int i = str->size - 1; i >= 0; --i)
+    // pre-process
+    string *copy = str_copy(str);
+    str_strip(copy);
+    str_upper(copy);
+    long long sign = 1; // default '+'
+    if (copy->data[0] == '-' || copy->data[0] == '+')
     {
-        int integer = _char_to_integer(str->data[i], base);
-        if (integer == -1) // a symbol appears
-        {
-            if (str->data[i] != '+' && str->data[i] != '-') // not a plus or/and a minus sign
-            {
-                return (long long)NAN;
-            }
-            else if ((str->data[i] == '+' && i > 0) || (str->data[i] == '-' && i > 0)) // [+-] appears on the > 0 index
-            {
-                return (long long)NAN;
-            }
-            else // [+-] appears on the 0 index
-            {
-                integer = (str->data[i] == '+' ? 1 : -1);
-            }
-        }
-        result += integer * (long long)pow(base, str->size - 1 - i);
+        sign = (copy->data[0] == '+') ? 1 : -1;
+        str_erase(copy, 0, 1); // erase sign
     }
 
-    return result;
+    // check empty after erased sign
+    if (str_is_empty(copy)) // "(blank)[+-]?(blank)"
+    {
+        return (long long)NAN;
+    }
+
+    // calculate
+    long long result = 0;
+    for (int i = copy->size - 1; i >= 0; --i)
+    {
+        int integer = _char_to_integer(copy->data[i], base);
+        if (integer == -1) // a symbol appears
+        {
+            return (long long)NAN;
+        }
+        result += integer * (long long)pow(base, copy->size - 1 - i);
+    }
+    str_destroy(copy);
+
+    return sign * result;
 }
 
 void str_lower(string *str)
