@@ -1,7 +1,13 @@
 #include "my_string.h"
 
 #include <assert.h>
+#include <float.h>
 #include <stdio.h>
+
+bool eq(double a, double b)
+{
+    return fabs(a - b) < DBL_EPSILON;
+}
 
 int main()
 {
@@ -294,14 +300,8 @@ int main()
 
     str_set(s1, "233");
     assert(str_to_integer(s1, 10) == 233);
-    str_set(s1, "FFFFFFFFFFFFFFFFFFF");
-    assert(str_to_integer(s1, 16) == (long long)HUGE_VAL);
     str_set(s1, "cafebabe");
     assert(str_to_integer(s1, 16) == 3405691582LL);
-    str_set(s1, "inf");
-    assert(str_to_integer(s1, 10) == (long long)INFINITY);
-    str_set(s1, "hello");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
     str_set(s1, "z");
     assert(str_to_integer(s1, 36) == 35);
 
@@ -315,8 +315,6 @@ int main()
     assert(str_to_integer(s1, 16) == 15);
     str_set(s1, "11");
     assert(str_to_integer(s1, 2) == 3);
-    str_set(s1, "-inf");
-    assert(str_to_integer(s1, 10) == (long long)-INFINITY);
     str_set(s1, "zz");
     assert(str_to_integer(s1, 36) == 35 * 36 + 35);
     str_set(s1, "-1");
@@ -349,20 +347,76 @@ int main()
     assert(str_to_integer(s1, 2) == 10);
     str_set(s1, "\n\r\n\t  233  \t\r\n\r");
     assert(str_to_integer(s1, 10) == 233);
-    str_set(s1, "-INFINITY");
-    assert(str_to_integer(s1, 10) == (long long)-INFINITY);
-    str_set(s1, "+INFINITY");
-    assert(str_to_integer(s1, 10) == (long long)INFINITY);
-    str_set(s1, "INFINITY!!!");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
-    str_set(s1, "");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
-    str_set(s1, "+");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
-    str_set(s1, "-");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
-    str_set(s1, "hahaha~");
-    assert(str_to_integer(s1, 10) == (long long)NAN);
+
+    // str_to_decimal()
+    str_set(s1, "233.33");
+    assert(str_to_decimal(s1) == 233.33);
+    str_set(s1, "1e+600");
+    assert(str_to_decimal(s1) == HUGE_VAL);
+    str_set(s1, "nan");
+    assert(isnan(str_to_decimal(s1)));
+    str_set(s1, "inf");
+    assert(str_to_decimal(s1) == INFINITY);
+
+    str_set(s1, "0");
+    assert(str_to_decimal(s1) == 0);
+    str_set(s1, "-0");
+    assert(str_to_decimal(s1) == 0);
+    str_set(s1, "+0");
+    assert(str_to_decimal(s1) == 0);
+    str_set(s1, ".0");
+    assert(str_to_decimal(s1) == 0);
+    str_set(s1, "0.");
+    assert(str_to_decimal(s1) == 0);
+
+    str_set(s1, "1");
+    assert(str_to_decimal(s1) == 1.0);
+    str_set(s1, "-1");
+    assert(str_to_decimal(s1) == -1.0);
+    str_set(s1, "+1");
+    assert(str_to_decimal(s1) == 1.0);
+    str_set(s1, ".1");
+    assert(str_to_decimal(s1) == 0.1);
+    str_set(s1, "1.");
+    assert(str_to_decimal(s1) == 1.0);
+
+    str_set(s1, "1e2");
+    assert(str_to_decimal(s1) == 1e2);
+    str_set(s1, "-1e2");
+    assert(str_to_decimal(s1) == -1e2);
+    str_set(s1, "+1e2");
+    assert(str_to_decimal(s1) == 1e2);
+    str_set(s1, ".1e2");
+    assert(str_to_decimal(s1) == 0.1e2);
+    str_set(s1, "1.e2");
+    assert(str_to_decimal(s1) == 1.e2);
+
+    str_set(s1, "1e+2");
+    assert(str_to_decimal(s1) == 1e+2);
+    str_set(s1, "-1e+2");
+    assert(str_to_decimal(s1) == -1e+2);
+    str_set(s1, "+1e+2");
+    assert(str_to_decimal(s1) == 1e+2);
+    str_set(s1, ".1e+2");
+    assert(str_to_decimal(s1) == 0.1e+2);
+    str_set(s1, "1.e+2");
+    assert(str_to_decimal(s1) == 1.e+2);
+
+    str_set(s1, "1e-2");
+    assert(eq(str_to_decimal(s1), 1e-2));
+    str_set(s1, "-1e-2");
+    assert(eq(str_to_decimal(s1), -1e-2));
+    str_set(s1, "+1e-2");
+    assert(eq(str_to_decimal(s1), 1e-2));
+    str_set(s1, ".1e-2");
+    assert(eq(str_to_decimal(s1), 0.1e-2));
+    str_set(s1, "1.e-2");
+    assert(eq(str_to_decimal(s1), 1.e-2));
+
+    str_set(s1, "0.0001");
+    assert(eq(str_to_decimal(s1), 0.0001));
+    str_set(s1, "0.000101");
+    assert(!eq(str_to_decimal(s1), 0.0001));
 
     // str_destroy()
 

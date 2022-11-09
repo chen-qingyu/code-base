@@ -34,6 +34,31 @@ struct st_string
 // String initial capacity.
 #define INIT_CAPACITY 8
 
+enum state
+{
+    S_BEGIN_BLANK = 1 << 0,        // begin blank character
+    S_SIGN = 1 << 1,               // positive or negative sign
+    S_INT_PART = 1 << 2,           // integer part
+    S_DEC_POINT_HAS_LEFT = 1 << 3, // decimal point has left digit
+    S_DEC_POINT_NOT_LEFT = 1 << 4, // decimal point doesn't have left digit
+    S_DEC_PART = 1 << 5,           // decimal part
+    S_EXP = 1 << 6,                // scientific notation identifier
+    S_EXP_SIGN = 1 << 7,           // positive or negative sign of exponent part
+    S_EXP_PART = 1 << 8,           // exponent part
+    S_END_BLANK = 1 << 9,          // end blank character
+    S_OTHER = 1 << 10,             // other
+};
+
+enum event
+{
+    E_BLANK = 1 << 11,     // blank character: '\n', '\r', '\t', ' '
+    E_SIGN = 1 << 12,      // positive or negative sign: '+', '-'
+    E_NUMBER = 1 << 13,    // number: '[0-9]|[0-Z]'
+    E_DEC_POINT = 1 << 14, // decimal point: '.'
+    E_EXP = 1 << 15,       // scientific notation identifier: '[eE]'
+    E_OTHER = 1 << 16,     // other
+};
+
 /*******************************
  * Helper function declaration.
  *******************************/
@@ -52,6 +77,15 @@ static inline int _length(const char *chars);
 
 // Copy a string range.
 static inline void _copy_range(string *dst, const string *src, int begin, int end);
+
+// Check if the string represents infinity or nan. Return [+-]INFINITY or NAN if the string represents infinity or nan, zero otherwise.
+static inline double _check_infinity_nan(const string *str);
+
+// Try to transform a character to an integer based on 2-36 base.
+static inline int _char_to_integer(char digit, int base);
+
+// Try to transform a character to an event.
+static inline enum event _get_event(char ch, int base);
 
 /*******************************
  * Interface functions definition.
@@ -319,48 +353,97 @@ void str_destroy_array(string **str_arr)
 
 double str_to_decimal(const string *str)
 {
-    // TODO
-    return 0;
-}
-// TODO
-int _check_infinity(const string *str)
-{
-    string *inf = str_create();
-    char *pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
-    char *neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
-    for (int i = 0; i < 12; ++i)
+    // check infinity or nan
+    double inf_nan = _check_infinity_nan(str);
+    if (inf_nan != 0)
     {
-        str_set(inf, pos_infs[i]);
-        if (str_equal(str, inf))
+        return inf_nan;
+    }
+
+    double sign = 1; // default '+'
+    double decimal_part = 0;
+    int decimal_cnt = 0;
+    double exp_sign = 1; // default '+'
+    int exp_part = 0;
+
+    // FSM
+    enum state st = S_BEGIN_BLANK;
+    for (int i = 0; i < str->size; ++i)
+    {
+        enum event ev = _get_event(str->data[i], 10);
+        switch (st | ev)
         {
-            str_destroy(inf);
-            return 1; // +infinity
+            case S_BEGIN_BLANK | E_BLANK:
+                st = S_BEGIN_BLANK;
+                break;
+
+            case S_BEGIN_BLANK | E_SIGN:
+                sign = (str->data[i] == '+') ? 1 : -1;
+                st = S_SIGN;
+                break;
+
+            case S_BEGIN_BLANK | E_DEC_POINT:
+            case S_SIGN | E_DEC_POINT:
+                st = S_DEC_POINT_NOT_LEFT;
+                break;
+
+            case S_BEGIN_BLANK | E_NUMBER:
+            case S_SIGN | E_NUMBER:
+            case S_INT_PART | E_NUMBER:
+                decimal_part = decimal_part * 10 + _char_to_integer(str->data[i], 10);
+                st = S_INT_PART;
+                break;
+
+            case S_INT_PART | E_DEC_POINT:
+                st = S_DEC_POINT_HAS_LEFT;
+                break;
+
+            case S_DEC_POINT_NOT_LEFT | E_NUMBER:
+            case S_DEC_PART | E_NUMBER:
+            case S_DEC_POINT_HAS_LEFT | E_NUMBER:
+                decimal_part = decimal_part * 10 + _char_to_integer(str->data[i], 10);
+                decimal_cnt++;
+                st = S_DEC_PART;
+                break;
+
+            case S_INT_PART | E_EXP:
+            case S_DEC_POINT_HAS_LEFT | E_EXP:
+            case S_DEC_PART | E_EXP:
+                st = S_EXP;
+                break;
+
+            case S_EXP | E_SIGN:
+                exp_sign = (str->data[i] == '+') ? 1 : -1;
+                st = S_EXP_SIGN;
+                break;
+
+            case S_EXP | E_NUMBER:
+            case S_EXP_SIGN | E_NUMBER:
+            case S_EXP_PART | E_NUMBER:
+                exp_part = exp_part * 10 + _char_to_integer(str->data[i], 10);
+                st = S_EXP_PART;
+                break;
+
+            case S_INT_PART | E_BLANK:
+            case S_DEC_POINT_HAS_LEFT | E_BLANK:
+            case S_DEC_PART | E_BLANK:
+            case S_EXP_PART | E_BLANK:
+            case S_END_BLANK | E_BLANK:
+                st = S_END_BLANK;
+                break;
+
+            default:
+                st = S_OTHER;
+                break;
         }
     }
-    for (int i = 0; i < 6; ++i)
+    if (st != S_INT_PART && st != S_DEC_POINT_HAS_LEFT && st != S_DEC_PART && st != S_EXP_PART && st != S_END_BLANK)
     {
-        str_set(inf, neg_infs[i]);
-        if (str_equal(str, inf))
-        {
-            str_destroy(inf);
-            return -1; // -infinity
-        }
+        fprintf(stderr, "ERROR: Invalid literal for str_to_decimal(): '%s'\n", str->data);
+        exit(EXIT_FAILURE);
     }
-    str_destroy(inf);
-    return 0; // not infinity
-}
-// TODO
-int _char_to_integer(char digit, int base) // 2 <= base <= 36
-{
-    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for (int i = 0; i < base; ++i)
-    {
-        if (digit == digits[i])
-        {
-            return i;
-        }
-    }
-    return -1; // not an integer
+
+    return sign * ((decimal_part / pow(10, decimal_cnt)) * pow(10, exp_sign * exp_part));
 }
 
 long long str_to_integer(const string *str, int base)
@@ -368,52 +451,53 @@ long long str_to_integer(const string *str, int base)
     // check base
     if (base < 2 || base > 36)
     {
-        fprintf(stderr, "ERROR: Invalid base.\n");
+        fprintf(stderr, "ERROR: Invalid base for str_to_integer(): %d\n", base);
         exit(EXIT_FAILURE);
     }
 
-    // check infinity
-    int inf = _check_infinity(str);
-    if (inf == 1)
-    {
-        return (long long)INFINITY;
-    }
-    else if (inf == -1)
-    {
-        return (long long)-INFINITY;
-    }
-
-    // pre-process
-    string *copy = str_copy(str);
-    str_strip(copy);
-    str_upper(copy);
     long long sign = 1; // default '+'
-    if (copy->data[0] == '-' || copy->data[0] == '+')
-    {
-        sign = (copy->data[0] == '+') ? 1 : -1;
-        str_erase(copy, 0, 1); // erase sign
-    }
+    long long integer_part = 0;
 
-    // check empty after erased sign
-    if (str_is_empty(copy)) // "(blank)[+-]?(blank)"
+    // FSM
+    enum state st = S_BEGIN_BLANK;
+    for (int i = 0; i < str->size; ++i)
     {
-        return (long long)NAN;
-    }
-
-    // calculate
-    long long result = 0;
-    for (int i = copy->size - 1; i >= 0; --i)
-    {
-        int integer = _char_to_integer(copy->data[i], base);
-        if (integer == -1) // a symbol appears
+        enum event ev = _get_event(str->data[i], base);
+        switch (st | ev)
         {
-            return (long long)NAN;
-        }
-        result += integer * (long long)pow(base, copy->size - 1 - i);
-    }
-    str_destroy(copy);
+            case S_BEGIN_BLANK | E_BLANK:
+                st = S_BEGIN_BLANK;
+                break;
 
-    return sign * result;
+            case S_BEGIN_BLANK | E_SIGN:
+                sign = (str->data[i] == '+') ? 1 : -1;
+                st = S_SIGN;
+                break;
+
+            case S_BEGIN_BLANK | E_NUMBER:
+            case S_SIGN | E_NUMBER:
+            case S_INT_PART | E_NUMBER:
+                integer_part = integer_part * base + _char_to_integer(str->data[i], base);
+                st = S_INT_PART;
+                break;
+
+            case S_INT_PART | E_BLANK:
+            case S_END_BLANK | E_BLANK:
+                st = S_END_BLANK;
+                break;
+
+            default:
+                st = S_OTHER;
+                break;
+        }
+    }
+    if (st != S_INT_PART && st != S_END_BLANK)
+    {
+        fprintf(stderr, "ERROR: Invalid literal for str_to_integer() with base %d: '%s'\n", base, str->data);
+        exit(EXIT_FAILURE);
+    }
+
+    return sign * integer_part;
 }
 
 void str_lower(string *str)
@@ -663,4 +747,80 @@ static inline void _copy_range(string *dst, const string *src, int begin, int en
         dst->data[i] = src->data[begin + i];
     }
     dst->data[dst->size] = '\0';
+}
+
+static inline double _check_infinity_nan(const string *str)
+{
+    string *inf_nan = str_create();
+    char *pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
+    char *neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
+    char *nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};
+    for (int i = 0; i < 12; ++i)
+    {
+        str_set(inf_nan, pos_infs[i]);
+        if (str_equal(str, inf_nan))
+        {
+            str_destroy(inf_nan);
+            return INFINITY;
+        }
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        str_set(inf_nan, neg_infs[i]);
+        if (str_equal(str, inf_nan))
+        {
+            str_destroy(inf_nan);
+            return -INFINITY;
+        }
+    }
+    for (int i = 0; i < 9; ++i)
+    {
+        str_set(inf_nan, nans[i]);
+        if (str_equal(str, inf_nan))
+        {
+            str_destroy(inf_nan);
+            return NAN;
+        }
+    }
+    str_destroy(inf_nan);
+    return 0; // not infinity or nan
+}
+
+static inline int _char_to_integer(char digit, int base) // 2 <= base <= 36
+{
+    char upper_digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char lower_digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+    for (int i = 0; i < base; ++i)
+    {
+        if (digit == upper_digits[i] || digit == lower_digits[i])
+        {
+            return i;
+        }
+    }
+    return -1; // not an integer
+}
+
+static inline enum event _get_event(char ch, int base)
+{
+    if (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')
+    {
+        return E_BLANK;
+    }
+    else if (_char_to_integer(ch, base) != -1)
+    {
+        return E_NUMBER;
+    }
+    else if (ch == '-' || ch == '+')
+    {
+        return E_SIGN;
+    }
+    else if (ch == '.')
+    {
+        return E_DEC_POINT;
+    }
+    else if (ch == 'e' || ch == 'E')
+    {
+        return E_EXP;
+    }
+    return E_OTHER;
 }

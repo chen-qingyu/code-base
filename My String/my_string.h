@@ -76,7 +76,7 @@ enum order
     EQ = 0,
 
     // Grater Than.
-    GT = 1
+    GT = 1,
 };
 
 /*******************************
@@ -233,14 +233,14 @@ void str_destroy_array(string **str_arr);
 /**
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
  *        If the string is too big to be representable will return `HUGE_VAL`.
- *        If the string cannot be interpreted as a number will return `NAN`.
+ *        If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
  *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `INFINITY`.
  *        Example: string *str1 = str_init("233.33");
  *                 double number = str_to_decimal(str1); // => 233.33
- *                 string *str2 = str_init("1e+300");
+ *                 string *str2 = str_init("1e+600");
  *                 double number = str_to_decimal(str2); // => HUGE_VAL
- *                 string *str3 = str_init("cafebabe");
- *                 double number = str_to_decimal(str3); // => NAN (should call str_to_integer)
+ *                 string *str3 = str_init("nan");
+ *                 double number = str_to_decimal(str3); // => NAN
  *                 string *str4 = str_init("inf");
  *                 double number = str_to_decimal(str4); // => INFINITY
  * @param str: String to be parsed.
@@ -250,25 +250,16 @@ double str_to_decimal(const string *str);
 
 /**
  * @brief Convert the string to an integer number based on 2-36 base. O(N)
- *        If the string is too big to be representable will return `(long long)HUGE_VAL`.
- *        If the string cannot be interpreted as an integer number will return `(long long)NAN`.
- *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `(long long)INFINITY`.
  *        Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).
  *        Example: string *str1 = str_init("233");
- *                 long long number = str_to_integer(str1, 10); // => (long long)233
- *                 string *str2 = str_init("FFFFFFFFFFFFFFFFFFF");
- *                 long long number = str_to_integer(str2, 16); // => (long long)HUGE_VAL
- *                 string *str3 = str_init("cafebabe");
- *                 long long number = str_to_integer(str3, 16); // => (long long)3405691582
- *                 string *str4 = str_init("inf");
- *                 long long number = str_to_integer(str4, 10); // => (long long)INFINITY
- *                 string *str5 = str_init("hello");
- *                 long long number = str_to_integer(str5, 10); // => (long long)NAN
- *                 string *str6 = str_init("z");
- *                 long long number = str_to_integer(str6, 36); // => (long long)35
+ *                 long long number = str_to_integer(str1, 10); // => 233
+ *                 string *str2 = str_init("cafebabe");
+ *                 long long number = str_to_integer(str2, 16); // => 3405691582
+ *                 string *str3 = str_init("z");
+ *                 long long number = str_to_integer(str3, 36); // => 35
  * @param str: String to be parsed.
  * @param base: The base of an integer (2 <= base <= 36).
- * @return An integer number that can represent the string or (long long)HUGE_VAL or (long long)NAN or [+-](long long)INFINITY.
+ * @return An integer number that can represent the string.
  */
 long long str_to_integer(const string *str, int base);
 
