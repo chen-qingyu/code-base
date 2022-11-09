@@ -349,6 +349,7 @@ int main()
     assert(str_to_integer(s1, 10) == 233);
 
     // str_to_decimal()
+
     str_set(s1, "233.33");
     assert(str_to_decimal(s1) == 233.33);
     str_set(s1, "1e+600");
