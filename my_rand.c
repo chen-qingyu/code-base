@@ -1,4 +1,6 @@
-#include <stdio.h>
+#include <stdio.h>  // printf()
+#include <stdlib.h> // rand() RAND_MAX
+#include <time.h>   // clock() clock_t CLOCKS_PER_SEC
 
 double my_mod(const double x, const double m)
 {
@@ -12,11 +14,34 @@ double my_rand_gen(double *r)
     return *r / m;
 }
 
-// yield 0-1 random number
+// yield a pseudo-random number of [0, 1) use my_rand_gen()
 double my_rand()
 {
-    static double seed = 0.5;
+    static double seed = 0.0;
     return my_rand_gen(&seed);
+}
+
+// yield a pseudo-random number of [0, 1) use rand()
+double std_rand()
+{
+    return (double)rand() / RAND_MAX;
+}
+
+typedef double (*fn)();
+
+double test_time(fn func)
+{
+    clock_t start, end;
+    int loop = 1000000;
+
+    start = clock();
+    for (int i = 0; i < loop; ++i)
+    {
+        func();
+    }
+    end = clock();
+
+    return (double)(end - start) / CLOCKS_PER_SEC;
 }
 
 int main(void)
@@ -30,5 +55,16 @@ int main(void)
             printf("\n");
         }
     }
+
+    // test time
+    printf("test time\n");
+    double time;
+
+    time = test_time(std_rand);
+    printf("std_rand(): %lf (%.3lfs)\n", std_rand(), time); // std_rand(): 0.652608 (0.016s)
+
+    time = test_time(my_rand);
+    printf("my_rand(): %lf (%.3lfs)\n", my_rand(), time); // my_rand(): 0.855469 (0.018s)
+
     return 0;
 }
