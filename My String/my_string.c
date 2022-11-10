@@ -34,6 +34,7 @@ struct st_string
 // String initial capacity.
 #define INIT_CAPACITY 8
 
+// Used for FSM
 enum state
 {
     S_BEGIN_BLANK = 1 << 0,        // begin blank character
@@ -49,11 +50,12 @@ enum state
     S_OTHER = 1 << 10,             // other
 };
 
+// Used for FSM
 enum event
 {
     E_BLANK = 1 << 11,     // blank character: '\n', '\r', '\t', ' '
     E_SIGN = 1 << 12,      // positive or negative sign: '+', '-'
-    E_NUMBER = 1 << 13,    // number: '[0-9]|[0-Z]'
+    E_NUMBER = 1 << 13,    // number: '[0-9a-zA-Z]'
     E_DEC_POINT = 1 << 14, // decimal point: '.'
     E_EXP = 1 << 15,       // scientific notation identifier: '[eE]'
     E_OTHER = 1 << 16,     // other
@@ -67,7 +69,7 @@ enum event
 static inline void _check_bounds(int pos, int begin, int end);
 
 // Check whether the pointer is a non-null pointer.
-static inline void _check_pointer(void *pointer);
+static inline void _check_pointer(const void *pointer);
 
 // Use the KMP algorithm to find the position of the pattern.
 static inline int _find_pattern(const char *str, const char *pattern, int n, int m);
@@ -654,7 +656,7 @@ static inline void _check_bounds(int pos, int begin, int end)
     }
 }
 
-static inline void _check_pointer(void *pointer)
+static inline void _check_pointer(const void *pointer)
 {
     if (pointer == NULL)
     {

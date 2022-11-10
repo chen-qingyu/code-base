@@ -234,7 +234,7 @@ void str_destroy_array(string **str_arr);
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
  *        If the string is too big to be representable will return `HUGE_VAL`.
  *        If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
- *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `INFINITY`.
+ *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `[+-]?INFINITY`.
  *        Example: string *str1 = str_init("233.33");
  *                 double number = str_to_decimal(str1); // => 233.33
  *                 string *str2 = str_init("1e+600");
@@ -244,7 +244,7 @@ void str_destroy_array(string **str_arr);
  *                 string *str4 = str_init("inf");
  *                 double number = str_to_decimal(str4); // => INFINITY
  * @param str: String to be parsed.
- * @return A number that can represent the string or HUGE_VAL or NAN or [+-]INFINITY.
+ * @return A number that can represent the string or HUGE_VAL or NAN or [+-]?INFINITY.
  */
 double str_to_decimal(const string *str);
 

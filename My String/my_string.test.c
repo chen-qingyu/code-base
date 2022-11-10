@@ -4,7 +4,7 @@
 #include <float.h>
 #include <stdio.h>
 
-bool eq(double a, double b)
+bool eq(const double a, const double b)
 {
     return fabs(a - b) < DBL_EPSILON;
 }
@@ -418,6 +418,11 @@ int main()
     assert(eq(str_to_decimal(s1), 0.0001));
     str_set(s1, "0.000101");
     assert(!eq(str_to_decimal(s1), 0.0001));
+
+    str_set(s1, "0.123e10");
+    assert(eq(str_to_decimal(s1), 0.123e10));
+    str_set(s1, "0.123e01");
+    assert(!eq(str_to_decimal(s1), 0.123e10));
 
     // str_destroy()
 
