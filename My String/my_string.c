@@ -57,7 +57,7 @@ enum event
     E_SIGN = 1 << 12,      // positive or negative sign: '+', '-'
     E_NUMBER = 1 << 13,    // number: '[0-9a-zA-Z]'
     E_DEC_POINT = 1 << 14, // decimal point: '.'
-    E_EXP = 1 << 15,       // scientific notation identifier: '[eE]'
+    E_EXP = 1 << 15,       // scientific notation identifier: 'e', 'E'
     E_OTHER = 1 << 16,     // other
 };
 
@@ -436,6 +436,7 @@ double str_to_decimal(const string *str)
 
             default:
                 st = S_OTHER;
+                i = str->size; // exit for loop
                 break;
         }
     }
@@ -490,6 +491,7 @@ long long str_to_integer(const string *str, int base)
 
             default:
                 st = S_OTHER;
+                i = str->size; // exit for loop
                 break;
         }
     }
@@ -754,9 +756,9 @@ static inline void _copy_range(string *dst, const string *src, int begin, int en
 static inline double _check_infinity_nan(const string *str)
 {
     string *inf_nan = str_create();
-    char *pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
-    char *neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
-    char *nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};
+    static const char *pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
+    static const char *neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
+    static const char *nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};
     for (int i = 0; i < 12; ++i)
     {
         str_set(inf_nan, pos_infs[i]);
@@ -790,8 +792,8 @@ static inline double _check_infinity_nan(const string *str)
 
 static inline int _char_to_integer(char digit, int base) // 2 <= base <= 36
 {
-    char upper_digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char lower_digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+    static const char *upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static const char *lower_digits = "0123456789abcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < base; ++i)
     {
         if (digit == upper_digits[i] || digit == lower_digits[i])
