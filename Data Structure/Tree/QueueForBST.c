@@ -1,5 +1,6 @@
-#include "QueueForBST.h"
 #include "BinarySearchTree.h"
+
+#include "QueueForBST.h"
 
 #define QUEUE_CAPACITY 100
 

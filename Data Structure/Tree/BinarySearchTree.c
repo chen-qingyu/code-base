@@ -1,6 +1,13 @@
 #include "BinarySearchTree.h"
 #include "QueueForBST.h"
 
+struct node
+{
+    tree_data_t data;
+    struct node *left;
+    struct node *right;
+};
+
 struct tree
 {
     struct node *root;
@@ -55,23 +62,18 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
             case LEVEL_ORDER:
             {
                 queue_t *queue = Queue_Create();
-                tree_node_t tmp;
-                if (node == NULL)
-                {
-                    return;
-                }
-                Queue_Enqueue(queue, *node);
+                Queue_Enqueue(queue, node);
                 while (!Queue_IsEmpty(queue))
                 {
-                    tmp = Queue_Dequeue(queue);
-                    pTrav(tmp.data);
-                    if (tmp.left)
+                    node = Queue_Dequeue(queue);
+                    pTrav(node->data);
+                    if (node->left)
                     {
-                        Queue_Enqueue(queue, *(tmp.left));
+                        Queue_Enqueue(queue, node->left);
                     }
-                    if (tmp.right)
+                    if (node->right)
                     {
-                        Queue_Enqueue(queue, *(tmp.right));
+                        Queue_Enqueue(queue, node->right);
                     }
                 }
                 Queue_Destroy(queue);
@@ -205,7 +207,7 @@ void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data
     TraverseNode(tree->root, type, pTrav);
 }
 
-tree_node_t *Tree_Find(const tree_t *tree, tree_data_t data)
+tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
 {
     tree_node_t *current = tree->root;
 
@@ -221,14 +223,14 @@ tree_node_t *Tree_Find(const tree_t *tree, tree_data_t data)
         }
         else
         {
-            return current;
+            return current->data;
         }
     }
 
-    return NULL;
+    return TREE_NOT_FOUND;
 }
 
-tree_node_t *Tree_FindMin(const tree_t *tree)
+tree_data_t Tree_FindMin(const tree_t *tree)
 {
     tree_node_t *current = tree->root;
 
@@ -240,10 +242,10 @@ tree_node_t *Tree_FindMin(const tree_t *tree)
         }
     }
 
-    return current;
+    return current->data;
 }
 
-tree_node_t *Tree_FindMax(const tree_t *tree)
+tree_data_t Tree_FindMax(const tree_t *tree)
 {
     tree_node_t *current = tree->root;
 
@@ -255,7 +257,7 @@ tree_node_t *Tree_FindMax(const tree_t *tree)
         }
     }
 
-    return current;
+    return current->data;
 }
 
 void Tree_Insert(tree_t *tree, tree_data_t data)

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node queue_data_t;
+typedef tree_node_t *queue_data_t;
 
 typedef struct queue queue_t;
 

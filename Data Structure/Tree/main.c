@@ -40,19 +40,19 @@ void BinarySearchTreeTest()
     assert(strcmp(str, "3 1 4 2 5 ") == 0);
     memset(str, 0, sizeof(str));
 
-    tree_node_t *t = Tree_Find(tree, 2);
-    assert(t->data == 2);
-    t = Tree_Find(tree, 0);
-    assert(t == NULL);
+    tree_data_t value = Tree_Find(tree, 2);
+    assert(value == 2);
+    value = Tree_Find(tree, 0);
+    assert(value == TREE_NOT_FOUND);
 
-    tree_node_t *min = Tree_FindMin(tree);
-    assert(min->data == 1);
-    tree_node_t *max = Tree_FindMax(tree);
-    assert(max->data == 5);
+    value = Tree_FindMin(tree);
+    assert(value == 1);
+    value = Tree_FindMax(tree);
+    assert(value == 5);
 
     Tree_Delete(tree, 5);
-    max = Tree_FindMax(tree);
-    assert(max->data == 4);
+    value = Tree_FindMax(tree);
+    assert(value == 4);
 
     Tree_Destroy(tree);
     tree = NULL;

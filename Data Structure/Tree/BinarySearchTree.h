@@ -26,12 +26,7 @@ typedef struct node tree_node_t;
 
 typedef struct tree tree_t;
 
-struct node
-{
-    tree_data_t data;
-    struct node *left;
-    struct node *right;
-};
+#define TREE_NOT_FOUND INT_MIN // a value of tree_data_t that indicates not found
 
 /*************************************************
   Description:    创建一个空二叉搜索树
@@ -64,23 +59,23 @@ void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data
   Description:    在一个二叉搜索树 tree 中寻找元素 data
   Parameter:      一个指向二叉搜索树的指针 tree
                   一个待寻找元素 data
-  Return:         元素 data 所在的结点指针或者 NULL
+  Return:         元素 data 或者 TREE_NOT_FOUND
 *************************************************/
-tree_node_t *Tree_Find(const tree_t *tree, tree_data_t data);
+tree_data_t Tree_Find(const tree_t *tree, tree_data_t data);
 
 /*************************************************
   Description:    在一个二叉搜索树 tree 中寻找最小元素
   Parameter:      一个指向二叉搜索树的指针 tree
-  Return:         最小元素所在的结点指针或者 NULL
+  Return:         最小的元素
 *************************************************/
-tree_node_t *Tree_FindMin(const tree_t *tree);
+tree_data_t Tree_FindMin(const tree_t *tree);
 
 /*************************************************
   Description:    在一个二叉搜索树 tree 中寻找最大元素
   Parameter:      一个指向二叉搜索树的指针 tree
-  Return:         最大元素所在的结点指针或者 NULL
+  Return:         最大的元素
 *************************************************/
-tree_node_t *Tree_FindMax(const tree_t *tree);
+tree_data_t Tree_FindMax(const tree_t *tree);
 
 /*************************************************
   Description:    在一个二叉搜索树 tree 中插入元素 data
