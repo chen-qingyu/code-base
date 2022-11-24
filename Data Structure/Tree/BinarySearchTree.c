@@ -162,14 +162,7 @@ static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data
             else
             {
                 tmp = node;
-                if (!node->left)
-                {
-                    node = node->right;
-                }
-                else
-                {
-                    node = node->left;
-                }
+                node = node->left ? node->left : node->right;
                 free(tmp);
                 tmp = NULL;
                 tree->count--;

@@ -31,7 +31,7 @@ void StackTest(void)
     Stack_Destroy(stack);
     stack = NULL;
 
-    printf("Stack Test OK\n");
+    printf("Stack Test OK.\n");
 }
 
 int main(void)

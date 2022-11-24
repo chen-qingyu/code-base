@@ -92,7 +92,7 @@ void WeightedGraphTest(void)
     Graph_Destroy(G);
     G = NULL;
 
-    printf("Weighted Graph Test OK\n");
+    printf("Weighted Graph Test OK.\n");
 }
 
 int main(void)
