@@ -43,6 +43,20 @@ tree_t *Tree_Create(void);
 void Tree_Destroy(tree_t *tree);
 
 /*************************************************
+  Description:    求二叉搜索树 tree 的元素个数
+  Parameter:      一个指向二叉搜索树的指针 tree
+  Return:         二叉搜索树的元素个数
+*************************************************/
+int Tree_Size(const tree_t *tree);
+
+/*************************************************
+  Description:    判断二叉搜索树 tree 是否为空
+  Parameter:      一个指向二叉搜索树的指针 tree
+  Return:         如果二叉搜索树为空则返回 true ，否则返回 false
+*************************************************/
+bool Tree_IsEmpty(const tree_t *tree);
+
+/*************************************************
   Description:    遍历一个二叉搜索树 tree
   Parameter:      一个指向二叉搜索树的指针 tree
                   一个枚举遍历类型 type

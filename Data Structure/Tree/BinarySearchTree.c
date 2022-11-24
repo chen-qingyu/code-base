@@ -11,6 +11,7 @@ struct node
 struct tree
 {
     struct node *root;
+    int count;
 };
 
 /*******************************
@@ -88,7 +89,7 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
     }
 }
 
-static tree_node_t *InsertNode(tree_node_t *node, tree_data_t data)
+static tree_node_t *InsertNode(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
     if (node == NULL)
     {
@@ -101,16 +102,17 @@ static tree_node_t *InsertNode(tree_node_t *node, tree_data_t data)
         node->data = data;
         node->left = NULL;
         node->right = NULL;
+        tree->count++;
     }
     else
     {
         if (data < node->data)
         {
-            node->left = InsertNode(node->left, data);
+            node->left = InsertNode(tree, node->left, data);
         }
         else if (data > node->data)
         {
-            node->right = InsertNode(node->right, data);
+            node->right = InsertNode(tree, node->right, data);
         }
     }
 
@@ -132,7 +134,7 @@ static tree_node_t *FindMinNode(tree_node_t *node)
     return current;
 }
 
-static tree_node_t *DeleteNode(tree_node_t *node, tree_data_t data)
+static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
     tree_node_t *tmp;
 
@@ -144,11 +146,11 @@ static tree_node_t *DeleteNode(tree_node_t *node, tree_data_t data)
     {
         if (data < node->data)
         {
-            node->left = DeleteNode(node->left, data);
+            node->left = DeleteNode(tree, node->left, data);
         }
         else if (data > node->data)
         {
-            node->right = DeleteNode(node->right, data);
+            node->right = DeleteNode(tree, node->right, data);
         }
         else
         {
@@ -156,7 +158,7 @@ static tree_node_t *DeleteNode(tree_node_t *node, tree_data_t data)
             {
                 tmp = FindMinNode(node->right);
                 node->data = tmp->data;
-                node->right = DeleteNode(node->right, node->data);
+                node->right = DeleteNode(tree, node->right, node->data);
             }
             else
             {
@@ -171,6 +173,7 @@ static tree_node_t *DeleteNode(tree_node_t *node, tree_data_t data)
                 }
                 free(tmp);
                 tmp = NULL;
+                tree->count--;
             }
         }
     }
@@ -192,6 +195,7 @@ tree_t *Tree_Create(void)
     }
 
     tree->root = NULL;
+    tree->count = 0;
 
     return tree;
 }
@@ -200,6 +204,16 @@ void Tree_Destroy(tree_t *tree)
 {
     DestroyNode(tree->root);
     free(tree);
+}
+
+int Tree_Size(const tree_t *tree)
+{
+    return tree->count;
+}
+
+bool Tree_IsEmpty(const tree_t *tree)
+{
+    return tree->count == 0;
 }
 
 void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data))
@@ -262,10 +276,10 @@ tree_data_t Tree_FindMax(const tree_t *tree)
 
 void Tree_Insert(tree_t *tree, tree_data_t data)
 {
-    tree->root = InsertNode(tree->root, data);
+    tree->root = InsertNode(tree, tree->root, data);
 }
 
 void Tree_Delete(tree_t *tree, tree_data_t data)
 {
-    tree->root = DeleteNode(tree->root, data);
+    tree->root = DeleteNode(tree, tree->root, data);
 }

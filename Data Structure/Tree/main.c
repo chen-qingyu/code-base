@@ -15,6 +15,9 @@ void BinarySearchTreeTest()
 {
     tree_t *tree = Tree_Create();
 
+    assert(Tree_Size(tree) == 0);
+    assert(Tree_IsEmpty(tree) == true);
+
     Tree_Insert(tree, 3);
     Tree_Insert(tree, 1);
     Tree_Insert(tree, 2);
@@ -23,6 +26,9 @@ void BinarySearchTreeTest()
     Tree_Insert(tree, 5);
     Tree_Insert(tree, 5);
     Tree_Insert(tree, 1);
+
+    assert(Tree_Size(tree) == 5);
+    assert(Tree_IsEmpty(tree) == false);
 
     Tree_Traverse(tree, PRE_ORDER, Visit);
     assert(strcmp(str, "3 1 2 4 5 ") == 0);
@@ -53,6 +59,9 @@ void BinarySearchTreeTest()
     Tree_Delete(tree, 5);
     value = Tree_FindMax(tree);
     assert(value == 4);
+
+    assert(Tree_Size(tree) == 4);
+    assert(Tree_IsEmpty(tree) == false);
 
     Tree_Destroy(tree);
     tree = NULL;
