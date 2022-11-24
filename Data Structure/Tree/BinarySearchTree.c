@@ -135,8 +135,6 @@ static tree_node_t *FindMinNode(tree_node_t *node)
 
 static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
-    tree_node_t *tmp;
-
     if (node == NULL)
     {
         fprintf(stderr, "Error: There was no item %d.\n", data);
@@ -155,16 +153,15 @@ static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data
         {
             if (node->left && node->right)
             {
-                tmp = FindMinNode(node->right);
+                tree_node_t *tmp = FindMinNode(node->right);
                 node->data = tmp->data;
-                node->right = DeleteNode(tree, node->right, node->data);
+                node->right = DeleteNode(tree, node->right, tmp->data);
             }
             else
             {
-                tmp = node;
+                tree_node_t *tmp = node;
                 node = node->left ? node->left : node->right;
                 free(tmp);
-                tmp = NULL;
                 tree->count--;
             }
         }
