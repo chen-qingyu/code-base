@@ -120,17 +120,12 @@ static tree_node_t *InsertNode(tree_t *tree, tree_node_t *node, tree_data_t data
 
 static tree_node_t *FindMinNode(tree_node_t *node)
 {
-    tree_node_t *current = node;
-
-    if (current)
+    while (node->left) // node is not NULL
     {
-        while (current->left)
-        {
-            current = current->left;
-        }
+        node = node->left;
     }
 
-    return current;
+    return node;
 }
 
 static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data)
@@ -149,11 +144,11 @@ static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data
         {
             node->right = DeleteNode(tree, node->right, data);
         }
-        else
+        else // data == node->data
         {
             if (node->left && node->right)
             {
-                tree_node_t *tmp = FindMinNode(node->right);
+                tree_node_t *tmp = FindMinNode(node->right); // node->right is not NULL
                 node->data = tmp->data;
                 node->right = DeleteNode(tree, node->right, tmp->data);
             }
