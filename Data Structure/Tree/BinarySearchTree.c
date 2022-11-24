@@ -25,7 +25,6 @@ static void DestroyNode(tree_node_t *node)
         DestroyNode(node->left);
         DestroyNode(node->right);
         free(node);
-        node = NULL;
     }
 }
 
@@ -256,7 +255,7 @@ tree_data_t Tree_FindMin(const tree_t *tree)
         }
     }
 
-    return current->data;
+    return current ? current->data : TREE_NOT_FOUND;
 }
 
 tree_data_t Tree_FindMax(const tree_t *tree)
@@ -271,7 +270,7 @@ tree_data_t Tree_FindMax(const tree_t *tree)
         }
     }
 
-    return current->data;
+    return current ? current->data : TREE_NOT_FOUND;
 }
 
 void Tree_Insert(tree_t *tree, tree_data_t data)
