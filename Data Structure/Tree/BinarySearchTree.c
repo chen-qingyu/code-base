@@ -34,7 +34,6 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
     {
         switch (type)
         {
-            // 先序遍历
             case PRE_ORDER:
             {
                 pTrav(node->data);
@@ -42,7 +41,7 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
                 TraverseNode(node->right, PRE_ORDER, pTrav);
                 break;
             }
-            // 中序遍历
+
             case IN_ORDER:
             {
                 TraverseNode(node->left, IN_ORDER, pTrav);
@@ -50,7 +49,7 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
                 TraverseNode(node->right, IN_ORDER, pTrav);
                 break;
             }
-            // 后序遍历
+
             case POST_ORDER:
             {
                 TraverseNode(node->left, POST_ORDER, pTrav);
@@ -58,7 +57,7 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
                 pTrav(node->data);
                 break;
             }
-            // 层次遍历
+
             case LEVEL_ORDER:
             {
                 queue_t *queue = Queue_Create();
@@ -79,6 +78,7 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
                 Queue_Destroy(queue);
                 break;
             }
+
             default:
             {
                 fprintf(stderr, "Error type!\n");
