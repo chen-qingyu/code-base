@@ -1,5 +1,8 @@
 #include "Stack.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define STACK_CAPACITY 100
 
 struct stack
@@ -12,6 +15,16 @@ struct stack
 Helper functions implementation.
 *******************************/
 
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -19,11 +32,7 @@ Interface functions implementation.
 stack_t *Stack_Create(void)
 {
     stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
-    if (stack == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(stack);
 
     stack->top = -1;
 

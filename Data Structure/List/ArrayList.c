@@ -1,5 +1,8 @@
 #include "List.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct list
 {
     // Number of elements.
@@ -16,12 +19,22 @@ struct list
 Helper functions implementation.
 *******************************/
 
-// Check whether the position is within the valid range. (begin <= pos < end).
-static void checkBounds(int pos, int begin, int end)
+// Check whether the index is valid (begin <= pos < end).
+static inline void check_bounds(int pos, int begin, int end)
 {
     if (pos < begin || pos >= end)
     {
-        fprintf(stderr, "ERROR: Out Of Range.");
+        fprintf(stderr, "ERROR: Out Of Range: %d not in [%d, %d)\n", pos, begin, end);
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -33,15 +46,12 @@ Interface functions implementation.
 list_t *List_Create(void)
 {
     list_t *list = (list_t *)malloc(sizeof(list_t));
-    if (list == NULL)
-    {
-        fprintf(stderr, "ERROR: (file %s, line %d) There was not enough memory.\n", __FILE__, __LINE__);
-        exit(-2);
-    }
+    check_pointer(list);
 
     list->count = 0;
     list->capacity = 8;
     list->data = (list_data_t *)malloc(sizeof(list_data_t) * list->capacity);
+    check_pointer(list->data);
 
     return list;
 }
@@ -64,7 +74,7 @@ bool List_IsEmpty(const list_t *list)
 
 list_data_t List_At(const list_t *list, int i) // list[i]
 {
-    checkBounds(i, 0, list->count);
+    check_bounds(i, 0, list->count);
 
     return list->data[i];
 }
@@ -83,18 +93,13 @@ int List_Find(const list_t *list, list_data_t data)
 
 void List_Insert(list_t *list, int i, list_data_t data)
 {
-    checkBounds(i, 0, list->count + 1);
+    check_bounds(i, 0, list->count + 1);
 
-    if (list->count == list->capacity) // Expand capacity
+    if (list->count == list->capacity) // need to expand capacity
     {
-        list->capacity *= 2; // Double the capacity
-        list_data_t *tmp = (list_data_t *)malloc(sizeof(list_data_t) * list->capacity);
-        for (size_t i = 0; i < list->count; ++i)
-        {
-            *(tmp + i) = list->data[i];
-        }
-        free(list->data);
-        list->data = tmp;
+        list->capacity *= 2; // double the capacity
+        list->data = (list_data_t *)realloc(list->data, sizeof(list_data_t) * list->capacity);
+        check_pointer(list->data);
     }
 
     for (int j = list->count; j > i; j--)
@@ -107,7 +112,7 @@ void List_Insert(list_t *list, int i, list_data_t data)
 
 void List_Delete(list_t *list, int i)
 {
-    checkBounds(i, 0, list->count);
+    check_bounds(i, 0, list->count);
 
     for (int j = i + 1; j < list->count; j++)
     {

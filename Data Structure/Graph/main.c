@@ -1,5 +1,7 @@
 #include "WeightedGraph.h"
+
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 
 char str[64] = {0};
@@ -90,7 +92,6 @@ void WeightedGraphTest(void)
     }
 
     Graph_Destroy(G);
-    G = NULL;
 
     printf("Weighted Graph Test OK.\n");
 }

@@ -1,13 +1,26 @@
 #include "WeightedGraph.h"
 #include "../Queue/Queue.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 bool visited[VERTEX_NUMBER] = {false};
 
 /*******************************
 Helper functions implementation.
 *******************************/
 
-static void CleanVisitedFlag(void)
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+static void clean_visited_flag(void)
 {
     for (graph_vertex_t i = 0; i < VERTEX_NUMBER; i++)
     {
@@ -15,7 +28,7 @@ static void CleanVisitedFlag(void)
     }
 }
 
-static void DFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
+static void dfs(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
     graph_vertex_t V1;
 
@@ -26,12 +39,12 @@ static void DFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t
     {
         if (Graph_IsAdjacent(G, startV, V1) && !visited[V1])
         {
-            DFS(G, V1, pVisit);
+            dfs(G, V1, pVisit);
         }
     }
 }
 
-static graph_vertex_t FindMinDist(const graph_t *G, graph_edge_t dist[], bool collected[])
+static graph_vertex_t find_min_dist(const graph_t *G, graph_edge_t dist[], bool collected[])
 {
     graph_vertex_t MinV, V;
     int minDist = NO_PATH;
@@ -55,11 +68,7 @@ Interface functions implementation.
 graph_t *Graph_Create(void)
 {
     graph_t *G = (graph_t *)malloc(sizeof(graph_t));
-    if (G == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(G);
 
     G->vertexNum = VERTEX_NUMBER;
     G->edgeNum = 0;
@@ -103,13 +112,13 @@ bool Graph_IsAdjacent(const graph_t *G, graph_vertex_t V1, graph_vertex_t V2)
 
 void Graph_DFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
-    CleanVisitedFlag();
-    DFS(G, startV, pVisit);
+    clean_visited_flag();
+    dfs(G, startV, pVisit);
 }
 
 void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
-    CleanVisitedFlag();
+    clean_visited_flag();
     queue_t *Q = Queue_Create();
     graph_vertex_t V1, V2;
 
@@ -156,7 +165,7 @@ bool Graph_Dijkstra(const graph_t *G, graph_edge_t dist[], graph_vertex_t path[]
 
     while (1)
     {
-        V1 = FindMinDist(G, dist, collected);
+        V1 = find_min_dist(G, dist, collected);
         if (V1 == NOT_FOUND)
         {
             break;
@@ -184,22 +193,20 @@ bool Graph_Dijkstra(const graph_t *G, graph_edge_t dist[], graph_vertex_t path[]
 
 bool Graph_Floyd(const graph_t *G, graph_edge_t dist[][VERTEX_NUMBER], graph_vertex_t path[][VERTEX_NUMBER])
 {
-    graph_vertex_t i, j, k;
-
-    for (i = 0; i < G->vertexNum; i++)
+    for (graph_vertex_t i = 0; i < G->vertexNum; i++)
     {
-        for (j = 0; j < G->vertexNum; j++)
+        for (graph_vertex_t j = 0; j < G->vertexNum; j++)
         {
             dist[i][j] = G->matrix[i][j];
             path[i][j] = -1;
         }
     }
 
-    for (k = 0; k < G->vertexNum; k++)
+    for (graph_vertex_t k = 0; k < G->vertexNum; k++)
     {
-        for (i = 0; i < G->vertexNum; i++)
+        for (graph_vertex_t i = 0; i < G->vertexNum; i++)
         {
-            for (j = 0; j < G->vertexNum; j++)
+            for (graph_vertex_t j = 0; j < G->vertexNum; j++)
             {
                 if (dist[i][k] + dist[k][j] < dist[i][j])
                 {

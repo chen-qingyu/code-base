@@ -1,5 +1,9 @@
 #include "HashTable.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 typedef enum
 {
     EMPTY,
@@ -20,7 +24,17 @@ struct item
 Helper functions implementation.
 *******************************/
 
-static int Hash(table_key_t key)
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+static int hash(table_key_t key)
 {
     unsigned int index = 0;
 
@@ -32,12 +46,12 @@ static int Hash(table_key_t key)
     return index % HASHTABLE_CAPACITY;
 }
 
-static int FindPos(const table_t *table, table_key_t key)
+static int find_pos(const table_t *table, table_key_t key)
 {
     int currentPos, newPos;
     int conflictCnt = 0;
 
-    currentPos = Hash(key);
+    currentPos = hash(key);
     newPos = currentPos;
 
     while (table[newPos].state != EMPTY && strcmp(table[newPos].key, key) != 0)
@@ -70,11 +84,7 @@ Interface functions implementation.
 table_t *HashTable_Create(void)
 {
     table_t *table = (table_t *)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
-    if (table == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(table);
 
     for (int i = 0; i < HASHTABLE_CAPACITY; i++)
     {
@@ -99,14 +109,14 @@ void HashTable_Destroy(table_t *table)
 
 table_value_t HashTable_Get(const table_t *table, table_key_t key)
 {
-    int pos = FindPos(table, key);
+    int pos = find_pos(table, key);
 
     return table[pos].state == FULL ? table[pos].value : NOT_FOUND;
 }
 
 void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
 {
-    int pos = FindPos(table, key);
+    int pos = find_pos(table, key);
 
     if (table[pos].state == FULL)
     {
@@ -120,7 +130,7 @@ void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
 
 void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
 {
-    int pos = FindPos(table, key);
+    int pos = find_pos(table, key);
 
     if (table[pos].state != FULL)
     {
@@ -131,11 +141,7 @@ void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
         }
         table[pos].state = FULL;
         table[pos].key = (char *)malloc(strlen(key) * sizeof(char) + 1);
-        if (table[pos].key == NULL)
-        {
-            fprintf(stderr, "ERROR: There was not enough memory.\n");
-            exit(-2);
-        }
+        check_pointer(table[pos].key);
 
         strcpy(table[pos].key, key);
         table[pos].value = value;
@@ -148,7 +154,7 @@ void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
 
 void HashTable_Delete(table_t *table, table_key_t key)
 {
-    int pos = FindPos(table, key);
+    int pos = find_pos(table, key);
 
     if (table[pos].state == FULL)
     {

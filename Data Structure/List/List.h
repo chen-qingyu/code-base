@@ -7,10 +7,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h> // bool
 
 typedef int list_data_t;
 

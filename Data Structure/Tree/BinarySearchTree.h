@@ -7,10 +7,8 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h>  // INT_MAX
+#include <stdbool.h> // bool
 
 typedef enum
 {
@@ -26,7 +24,7 @@ typedef struct node tree_node_t;
 
 typedef struct tree tree_t;
 
-#define TREE_NOT_FOUND INT_MIN // a value of tree_data_t that indicates not found
+#define TREE_NOT_FOUND INT_MAX // a value of tree_data_t that indicates not found
 
 /*************************************************
   Description:    创建一个空二叉搜索树

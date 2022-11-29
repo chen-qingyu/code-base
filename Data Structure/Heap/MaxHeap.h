@@ -7,22 +7,11 @@
 #ifndef MAX_HEAP_H
 #define MAX_HEAP_H
 
-#include <limits.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h> // bool
 
 typedef struct heap heap_t;
 
 typedef int heap_data_t;
-
-struct heap
-{
-    heap_data_t *data;
-    int size;
-    int capacity;
-};
 
 /*************************************************
   Description:    创建一个空堆
@@ -39,11 +28,11 @@ heap_t *MaxHeap_Create(void);
 void MaxHeap_Destroy(heap_t *heap);
 
 /*************************************************
-  Description:    判断堆 heap 是否已满
+  Description:    求堆 heap 的元素个数
   Parameter:      一个指向堆的指针 heap
-  Return:         如果堆已满则返回 true ，否则返回 false
+  Return:         堆的元素个数
 *************************************************/
-bool MaxHeap_IsFull(const heap_t *heap);
+int MaxHeap_Size(const heap_t *heap);
 
 /*************************************************
   Description:    判断堆 heap 是否已空
@@ -58,13 +47,20 @@ bool MaxHeap_IsEmpty(const heap_t *heap);
                   一个待插入元素 data
   Return:         空
 *************************************************/
-void MaxHeap_Insert(heap_t *heap, heap_data_t data);
+void MaxHeap_Push(heap_t *heap, heap_data_t data);
 
 /*************************************************
   Description:    在堆 heap 中删除堆顶元素
   Parameter:      一个指向堆的指针 heap
   Return:         堆顶元素
 *************************************************/
-heap_data_t MaxHeap_Delete(heap_t *heap);
+heap_data_t MaxHeap_Pop(heap_t *heap);
+
+/*************************************************
+  Description:    查看堆 heap 的堆顶元素
+  Parameter:      一个指向堆的指针 heap
+  Return:         堆顶元素
+*************************************************/
+heap_data_t MaxHeap_Top(heap_t *heap);
 
 #endif

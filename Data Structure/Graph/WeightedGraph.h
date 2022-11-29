@@ -7,10 +7,8 @@
 #ifndef WEIGHTED_GRAPH_H
 #define WEIGHTED_GRAPH_H
 
-#include <limits.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h>  // INT_MAX
+#include <stdbool.h> // bool
 
 /* 注释掉此行变成无向图 */
 // #define UNDIRECTED

@@ -1,5 +1,7 @@
 #include "HashTable.h"
+
 #include <assert.h>
+#include <stdio.h>
 
 void HashTableTest()
 {
@@ -22,7 +24,6 @@ void HashTableTest()
     assert(HashTable_Get(table, "aaa") == NOT_FOUND);
 
     HashTable_Destroy(table);
-    table = NULL;
 
     printf("Hash Table Test OK.\n");
 }

@@ -2,6 +2,9 @@
 
 #include "QueueForBST.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define QUEUE_CAPACITY 100
 
 struct queue
@@ -15,6 +18,16 @@ struct queue
 Helper functions implementation.
 *******************************/
 
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -22,11 +35,7 @@ Interface functions implementation.
 queue_t *Queue_Create(void)
 {
     queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
-    if (queue == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(queue);
 
     queue->front = -1;
     queue->rear = -1;

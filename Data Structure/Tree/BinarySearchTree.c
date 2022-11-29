@@ -1,6 +1,9 @@
 #include "BinarySearchTree.h"
 #include "QueueForBST.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct node
 {
     tree_data_t data;
@@ -18,17 +21,27 @@ struct tree
 Helper functions implementation.
 *******************************/
 
-static void DestroyNode(tree_node_t *node)
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+static void destroy_node(tree_node_t *node)
 {
     if (node)
     {
-        DestroyNode(node->left);
-        DestroyNode(node->right);
+        destroy_node(node->left);
+        destroy_node(node->right);
         free(node);
     }
 }
 
-static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_data_t data))
+static void traverse_node(tree_node_t *node, traverse_t type, void (*pTrav)(tree_data_t data))
 {
     if (node)
     {
@@ -37,23 +50,23 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
             case PRE_ORDER:
             {
                 pTrav(node->data);
-                TraverseNode(node->left, PRE_ORDER, pTrav);
-                TraverseNode(node->right, PRE_ORDER, pTrav);
+                traverse_node(node->left, PRE_ORDER, pTrav);
+                traverse_node(node->right, PRE_ORDER, pTrav);
                 break;
             }
 
             case IN_ORDER:
             {
-                TraverseNode(node->left, IN_ORDER, pTrav);
+                traverse_node(node->left, IN_ORDER, pTrav);
                 pTrav(node->data);
-                TraverseNode(node->right, IN_ORDER, pTrav);
+                traverse_node(node->right, IN_ORDER, pTrav);
                 break;
             }
 
             case POST_ORDER:
             {
-                TraverseNode(node->left, POST_ORDER, pTrav);
-                TraverseNode(node->right, POST_ORDER, pTrav);
+                traverse_node(node->left, POST_ORDER, pTrav);
+                traverse_node(node->right, POST_ORDER, pTrav);
                 pTrav(node->data);
                 break;
             }
@@ -88,16 +101,13 @@ static void TraverseNode(tree_node_t *node, traverse_t type, void (*pTrav)(tree_
     }
 }
 
-static tree_node_t *InsertNode(tree_t *tree, tree_node_t *node, tree_data_t data)
+static tree_node_t *insert_node(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
     if (node == NULL)
     {
         node = (tree_node_t *)malloc(sizeof(struct node));
-        if (node == NULL)
-        {
-            fprintf(stderr, "ERROR: There was not enough memory.\n");
-            exit(-2);
-        }
+        check_pointer(node);
+
         node->data = data;
         node->left = NULL;
         node->right = NULL;
@@ -107,18 +117,18 @@ static tree_node_t *InsertNode(tree_t *tree, tree_node_t *node, tree_data_t data
     {
         if (data < node->data)
         {
-            node->left = InsertNode(tree, node->left, data);
+            node->left = insert_node(tree, node->left, data);
         }
         else if (data > node->data)
         {
-            node->right = InsertNode(tree, node->right, data);
+            node->right = insert_node(tree, node->right, data);
         }
     }
 
     return node;
 }
 
-static tree_node_t *FindMinNode(tree_node_t *node)
+static tree_node_t *find_min_node(tree_node_t *node)
 {
     while (node->left) // node is not NULL
     {
@@ -128,7 +138,7 @@ static tree_node_t *FindMinNode(tree_node_t *node)
     return node;
 }
 
-static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data)
+static tree_node_t *delete_node(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
     if (node == NULL)
     {
@@ -138,19 +148,19 @@ static tree_node_t *DeleteNode(tree_t *tree, tree_node_t *node, tree_data_t data
     {
         if (data < node->data)
         {
-            node->left = DeleteNode(tree, node->left, data);
+            node->left = delete_node(tree, node->left, data);
         }
         else if (data > node->data)
         {
-            node->right = DeleteNode(tree, node->right, data);
+            node->right = delete_node(tree, node->right, data);
         }
         else // data == node->data
         {
             if (node->left && node->right)
             {
-                tree_node_t *tmp = FindMinNode(node->right); // node->right is not NULL
+                tree_node_t *tmp = find_min_node(node->right); // node->right is not NULL
                 node->data = tmp->data;
-                node->right = DeleteNode(tree, node->right, tmp->data);
+                node->right = delete_node(tree, node->right, tmp->data);
             }
             else
             {
@@ -172,11 +182,7 @@ Interface functions implementation.
 tree_t *Tree_Create(void)
 {
     tree_t *tree = (tree_t *)malloc(sizeof(tree_t));
-    if (tree == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(tree);
 
     tree->root = NULL;
     tree->count = 0;
@@ -186,7 +192,7 @@ tree_t *Tree_Create(void)
 
 void Tree_Destroy(tree_t *tree)
 {
-    DestroyNode(tree->root);
+    destroy_node(tree->root);
     free(tree);
 }
 
@@ -202,7 +208,7 @@ bool Tree_IsEmpty(const tree_t *tree)
 
 void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data))
 {
-    TraverseNode(tree->root, type, pTrav);
+    traverse_node(tree->root, type, pTrav);
 }
 
 tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
@@ -260,10 +266,10 @@ tree_data_t Tree_FindMax(const tree_t *tree)
 
 void Tree_Insert(tree_t *tree, tree_data_t data)
 {
-    tree->root = InsertNode(tree, tree->root, data);
+    tree->root = insert_node(tree, tree->root, data);
 }
 
 void Tree_Delete(tree_t *tree, tree_data_t data)
 {
-    tree->root = DeleteNode(tree, tree->root, data);
+    tree->root = delete_node(tree, tree->root, data);
 }

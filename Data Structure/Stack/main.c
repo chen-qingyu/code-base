@@ -1,5 +1,7 @@
 #include "Stack.h"
+
 #include <assert.h>
+#include <stdio.h>
 
 void StackTest(void)
 {
@@ -29,7 +31,6 @@ void StackTest(void)
     assert(Stack_Top(stack) == 233);
 
     Stack_Destroy(stack);
-    stack = NULL;
 
     printf("Stack Test OK.\n");
 }

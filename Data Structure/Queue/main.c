@@ -1,5 +1,7 @@
 #include "Queue.h"
+
 #include <assert.h>
+#include <stdio.h>
 
 void QueueTest(void)
 {
@@ -24,7 +26,6 @@ void QueueTest(void)
     assert(Queue_IsEmpty(queue) == true);
 
     Queue_Destroy(queue);
-    queue = NULL;
 
     printf("Queue Test OK.\n");
 }

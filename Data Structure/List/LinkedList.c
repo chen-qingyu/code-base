@@ -1,5 +1,8 @@
 #include "List.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct node
 {
     // Data stored in the node.
@@ -22,12 +25,22 @@ struct list
 Helper functions implementation.
 *******************************/
 
-// Check whether the position is within the valid range. (begin <= pos < end).
-static void checkBounds(int pos, int begin, int end)
+// Check whether the index is valid (begin <= pos < end).
+static inline void check_bounds(int pos, int begin, int end)
 {
     if (pos < begin || pos >= end)
     {
-        fprintf(stderr, "ERROR: Out Of Range.");
+        fprintf(stderr, "ERROR: Out Of Range: %d not in [%d, %d)\n", pos, begin, end);
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -39,20 +52,11 @@ Interface functions implementation.
 list_t *List_Create(void)
 {
     list_t *list = (list_t *)malloc(sizeof(list_t));
-    if (list == NULL)
-    {
-        fprintf(stderr, "ERROR: (file %s, line %d) There was not enough memory.\n", __FILE__, __LINE__);
-        exit(-2);
-    }
+    check_pointer(list);
 
     list->count = 0;
     list->header = (struct node *)malloc(sizeof(struct node));
-    if (list->header == NULL)
-    {
-        fprintf(stderr, "ERROR: (file %s, line %d) There was not enough memory.\n", __FILE__, __LINE__);
-        exit(-2);
-    }
-    list->header->data = 0;
+    check_pointer(list->header);
     list->header->next = NULL;
 
     return list;
@@ -81,7 +85,7 @@ bool List_IsEmpty(const list_t *list)
 
 list_data_t List_At(const list_t *list, int i) // list[i]
 {
-    checkBounds(i, 0, list->count);
+    check_bounds(i, 0, list->count);
 
     struct node *current = list->header->next;
 
@@ -109,14 +113,10 @@ int List_Find(const list_t *list, list_data_t data)
 
 void List_Insert(list_t *list, int i, list_data_t data)
 {
-    checkBounds(i, 0, list->count + 1);
+    check_bounds(i, 0, list->count + 1);
 
     struct node *node = (struct node *)malloc(sizeof(struct node));
-    if (node == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(node);
     node->data = data;
 
     struct node *tmp = list->header;
@@ -132,7 +132,7 @@ void List_Insert(list_t *list, int i, list_data_t data)
 
 void List_Delete(list_t *list, int i)
 {
-    checkBounds(i, 0, list->count);
+    check_bounds(i, 0, list->count);
 
     struct node *tmp = list->header;
     for (int j = 0; j < i; j++)

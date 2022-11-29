@@ -1,5 +1,7 @@
 #include "BinarySearchTree.h"
+
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 
 char str[64] = {0};
@@ -65,7 +67,6 @@ void BinarySearchTreeTest()
     assert(Tree_IsEmpty(tree) == false);
 
     Tree_Destroy(tree);
-    tree = NULL;
 
     printf("Binary Search Tree Test OK.\n");
 }

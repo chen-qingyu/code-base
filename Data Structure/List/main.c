@@ -1,6 +1,7 @@
 #include "List.h"
-#include <assert.h>
 
+#include <assert.h>
+#include <stdio.h>
 #include <string.h>
 
 char str[64] = {0};
@@ -70,9 +71,7 @@ void ListTest(void)
     assert(List_IsEmpty(list1) == true);
 
     List_Destroy(list1);
-    list1 = NULL;
     List_Destroy(list2);
-    list2 = NULL;
 
     printf("List Test OK.\n");
 }

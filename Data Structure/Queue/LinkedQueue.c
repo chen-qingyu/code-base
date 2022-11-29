@@ -1,5 +1,8 @@
 #include "Queue.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct node
 {
     queue_data_t data;
@@ -17,6 +20,16 @@ struct queue
 Helper functions implementation.
 *******************************/
 
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void *pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -24,18 +37,11 @@ Interface functions implementation.
 queue_t *Queue_Create(void)
 {
     queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
-    if (queue == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(queue);
 
     queue->front = (struct node *)malloc(sizeof(struct node));
-    if (queue->front == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(queue->front);
+
     queue->rear = queue->front;
     queue->front->next = NULL;
     queue->count = 0;
@@ -67,11 +73,7 @@ bool Queue_IsEmpty(const queue_t *queue)
 void Queue_Enqueue(queue_t *queue, queue_data_t data)
 {
     struct node *add = (struct node *)malloc(sizeof(struct node));
-    if (add == NULL)
-    {
-        fprintf(stderr, "ERROR: There was not enough memory.\n");
-        exit(-2);
-    }
+    check_pointer(add);
 
     add->data = data;
     add->next = NULL;
@@ -84,7 +86,7 @@ void Queue_Enqueue(queue_t *queue, queue_data_t data)
 
 queue_data_t Queue_Dequeue(queue_t *queue)
 {
-    if (Queue_IsEmpty(queue))
+    if (queue->count == 0)
     {
         fprintf(stderr, "The queue is empty.\n");
         exit(EXIT_FAILURE);
