@@ -94,7 +94,7 @@ static void traverse_node(tree_node_t *node, traverse_t type, void (*pTrav)(tree
 
             default:
             {
-                fprintf(stderr, "Error type!\n");
+                fprintf(stderr, "ERROR: Invalid type for traverse.\n");
                 break;
             }
         }
