@@ -88,7 +88,7 @@ queue_data_t Queue_Dequeue(queue_t *queue)
 {
     if (queue->count == 0)
     {
-        fprintf(stderr, "The queue is empty.\n");
+        fprintf(stderr, "ERROR: The queue is empty.\n");
         exit(EXIT_FAILURE);
     }
 

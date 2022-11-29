@@ -60,7 +60,7 @@ void ListTest(void)
     assert(List_Find(list1, 233) == 0);
     assert(List_Find(list1, 999) == 3);
     assert(List_Find(list1, 1) == 7);
-    assert(List_Find(list1, 0) == -1);
+    assert(List_Find(list1, 0) == LIST_NOT_FOUND);
 
     int length = List_Size(list1);
     for (int i = 0; i < length; i++)

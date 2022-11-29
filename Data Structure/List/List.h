@@ -9,6 +9,8 @@
 
 #include <stdbool.h> // bool
 
+#define LIST_NOT_FOUND (-1) // a value of list_data_t that indicates not found
+
 typedef int list_data_t;
 
 typedef struct list list_t;
@@ -53,7 +55,7 @@ list_data_t List_At(const list_t *list, int i);
   Description:    求元素 data 在列表 list 中的下标
   Parameter:      一个指向列表的指针 list
                   一个待寻找元素 data
-  Return:         待寻找元素 data 的下标 i 或者 -1 代表没找到
+  Return:         待寻找元素 data 的下标 i 或者 LIST_NOT_FOUND 代表没找到
 *************************************************/
 int List_Find(const list_t *list, list_data_t data);
 

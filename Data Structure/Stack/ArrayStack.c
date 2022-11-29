@@ -58,7 +58,7 @@ void Stack_Push(stack_t *stack, stack_data_t data)
 {
     if (Stack_Size(stack) == STACK_CAPACITY)
     {
-        fprintf(stderr, "The stack is full.\n");
+        fprintf(stderr, "ERROR: The stack is full.\n");
         return;
     }
 
@@ -69,7 +69,7 @@ stack_data_t Stack_Pop(stack_t *stack)
 {
     if (Stack_IsEmpty(stack))
     {
-        fprintf(stderr, "The stack is empty.\n");
+        fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -80,7 +80,7 @@ stack_data_t Stack_Top(const stack_t *stack)
 {
     if (Stack_IsEmpty(stack))
     {
-        fprintf(stderr, "The stack is empty.\n");
+        fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 

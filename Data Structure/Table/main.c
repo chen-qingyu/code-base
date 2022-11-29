@@ -21,7 +21,7 @@ void HashTableTest()
     assert(HashTable_Get(table, "aaa") == 233);
 
     HashTable_Delete(table, "aaa");
-    assert(HashTable_Get(table, "aaa") == NOT_FOUND);
+    assert(HashTable_Get(table, "aaa") == HASHTABLE_NOT_FOUND);
 
     HashTable_Destroy(table);
 

@@ -9,13 +9,13 @@
 
 #include <stdbool.h> // bool
 
+#define HASHTABLE_NOT_FOUND (-1) // a value of table_value_t that indicates not found
+
 typedef char *table_key_t;
 
 typedef int table_value_t;
 
 typedef struct item table_t;
-
-#define NOT_FOUND (-1) // table_value_t
 
 /*************************************************
   Description:    创建一个空散列表
@@ -35,7 +35,7 @@ void HashTable_Destroy(table_t *table);
   Description:    在散列表 table 中取 key 对应的 value
   Parameter:      一个指向散列表的指针 table
                   一个 key
-  Return:         key 对应的 value 或者 NOT_FOUND
+  Return:         key 对应的 value 或者 HASHTABLE_NOT_FOUND
 *************************************************/
 table_value_t HashTable_Get(const table_t *table, table_key_t key);
 

@@ -62,7 +62,7 @@ void Queue_Enqueue(queue_t *queue, queue_data_t data)
 {
     if (Queue_Size(queue) == QUEUE_CAPACITY)
     {
-        fprintf(stderr, "The queue is full.\n");
+        fprintf(stderr, "ERROR: The queue is full.\n");
         return;
     }
 
@@ -74,7 +74,7 @@ queue_data_t Queue_Dequeue(queue_t *queue)
 {
     if (Queue_IsEmpty(queue))
     {
-        fprintf(stderr, "The queue is empty.\n");
+        fprintf(stderr, "ERROR: The queue is empty.\n");
         exit(EXIT_FAILURE);
     }
 

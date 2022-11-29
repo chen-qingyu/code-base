@@ -108,7 +108,7 @@ int List_Find(const list_t *list, list_data_t data)
         index++;
     }
 
-    return (current) ? index : -1;
+    return (current) ? index : LIST_NOT_FOUND;
 }
 
 void List_Insert(list_t *list, int i, list_data_t data)

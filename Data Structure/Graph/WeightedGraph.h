@@ -10,6 +10,8 @@
 #include <limits.h>  // INT_MAX
 #include <stdbool.h> // bool
 
+#define VERTEX_NUMBER 7
+
 /* 注释掉此行变成无向图 */
 // #define UNDIRECTED
 
@@ -18,19 +20,6 @@ typedef int graph_vertex_t; // 顶点（的编号）
 typedef int graph_edge_t; // 边（的权重）
 
 typedef struct graph graph_t; // 图
-
-#define VERTEX_NUMBER 7
-
-#define NOT_FOUND (-1) // graph_vertex_t
-
-#define NO_PATH INT_MAX
-
-struct graph
-{
-    int vertexNum;
-    int edgeNum;
-    graph_edge_t matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
-};
 
 /*************************************************
   Description:    创建一个空图

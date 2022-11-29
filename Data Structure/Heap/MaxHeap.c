@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_ITEM INT_MAX // heap_data_t
+
 struct heap
 {
     heap_data_t *data;
     int count;
     int capacity;
 };
-
-#define MAX_ITEM INT_MAX // heap_data_t
 
 /*******************************
 Helper functions implementation.
@@ -82,7 +82,7 @@ heap_data_t MaxHeap_Pop(heap_t *heap)
 {
     if (heap->count == 0)
     {
-        fprintf(stderr, "The heap is empty.\n");
+        fprintf(stderr, "ERROR: The heap is empty.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -116,7 +116,7 @@ heap_data_t MaxHeap_Top(heap_t *heap)
 {
     if (heap->count == 0)
     {
-        fprintf(stderr, "The heap is empty.\n");
+        fprintf(stderr, "ERROR: The heap is empty.\n");
         exit(EXIT_FAILURE);
     }
 

@@ -66,30 +66,25 @@ void WeightedGraphTest(void)
     assert(strcmp(str, "0 1 3 4 2 5 6 ") == 0);
     memset(str, 0, sizeof(str));
 
-    int dist[VERTEX_NUMBER] = {NO_PATH};
-    int path[VERTEX_NUMBER] = {-1};
-    if (Graph_Dijkstra(G, dist, path, 0))
-    {
-        assert(dist[0] == 0);
-        assert(dist[1] == 2);
-        assert(dist[2] == 3);
-        assert(dist[3] == 1);
-        assert(dist[4] == 3);
-        assert(dist[5] == 6);
-        assert(dist[6] == 5);
+    int dist[VERTEX_NUMBER];
+    int path[VERTEX_NUMBER];
+    Graph_Dijkstra(G, dist, path, 0);
 
-        assert(path[0] == -1);
-        assert(path[1] == 0);
-        assert(path[2] == 3);
-        assert(path[3] == 0);
-        assert(path[4] == 3);
-        assert(path[5] == 6);
-        assert(path[6] == 3);
-    }
-    else
-    {
-        assert(false);
-    }
+    assert(dist[0] == 0);
+    assert(dist[1] == 2);
+    assert(dist[2] == 3);
+    assert(dist[3] == 1);
+    assert(dist[4] == 3);
+    assert(dist[5] == 6);
+    assert(dist[6] == 5);
+
+    assert(path[0] == -1);
+    assert(path[1] == 0);
+    assert(path[2] == 3);
+    assert(path[3] == 0);
+    assert(path[4] == 3);
+    assert(path[5] == 6);
+    assert(path[6] == 3);
 
     Graph_Destroy(G);
 

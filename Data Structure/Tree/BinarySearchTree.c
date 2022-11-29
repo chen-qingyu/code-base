@@ -95,6 +95,7 @@ static void traverse_node(tree_node_t *node, traverse_t type, void (*pTrav)(tree
             default:
             {
                 fprintf(stderr, "ERROR: Invalid type for traverse.\n");
+                exit(EXIT_FAILURE);
                 break;
             }
         }
@@ -140,11 +141,7 @@ static tree_node_t *find_min_node(tree_node_t *node)
 
 static tree_node_t *delete_node(tree_t *tree, tree_node_t *node, tree_data_t data)
 {
-    if (node == NULL)
-    {
-        fprintf(stderr, "Error: There was no item %d.\n", data);
-    }
-    else
+    if (node)
     {
         if (data < node->data)
         {

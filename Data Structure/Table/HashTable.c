@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define HASHTABLE_CAPACITY 17
+
 typedef enum
 {
     EMPTY,
@@ -17,8 +19,6 @@ struct item
     table_value_t value;
     table_state_t state;
 };
-
-#define HASHTABLE_CAPACITY 17
 
 /*******************************
 Helper functions implementation.
@@ -111,7 +111,7 @@ table_value_t HashTable_Get(const table_t *table, table_key_t key)
 {
     int pos = find_pos(table, key);
 
-    return table[pos].state == FULL ? table[pos].value : NOT_FOUND;
+    return table[pos].state == FULL ? table[pos].value : HASHTABLE_NOT_FOUND;
 }
 
 void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
@@ -124,7 +124,8 @@ void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
     }
     else
     {
-        fprintf(stderr, "Key-value pair does not exist.\n");
+        fprintf(stderr, "ERROR: Key-value pair does not exist.\n");
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -148,7 +149,8 @@ void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
     }
     else
     {
-        fprintf(stderr, "Key-value pair already exists.\n");
+        fprintf(stderr, "ERROR: Key-value pair already exists.\n");
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -162,6 +164,7 @@ void HashTable_Delete(table_t *table, table_key_t key)
     }
     else
     {
-        fprintf(stderr, "Key-value pair does not exist.\n");
+        fprintf(stderr, "ERROR: Key-value pair does not exist.\n");
+        exit(EXIT_FAILURE);
     }
 }

@@ -9,9 +9,9 @@
 
 #include <stdbool.h> // bool
 
-typedef struct heap heap_t;
-
 typedef int heap_data_t;
+
+typedef struct heap heap_t;
 
 /*************************************************
   Description:    创建一个空堆

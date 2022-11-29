@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NOT_FOUND (-1)
+
+#define NO_PATH INT_MAX
+
+struct graph
+{
+    int vertexNum;
+    int edgeNum;
+    graph_edge_t matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
+};
+
 bool visited[VERTEX_NUMBER] = {false};
 
 /*******************************
@@ -144,6 +155,13 @@ void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t 
 
 bool Graph_Dijkstra(const graph_t *G, graph_edge_t dist[], graph_vertex_t path[], graph_vertex_t startV)
 {
+    // init array state
+    for (int i = 0; i < VERTEX_NUMBER; i++)
+    {
+        dist[i] = NO_PATH;
+        path[i] = NOT_FOUND;
+    }
+
     bool collected[VERTEX_NUMBER] = {false};
     graph_vertex_t V1, V2;
 

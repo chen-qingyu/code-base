@@ -10,6 +10,8 @@
 #include <limits.h>  // INT_MAX
 #include <stdbool.h> // bool
 
+#define TREE_NOT_FOUND INT_MAX // a value of tree_data_t that indicates not found
+
 typedef enum
 {
     PRE_ORDER,
@@ -23,8 +25,6 @@ typedef int tree_data_t;
 typedef struct node tree_node_t;
 
 typedef struct tree tree_t;
-
-#define TREE_NOT_FOUND INT_MAX // a value of tree_data_t that indicates not found
 
 /*************************************************
   Description:    创建一个空二叉搜索树

@@ -81,7 +81,7 @@ stack_data_t Stack_Pop(stack_t *stack)
 {
     if (Stack_IsEmpty(stack))
     {
-        fprintf(stderr, "The stack is empty.\n");
+        fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -99,7 +99,7 @@ stack_data_t Stack_Top(const stack_t *stack)
 {
     if (Stack_IsEmpty(stack))
     {
-        fprintf(stderr, "The stack is empty.\n");
+        fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
