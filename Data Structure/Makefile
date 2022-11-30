@@ -85,11 +85,11 @@ Stack/LinkedStack.o: Stack/LinkedStack.c Stack/LinkedStack.h
 TestGraph: Graph/TestGraph.exe
 	./Graph/TestGraph.exe
 
-Graph/TestGraph.exe: Graph/TestGraph.c Graph/WeightedGraph.o Queue/ArrayQueue.o # need Queue
-	gcc -Wall Graph/TestGraph.c Graph/WeightedGraph.o Queue/ArrayQueue.o -o Graph/TestGraph.exe
+Graph/TestGraph.exe: Graph/TestGraph.c Graph/Graph.o Queue/ArrayQueue.o # need Queue
+	gcc -Wall Graph/TestGraph.c Graph/Graph.o Queue/ArrayQueue.o -o Graph/TestGraph.exe
 
-Graph/WeightedGraph.o: Graph/WeightedGraph.c Graph/WeightedGraph.h
-	gcc -Wall -c Graph/WeightedGraph.c -o Graph/WeightedGraph.o
+Graph/Graph.o: Graph/Graph.c Graph/Graph.h
+	gcc -Wall -c Graph/Graph.c -o Graph/Graph.o
 
 # Clean files
 

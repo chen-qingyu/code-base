@@ -1,11 +1,11 @@
 /*
-类型名称：加权图 (Weighted Graph)
+图 (Graph)
 对象集：G(V, E) 由一个非空的有限顶点集合 V 和一个有限边集合 E 组成。
 操作集：对于任意的图 G ∈ graph_t ，顶点（的编号） V ∈ graph_vertex_t ，边（的权重） E ∈ graph_edge_t
 */
 
-#ifndef WEIGHTED_GRAPH_H
-#define WEIGHTED_GRAPH_H
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include <stdbool.h> // bool
 

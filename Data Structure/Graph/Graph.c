@@ -1,4 +1,4 @@
-#include "WeightedGraph.h"
+#include "Graph.h"
 #include "../Queue/ArrayQueue.h"
 
 #include <stdio.h>

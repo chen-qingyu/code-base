@@ -1,5 +1,5 @@
 /*
-栈(Stack)
+栈 (Stack)
 对象集：有n(n>=0)个元素的有穷线性表
 操作集：栈 stack 属于 stack_t ，元素 data 属于 stack_data_t
 */

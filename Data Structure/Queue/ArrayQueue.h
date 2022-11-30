@@ -1,5 +1,5 @@
 /*
-队列(Queue)
+队列 (Queue)
 对象集：有n(n>=0)个元素的有穷线性表
 操作集：队列 queue 属于 queue_t ，元素 data 属于 queue_data_t
 */

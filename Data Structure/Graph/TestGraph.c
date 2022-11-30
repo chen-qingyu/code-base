@@ -1,4 +1,4 @@
-#include "WeightedGraph.h"
+#include "Graph.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -13,7 +13,7 @@ void Visit(graph_vertex_t V)
     strcat(str, tmp);
 }
 
-void TestWeightedGraph(void)
+void TestGraph(void)
 {
     graph_t *G = Graph_Create();
 
@@ -88,12 +88,12 @@ void TestWeightedGraph(void)
 
     Graph_Destroy(G);
 
-    printf("Weighted Graph Test OK.\n");
+    printf("Graph Test OK.\n");
 }
 
 int main(void)
 {
-    TestWeightedGraph();
+    TestGraph();
 
     return 0;
 }

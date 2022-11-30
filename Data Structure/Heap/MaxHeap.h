@@ -1,5 +1,5 @@
 /*
-最大堆(Max Heap)
+最大堆 (Max Heap)
 对象集：一棵完全二叉树，每个结点的元素值不小于其子结点的元素值
 操作集：最大堆 heap 属于 heap_t ，元素 data 属于 heap_data_t
 */

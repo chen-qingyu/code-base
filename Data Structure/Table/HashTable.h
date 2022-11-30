@@ -1,5 +1,5 @@
 /*
-散列表(Hash Table)
+散列表 (Hash Table)
 对象集：散列表是由n(n>=0)个键值对(key-value pair)构成的集合
 操作集：散列表 table 属于 table_t ，键 key 属于 table_key_t ，值 value 属于 table_value_t
 */

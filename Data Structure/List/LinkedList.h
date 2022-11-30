@@ -1,5 +1,5 @@
 /*
-列表(List)
+链表 (Linked List)
 对象集：n (n >= 0) 个元素构成的有序序列： a_1, a_2, a_3 ... a_n.
 操作集：列表 list 属于 list_t ，整数 i 表示元素下标(从0开始)，元素 data 属于 list_data_t
 */
