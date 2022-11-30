@@ -15,7 +15,7 @@ struct graph
     graph_edge_t matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
 };
 
-bool visited[VERTEX_NUMBER] = {false};
+static bool visited[VERTEX_NUMBER] = {false};
 
 /*******************************
 Helper functions implementation.
@@ -41,12 +41,10 @@ static void clean_visited_flag(void)
 
 static void dfs(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
-    graph_vertex_t V1;
-
     pVisit(startV);
     visited[startV] = true;
 
-    for (V1 = 0; V1 < G->vertexNum; V1++)
+    for (graph_vertex_t V1 = 0; V1 < G->vertexNum; V1++)
     {
         if (Graph_IsAdjacent(G, startV, V1) && !visited[V1])
         {
@@ -55,21 +53,21 @@ static void dfs(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t
     }
 }
 
-static graph_vertex_t find_min_dist(const graph_t *G, graph_edge_t dist[], bool collected[])
+static graph_vertex_t find_min_dist(const graph_t *G, graph_edge_t dist[])
 {
-    graph_vertex_t MinV, V;
+    graph_vertex_t minV;
     int minDist = NO_PATH;
 
-    for (V = 0; V < G->vertexNum; V++)
+    for (graph_vertex_t V = 0; V < G->vertexNum; V++)
     {
-        if (collected[V] == false && dist[V] < minDist)
+        if (!visited[V] && dist[V] < minDist)
         {
             minDist = dist[V];
-            MinV = V;
+            minV = V;
         }
     }
 
-    return (minDist < NO_PATH) ? MinV : NOT_FOUND;
+    return minDist < NO_PATH ? minV : NOT_FOUND;
 }
 
 /*******************************
@@ -124,23 +122,23 @@ bool Graph_IsAdjacent(const graph_t *G, graph_vertex_t V1, graph_vertex_t V2)
 void Graph_DFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
     clean_visited_flag();
+
     dfs(G, startV, pVisit);
 }
 
 void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V))
 {
     clean_visited_flag();
-    queue_t *Q = Queue_Create();
-    graph_vertex_t V1, V2;
 
     pVisit(startV);
     visited[startV] = true;
-    Queue_Enqueue(Q, startV);
 
+    queue_t *Q = Queue_Create();
+    Queue_Enqueue(Q, startV);
     while (!Queue_IsEmpty(Q))
     {
-        V1 = Queue_Dequeue(Q);
-        for (V2 = 0; V2 < G->vertexNum; V2++)
+        graph_vertex_t V1 = Queue_Dequeue(Q);
+        for (graph_vertex_t V2 = 0; V2 < G->vertexNum; V2++)
         {
             if (!visited[V2] && Graph_IsAdjacent(G, V1, V2))
             {
@@ -155,43 +153,29 @@ void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t 
 
 bool Graph_Dijkstra(const graph_t *G, graph_edge_t dist[], graph_vertex_t path[], graph_vertex_t startV)
 {
+    clean_visited_flag();
+
     // init array state
-    for (int i = 0; i < VERTEX_NUMBER; i++)
-    {
-        dist[i] = NO_PATH;
-        path[i] = NOT_FOUND;
-    }
-
-    bool collected[VERTEX_NUMBER] = {false};
-    graph_vertex_t V1, V2;
-
-    for (V1 = 0; V1 < G->vertexNum; V1++)
+    for (graph_vertex_t V1 = 0; V1 < G->vertexNum; V1++)
     {
         dist[V1] = G->matrix[startV][V1];
-        if (dist[V1] < NO_PATH)
-        {
-            path[V1] = startV;
-        }
-        else
-        {
-            path[V1] = -1;
-        }
+        path[V1] = dist[V1] < NO_PATH ? startV : NOT_FOUND;
     }
 
     dist[startV] = 0;
-    collected[startV] = true;
+    visited[startV] = true;
 
     while (1)
     {
-        V1 = find_min_dist(G, dist, collected);
+        graph_vertex_t V1 = find_min_dist(G, dist);
         if (V1 == NOT_FOUND)
         {
             break;
         }
-        collected[V1] = true;
-        for (V2 = 0; V2 < G->vertexNum; V2++)
+        visited[V1] = true;
+        for (graph_vertex_t V2 = 0; V2 < G->vertexNum; V2++)
         {
-            if (collected[V2] == false && G->matrix[V1][V2] < NO_PATH)
+            if (visited[V2] == false && G->matrix[V1][V2] < NO_PATH)
             {
                 if (G->matrix[V1][V2] < 0)
                 {
@@ -216,7 +200,7 @@ bool Graph_Floyd(const graph_t *G, graph_edge_t dist[][VERTEX_NUMBER], graph_ver
         for (graph_vertex_t j = 0; j < G->vertexNum; j++)
         {
             dist[i][j] = G->matrix[i][j];
-            path[i][j] = -1;
+            path[i][j] = NOT_FOUND;
         }
     }
 

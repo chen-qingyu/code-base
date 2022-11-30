@@ -48,11 +48,9 @@ static int hash(table_key_t key)
 
 static int find_pos(const table_t *table, table_key_t key)
 {
-    int currentPos, newPos;
+    int currentPos = hash(key);
+    int newPos = currentPos;
     int conflictCnt = 0;
-
-    currentPos = hash(key);
-    newPos = currentPos;
 
     while (table[newPos].state != EMPTY && strcmp(table[newPos].key, key) != 0)
     {

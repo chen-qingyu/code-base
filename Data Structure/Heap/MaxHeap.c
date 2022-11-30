@@ -70,12 +70,12 @@ void MaxHeap_Push(heap_t *heap, heap_data_t data)
         check_pointer(heap->data);
     }
 
-    int i;
-    for (i = ++heap->count; heap->data[i / 2] < data; i /= 2)
+    int pos;
+    for (pos = ++heap->count; heap->data[pos / 2] < data; pos /= 2)
     {
-        heap->data[i] = heap->data[i / 2];
+        heap->data[pos] = heap->data[pos / 2];
     }
-    heap->data[i] = data;
+    heap->data[pos] = data;
 }
 
 heap_data_t MaxHeap_Pop(heap_t *heap)
