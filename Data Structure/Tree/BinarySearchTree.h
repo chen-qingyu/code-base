@@ -22,8 +22,6 @@ typedef enum
 
 typedef int tree_data_t;
 
-typedef struct node tree_node_t;
-
 typedef struct tree tree_t;
 
 /*************************************************
@@ -78,14 +76,14 @@ tree_data_t Tree_Find(const tree_t *tree, tree_data_t data);
 /*************************************************
   Description:    在一个二叉搜索树 tree 中寻找最小元素
   Parameter:      一个指向二叉搜索树的指针 tree
-  Return:         最小的元素
+  Return:         最小的元素或者 TREE_NOT_FOUND
 *************************************************/
 tree_data_t Tree_FindMin(const tree_t *tree);
 
 /*************************************************
   Description:    在一个二叉搜索树 tree 中寻找最大元素
   Parameter:      一个指向二叉搜索树的指针 tree
-  Return:         最大的元素
+  Return:         最大的元素或者 TREE_NOT_FOUND
 *************************************************/
 tree_data_t Tree_FindMax(const tree_t *tree);
 

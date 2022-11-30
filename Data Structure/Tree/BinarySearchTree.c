@@ -31,7 +31,7 @@ static inline void check_pointer(const void *pointer)
     }
 }
 
-static void destroy_node(tree_node_t *node)
+static void destroy_node(struct node *node)
 {
     if (node)
     {
@@ -41,7 +41,7 @@ static void destroy_node(tree_node_t *node)
     }
 }
 
-static void traverse_node(tree_node_t *node, traverse_t type, void (*pTrav)(tree_data_t data))
+static void traverse_node(struct node *node, traverse_t type, void (*pTrav)(tree_data_t data))
 {
     if (node)
     {
@@ -102,11 +102,11 @@ static void traverse_node(tree_node_t *node, traverse_t type, void (*pTrav)(tree
     }
 }
 
-static tree_node_t *insert_node(tree_t *tree, tree_node_t *node, tree_data_t data)
+static struct node *insert_node(tree_t *tree, struct node *node, tree_data_t data)
 {
     if (node == NULL)
     {
-        node = (tree_node_t *)malloc(sizeof(struct node));
+        node = (struct node *)malloc(sizeof(struct node));
         check_pointer(node);
 
         node->data = data;
@@ -129,7 +129,7 @@ static tree_node_t *insert_node(tree_t *tree, tree_node_t *node, tree_data_t dat
     return node;
 }
 
-static tree_node_t *find_min_node(tree_node_t *node)
+static struct node *find_min_node(struct node *node)
 {
     while (node->left) // node is not NULL
     {
@@ -139,7 +139,7 @@ static tree_node_t *find_min_node(tree_node_t *node)
     return node;
 }
 
-static tree_node_t *delete_node(tree_t *tree, tree_node_t *node, tree_data_t data)
+static struct node *delete_node(tree_t *tree, struct node *node, tree_data_t data)
 {
     if (node)
     {
@@ -155,13 +155,13 @@ static tree_node_t *delete_node(tree_t *tree, tree_node_t *node, tree_data_t dat
         {
             if (node->left && node->right)
             {
-                tree_node_t *tmp = find_min_node(node->right); // node->right is not NULL
+                struct node *tmp = find_min_node(node->right); // node->right is not NULL
                 node->data = tmp->data;
                 node->right = delete_node(tree, node->right, tmp->data);
             }
             else
             {
-                tree_node_t *tmp = node;
+                struct node *tmp = node;
                 node = node->left ? node->left : node->right;
                 free(tmp);
                 tree->count--;
@@ -210,7 +210,7 @@ void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data
 
 tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
 {
-    tree_node_t *current = tree->root;
+    struct node *current = tree->root;
 
     while (current)
     {
@@ -233,7 +233,7 @@ tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
 
 tree_data_t Tree_FindMin(const tree_t *tree)
 {
-    tree_node_t *current = tree->root;
+    struct node *current = tree->root;
 
     if (current)
     {
@@ -248,7 +248,7 @@ tree_data_t Tree_FindMin(const tree_t *tree)
 
 tree_data_t Tree_FindMax(const tree_t *tree)
 {
-    tree_node_t *current = tree->root;
+    struct node *current = tree->root;
 
     if (current)
     {
