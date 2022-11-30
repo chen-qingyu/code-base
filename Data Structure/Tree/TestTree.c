@@ -13,7 +13,7 @@ void Visit(tree_data_t n)
     strcat(str, tmp);
 }
 
-void BinarySearchTreeTest()
+void TestBinarySearchTree()
 {
     tree_t *tree = Tree_Create();
 
@@ -66,6 +66,13 @@ void BinarySearchTreeTest()
     assert(Tree_Size(tree) == 3);
     assert(Tree_IsEmpty(tree) == false);
 
+    Tree_Insert(tree, -1);
+    assert(Tree_Size(tree) == 4);
+    assert(Tree_Find(tree, -1) == -1);
+    Tree_Delete(tree, -1);
+    assert(Tree_Size(tree) == 3);
+    assert(Tree_Find(tree, -1) == TREE_NOT_FOUND);
+
     Tree_Destroy(tree);
 
     printf("Binary Search Tree Test OK.\n");
@@ -73,7 +80,7 @@ void BinarySearchTreeTest()
 
 int main(void)
 {
-    BinarySearchTreeTest();
+    TestBinarySearchTree();
 
     return 0;
 }

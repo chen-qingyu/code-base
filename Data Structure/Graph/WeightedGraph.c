@@ -1,5 +1,5 @@
 #include "WeightedGraph.h"
-#include "../Queue/Queue.h"
+#include "../Queue/ArrayQueue.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -133,22 +133,22 @@ void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t 
     pVisit(startV);
     visited[startV] = true;
 
-    queue_t *Q = Queue_Create();
-    Queue_Enqueue(Q, startV);
-    while (!Queue_IsEmpty(Q))
+    queue_t *Q = ArrayQueue_Create();
+    ArrayQueue_Enqueue(Q, startV);
+    while (!ArrayQueue_IsEmpty(Q))
     {
-        graph_vertex_t V1 = Queue_Dequeue(Q);
+        graph_vertex_t V1 = ArrayQueue_Dequeue(Q);
         for (graph_vertex_t V2 = 0; V2 < G->vertexNum; V2++)
         {
             if (!visited[V2] && Graph_IsAdjacent(G, V1, V2))
             {
                 pVisit(V2);
                 visited[V2] = true;
-                Queue_Enqueue(Q, V2);
+                ArrayQueue_Enqueue(Q, V2);
             }
         }
     }
-    Queue_Destroy(Q);
+    ArrayQueue_Destroy(Q);
 }
 
 bool Graph_Dijkstra(const graph_t *G, graph_edge_t dist[], graph_vertex_t path[], graph_vertex_t startV)

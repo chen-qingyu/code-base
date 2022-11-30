@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "LinkedStack.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,7 +33,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-stack_t *Stack_Create(void)
+stack_t *LinkedStack_Create(void)
 {
     stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
     check_pointer(stack);
@@ -44,7 +44,7 @@ stack_t *Stack_Create(void)
     return stack;
 }
 
-void Stack_Destroy(stack_t *stack)
+void LinkedStack_Destroy(stack_t *stack)
 {
     while (stack->top)
     {
@@ -55,17 +55,17 @@ void Stack_Destroy(stack_t *stack)
     free(stack);
 }
 
-int Stack_Size(const stack_t *stack)
+int LinkedStack_Size(const stack_t *stack)
 {
     return stack->count;
 }
 
-bool Stack_IsEmpty(const stack_t *stack)
+bool LinkedStack_IsEmpty(const stack_t *stack)
 {
     return stack->count == 0;
 }
 
-void Stack_Push(stack_t *stack, stack_data_t data)
+void LinkedStack_Push(stack_t *stack, stack_data_t data)
 {
     struct node *node = (struct node *)malloc(sizeof(struct node));
     check_pointer(node);
@@ -77,9 +77,9 @@ void Stack_Push(stack_t *stack, stack_data_t data)
     stack->count++;
 }
 
-stack_data_t Stack_Pop(stack_t *stack)
+stack_data_t LinkedStack_Pop(stack_t *stack)
 {
-    if (Stack_IsEmpty(stack))
+    if (LinkedStack_IsEmpty(stack))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
@@ -95,9 +95,9 @@ stack_data_t Stack_Pop(stack_t *stack)
     return data;
 }
 
-stack_data_t Stack_Top(const stack_t *stack)
+stack_data_t LinkedStack_Top(const stack_t *stack)
 {
-    if (Stack_IsEmpty(stack))
+    if (LinkedStack_IsEmpty(stack))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);

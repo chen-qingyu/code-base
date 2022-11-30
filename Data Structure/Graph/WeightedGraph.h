@@ -7,7 +7,6 @@
 #ifndef WEIGHTED_GRAPH_H
 #define WEIGHTED_GRAPH_H
 
-#include <limits.h>  // INT_MAX
 #include <stdbool.h> // bool
 
 #define VERTEX_NUMBER 7

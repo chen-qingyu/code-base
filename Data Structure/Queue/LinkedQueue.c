@@ -1,4 +1,4 @@
-#include "Queue.h"
+#include "LinkedQueue.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +34,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-queue_t *Queue_Create(void)
+queue_t *LinkedQueue_Create(void)
 {
     queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
     check_pointer(queue);
@@ -49,7 +49,7 @@ queue_t *Queue_Create(void)
     return queue;
 }
 
-void Queue_Destroy(queue_t *queue)
+void LinkedQueue_Destroy(queue_t *queue)
 {
     while (queue->front)
     {
@@ -60,17 +60,17 @@ void Queue_Destroy(queue_t *queue)
     free(queue);
 }
 
-int Queue_Size(const queue_t *queue)
+int LinkedQueue_Size(const queue_t *queue)
 {
     return queue->count;
 }
 
-bool Queue_IsEmpty(const queue_t *queue)
+bool LinkedQueue_IsEmpty(const queue_t *queue)
 {
     return queue->count == 0;
 }
 
-void Queue_Enqueue(queue_t *queue, queue_data_t data)
+void LinkedQueue_Enqueue(queue_t *queue, queue_data_t data)
 {
     struct node *add = (struct node *)malloc(sizeof(struct node));
     check_pointer(add);
@@ -84,7 +84,7 @@ void Queue_Enqueue(queue_t *queue, queue_data_t data)
     ++queue->count;
 }
 
-queue_data_t Queue_Dequeue(queue_t *queue)
+queue_data_t LinkedQueue_Dequeue(queue_t *queue)
 {
     if (queue->count == 0)
     {

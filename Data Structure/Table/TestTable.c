@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void HashTableTest()
+void TestHashTable()
 {
     table_t *table = HashTable_Create();
 
@@ -30,7 +30,7 @@ void HashTableTest()
 
 int main(void)
 {
-    HashTableTest();
+    TestHashTable();
 
     return 0;
 }

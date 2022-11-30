@@ -9,7 +9,7 @@
 
 #include <stdbool.h> // bool
 
-typedef struct node *queue_data_t;
+typedef int queue_data_t;
 
 typedef struct queue queue_t;
 

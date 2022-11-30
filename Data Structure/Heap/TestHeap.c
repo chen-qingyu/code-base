@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void MaxHeapTest(void)
+void TestMaxHeap(void)
 {
     heap_t *heap = MaxHeap_Create();
     assert(MaxHeap_Size(heap) == 0);
@@ -35,7 +35,7 @@ void MaxHeapTest(void)
 
 int main(void)
 {
-    MaxHeapTest();
+    TestMaxHeap();
 
     return 0;
 }

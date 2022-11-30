@@ -13,7 +13,7 @@ void Visit(graph_vertex_t V)
     strcat(str, tmp);
 }
 
-void WeightedGraphTest(void)
+void TestWeightedGraph(void)
 {
     graph_t *G = Graph_Create();
 
@@ -93,7 +93,7 @@ void WeightedGraphTest(void)
 
 int main(void)
 {
-    WeightedGraphTest();
+    TestWeightedGraph();
 
     return 0;
 }

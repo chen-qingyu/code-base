@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "ArrayStack.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +29,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-stack_t *Stack_Create(void)
+stack_t *ArrayStack_Create(void)
 {
     stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
     check_pointer(stack);
@@ -39,24 +39,24 @@ stack_t *Stack_Create(void)
     return stack;
 }
 
-void Stack_Destroy(stack_t *stack)
+void ArrayStack_Destroy(stack_t *stack)
 {
     free(stack);
 }
 
-int Stack_Size(const stack_t *stack)
+int ArrayStack_Size(const stack_t *stack)
 {
     return stack->top + 1;
 }
 
-bool Stack_IsEmpty(const stack_t *stack)
+bool ArrayStack_IsEmpty(const stack_t *stack)
 {
     return stack->top + 1 == 0;
 }
 
-void Stack_Push(stack_t *stack, stack_data_t data)
+void ArrayStack_Push(stack_t *stack, stack_data_t data)
 {
-    if (Stack_Size(stack) == STACK_CAPACITY)
+    if (ArrayStack_Size(stack) == STACK_CAPACITY)
     {
         fprintf(stderr, "ERROR: The stack is full.\n");
         return;
@@ -65,9 +65,9 @@ void Stack_Push(stack_t *stack, stack_data_t data)
     stack->data[++(stack->top)] = data;
 }
 
-stack_data_t Stack_Pop(stack_t *stack)
+stack_data_t ArrayStack_Pop(stack_t *stack)
 {
-    if (Stack_IsEmpty(stack))
+    if (ArrayStack_IsEmpty(stack))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
@@ -76,9 +76,9 @@ stack_data_t Stack_Pop(stack_t *stack)
     return stack->data[(stack->top)--];
 }
 
-stack_data_t Stack_Top(const stack_t *stack)
+stack_data_t ArrayStack_Top(const stack_t *stack)
 {
-    if (Stack_IsEmpty(stack))
+    if (ArrayStack_IsEmpty(stack))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);

@@ -1,4 +1,4 @@
-#include "List.h"
+#include "ArrayList.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +43,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-list_t *List_Create(void)
+list_t *ArrayList_Create(void)
 {
     list_t *list = (list_t *)malloc(sizeof(list_t));
     check_pointer(list);
@@ -56,30 +56,30 @@ list_t *List_Create(void)
     return list;
 }
 
-void List_Destroy(list_t *list)
+void ArrayList_Destroy(list_t *list)
 {
     free(list->data);
     free(list);
 }
 
-int List_Size(const list_t *list)
+int ArrayList_Size(const list_t *list)
 {
     return list->count;
 }
 
-bool List_IsEmpty(const list_t *list)
+bool ArrayList_IsEmpty(const list_t *list)
 {
     return list->count == 0;
 }
 
-list_data_t List_At(const list_t *list, int i) // list[i]
+list_data_t ArrayList_At(const list_t *list, int i) // list[i]
 {
     check_bounds(i, 0, list->count);
 
     return list->data[i];
 }
 
-int List_Find(const list_t *list, list_data_t data)
+int ArrayList_Find(const list_t *list, list_data_t data)
 {
     int index = 0;
 
@@ -91,7 +91,7 @@ int List_Find(const list_t *list, list_data_t data)
     return index < list->count ? index : LIST_NOT_FOUND;
 }
 
-void List_Insert(list_t *list, int i, list_data_t data)
+void ArrayList_Insert(list_t *list, int i, list_data_t data)
 {
     check_bounds(i, 0, list->count + 1);
 
@@ -110,7 +110,7 @@ void List_Insert(list_t *list, int i, list_data_t data)
     ++list->count;
 }
 
-void List_Delete(list_t *list, int i)
+void ArrayList_Delete(list_t *list, int i)
 {
     check_bounds(i, 0, list->count);
 
@@ -121,7 +121,7 @@ void List_Delete(list_t *list, int i)
     --list->count;
 }
 
-void List_Traverse(list_t *list, void (*pTrav)(list_data_t data))
+void ArrayList_Traverse(list_t *list, void (*pTrav)(list_data_t data))
 {
     for (int i = 0; i < list->count; i++)
     {
@@ -129,7 +129,7 @@ void List_Traverse(list_t *list, void (*pTrav)(list_data_t data))
     }
 }
 
-void List_Reverse(list_t *list)
+void ArrayList_Reverse(list_t *list)
 {
     for (int i = 0, j = list->count - 1; i < j; ++i, --j)
     {

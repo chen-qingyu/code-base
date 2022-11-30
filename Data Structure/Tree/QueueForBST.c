@@ -30,7 +30,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-queue_t *Queue_Create(void)
+queue_t *ArrayQueue_Create(void)
 {
     queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
     check_pointer(queue);
@@ -41,24 +41,24 @@ queue_t *Queue_Create(void)
     return queue;
 }
 
-void Queue_Destroy(queue_t *queue)
+void ArrayQueue_Destroy(queue_t *queue)
 {
     free(queue);
 }
 
-int Queue_Size(const queue_t *queue)
+int ArrayQueue_Size(const queue_t *queue)
 {
     return (queue->rear - queue->front + (QUEUE_CAPACITY + 1)) % (QUEUE_CAPACITY + 1);
 }
 
-bool Queue_IsEmpty(const queue_t *queue)
+bool ArrayQueue_IsEmpty(const queue_t *queue)
 {
-    return Queue_Size(queue) == 0;
+    return ArrayQueue_Size(queue) == 0;
 }
 
-void Queue_Enqueue(queue_t *queue, queue_data_t data)
+void ArrayQueue_Enqueue(queue_t *queue, queue_data_t data)
 {
-    if (Queue_Size(queue) == QUEUE_CAPACITY)
+    if (ArrayQueue_Size(queue) == QUEUE_CAPACITY)
     {
         fprintf(stderr, "ERROR: The queue is full.\n");
         return;
@@ -68,9 +68,9 @@ void Queue_Enqueue(queue_t *queue, queue_data_t data)
     queue->data[queue->rear] = data;
 }
 
-queue_data_t Queue_Dequeue(queue_t *queue)
+queue_data_t ArrayQueue_Dequeue(queue_t *queue)
 {
-    if (Queue_IsEmpty(queue))
+    if (ArrayQueue_IsEmpty(queue))
     {
         fprintf(stderr, "ERROR: The queue is empty.\n");
         exit(EXIT_FAILURE);

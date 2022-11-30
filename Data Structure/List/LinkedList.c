@@ -1,4 +1,4 @@
-#include "List.h"
+#include "LinkedList.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +49,7 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-list_t *List_Create(void)
+list_t *LinkedList_Create(void)
 {
     list_t *list = (list_t *)malloc(sizeof(list_t));
     check_pointer(list);
@@ -62,7 +62,7 @@ list_t *List_Create(void)
     return list;
 }
 
-void List_Destroy(list_t *list)
+void LinkedList_Destroy(list_t *list)
 {
     while (list->header)
     {
@@ -73,17 +73,17 @@ void List_Destroy(list_t *list)
     free(list);
 }
 
-int List_Size(const list_t *list)
+int LinkedList_Size(const list_t *list)
 {
     return list->count;
 }
 
-bool List_IsEmpty(const list_t *list)
+bool LinkedList_IsEmpty(const list_t *list)
 {
     return list->count == 0;
 }
 
-list_data_t List_At(const list_t *list, int i) // list[i]
+list_data_t LinkedList_At(const list_t *list, int i) // list[i]
 {
     check_bounds(i, 0, list->count);
 
@@ -97,7 +97,7 @@ list_data_t List_At(const list_t *list, int i) // list[i]
     return current->data;
 }
 
-int List_Find(const list_t *list, list_data_t data)
+int LinkedList_Find(const list_t *list, list_data_t data)
 {
     int index = 0;
     struct node *current = list->header->next;
@@ -111,7 +111,7 @@ int List_Find(const list_t *list, list_data_t data)
     return current ? index : LIST_NOT_FOUND;
 }
 
-void List_Insert(list_t *list, int i, list_data_t data)
+void LinkedList_Insert(list_t *list, int i, list_data_t data)
 {
     check_bounds(i, 0, list->count + 1);
 
@@ -130,7 +130,7 @@ void List_Insert(list_t *list, int i, list_data_t data)
     ++list->count;
 }
 
-void List_Delete(list_t *list, int i)
+void LinkedList_Delete(list_t *list, int i)
 {
     check_bounds(i, 0, list->count);
 
@@ -147,7 +147,7 @@ void List_Delete(list_t *list, int i)
     --list->count;
 }
 
-void List_Traverse(list_t *list, void (*pTrav)(list_data_t data))
+void LinkedList_Traverse(list_t *list, void (*pTrav)(list_data_t data))
 {
     for (struct node *cur = list->header->next; cur != NULL; cur = cur->next)
     {
@@ -155,7 +155,7 @@ void List_Traverse(list_t *list, void (*pTrav)(list_data_t data))
     }
 }
 
-void List_Reverse(list_t *list)
+void LinkedList_Reverse(list_t *list)
 {
     struct node *pre = list->header->next;
     list->header->next = NULL;

@@ -7,10 +7,9 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
-#include <limits.h>  // INT_MAX
 #include <stdbool.h> // bool
 
-#define TREE_NOT_FOUND INT_MAX // a value of tree_data_t that indicates not found
+#define TREE_NOT_FOUND (-1) // a value of tree_data_t that indicates not found
 
 typedef enum
 {
