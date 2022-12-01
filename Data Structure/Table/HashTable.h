@@ -1,8 +1,16 @@
-/*
-散列表 (Hash Table)
-对象集：散列表是由n(n>=0)个键值对(key-value pair)构成的集合
-操作集：散列表 table 属于 table_t ，键 key 属于 table_key_t ，值 value 属于 table_value_t
-*/
+/**
+ * @file HashTable.h
+ * @author 青羽 (chen_qingyu@qq.com)
+ * @brief 散列表 (Hash Table)
+ * @version 0.1
+ * @date 2022.01.29
+ *
+ * @copyright Copyright (c) 2022
+ *
+ * 学习数据结构用。
+ * 散列表 table 是由 n(n>=0) 个键值对(key-value pair)构成的集合。
+ * 散列表 table 属于 table_t ，键 key 属于 table_key_t ，值 value 属于 table_value_t 。
+ */
 
 #ifndef HASH_TABLE_H
 #define HASH_TABLE_H
@@ -17,51 +25,53 @@ typedef int table_value_t;
 
 typedef struct item table_t;
 
-/*************************************************
-  Description:    创建一个空散列表
-  Parameter:      空
-  Return:         一个指向空散列表的指针
-*************************************************/
+/**
+ * @brief 创建一个空散列表
+ *
+ * @return 一个指向空散列表的指针
+ */
 table_t *HashTable_Create(void);
 
-/*************************************************
-  Description:    销毁一个散列表 table
-  Parameter:      一个指向待销毁散列表的指针 table
-  Return:         空
-*************************************************/
+/**
+ * @brief 销毁一个散列表 table
+ *
+ * @param table 一个指向待销毁散列表的指针
+ */
 void HashTable_Destroy(table_t *table);
 
-/*************************************************
-  Description:    在散列表 table 中取 key 对应的 value
-  Parameter:      一个指向散列表的指针 table
-                  一个 key
-  Return:         key 对应的 value 或者 HASHTABLE_NOT_FOUND
-*************************************************/
+/**
+ * @brief 在散列表 table 中取 key 对应的 value
+ *
+ * @param table 一个指向散列表的指针
+ * @param key 一个 key
+ * @return key 对应的 value 或者 HASHTABLE_NOT_FOUND
+ */
 table_value_t HashTable_Get(const table_t *table, table_key_t key);
 
-/*************************************************
-  Description:    在散列表 table 中修改 key 对应的 value
-  Parameter:      一个指向散列表的指针 table
-                  一个 key
-                  一个新的 value
-  Return:         空
-*************************************************/
+/**
+ * @brief 在散列表 table 中修改 key 对应的 value
+ *
+ * @param table 一个指向散列表的指针
+ * @param key 一个 key
+ * @param value 一个新的 value
+ */
 void HashTable_Modify(table_t *table, table_key_t key, table_value_t value);
 
-/*************************************************
-  Description:    在散列表 table 中插入一个新的键值对
-  Parameter:      一个指向散列表的指针 table
-                  一对新的 key 和 value
-  Return:         空
-*************************************************/
+/**
+ * @brief 在散列表 table 中插入一个新的键值对
+ *
+ * @param table 一个指向散列表的指针
+ * @param key 一个新的 key
+ * @param value 一个新的 key 对应的 value
+ */
 void HashTable_Insert(table_t *table, table_key_t key, table_value_t value);
 
-/*************************************************
-  Description:    在散列表 table 中删除 key 对应的键值对
-  Parameter:      一个指向散列表的指针 table
-                  待删除键值对的 key
-  Return:         空
-*************************************************/
+/**
+ * @brief 在散列表 table 中删除 key 对应的键值对
+ *
+ * @param table 一个指向散列表的指针
+ * @param key 待删除键值对的 key
+ */
 void HashTable_Delete(table_t *table, table_key_t key);
 
 #endif

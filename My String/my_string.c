@@ -1,12 +1,15 @@
-/******************************************
- * FileName: my_string.c
- * Brief: My simple C string library implementation.
+/**
+ * @file my_string.c
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief My simple C string library implementation.
  *        Because the <string.h> is too difficult to use, so I wrote one myself.
  *        Only for C language, so it is named `string`.
- * Author: 青羽
- * Blog: https://chen-qingyu.github.io/
- * CreateDate: 2022.11.03
- ******************************************/
+ * @version 1.0
+ * @date 2022.11.03
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 
 #include "my_string.h"
 
@@ -653,7 +656,7 @@ static inline void _check_bounds(int pos, int begin, int end)
 {
     if (pos < begin || pos >= end)
     {
-        fprintf(stderr, "ERROR: Out of range.\n");
+        fprintf(stderr, "ERROR: Out of range: %d not in [%d, %d)\n", pos, begin, end);
         exit(EXIT_FAILURE);
     }
 }

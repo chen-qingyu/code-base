@@ -1,11 +1,14 @@
-/******************************************
- * FileName: my_string.h
- * Brief: My simple C string library.
+/**
+ * @file my_string.h
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief My simple C string library.
  *        Because the <string.h> is too difficult to use, so I wrote one myself.
  *        Only for C language, so it is named `string`.
- * Author: 青羽
- * Blog: https://chen-qingyu.github.io/
- * CreateDate: 2022.11.03
+ * @version 1.0
+ * @date 2022.11.03
+ *
+ * @copyright Copyright (c) 2022
+ *
  * Functions:
  * - String construction/deconstruction:
  *   - str_create        Create an empty string.
@@ -42,7 +45,7 @@
  *   - str_strip         Remove leading and trailing blank characters of the string.
  *   - str_swap          Swap the contents of two strings.
  *   - str_clear         Clear the contents of the string.
- ******************************************/
+ */
 
 #ifndef MY_STRING_H
 #define MY_STRING_H

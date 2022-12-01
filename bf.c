@@ -1,10 +1,13 @@
-/************************************************************
- * File Name: bf.c
- * Author: Qing Yu
- * Date: 2022.10.08
- * Description: Brainfuck interpreter implementation in C
- *              reference to http://brainfuck.org/
- ***********************************************************/
+/**
+ * @file bf.c
+ * @author 青羽 (chen_qingyu@qq.com)
+ * @brief Brainfuck interpreter implementation in C. Reference to http://brainfuck.org/
+ * @version 1.0
+ * @date 2022.10.08
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

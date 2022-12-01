@@ -30,7 +30,7 @@ static inline void check_bounds(int pos, int begin, int end)
 {
     if (pos < begin || pos >= end)
     {
-        fprintf(stderr, "ERROR: Out Of Range: %d not in [%d, %d)\n", pos, begin, end);
+        fprintf(stderr, "ERROR: Out of range: %d not in [%d, %d)\n", pos, begin, end);
         exit(EXIT_FAILURE);
     }
 }
