@@ -58,7 +58,7 @@ bool LinkedList_IsEmpty(const list_t *list);
  *
  * @param list 一个指向列表的指针
  * @param i 下标 (0 <= i < Size(list))
- * @return list_data_t 第 i 个元素
+ * @return 第 i 个元素
  */
 list_data_t LinkedList_At(const list_t *list, int i);
 

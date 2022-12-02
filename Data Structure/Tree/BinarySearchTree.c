@@ -6,15 +6,23 @@
 
 struct node
 {
+    // The data stored in this node.
     tree_data_t data;
+
+    // A pointer to the left child of the node.
     struct node *left;
+
+    // A pointer to the right child of the node.
     struct node *right;
 };
 
 struct tree
 {
-    struct node *root;
+    // Number of elements.
     int count;
+
+    // A pointer to the root node.
+    struct node *root;
 };
 
 /*******************************
