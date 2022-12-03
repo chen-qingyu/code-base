@@ -76,18 +76,18 @@ bool Graph_IsAdjacent(const graph_t *G, graph_vertex_t V1, graph_vertex_t V2);
  *
  * @param G 一个指向图的指针
  * @param startV 遍历起始点
- * @param pVisit 一个对遍历到的每个顶点进行操作的函数的指针
+ * @param p_visit 一个对遍历到的每个顶点进行操作的函数的指针
  */
-void Graph_DFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V));
+void Graph_DFS(graph_t *G, graph_vertex_t startV, void (*p_visit)(graph_vertex_t V));
 
 /**
  * @brief 广度优先遍历图
  *
  * @param G 一个指向图的指针
  * @param startV 遍历起始点
- * @param pVisit 一个对遍历到的每个顶点进行操作的函数的指针
+ * @param p_visit 一个对遍历到的每个顶点进行操作的函数的指针
  */
-void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*pVisit)(graph_vertex_t V));
+void Graph_BFS(graph_t *G, graph_vertex_t startV, void (*p_visit)(graph_vertex_t V));
 
 /**
  * @brief Dijkstra 算法遍历图

@@ -86,7 +86,7 @@ heap_data_t MaxHeap_Pop(heap_t *heap)
         exit(EXIT_FAILURE);
     }
 
-    heap_data_t maxItem = heap->data[1];
+    heap_data_t max_item = heap->data[1];
     heap_data_t tmp = heap->data[heap->count--];
 
     int parent, child;
@@ -109,7 +109,7 @@ heap_data_t MaxHeap_Pop(heap_t *heap)
     }
     heap->data[parent] = tmp;
 
-    return maxItem;
+    return max_item;
 }
 
 heap_data_t MaxHeap_Top(heap_t *heap)

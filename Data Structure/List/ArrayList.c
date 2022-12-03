@@ -121,11 +121,11 @@ void ArrayList_Delete(list_t *list, int i)
     --list->count;
 }
 
-void ArrayList_Traverse(list_t *list, void (*pTrav)(list_data_t data))
+void ArrayList_Traverse(list_t *list, void (*p_trav)(list_data_t data))
 {
     for (int i = 0; i < list->count; i++)
     {
-        pTrav(list->data[i]);
+        p_trav(list->data[i]);
     }
 }
 

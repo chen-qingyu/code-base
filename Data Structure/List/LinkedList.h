@@ -92,9 +92,9 @@ void LinkedList_Delete(list_t *list, int i);
  * @brief 遍历 list
  *
  * @param list 一个指向列表的指针
- * @param pTrav 一个指向用以操作列表元素的函数的指针
+ * @param p_trav 一个指向用以操作列表元素的函数的指针
  */
-void LinkedList_Traverse(list_t *list, void (*pTrav)(list_data_t data));
+void LinkedList_Traverse(list_t *list, void (*p_trav)(list_data_t data));
 
 /**
  * @brief 就地逆置列表 list

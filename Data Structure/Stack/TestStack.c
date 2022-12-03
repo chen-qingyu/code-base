@@ -11,8 +11,8 @@ void TestArrayStack(void)
     assert(ArrayStack_IsEmpty(stack) == true);
 
     stack_data_t arr[] = {1, 2, 3, 4, 5};
-    int arrSize = sizeof(arr) / sizeof(arr[0]);
-    for (int i = 0; i < arrSize; i++)
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
     {
         ArrayStack_Push(stack, arr[i]);
     }
@@ -20,9 +20,9 @@ void TestArrayStack(void)
     assert(ArrayStack_IsEmpty(stack) == false);
     assert(ArrayStack_Top(stack) == 5);
 
-    for (int i = 0; i < arrSize; i++)
+    for (int i = 0; i < arr_size; i++)
     {
-        assert(ArrayStack_Pop(stack) == arr[arrSize - i - 1]);
+        assert(ArrayStack_Pop(stack) == arr[arr_size - i - 1]);
     }
     assert(ArrayStack_IsEmpty(stack) == true);
 
@@ -43,8 +43,8 @@ void TestLinkedStack(void)
     assert(LinkedStack_IsEmpty(stack) == true);
 
     stack_data_t arr[] = {1, 2, 3, 4, 5};
-    int arrSize = sizeof(arr) / sizeof(arr[0]);
-    for (int i = 0; i < arrSize; i++)
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
     {
         LinkedStack_Push(stack, arr[i]);
     }
@@ -52,9 +52,9 @@ void TestLinkedStack(void)
     assert(LinkedStack_IsEmpty(stack) == false);
     assert(LinkedStack_Top(stack) == 5);
 
-    for (int i = 0; i < arrSize; i++)
+    for (int i = 0; i < arr_size; i++)
     {
-        assert(LinkedStack_Pop(stack) == arr[arrSize - i - 1]);
+        assert(LinkedStack_Pop(stack) == arr[arr_size - i - 1]);
     }
     assert(LinkedStack_IsEmpty(stack) == true);
 

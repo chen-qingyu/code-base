@@ -48,31 +48,31 @@ static int hash(table_key_t key)
 
 static int find_pos(const table_t *table, table_key_t key)
 {
-    int currentPos = hash(key);
-    int newPos = currentPos;
-    int conflictCnt = 0;
+    int current_pos = hash(key);
+    int new_pos = current_pos;
+    int conflict_cnt = 0;
 
-    while (table[newPos].state != EMPTY && strcmp(table[newPos].key, key) != 0)
+    while (table[new_pos].state != EMPTY && strcmp(table[new_pos].key, key) != 0)
     {
-        if (++conflictCnt % 2)
+        if (++conflict_cnt % 2)
         {
-            newPos = currentPos + (conflictCnt + 1) * (conflictCnt + 1) / 4;
-            if (newPos >= HASHTABLE_CAPACITY)
+            new_pos = current_pos + (conflict_cnt + 1) * (conflict_cnt + 1) / 4;
+            if (new_pos >= HASHTABLE_CAPACITY)
             {
-                newPos = newPos % HASHTABLE_CAPACITY;
+                new_pos = new_pos % HASHTABLE_CAPACITY;
             }
         }
         else
         {
-            newPos = currentPos - conflictCnt * conflictCnt / 4;
-            while (newPos < 0)
+            new_pos = current_pos - conflict_cnt * conflict_cnt / 4;
+            while (new_pos < 0)
             {
-                newPos += HASHTABLE_CAPACITY;
+                new_pos += HASHTABLE_CAPACITY;
             }
         }
     }
 
-    return newPos;
+    return new_pos;
 }
 
 /*******************************

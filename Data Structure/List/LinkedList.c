@@ -147,11 +147,11 @@ void LinkedList_Delete(list_t *list, int i)
     --list->count;
 }
 
-void LinkedList_Traverse(list_t *list, void (*pTrav)(list_data_t data))
+void LinkedList_Traverse(list_t *list, void (*p_trav)(list_data_t data))
 {
     for (struct node *cur = list->header->next; cur != NULL; cur = cur->next)
     {
-        pTrav(cur->data);
+        p_trav(cur->data);
     }
 }
 

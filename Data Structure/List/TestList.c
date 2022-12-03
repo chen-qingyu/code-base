@@ -21,8 +21,8 @@ void TestArrayList(void)
     assert(ArrayList_IsEmpty(list1) == true);
 
     list_data_t arr[] = {1, 2, 3, 4};
-    int arrSize = sizeof(arr) / sizeof(arr[0]);
-    for (int i = 0; i < arrSize; i++)
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
     {
         ArrayList_Insert(list1, i, arr[i]);
         assert(ArrayList_At(list1, i) == i + 1);
@@ -84,8 +84,8 @@ void TestLinkedList(void)
     assert(LinkedList_IsEmpty(list1) == true);
 
     list_data_t arr[] = {1, 2, 3, 4};
-    int arrSize = sizeof(arr) / sizeof(arr[0]);
-    for (int i = 0; i < arrSize; i++)
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
     {
         LinkedList_Insert(list1, i, arr[i]);
         assert(LinkedList_At(list1, i) == i + 1);

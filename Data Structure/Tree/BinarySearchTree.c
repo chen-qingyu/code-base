@@ -49,7 +49,7 @@ static void destroy_node(struct node *node)
     }
 }
 
-static void traverse_node(struct node *node, traverse_t type, void (*pTrav)(tree_data_t data))
+static void traverse_node(struct node *node, traverse_t type, void (*p_trav)(tree_data_t data))
 {
     if (node)
     {
@@ -57,25 +57,25 @@ static void traverse_node(struct node *node, traverse_t type, void (*pTrav)(tree
         {
             case PRE_ORDER:
             {
-                pTrav(node->data);
-                traverse_node(node->left, PRE_ORDER, pTrav);
-                traverse_node(node->right, PRE_ORDER, pTrav);
+                p_trav(node->data);
+                traverse_node(node->left, PRE_ORDER, p_trav);
+                traverse_node(node->right, PRE_ORDER, p_trav);
                 break;
             }
 
             case IN_ORDER:
             {
-                traverse_node(node->left, IN_ORDER, pTrav);
-                pTrav(node->data);
-                traverse_node(node->right, IN_ORDER, pTrav);
+                traverse_node(node->left, IN_ORDER, p_trav);
+                p_trav(node->data);
+                traverse_node(node->right, IN_ORDER, p_trav);
                 break;
             }
 
             case POST_ORDER:
             {
-                traverse_node(node->left, POST_ORDER, pTrav);
-                traverse_node(node->right, POST_ORDER, pTrav);
-                pTrav(node->data);
+                traverse_node(node->left, POST_ORDER, p_trav);
+                traverse_node(node->right, POST_ORDER, p_trav);
+                p_trav(node->data);
                 break;
             }
 
@@ -86,7 +86,7 @@ static void traverse_node(struct node *node, traverse_t type, void (*pTrav)(tree
                 while (!ArrayQueue_IsEmpty(queue))
                 {
                     node = ArrayQueue_Dequeue(queue);
-                    pTrav(node->data);
+                    p_trav(node->data);
                     if (node->left)
                     {
                         ArrayQueue_Enqueue(queue, node->left);
@@ -211,9 +211,9 @@ bool Tree_IsEmpty(const tree_t *tree)
     return tree->count == 0;
 }
 
-void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data))
+void Tree_Traverse(tree_t *tree, traverse_t type, void (*p_trav)(tree_data_t data))
 {
-    traverse_node(tree->root, type, pTrav);
+    traverse_node(tree->root, type, p_trav);
 }
 
 tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)

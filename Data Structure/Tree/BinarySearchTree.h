@@ -70,9 +70,9 @@ bool Tree_IsEmpty(const tree_t *tree);
  *              - IN_ORDER    中序遍历
  *              - POST_ORDER  后序遍历
  *              - LEVEL_ORDER 层次遍历
- * @param pTrav 一个对遍历到的每个元素进行操作的函数的指针
+ * @param p_trav 一个对遍历到的每个元素进行操作的函数的指针
  */
-void Tree_Traverse(tree_t *tree, traverse_t type, void (*pTrav)(tree_data_t data));
+void Tree_Traverse(tree_t *tree, traverse_t type, void (*p_trav)(tree_data_t data));
 
 /**
  * @brief 在一个二叉搜索树 tree 中寻找元素 data
