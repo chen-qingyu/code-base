@@ -36,35 +36,35 @@ typedef struct tree tree_t;
  *
  * @return 一个指向空二叉搜索树的指针
  */
-tree_t *Tree_Create(void);
+tree_t* Tree_Create(void);
 
 /**
- * @brief 销毁一个二叉搜索树 tree
+ * @brief 销毁一个二叉搜索树
  *
- * @param tree 一个指向待销毁二叉搜索树的指针
+ * @param self 一个指向待销毁二叉搜索树的指针
  */
-void Tree_Destroy(tree_t *tree);
+void Tree_Destroy(tree_t* self);
 
 /**
- * @brief 求二叉搜索树 tree 的元素个数
+ * @brief 求二叉搜索树的元素个数
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @return 二叉搜索树的元素个数
  */
-int Tree_Size(const tree_t *tree);
+int Tree_Size(const tree_t* self);
 
 /**
- * @brief 判断二叉搜索树 tree 是否为空
+ * @brief 判断二叉搜索树是否为空
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @return 如果二叉搜索树为空则返回 true ，否则返回 false
  */
-bool Tree_IsEmpty(const tree_t *tree);
+bool Tree_IsEmpty(const tree_t* self);
 
 /**
- * @brief 遍历一个二叉搜索树 tree
+ * @brief 遍历一个二叉搜索树
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @param type 一个枚举遍历类型
  *              - PRE_ORDER   先序遍历
  *              - IN_ORDER    中序遍历
@@ -72,47 +72,47 @@ bool Tree_IsEmpty(const tree_t *tree);
  *              - LEVEL_ORDER 层次遍历
  * @param p_trav 一个对遍历到的每个元素进行操作的函数的指针
  */
-void Tree_Traverse(tree_t *tree, traverse_t type, void (*p_trav)(tree_data_t data));
+void Tree_Traverse(tree_t* self, traverse_t type, void (*p_trav)(tree_data_t data));
 
 /**
- * @brief 在一个二叉搜索树 tree 中寻找元素 data
+ * @brief 在一个二叉搜索树中寻找元素 data
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @param data 一个待寻找元素
  * @return 元素 data 或者 TREE_NOT_FOUND
  */
-tree_data_t Tree_Find(const tree_t *tree, tree_data_t data);
+tree_data_t Tree_Find(const tree_t* self, tree_data_t data);
 
 /**
- * @brief 在一个二叉搜索树 tree 中寻找最小元素
+ * @brief 在一个二叉搜索树中寻找最小元素
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @return 最小的元素或者 TREE_NOT_FOUND
  */
-tree_data_t Tree_FindMin(const tree_t *tree);
+tree_data_t Tree_FindMin(const tree_t* self);
 
 /**
- * @brief 在一个二叉搜索树 tree 中寻找最大元素
+ * @brief 在一个二叉搜索树中寻找最大元素
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @return 最大的元素或者 TREE_NOT_FOUND
  */
-tree_data_t Tree_FindMax(const tree_t *tree);
+tree_data_t Tree_FindMax(const tree_t* self);
 
 /**
- * @brief 在一个二叉搜索树 tree 中插入元素 data
+ * @brief 在一个二叉搜索树中插入元素 data
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @param data 一个待插入元素
  */
-void Tree_Insert(tree_t *tree, tree_data_t data);
+void Tree_Insert(tree_t* self, tree_data_t data);
 
 /**
- * @brief 在一个二叉搜索树 tree 中删除元素 data
+ * @brief 在一个二叉搜索树中删除元素 data
  *
- * @param tree 一个指向二叉搜索树的指针
+ * @param self 一个指向二叉搜索树的指针
  * @param data 一个待删除元素
  */
-void Tree_Delete(tree_t *tree, tree_data_t data);
+void Tree_Delete(tree_t* self, tree_data_t data);
 
 #endif

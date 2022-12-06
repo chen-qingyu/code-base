@@ -25,7 +25,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -46,7 +46,7 @@ static int hash(table_key_t key)
     return index % HASHTABLE_CAPACITY;
 }
 
-static int find_pos(const table_t *table, table_key_t key)
+static int find_pos(const table_t* table, table_key_t key)
 {
     int current_pos = hash(key);
     int new_pos = current_pos;
@@ -79,9 +79,9 @@ static int find_pos(const table_t *table, table_key_t key)
 Interface functions implementation.
 *******************************/
 
-table_t *HashTable_Create(void)
+table_t* HashTable_Create(void)
 {
-    table_t *table = (table_t *)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
+    table_t* table = (table_t*)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
     check_pointer(table);
 
     for (int i = 0; i < HASHTABLE_CAPACITY; i++)
@@ -93,32 +93,32 @@ table_t *HashTable_Create(void)
     return table;
 }
 
-void HashTable_Destroy(table_t *table)
+void HashTable_Destroy(table_t* self)
 {
     for (int i = 0; i < HASHTABLE_CAPACITY; ++i)
     {
-        if (table[i].key)
+        if (self[i].key)
         {
-            free(table[i].key);
+            free(self[i].key);
         }
     }
-    free(table);
+    free(self);
 }
 
-table_value_t HashTable_Get(const table_t *table, table_key_t key)
+table_value_t HashTable_Get(const table_t* self, table_key_t key)
 {
-    int pos = find_pos(table, key);
+    int pos = find_pos(self, key);
 
-    return table[pos].state == FULL ? table[pos].value : HASHTABLE_NOT_FOUND;
+    return self[pos].state == FULL ? self[pos].value : HASHTABLE_NOT_FOUND;
 }
 
-void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
+void HashTable_Modify(table_t* self, table_key_t key, table_value_t value)
 {
-    int pos = find_pos(table, key);
+    int pos = find_pos(self, key);
 
-    if (table[pos].state == FULL)
+    if (self[pos].state == FULL)
     {
-        table[pos].value = value;
+        self[pos].value = value;
     }
     else
     {
@@ -127,23 +127,23 @@ void HashTable_Modify(table_t *table, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
+void HashTable_Insert(table_t* self, table_key_t key, table_value_t value)
 {
-    int pos = find_pos(table, key);
+    int pos = find_pos(self, key);
 
-    if (table[pos].state != FULL)
+    if (self[pos].state != FULL)
     {
-        if (table[pos].state == DELETED)
+        if (self[pos].state == DELETED)
         {
-            free(table[pos].key);
-            table[pos].key = NULL;
+            free(self[pos].key);
+            self[pos].key = NULL;
         }
-        table[pos].state = FULL;
-        table[pos].key = (char *)malloc(strlen(key) * sizeof(char) + 1);
-        check_pointer(table[pos].key);
+        self[pos].state = FULL;
+        self[pos].key = (char*)malloc(strlen(key) * sizeof(char) + 1);
+        check_pointer(self[pos].key);
 
-        strcpy(table[pos].key, key);
-        table[pos].value = value;
+        strcpy(self[pos].key, key);
+        self[pos].value = value;
     }
     else
     {
@@ -152,13 +152,13 @@ void HashTable_Insert(table_t *table, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Delete(table_t *table, table_key_t key)
+void HashTable_Delete(table_t* self, table_key_t key)
 {
-    int pos = find_pos(table, key);
+    int pos = find_pos(self, key);
 
-    if (table[pos].state == FULL)
+    if (self[pos].state == FULL)
     {
-        table[pos].state = DELETED;
+        self[pos].state = DELETED;
     }
     else
     {

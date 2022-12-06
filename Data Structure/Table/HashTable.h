@@ -19,7 +19,7 @@
 
 #define HASHTABLE_NOT_FOUND (-1) // a value of table_value_t that indicates not found
 
-typedef char *table_key_t;
+typedef char* table_key_t;
 
 typedef int table_value_t;
 
@@ -30,48 +30,48 @@ typedef struct item table_t;
  *
  * @return 一个指向空散列表的指针
  */
-table_t *HashTable_Create(void);
+table_t* HashTable_Create(void);
 
 /**
- * @brief 销毁一个散列表 table
+ * @brief 销毁一个散列表
  *
- * @param table 一个指向待销毁散列表的指针
+ * @param self 一个指向待销毁散列表的指针
  */
-void HashTable_Destroy(table_t *table);
+void HashTable_Destroy(table_t* self);
 
 /**
- * @brief 在散列表 table 中取 key 对应的 value
+ * @brief 在散列表中取 key 对应的 value
  *
- * @param table 一个指向散列表的指针
+ * @param self 一个指向散列表的指针
  * @param key 一个 key
  * @return key 对应的 value 或者 HASHTABLE_NOT_FOUND
  */
-table_value_t HashTable_Get(const table_t *table, table_key_t key);
+table_value_t HashTable_Get(const table_t* self, table_key_t key);
 
 /**
- * @brief 在散列表 table 中修改 key 对应的 value
+ * @brief 在散列表中修改 key 对应的 value
  *
- * @param table 一个指向散列表的指针
+ * @param self 一个指向散列表的指针
  * @param key 一个 key
  * @param value 一个新的 value
  */
-void HashTable_Modify(table_t *table, table_key_t key, table_value_t value);
+void HashTable_Modify(table_t* self, table_key_t key, table_value_t value);
 
 /**
- * @brief 在散列表 table 中插入一个新的键值对
+ * @brief 在散列表中插入一个新的键值对
  *
- * @param table 一个指向散列表的指针
+ * @param self 一个指向散列表的指针
  * @param key 一个新的 key
  * @param value 一个新的 key 对应的 value
  */
-void HashTable_Insert(table_t *table, table_key_t key, table_value_t value);
+void HashTable_Insert(table_t* self, table_key_t key, table_value_t value);
 
 /**
- * @brief 在散列表 table 中删除 key 对应的键值对
+ * @brief 在散列表中删除 key 对应的键值对
  *
- * @param table 一个指向散列表的指针
+ * @param self 一个指向散列表的指针
  * @param key 待删除键值对的 key
  */
-void HashTable_Delete(table_t *table, table_key_t key);
+void HashTable_Delete(table_t* self, table_key_t key);
 
 #endif

@@ -1,6 +1,6 @@
 # Test all
 
-all: TestTree TestTable TestList TestHeap TestQueue TestStack TestGraph
+test: TestTree TestTable TestList TestHeap TestQueue TestStack TestGraph TestString
 
 # Tree
 
@@ -85,11 +85,22 @@ Stack/LinkedStack.o: Stack/LinkedStack.c Stack/LinkedStack.h
 TestGraph: Graph/TestGraph.exe
 	./Graph/TestGraph.exe
 
-Graph/TestGraph.exe: Graph/TestGraph.c Graph/Graph.o Queue/ArrayQueue.o # need Queue
-	gcc -Wall Graph/TestGraph.c Graph/Graph.o Queue/ArrayQueue.o -o Graph/TestGraph.exe
+Graph/TestGraph.exe: Graph/TestGraph.c Graph/MatrixGraph.o Queue/ArrayQueue.o # need Queue
+	gcc -Wall Graph/TestGraph.c Graph/MatrixGraph.o Queue/ArrayQueue.o -o Graph/TestGraph.exe
 
-Graph/Graph.o: Graph/Graph.c Graph/Graph.h
-	gcc -Wall -c Graph/Graph.c -o Graph/Graph.o
+Graph/MatrixGraph.o: Graph/MatrixGraph.c Graph/MatrixGraph.h
+	gcc -Wall -c Graph/MatrixGraph.c -o Graph/MatrixGraph.o
+
+# String
+
+TestString: String/TestString.exe
+	./String/TestString.exe
+
+String/TestString.exe: String/TestString.c String/String.o
+	gcc -Wall String/TestString.c String/String.o -o String/TestString.exe
+
+String/String.o: String/String.c String/String.h
+	gcc -Wall -c String/String.c -o String/String.o
 
 # Clean files
 

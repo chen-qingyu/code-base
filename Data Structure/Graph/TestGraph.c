@@ -1,4 +1,4 @@
-#include "Graph.h"
+#include "MatrixGraph.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -13,21 +13,21 @@ void Visit(graph_vertex_t V)
     strcat(str, tmp);
 }
 
-void TestGraph(void)
+void TestMatrixGraph(void)
 {
-    graph_t *G = Graph_Create();
+    graph_t* G = MatrixGraph_Create();
 
-    Graph_Link(G, 0, 1, 2);
-    Graph_Link(G, 0, 3, 1);
-    Graph_Link(G, 1, 4, 10);
-    Graph_Link(G, 1, 3, 3);
-    Graph_Link(G, 2, 0, 4);
-    Graph_Link(G, 2, 5, 5);
-    Graph_Link(G, 3, 2, 2);
-    Graph_Link(G, 3, 4, 2);
-    Graph_Link(G, 3, 5, 8);
-    Graph_Link(G, 3, 6, 4);
-    Graph_Link(G, 6, 5, 1);
+    MatrixGraph_Link(G, 0, 1, 2);
+    MatrixGraph_Link(G, 0, 3, 1);
+    MatrixGraph_Link(G, 1, 4, 10);
+    MatrixGraph_Link(G, 1, 3, 3);
+    MatrixGraph_Link(G, 2, 0, 4);
+    MatrixGraph_Link(G, 2, 5, 5);
+    MatrixGraph_Link(G, 3, 2, 2);
+    MatrixGraph_Link(G, 3, 4, 2);
+    MatrixGraph_Link(G, 3, 5, 8);
+    MatrixGraph_Link(G, 3, 6, 4);
+    MatrixGraph_Link(G, 6, 5, 1);
 
     //       +--+   2    +--+
     //       |V0|------->|V1|
@@ -43,32 +43,32 @@ void TestGraph(void)
     //       |V5|<-------|V6|
     //       +--+        +--+
 
-    assert(Graph_IsAdjacent(G, 0, 1) == true);
-    assert(Graph_IsAdjacent(G, 0, 6) == false);
-    assert(Graph_IsAdjacent(G, 6, 0) == false);
+    assert(MatrixGraph_IsAdjacent(G, 0, 1) == true);
+    assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
+    assert(MatrixGraph_IsAdjacent(G, 6, 0) == false);
 
-    Graph_Link(G, 0, 6, 99);
-    assert(Graph_IsAdjacent(G, 0, 6) == true);
+    MatrixGraph_Link(G, 0, 6, 99);
+    assert(MatrixGraph_IsAdjacent(G, 0, 6) == true);
 #ifndef UNDIRECTED
-    assert(Graph_IsAdjacent(G, 6, 0) == false);
+    assert(MatrixGraph_IsAdjacent(G, 6, 0) == false);
 #else
-    assert(Graph_IsAdjacent(G, 6, 0) == true);
+    assert(MatrixGraph_IsAdjacent(G, 6, 0) == true);
 #endif
 
-    Graph_Unlink(G, 0, 6);
-    assert(Graph_IsAdjacent(G, 0, 6) == false);
+    MatrixGraph_Unlink(G, 0, 6);
+    assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
 
-    Graph_DFS(G, 0, Visit);
+    MatrixGraph_DFS(G, 0, Visit);
     assert(strcmp(str, "0 1 3 2 5 4 6 ") == 0);
     memset(str, 0, sizeof(str));
 
-    Graph_BFS(G, 0, Visit);
+    MatrixGraph_BFS(G, 0, Visit);
     assert(strcmp(str, "0 1 3 4 2 5 6 ") == 0);
     memset(str, 0, sizeof(str));
 
     int dist[VERTEX_NUMBER];
     int path[VERTEX_NUMBER];
-    Graph_Dijkstra(G, dist, path, 0);
+    MatrixGraph_Dijkstra(G, dist, path, 0);
 
     assert(dist[0] == 0);
     assert(dist[1] == 2);
@@ -86,14 +86,14 @@ void TestGraph(void)
     assert(path[5] == 6);
     assert(path[6] == 3);
 
-    Graph_Destroy(G);
+    MatrixGraph_Destroy(G);
 
-    printf("Graph Test OK.\n");
+    printf("Matrix Graph Test OK.\n");
 }
 
 int main(void)
 {
-    TestGraph();
+    TestMatrixGraph();
 
     return 0;
 }

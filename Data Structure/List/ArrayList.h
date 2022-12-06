@@ -28,14 +28,14 @@ typedef struct list list_t;
  *
  * @return 一个指向空列表的指针
  */
-list_t *ArrayList_Create(void);
+list_t* ArrayList_Create(void);
 
 /**
  * @brief 销毁一个列表 list
  *
  * @param list 一个指向待销毁列表的指针
  */
-void ArrayList_Destroy(list_t *list);
+void ArrayList_Destroy(list_t* list);
 
 /**
  * @brief 求列表 list 的长度
@@ -43,7 +43,7 @@ void ArrayList_Destroy(list_t *list);
  * @param list 一个指向列表的指针
  * @return 列表长度
  */
-int ArrayList_Size(const list_t *list);
+int ArrayList_Size(const list_t* list);
 
 /**
  * @brief 判断列表 list 是否为空
@@ -51,7 +51,7 @@ int ArrayList_Size(const list_t *list);
  * @param list 一个指向列表的指针
  * @return 如果列表为空则返回 true ，否则返回 false
  */
-bool ArrayList_IsEmpty(const list_t *list);
+bool ArrayList_IsEmpty(const list_t* list);
 
 /**
  * @brief 取列表 list 的第 i 个元素
@@ -60,7 +60,7 @@ bool ArrayList_IsEmpty(const list_t *list);
  * @param i 下标 (0 <= i < Size(list))
  * @return 第 i 个元素
  */
-list_data_t ArrayList_At(const list_t *list, int i);
+list_data_t ArrayList_At(const list_t* list, int i);
 
 /**
  * @brief 求元素 data 在列表 list 中的下标
@@ -69,7 +69,7 @@ list_data_t ArrayList_At(const list_t *list, int i);
  * @param data 一个待寻找元素
  * @return 待寻找元素 data 的下标 i 或者 LIST_NOT_FOUND 代表没找到
  */
-int ArrayList_Find(const list_t *list, list_data_t data);
+int ArrayList_Find(const list_t* list, list_data_t data);
 
 /**
  * @brief 在列表 list 的下标为 i 的位置上插入一个元素 data
@@ -78,7 +78,7 @@ int ArrayList_Find(const list_t *list, list_data_t data);
  * @param i 下标 (0 <= i <= Size(list))
  * @param data 待插入元素
  */
-void ArrayList_Insert(list_t *list, int i, list_data_t data);
+void ArrayList_Insert(list_t* list, int i, list_data_t data);
 
 /**
  * @brief 从列表 list 当中删除下标为 i 的元素
@@ -86,7 +86,7 @@ void ArrayList_Insert(list_t *list, int i, list_data_t data);
  * @param list 一个指向列表的指针
  * @param i 下标 (0 <= i < Size(list))
  */
-void ArrayList_Delete(list_t *list, int i);
+void ArrayList_Delete(list_t* list, int i);
 
 /**
  * @brief 遍历 list
@@ -94,13 +94,13 @@ void ArrayList_Delete(list_t *list, int i);
  * @param list 一个指向列表的指针
  * @param p_trav 一个指向用以操作列表元素的函数的指针
  */
-void ArrayList_Traverse(list_t *list, void (*p_trav)(list_data_t data));
+void ArrayList_Traverse(list_t* list, void (*p_trav)(list_data_t data));
 
 /**
  * @brief 就地逆置列表 list
  *
  * @param list 一个指向列表的指针
  */
-void ArrayList_Reverse(list_t *list);
+void ArrayList_Reverse(list_t* list);
 
 #endif

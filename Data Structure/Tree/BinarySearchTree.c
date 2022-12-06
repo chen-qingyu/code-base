@@ -10,10 +10,10 @@ struct node
     tree_data_t data;
 
     // A pointer to the left child of the node.
-    struct node *left;
+    struct node* left;
 
     // A pointer to the right child of the node.
-    struct node *right;
+    struct node* right;
 };
 
 struct tree
@@ -22,7 +22,7 @@ struct tree
     int count;
 
     // A pointer to the root node.
-    struct node *root;
+    struct node* root;
 };
 
 /*******************************
@@ -30,7 +30,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -39,7 +39,7 @@ static inline void check_pointer(const void *pointer)
     }
 }
 
-static void destroy_node(struct node *node)
+static void destroy_node(struct node* node)
 {
     if (node)
     {
@@ -49,7 +49,7 @@ static void destroy_node(struct node *node)
     }
 }
 
-static void traverse_node(struct node *node, traverse_t type, void (*p_trav)(tree_data_t data))
+static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(tree_data_t data))
 {
     if (node)
     {
@@ -81,7 +81,7 @@ static void traverse_node(struct node *node, traverse_t type, void (*p_trav)(tre
 
             case LEVEL_ORDER:
             {
-                queue_t *queue = ArrayQueue_Create();
+                queue_t* queue = ArrayQueue_Create();
                 ArrayQueue_Enqueue(queue, node);
                 while (!ArrayQueue_IsEmpty(queue))
                 {
@@ -110,11 +110,11 @@ static void traverse_node(struct node *node, traverse_t type, void (*p_trav)(tre
     }
 }
 
-static struct node *insert_node(tree_t *tree, struct node *node, tree_data_t data)
+static struct node* insert_node(tree_t* tree, struct node* node, tree_data_t data)
 {
     if (node == NULL)
     {
-        node = (struct node *)malloc(sizeof(struct node));
+        node = (struct node*)malloc(sizeof(struct node));
         check_pointer(node);
 
         node->data = data;
@@ -137,7 +137,7 @@ static struct node *insert_node(tree_t *tree, struct node *node, tree_data_t dat
     return node;
 }
 
-static struct node *find_min_node(struct node *node)
+static struct node* find_min_node(struct node* node)
 {
     while (node->left) // node is not NULL
     {
@@ -147,7 +147,7 @@ static struct node *find_min_node(struct node *node)
     return node;
 }
 
-static struct node *delete_node(tree_t *tree, struct node *node, tree_data_t data)
+static struct node* delete_node(tree_t* tree, struct node* node, tree_data_t data)
 {
     if (node)
     {
@@ -163,13 +163,13 @@ static struct node *delete_node(tree_t *tree, struct node *node, tree_data_t dat
         {
             if (node->left && node->right)
             {
-                struct node *tmp = find_min_node(node->right); // node->right is not NULL
+                struct node* tmp = find_min_node(node->right); // node->right is not NULL
                 node->data = tmp->data;
                 node->right = delete_node(tree, node->right, tmp->data);
             }
             else
             {
-                struct node *tmp = node;
+                struct node* tmp = node;
                 node = node->left ? node->left : node->right;
                 free(tmp);
                 tree->count--;
@@ -184,9 +184,9 @@ static struct node *delete_node(tree_t *tree, struct node *node, tree_data_t dat
 Interface functions implementation.
 *******************************/
 
-tree_t *Tree_Create(void)
+tree_t* Tree_Create(void)
 {
-    tree_t *tree = (tree_t *)malloc(sizeof(tree_t));
+    tree_t* tree = (tree_t*)malloc(sizeof(tree_t));
     check_pointer(tree);
 
     tree->root = NULL;
@@ -195,30 +195,30 @@ tree_t *Tree_Create(void)
     return tree;
 }
 
-void Tree_Destroy(tree_t *tree)
+void Tree_Destroy(tree_t* self)
 {
-    destroy_node(tree->root);
-    free(tree);
+    destroy_node(self->root);
+    free(self);
 }
 
-int Tree_Size(const tree_t *tree)
+int Tree_Size(const tree_t* self)
 {
-    return tree->count;
+    return self->count;
 }
 
-bool Tree_IsEmpty(const tree_t *tree)
+bool Tree_IsEmpty(const tree_t* self)
 {
-    return tree->count == 0;
+    return self->count == 0;
 }
 
-void Tree_Traverse(tree_t *tree, traverse_t type, void (*p_trav)(tree_data_t data))
+void Tree_Traverse(tree_t* self, traverse_t type, void (*p_trav)(tree_data_t data))
 {
-    traverse_node(tree->root, type, p_trav);
+    traverse_node(self->root, type, p_trav);
 }
 
-tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
+tree_data_t Tree_Find(const tree_t* self, tree_data_t data)
 {
-    struct node *current = tree->root;
+    struct node* current = self->root;
 
     while (current)
     {
@@ -239,9 +239,9 @@ tree_data_t Tree_Find(const tree_t *tree, tree_data_t data)
     return TREE_NOT_FOUND;
 }
 
-tree_data_t Tree_FindMin(const tree_t *tree)
+tree_data_t Tree_FindMin(const tree_t* self)
 {
-    struct node *current = tree->root;
+    struct node* current = self->root;
 
     if (current)
     {
@@ -254,9 +254,9 @@ tree_data_t Tree_FindMin(const tree_t *tree)
     return current ? current->data : TREE_NOT_FOUND;
 }
 
-tree_data_t Tree_FindMax(const tree_t *tree)
+tree_data_t Tree_FindMax(const tree_t* self)
 {
-    struct node *current = tree->root;
+    struct node* current = self->root;
 
     if (current)
     {
@@ -269,12 +269,12 @@ tree_data_t Tree_FindMax(const tree_t *tree)
     return current ? current->data : TREE_NOT_FOUND;
 }
 
-void Tree_Insert(tree_t *tree, tree_data_t data)
+void Tree_Insert(tree_t* self, tree_data_t data)
 {
-    tree->root = insert_node(tree, tree->root, data);
+    self->root = insert_node(self, self->root, data);
 }
 
-void Tree_Delete(tree_t *tree, tree_data_t data)
+void Tree_Delete(tree_t* self, tree_data_t data)
 {
-    tree->root = delete_node(tree, tree->root, data);
+    self->root = delete_node(self, self->root, data);
 }
