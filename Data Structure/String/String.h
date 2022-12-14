@@ -62,8 +62,8 @@
 // INFINITY: Positive infinity.
 #include <math.h>
 
-// Used for string find.
-#define STR_NOT_FOUND (-1)
+// Indicates not found
+#define STRING_NOT_FOUND (-1)
 
 // String structure declaration.
 typedef struct string String;
@@ -242,7 +242,7 @@ enum order String_Compare(const String* self, const String* that);
  *
  * @param self A pointer to the string.
  * @param pattern A pointer to the pattern string.
- * @return Returns the starting substring index or STR_NOT_FOUND.
+ * @return Returns the starting substring index or STRING_NOT_FOUND.
  */
 int String_Find(const String* self, const String* pattern);
 

@@ -11,13 +11,13 @@ typedef enum
     EMPTY,
     FULL,
     DELETED
-} table_state_t;
+} TableState;
 
 struct item
 {
     TableKey key;
     TableValue value;
-    table_state_t state;
+    TableState state;
 };
 
 /*******************************
@@ -109,7 +109,7 @@ TableValue HashTable_Get(const Table* self, TableKey key)
 {
     int pos = find_pos(self, key);
 
-    return self[pos].state == FULL ? self[pos].value : HASHTABLE_NOT_FOUND;
+    return self[pos].state == FULL ? self[pos].value : TABLE_NOT_FOUND;
 }
 
 void HashTable_Modify(Table* self, TableKey key, TableValue value)

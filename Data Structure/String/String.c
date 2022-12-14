@@ -322,7 +322,7 @@ String** String_Split(const String* self, const String* sep)
 
     int pos_begin = 0;
     int pos_sep = 0;
-    while ((pos_sep = find_pattern(self->data + pos_begin, sep->data, self->size - pos_begin, sep->size)) != STR_NOT_FOUND)
+    while ((pos_sep = find_pattern(self->data + pos_begin, sep->data, self->size - pos_begin, sep->size)) != STRING_NOT_FOUND)
     {
         String* tmp = String_Create();
         copy_range(tmp, self, pos_begin, pos_begin + pos_sep);
@@ -589,7 +589,7 @@ void String_Replace(String* self, const String* old_str, const String* new_str)
 
     int offset = 0;
     int index = 0;
-    while ((index = find_pattern(self->data + offset, old_str->data, self->size - offset, old_str->size)) != STR_NOT_FOUND)
+    while ((index = find_pattern(self->data + offset, old_str->data, self->size - offset, old_str->size)) != STRING_NOT_FOUND)
     {
         index += offset;
         copy_range(tmp, self, offset, index);
@@ -673,7 +673,7 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
 {
     if (n < m)
     {
-        return STR_NOT_FOUND;
+        return STRING_NOT_FOUND;
     }
 
     if (m == 0) // "" is in any string at index 0.
@@ -683,7 +683,7 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
 
     int* match = (int*)malloc(sizeof(int) * m);
     check_pointer(match);
-    match[0] = STR_NOT_FOUND;
+    match[0] = STRING_NOT_FOUND;
 
     for (int j = 1; j < m; j++)
     {
@@ -698,7 +698,7 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
         }
         else
         {
-            match[j] = STR_NOT_FOUND;
+            match[j] = STRING_NOT_FOUND;
         }
     }
 
@@ -723,7 +723,7 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
 
     free(match);
 
-    return (p == m) ? (s - m) : STR_NOT_FOUND;
+    return (p == m) ? (s - m) : STRING_NOT_FOUND;
 }
 
 static inline int length(const char* chars)

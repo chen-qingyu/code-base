@@ -100,9 +100,9 @@ int main()
     assert(String_Find(s5, s4) == 2);
     assert(String_Find(s5, s5) == 0);
     String_Set(s1, " ");
-    assert(String_Find(s5, s1) == STR_NOT_FOUND);
+    assert(String_Find(s5, s1) == STRING_NOT_FOUND);
     String_Set(s1, "ac");
-    assert(String_Find(s5, s1) == STR_NOT_FOUND);
+    assert(String_Find(s5, s1) == STRING_NOT_FOUND);
 
     // String_Append()
 

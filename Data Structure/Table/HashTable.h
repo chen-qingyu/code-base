@@ -17,7 +17,7 @@
 
 #include <stdbool.h> // bool
 
-#define HASHTABLE_NOT_FOUND (-1) // a value of TableValue that indicates not found
+#define TABLE_NOT_FOUND (-1) // a value of TableValue that indicates not found
 
 typedef char* TableKey;
 
@@ -44,7 +44,7 @@ void HashTable_Destroy(Table* self);
  *
  * @param self 一个指向散列表的指针
  * @param key 一个 key
- * @return key 对应的 value 或者 HASHTABLE_NOT_FOUND
+ * @return key 对应的 value 或者 TABLE_NOT_FOUND
  */
 TableValue HashTable_Get(const Table* self, TableKey key);
 
