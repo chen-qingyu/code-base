@@ -1,0 +1,6 @@
+1. 考完研后进一步学习理论
+2. 写开源文章和Readme, 开源文章中间部分和Readme保持同步
+3. 上 GoogleTest, DrMemory, Doxygen
+4. 写代码：
+    - 实现 DoublyLinkedList, MinHeap, AVLTree, ListGraph, ArrayDeque(参考Java的ArrayDeque源码), LinkedDeque(里面组合一个DoublyLinkedList) 等
+    - 重写 MatrixGraph 等

@@ -6,10 +6,10 @@
 struct node
 {
     // Data stored in the node.
-    list_data_t data;
+    ListItem data;
 
     // Successor.
-    struct node *next;
+    struct node* next;
 };
 
 struct list
@@ -18,7 +18,7 @@ struct list
     int count;
 
     // Pointer to the header (rank = -1).
-    struct node *header;
+    struct node* header;
 };
 
 /*******************************
@@ -36,7 +36,7 @@ static inline void check_bounds(int pos, int begin, int end)
 }
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -49,45 +49,45 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-list_t *LinkedList_Create(void)
+List* LinkedList_Create(void)
 {
-    list_t *list = (list_t *)malloc(sizeof(list_t));
+    List* list = (List*)malloc(sizeof(List));
     check_pointer(list);
 
     list->count = 0;
-    list->header = (struct node *)malloc(sizeof(struct node));
+    list->header = (struct node*)malloc(sizeof(struct node));
     check_pointer(list->header);
     list->header->next = NULL;
 
     return list;
 }
 
-void LinkedList_Destroy(list_t *list)
+void LinkedList_Destroy(List* self)
 {
-    while (list->header)
+    while (self->header)
     {
-        struct node *next = list->header->next;
-        free(list->header);
-        list->header = next;
+        struct node* next = self->header->next;
+        free(self->header);
+        self->header = next;
     }
-    free(list);
+    free(self);
 }
 
-int LinkedList_Size(const list_t *list)
+int LinkedList_Size(const List* self)
 {
-    return list->count;
+    return self->count;
 }
 
-bool LinkedList_IsEmpty(const list_t *list)
+bool LinkedList_IsEmpty(const List* self)
 {
-    return list->count == 0;
+    return self->count == 0;
 }
 
-list_data_t LinkedList_At(const list_t *list, int i) // list[i]
+ListItem LinkedList_At(const List* self, int i) // self[i]
 {
-    check_bounds(i, 0, list->count);
+    check_bounds(i, 0, self->count);
 
-    struct node *current = list->header->next;
+    struct node* current = self->header->next;
 
     for (int j = 0; j < i; ++j)
     {
@@ -97,10 +97,10 @@ list_data_t LinkedList_At(const list_t *list, int i) // list[i]
     return current->data;
 }
 
-int LinkedList_Find(const list_t *list, list_data_t data)
+int LinkedList_Find(const List* self, ListItem data)
 {
     int index = 0;
-    struct node *current = list->header->next;
+    struct node* current = self->header->next;
 
     while (current != NULL && current->data != data)
     {
@@ -111,15 +111,15 @@ int LinkedList_Find(const list_t *list, list_data_t data)
     return current ? index : LIST_NOT_FOUND;
 }
 
-void LinkedList_Insert(list_t *list, int i, list_data_t data)
+void LinkedList_Insert(List* self, int i, ListItem data)
 {
-    check_bounds(i, 0, list->count + 1);
+    check_bounds(i, 0, self->count + 1);
 
-    struct node *node = (struct node *)malloc(sizeof(struct node));
+    struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
     node->data = data;
 
-    struct node *tmp = list->header;
+    struct node* tmp = self->header;
     for (int j = 0; j < i; j++)
     {
         tmp = tmp->next;
@@ -127,44 +127,44 @@ void LinkedList_Insert(list_t *list, int i, list_data_t data)
     node->next = tmp->next;
     tmp->next = node;
 
-    ++list->count;
+    ++self->count;
 }
 
-void LinkedList_Delete(list_t *list, int i)
+void LinkedList_Delete(List* self, int i)
 {
-    check_bounds(i, 0, list->count);
+    check_bounds(i, 0, self->count);
 
-    struct node *tmp = list->header;
+    struct node* tmp = self->header;
     for (int j = 0; j < i; j++)
     {
         tmp = tmp->next;
     }
-    struct node *node = tmp->next;
+    struct node* node = tmp->next;
     tmp->next = node->next;
     free(node);
     node = NULL;
 
-    --list->count;
+    --self->count;
 }
 
-void LinkedList_Traverse(list_t *list, void (*p_trav)(list_data_t data))
+void LinkedList_Traverse(List* self, void (*p_trav)(ListItem data))
 {
-    for (struct node *cur = list->header->next; cur != NULL; cur = cur->next)
+    for (struct node* cur = self->header->next; cur != NULL; cur = cur->next)
     {
         p_trav(cur->data);
     }
 }
 
-void LinkedList_Reverse(list_t *list)
+void LinkedList_Reverse(List* self)
 {
-    struct node *pre = list->header->next;
-    list->header->next = NULL;
+    struct node* pre = self->header->next;
+    self->header->next = NULL;
 
     while (pre)
     {
-        struct node *tmp = pre;
+        struct node* tmp = pre;
         pre = pre->next;
-        tmp->next = list->header->next;
-        list->header->next = tmp;
+        tmp->next = self->header->next;
+        self->header->next = tmp;
     }
 }

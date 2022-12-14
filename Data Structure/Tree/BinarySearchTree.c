@@ -1,5 +1,5 @@
 #include "BinarySearchTree.h"
-#include "QueueForBST.h"
+#include "QueueForTree.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +7,7 @@
 struct node
 {
     // The data stored in this node.
-    tree_data_t data;
+    TreeItem data;
 
     // A pointer to the left child of the node.
     struct node* left;
@@ -49,7 +49,7 @@ static void destroy_node(struct node* node)
     }
 }
 
-static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(tree_data_t data))
+static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(TreeItem data))
 {
     if (node)
     {
@@ -81,7 +81,7 @@ static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(tre
 
             case LEVEL_ORDER:
             {
-                queue_t* queue = ArrayQueue_Create();
+                Queue* queue = ArrayQueue_Create();
                 ArrayQueue_Enqueue(queue, node);
                 while (!ArrayQueue_IsEmpty(queue))
                 {
@@ -110,7 +110,7 @@ static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(tre
     }
 }
 
-static struct node* insert_node(tree_t* tree, struct node* node, tree_data_t data)
+static struct node* insert_node(Tree* tree, struct node* node, TreeItem data)
 {
     if (node == NULL)
     {
@@ -147,7 +147,7 @@ static struct node* find_min_node(struct node* node)
     return node;
 }
 
-static struct node* delete_node(tree_t* tree, struct node* node, tree_data_t data)
+static struct node* delete_node(Tree* tree, struct node* node, TreeItem data)
 {
     if (node)
     {
@@ -184,9 +184,9 @@ static struct node* delete_node(tree_t* tree, struct node* node, tree_data_t dat
 Interface functions implementation.
 *******************************/
 
-tree_t* Tree_Create(void)
+Tree* BinarySearchTree_Create(void)
 {
-    tree_t* tree = (tree_t*)malloc(sizeof(tree_t));
+    Tree* tree = (Tree*)malloc(sizeof(Tree));
     check_pointer(tree);
 
     tree->root = NULL;
@@ -195,28 +195,28 @@ tree_t* Tree_Create(void)
     return tree;
 }
 
-void Tree_Destroy(tree_t* self)
+void BinarySearchTree_Destroy(Tree* self)
 {
     destroy_node(self->root);
     free(self);
 }
 
-int Tree_Size(const tree_t* self)
+int BinarySearchTree_Size(const Tree* self)
 {
     return self->count;
 }
 
-bool Tree_IsEmpty(const tree_t* self)
+bool BinarySearchTree_IsEmpty(const Tree* self)
 {
     return self->count == 0;
 }
 
-void Tree_Traverse(tree_t* self, traverse_t type, void (*p_trav)(tree_data_t data))
+void BinarySearchTree_Traverse(Tree* self, traverse_t type, void (*p_trav)(TreeItem data))
 {
     traverse_node(self->root, type, p_trav);
 }
 
-tree_data_t Tree_Find(const tree_t* self, tree_data_t data)
+TreeItem BinarySearchTree_Find(const Tree* self, TreeItem data)
 {
     struct node* current = self->root;
 
@@ -239,7 +239,7 @@ tree_data_t Tree_Find(const tree_t* self, tree_data_t data)
     return TREE_NOT_FOUND;
 }
 
-tree_data_t Tree_FindMin(const tree_t* self)
+TreeItem BinarySearchTree_FindMin(const Tree* self)
 {
     struct node* current = self->root;
 
@@ -254,7 +254,7 @@ tree_data_t Tree_FindMin(const tree_t* self)
     return current ? current->data : TREE_NOT_FOUND;
 }
 
-tree_data_t Tree_FindMax(const tree_t* self)
+TreeItem BinarySearchTree_FindMax(const Tree* self)
 {
     struct node* current = self->root;
 
@@ -269,12 +269,12 @@ tree_data_t Tree_FindMax(const tree_t* self)
     return current ? current->data : TREE_NOT_FOUND;
 }
 
-void Tree_Insert(tree_t* self, tree_data_t data)
+void BinarySearchTree_Insert(Tree* self, TreeItem data)
 {
     self->root = insert_node(self, self->root, data);
 }
 
-void Tree_Delete(tree_t* self, tree_data_t data)
+void BinarySearchTree_Delete(Tree* self, TreeItem data)
 {
     self->root = delete_node(self, self->root, data);
 }

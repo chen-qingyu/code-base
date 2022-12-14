@@ -15,8 +15,8 @@ typedef enum
 
 struct item
 {
-    table_key_t key;
-    table_value_t value;
+    TableKey key;
+    TableValue value;
     table_state_t state;
 };
 
@@ -34,7 +34,7 @@ static inline void check_pointer(const void* pointer)
     }
 }
 
-static int hash(table_key_t key)
+static int hash(TableKey key)
 {
     unsigned int index = 0;
 
@@ -46,7 +46,7 @@ static int hash(table_key_t key)
     return index % HASHTABLE_CAPACITY;
 }
 
-static int find_pos(const table_t* table, table_key_t key)
+static int find_pos(const Table* table, TableKey key)
 {
     int current_pos = hash(key);
     int new_pos = current_pos;
@@ -79,9 +79,9 @@ static int find_pos(const table_t* table, table_key_t key)
 Interface functions implementation.
 *******************************/
 
-table_t* HashTable_Create(void)
+Table* HashTable_Create(void)
 {
-    table_t* table = (table_t*)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
+    Table* table = (Table*)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
     check_pointer(table);
 
     for (int i = 0; i < HASHTABLE_CAPACITY; i++)
@@ -93,7 +93,7 @@ table_t* HashTable_Create(void)
     return table;
 }
 
-void HashTable_Destroy(table_t* self)
+void HashTable_Destroy(Table* self)
 {
     for (int i = 0; i < HASHTABLE_CAPACITY; ++i)
     {
@@ -105,14 +105,14 @@ void HashTable_Destroy(table_t* self)
     free(self);
 }
 
-table_value_t HashTable_Get(const table_t* self, table_key_t key)
+TableValue HashTable_Get(const Table* self, TableKey key)
 {
     int pos = find_pos(self, key);
 
     return self[pos].state == FULL ? self[pos].value : HASHTABLE_NOT_FOUND;
 }
 
-void HashTable_Modify(table_t* self, table_key_t key, table_value_t value)
+void HashTable_Modify(Table* self, TableKey key, TableValue value)
 {
     int pos = find_pos(self, key);
 
@@ -127,7 +127,7 @@ void HashTable_Modify(table_t* self, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Insert(table_t* self, table_key_t key, table_value_t value)
+void HashTable_Insert(Table* self, TableKey key, TableValue value)
 {
     int pos = find_pos(self, key);
 
@@ -152,7 +152,7 @@ void HashTable_Insert(table_t* self, table_key_t key, table_value_t value)
     }
 }
 
-void HashTable_Delete(table_t* self, table_key_t key)
+void HashTable_Delete(Table* self, TableKey key)
 {
     int pos = find_pos(self, key);
 

@@ -80,10 +80,10 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
 static inline int length(const char* chars);
 
 // Copy a string range.
-static inline void copy_range(string_t* dst, const string_t* src, int begin, int end);
+static inline void copy_range(String* dst, const String* src, int begin, int end);
 
 // Check if the string represents infinity or nan. Return [+-]INFINITY or NAN if the string represents infinity or nan, zero otherwise.
-static inline double check_infinity_nan(const string_t* str);
+static inline double check_infinity_nan(const String* str);
 
 // Try to transform a character to an integer based on 2-36 base.
 static inline int char_to_integer(char digit, int base);
@@ -95,9 +95,9 @@ static inline enum event get_event(char ch, int base);
  * Interface functions definition.
  *******************************/
 
-string_t* String_Create(void)
+String* String_Create(void)
 {
-    string_t* str = (string_t*)malloc(sizeof(string_t));
+    String* str = (String*)malloc(sizeof(String));
     check_pointer(str);
     str->size = 0;
     str->capacity = INIT_CAPACITY;
@@ -108,9 +108,9 @@ string_t* String_Create(void)
     return str;
 }
 
-string_t* String_From(const char* chars)
+String* String_From(const char* chars)
 {
-    string_t* str = (string_t*)malloc(sizeof(string_t));
+    String* str = (String*)malloc(sizeof(String));
     check_pointer(str);
     str->size = length(chars);
     str->capacity = str->size + 1; // '\0'
@@ -125,9 +125,9 @@ string_t* String_From(const char* chars)
     return str;
 }
 
-string_t* String_Copy(const string_t* str)
+String* String_Copy(const String* str)
 {
-    string_t* copy = (string_t*)malloc(sizeof(string_t));
+    String* copy = (String*)malloc(sizeof(String));
     check_pointer(copy);
     copy->size = str->size;
     copy->capacity = str->capacity;
@@ -142,9 +142,9 @@ string_t* String_Copy(const string_t* str)
     return copy;
 }
 
-string_t* String_Move(string_t* str)
+String* String_Move(String* str)
 {
-    string_t* move = (string_t*)malloc(sizeof(string_t));
+    String* move = (String*)malloc(sizeof(String));
     check_pointer(move);
     move->size = str->size;
     move->capacity = str->capacity;
@@ -159,7 +159,7 @@ string_t* String_Move(string_t* str)
     return move;
 }
 
-void String_Destroy(string_t* self)
+void String_Destroy(String* self)
 {
     if (self != NULL)
     {
@@ -168,7 +168,7 @@ void String_Destroy(string_t* self)
     }
 }
 
-void String_CopyAssign(string_t* self, const string_t* that)
+void String_CopyAssign(String* self, const String* that)
 {
     free(self->data);
 
@@ -183,7 +183,7 @@ void String_CopyAssign(string_t* self, const string_t* that)
     self->data[self->size] = '\0';
 }
 
-void String_MoveAssign(string_t* self, string_t* that)
+void String_MoveAssign(String* self, String* that)
 {
     free(self->data);
 
@@ -198,7 +198,7 @@ void String_MoveAssign(string_t* self, string_t* that)
     that->data[0] = '\0';
 }
 
-char* String_Get(const string_t* self)
+char* String_Get(const String* self)
 {
     char* chars = (char*)malloc(sizeof(self->size) + 1);
     check_pointer(chars);
@@ -210,7 +210,7 @@ char* String_Get(const string_t* self)
     return chars;
 }
 
-void String_Set(string_t* self, const char* chars)
+void String_Set(String* self, const char* chars)
 {
     free(self->data);
 
@@ -225,29 +225,29 @@ void String_Set(string_t* self, const char* chars)
     self->data[self->size] = '\0';
 }
 
-void String_Print(const string_t* self)
+void String_Print(const String* self)
 {
     printf("%s\n", self->data);
 }
 
-int String_Size(const string_t* self)
+int String_Size(const String* self)
 {
     return self->size;
 }
 
-bool String_IsEmpty(const string_t* self)
+bool String_IsEmpty(const String* self)
 {
     return self->size == 0;
 }
 
-char String_At(const string_t* self, int i)
+char String_At(const String* self, int i)
 {
     check_bounds(i, 0, self->size);
 
     return self->data[i];
 }
 
-bool String_Equal(const string_t* self, const string_t* that)
+bool String_Equal(const String* self, const String* that)
 {
     if (self->size != that->size)
     {
@@ -265,7 +265,7 @@ bool String_Equal(const string_t* self, const string_t* that)
     return true;
 }
 
-enum order String_Compare(const string_t* self, const string_t* that)
+enum order String_Compare(const String* self, const String* that)
 {
     int diff = 0;
     for (int i = 0; i < self->size && i < that->size && diff == 0; i++)
@@ -298,7 +298,7 @@ enum order String_Compare(const string_t* self, const string_t* that)
     }
 }
 
-int String_Find(const string_t* self, const string_t* pattern)
+int String_Find(const String* self, const String* pattern)
 {
     const char* _str = self->data;
     const char* _pattern = pattern->data;
@@ -308,7 +308,7 @@ int String_Find(const string_t* self, const string_t* pattern)
     return find_pattern(_str, _pattern, n, m);
 }
 
-string_t** String_Split(const string_t* self, const string_t* sep)
+String** String_Split(const String* self, const String* sep)
 {
     if (sep->size == 0)
     {
@@ -316,7 +316,7 @@ string_t** String_Split(const string_t* self, const string_t* sep)
         exit(EXIT_FAILURE);
     }
 
-    string_t** str_arr = (string_t**)malloc(sizeof(string_t*) * (self->size + 1));
+    String** str_arr = (String**)malloc(sizeof(String*) * (self->size + 1));
     check_pointer(str_arr);
     int count = 0;
 
@@ -324,26 +324,26 @@ string_t** String_Split(const string_t* self, const string_t* sep)
     int pos_sep = 0;
     while ((pos_sep = find_pattern(self->data + pos_begin, sep->data, self->size - pos_begin, sep->size)) != STR_NOT_FOUND)
     {
-        string_t* tmp = String_Create();
+        String* tmp = String_Create();
         copy_range(tmp, self, pos_begin, pos_begin + pos_sep);
         str_arr[count++] = tmp;
         pos_begin += pos_sep + sep->size;
     }
     if (pos_begin != self->size)
     {
-        string_t* tmp = String_Create();
+        String* tmp = String_Create();
         copy_range(tmp, self, pos_begin, self->size);
         str_arr[count++] = tmp;
     }
     str_arr[count] = NULL;
 
     // shrink to fit
-    str_arr = (string_t**)realloc(str_arr, sizeof(string_t*) * (count + 1)); // count + 1 <= self->size + 1, safe
+    str_arr = (String**)realloc(str_arr, sizeof(String*) * (count + 1)); // count + 1 <= self->size + 1, safe
 
     return str_arr;
 }
 
-void String_DestroyArray(string_t** str_arr)
+void String_DestroyArray(String** str_arr)
 {
     if (str_arr)
     {
@@ -355,7 +355,7 @@ void String_DestroyArray(string_t** str_arr)
     }
 }
 
-double String_ToDecimal(const string_t* self)
+double String_ToDecimal(const String* self)
 {
     // check infinity or nan
     double inf_nan = check_infinity_nan(self);
@@ -451,7 +451,7 @@ double String_ToDecimal(const string_t* self)
     return sign * ((decimal_part / pow(10, decimal_cnt)) * pow(10, exp_sign * exp_part));
 }
 
-long long String_ToInteger(const string_t* self, int base)
+long long String_ToInteger(const String* self, int base)
 {
     // check base
     if (base < 2 || base > 36)
@@ -506,7 +506,7 @@ long long String_ToInteger(const string_t* self, int base)
     return sign * integer_part;
 }
 
-void String_Lower(string_t* self)
+void String_Lower(String* self)
 {
     for (int i = 0; i < self->size; ++i)
     {
@@ -514,7 +514,7 @@ void String_Lower(string_t* self)
     }
 }
 
-void String_Upper(string_t* self)
+void String_Upper(String* self)
 {
     for (int i = 0; i < self->size; ++i)
     {
@@ -522,7 +522,7 @@ void String_Upper(string_t* self)
     }
 }
 
-void String_Append(string_t* self, const string_t* str)
+void String_Append(String* self, const String* str)
 {
     if (self->size + str->size >= self->capacity) // need to expand capacity
     {
@@ -548,7 +548,7 @@ void String_Append(string_t* self, const string_t* str)
     self->data[self->size] = '\0';
 }
 
-void String_Erase(string_t* self, int begin, int end)
+void String_Erase(String* self, int begin, int end)
 {
     begin = (begin < 0 ? 0 : begin);
     end = (end > self->size ? self->size : end);
@@ -561,7 +561,7 @@ void String_Erase(string_t* self, int begin, int end)
     self->data[self->size] = '\0';
 }
 
-void String_Reverse(string_t* self)
+void String_Reverse(String* self)
 {
     for (int i = 0, j = self->size - 1; i < j; ++i, --j)
     {
@@ -571,7 +571,7 @@ void String_Reverse(string_t* self)
     }
 }
 
-void String_ReplaceChar(string_t* self, const char old_char, const char new_char)
+void String_ReplaceChar(String* self, const char old_char, const char new_char)
 {
     for (int i = 0; i < self->size; ++i)
     {
@@ -582,10 +582,10 @@ void String_ReplaceChar(string_t* self, const char old_char, const char new_char
     }
 }
 
-void String_Replace(string_t* self, const string_t* old_str, const string_t* new_str)
+void String_Replace(String* self, const String* old_str, const String* new_str)
 {
-    string_t* buffer = String_Create();
-    string_t* tmp = String_Create();
+    String* buffer = String_Create();
+    String* tmp = String_Create();
 
     int offset = 0;
     int index = 0;
@@ -611,7 +611,7 @@ void String_Replace(string_t* self, const string_t* old_str, const string_t* new
     free(buffer);
 }
 
-void String_Strip(string_t* self)
+void String_Strip(String* self)
 {
     int i = 0;
     while (i < self->size && self->data[i] <= 0x20)
@@ -627,7 +627,7 @@ void String_Strip(string_t* self)
     String_Erase(self, i + 1, self->size);
 }
 
-void String_Swap(string_t* self, string_t* that)
+void String_Swap(String* self, String* that)
 {
     int tmp_size = self->size;
     self->size = that->size;
@@ -642,7 +642,7 @@ void String_Swap(string_t* self, string_t* that)
     that->data = tmp_data;
 }
 
-void String_Clear(string_t* self)
+void String_Clear(String* self)
 {
     String_Set(self, "");
 }
@@ -737,7 +737,7 @@ static inline int length(const char* chars)
     return len;
 }
 
-static inline void copy_range(string_t* dst, const string_t* src, int begin, int end)
+static inline void copy_range(String* dst, const String* src, int begin, int end)
 {
     check_bounds(begin, 0, src->size);
     check_bounds(end, 0, src->size + 1);
@@ -755,9 +755,9 @@ static inline void copy_range(string_t* dst, const string_t* src, int begin, int
     dst->data[dst->size] = '\0';
 }
 
-static inline double check_infinity_nan(const string_t* str)
+static inline double check_infinity_nan(const String* str)
 {
-    string_t* inf_nan = String_Create();
+    String* inf_nan = String_Create();
     static const char* pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
     static const char* neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
     static const char* nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};

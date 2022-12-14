@@ -5,7 +5,7 @@
 
 void TestHashTable()
 {
-    table_t* table = HashTable_Create();
+    Table* table = HashTable_Create();
 
     HashTable_Insert(table, (char*)"aaa", 1);
     HashTable_Insert(table, (char*)"bbb", 2);

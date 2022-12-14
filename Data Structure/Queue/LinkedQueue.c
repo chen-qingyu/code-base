@@ -5,14 +5,14 @@
 
 struct node
 {
-    queue_data_t data;
-    struct node *next;
+    QueueItem data;
+    struct node* next;
 };
 
 struct queue
 {
-    struct node *front;
-    struct node *rear;
+    struct node* front;
+    struct node* rear;
     int count;
 };
 
@@ -21,7 +21,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -34,12 +34,12 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-queue_t *LinkedQueue_Create(void)
+Queue* LinkedQueue_Create(void)
 {
-    queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
+    Queue* queue = (Queue*)malloc(sizeof(Queue));
     check_pointer(queue);
 
-    queue->front = (struct node *)malloc(sizeof(struct node));
+    queue->front = (struct node*)malloc(sizeof(struct node));
     check_pointer(queue->front);
 
     queue->rear = queue->front;
@@ -49,56 +49,56 @@ queue_t *LinkedQueue_Create(void)
     return queue;
 }
 
-void LinkedQueue_Destroy(queue_t *queue)
+void LinkedQueue_Destroy(Queue* self)
 {
-    while (queue->front)
+    while (self->front)
     {
-        struct node *current = queue->front->next;
-        free(queue->front);
-        queue->front = current;
+        struct node* current = self->front->next;
+        free(self->front);
+        self->front = current;
     }
-    free(queue);
+    free(self);
 }
 
-int LinkedQueue_Size(const queue_t *queue)
+int LinkedQueue_Size(const Queue* self)
 {
-    return queue->count;
+    return self->count;
 }
 
-bool LinkedQueue_IsEmpty(const queue_t *queue)
+bool LinkedQueue_IsEmpty(const Queue* self)
 {
-    return queue->count == 0;
+    return self->count == 0;
 }
 
-void LinkedQueue_Enqueue(queue_t *queue, queue_data_t data)
+void LinkedQueue_Enqueue(Queue* self, QueueItem data)
 {
-    struct node *add = (struct node *)malloc(sizeof(struct node));
+    struct node* add = (struct node*)malloc(sizeof(struct node));
     check_pointer(add);
 
     add->data = data;
     add->next = NULL;
 
-    queue->rear->next = add;
-    queue->rear = add;
+    self->rear->next = add;
+    self->rear = add;
 
-    ++queue->count;
+    ++self->count;
 }
 
-queue_data_t LinkedQueue_Dequeue(queue_t *queue)
+QueueItem LinkedQueue_Dequeue(Queue* self)
 {
-    if (queue->count == 0)
+    if (self->count == 0)
     {
         fprintf(stderr, "ERROR: The queue is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    struct node *del = queue->front->next;
-    queue_data_t data = del->data;
+    struct node* del = self->front->next;
+    QueueItem data = del->data;
 
-    queue->front->next = del->next;
+    self->front->next = del->next;
     free(del);
 
-    --queue->count;
+    --self->count;
 
     return data;
 }

@@ -12,7 +12,7 @@ struct list
     int capacity;
 
     // Pointer to the data.
-    list_data_t *data;
+    ListItem* data;
 };
 
 /*******************************
@@ -30,7 +30,7 @@ static inline void check_bounds(int pos, int begin, int end)
 }
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -43,98 +43,98 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-list_t *ArrayList_Create(void)
+List* ArrayList_Create(void)
 {
-    list_t *list = (list_t *)malloc(sizeof(list_t));
+    List* list = (List*)malloc(sizeof(List));
     check_pointer(list);
 
     list->count = 0;
     list->capacity = 8;
-    list->data = (list_data_t *)malloc(sizeof(list_data_t) * list->capacity);
+    list->data = (ListItem*)malloc(sizeof(ListItem) * list->capacity);
     check_pointer(list->data);
 
     return list;
 }
 
-void ArrayList_Destroy(list_t *list)
+void ArrayList_Destroy(List* self)
 {
-    free(list->data);
-    free(list);
+    free(self->data);
+    free(self);
 }
 
-int ArrayList_Size(const list_t *list)
+int ArrayList_Size(const List* self)
 {
-    return list->count;
+    return self->count;
 }
 
-bool ArrayList_IsEmpty(const list_t *list)
+bool ArrayList_IsEmpty(const List* self)
 {
-    return list->count == 0;
+    return self->count == 0;
 }
 
-list_data_t ArrayList_At(const list_t *list, int i) // list[i]
+ListItem ArrayList_At(const List* self, int i) // self[i]
 {
-    check_bounds(i, 0, list->count);
+    check_bounds(i, 0, self->count);
 
-    return list->data[i];
+    return self->data[i];
 }
 
-int ArrayList_Find(const list_t *list, list_data_t data)
+int ArrayList_Find(const List* self, ListItem data)
 {
     int index = 0;
 
-    while (index < list->count && list->data[index] != data)
+    while (index < self->count && self->data[index] != data)
     {
         index++;
     }
 
-    return index < list->count ? index : LIST_NOT_FOUND;
+    return index < self->count ? index : LIST_NOT_FOUND;
 }
 
-void ArrayList_Insert(list_t *list, int i, list_data_t data)
+void ArrayList_Insert(List* self, int i, ListItem data)
 {
-    check_bounds(i, 0, list->count + 1);
+    check_bounds(i, 0, self->count + 1);
 
-    if (list->count == list->capacity) // need to expand capacity
+    if (self->count == self->capacity) // need to expand capacity
     {
-        list->capacity *= 2; // double the capacity
-        list->data = (list_data_t *)realloc(list->data, sizeof(list_data_t) * list->capacity);
-        check_pointer(list->data);
+        self->capacity *= 2; // double the capacity
+        self->data = (ListItem*)realloc(self->data, sizeof(ListItem) * self->capacity);
+        check_pointer(self->data);
     }
 
-    for (int j = list->count; j > i; j--)
+    for (int j = self->count; j > i; j--)
     {
-        list->data[j] = list->data[j - 1];
+        self->data[j] = self->data[j - 1];
     }
-    list->data[i] = data;
-    ++list->count;
+    self->data[i] = data;
+    ++self->count;
 }
 
-void ArrayList_Delete(list_t *list, int i)
+void ArrayList_Delete(List* self, int i)
 {
-    check_bounds(i, 0, list->count);
+    check_bounds(i, 0, self->count);
 
-    for (int j = i + 1; j < list->count; j++)
+    for (int j = i + 1; j < self->count; j++)
     {
-        list->data[j - 1] = list->data[j];
+        self->data[j - 1] = self->data[j];
     }
-    --list->count;
+    --self->count;
 }
 
-void ArrayList_Traverse(list_t *list, void (*p_trav)(list_data_t data))
+void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data))
 {
-    for (int i = 0; i < list->count; i++)
+    for (int i = 0; i < self->count; i++)
     {
-        p_trav(list->data[i]);
+        p_trav(self->data[i]);
     }
 }
 
-void ArrayList_Reverse(list_t *list)
+void ArrayList_Reverse(List* self)
 {
-    for (int i = 0, j = list->count - 1; i < j; ++i, --j)
+    for (int i = 0, j = self->count - 1; i < j; ++i, --j)
     {
-        list_data_t tmp = list->data[i];
-        list->data[i] = list->data[j];
-        list->data[j] = tmp;
+        ListItem tmp = self->data[i];
+        self->data[i] = self->data[j];
+        self->data[j] = tmp;
     }
 }

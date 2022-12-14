@@ -7,7 +7,7 @@
 
 struct stack
 {
-    stack_data_t data[STACK_CAPACITY];
+    StackItem data[STACK_CAPACITY];
     int top;
 };
 
@@ -16,7 +16,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -29,9 +29,9 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-stack_t *ArrayStack_Create(void)
+Stack* ArrayStack_Create(void)
 {
-    stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
     check_pointer(stack);
 
     stack->top = -1;
@@ -39,50 +39,50 @@ stack_t *ArrayStack_Create(void)
     return stack;
 }
 
-void ArrayStack_Destroy(stack_t *stack)
+void ArrayStack_Destroy(Stack* self)
 {
-    free(stack);
+    free(self);
 }
 
-int ArrayStack_Size(const stack_t *stack)
+int ArrayStack_Size(const Stack* self)
 {
-    return stack->top + 1;
+    return self->top + 1;
 }
 
-bool ArrayStack_IsEmpty(const stack_t *stack)
+bool ArrayStack_IsEmpty(const Stack* self)
 {
-    return stack->top + 1 == 0;
+    return self->top + 1 == 0;
 }
 
-void ArrayStack_Push(stack_t *stack, stack_data_t data)
+void ArrayStack_Push(Stack* self, StackItem data)
 {
-    if (ArrayStack_Size(stack) == STACK_CAPACITY)
+    if (ArrayStack_Size(self) == STACK_CAPACITY)
     {
         fprintf(stderr, "ERROR: The stack is full.\n");
         return;
     }
 
-    stack->data[++(stack->top)] = data;
+    self->data[++(self->top)] = data;
 }
 
-stack_data_t ArrayStack_Pop(stack_t *stack)
+StackItem ArrayStack_Pop(Stack* self)
 {
-    if (ArrayStack_IsEmpty(stack))
+    if (ArrayStack_IsEmpty(self))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    return stack->data[(stack->top)--];
+    return self->data[(self->top)--];
 }
 
-stack_data_t ArrayStack_Top(const stack_t *stack)
+StackItem ArrayStack_Top(const Stack* self)
 {
-    if (ArrayStack_IsEmpty(stack))
+    if (ArrayStack_IsEmpty(self))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    return stack->data[stack->top];
+    return self->data[self->top];
 }

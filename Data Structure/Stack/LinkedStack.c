@@ -5,14 +5,14 @@
 
 struct node
 {
-    stack_data_t data;
-    struct node *next;
+    StackItem data;
+    struct node* next;
 };
 
 struct stack
 {
     int count;
-    struct node *top;
+    struct node* top;
 };
 
 /*******************************
@@ -20,7 +20,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -33,9 +33,9 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-stack_t *LinkedStack_Create(void)
+Stack* LinkedStack_Create(void)
 {
-    stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
     check_pointer(stack);
 
     stack->top = NULL;
@@ -44,64 +44,64 @@ stack_t *LinkedStack_Create(void)
     return stack;
 }
 
-void LinkedStack_Destroy(stack_t *stack)
+void LinkedStack_Destroy(Stack* self)
 {
-    while (stack->top)
+    while (self->top)
     {
-        struct node *current = stack->top->next;
-        free(stack->top);
-        stack->top = current;
+        struct node* current = self->top->next;
+        free(self->top);
+        self->top = current;
     }
-    free(stack);
+    free(self);
 }
 
-int LinkedStack_Size(const stack_t *stack)
+int LinkedStack_Size(const Stack* self)
 {
-    return stack->count;
+    return self->count;
 }
 
-bool LinkedStack_IsEmpty(const stack_t *stack)
+bool LinkedStack_IsEmpty(const Stack* self)
 {
-    return stack->count == 0;
+    return self->count == 0;
 }
 
-void LinkedStack_Push(stack_t *stack, stack_data_t data)
+void LinkedStack_Push(Stack* self, StackItem data)
 {
-    struct node *node = (struct node *)malloc(sizeof(struct node));
+    struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
 
     node->data = data;
-    node->next = stack->top;
-    stack->top = node;
+    node->next = self->top;
+    self->top = node;
 
-    stack->count++;
+    self->count++;
 }
 
-stack_data_t LinkedStack_Pop(stack_t *stack)
+StackItem LinkedStack_Pop(Stack* self)
 {
-    if (LinkedStack_IsEmpty(stack))
+    if (LinkedStack_IsEmpty(self))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    struct node *node = stack->top;
-    stack->top = node->next;
-    stack_data_t data = node->data;
+    struct node* node = self->top;
+    self->top = node->next;
+    StackItem data = node->data;
     free(node);
 
-    stack->count--;
+    self->count--;
 
     return data;
 }
 
-stack_data_t LinkedStack_Top(const stack_t *stack)
+StackItem LinkedStack_Top(const Stack* self)
 {
-    if (LinkedStack_IsEmpty(stack))
+    if (LinkedStack_IsEmpty(self))
     {
         fprintf(stderr, "ERROR: The stack is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    return stack->top->data;
+    return self->top->data;
 }

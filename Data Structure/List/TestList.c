@@ -7,7 +7,7 @@
 
 char str[64] = {0};
 
-void Visit(list_data_t n)
+void Visit(ListItem n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -16,11 +16,11 @@ void Visit(list_data_t n)
 
 void TestArrayList(void)
 {
-    list_t *list1 = ArrayList_Create();
+    List* list1 = ArrayList_Create();
     assert(ArrayList_Size(list1) == 0);
     assert(ArrayList_IsEmpty(list1) == true);
 
-    list_data_t arr[] = {1, 2, 3, 4};
+    ListItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -39,8 +39,8 @@ void TestArrayList(void)
     assert(strcmp(str, "4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    list_t *list2 = ArrayList_Create();
-    list_data_t arr2[] = {233, 666, 888, 999};
+    List* list2 = ArrayList_Create();
+    ListItem arr2[] = {233, 666, 888, 999};
     int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
     for (int i = 0; i < arr2Size; i++)
     {
@@ -79,11 +79,11 @@ void TestArrayList(void)
 
 void TestLinkedList(void)
 {
-    list_t *list1 = LinkedList_Create();
+    List* list1 = LinkedList_Create();
     assert(LinkedList_Size(list1) == 0);
     assert(LinkedList_IsEmpty(list1) == true);
 
-    list_data_t arr[] = {1, 2, 3, 4};
+    ListItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -102,8 +102,8 @@ void TestLinkedList(void)
     assert(strcmp(str, "4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    list_t *list2 = LinkedList_Create();
-    list_data_t arr2[] = {233, 666, 888, 999};
+    List* list2 = LinkedList_Create();
+    ListItem arr2[] = {233, 666, 888, 999};
     int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
     for (int i = 0; i < arr2Size; i++)
     {

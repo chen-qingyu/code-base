@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_ITEM INT_MAX // heap_data_t
+#define MAX_ITEM INT_MAX // max value of HeapItem
 
 struct heap
 {
-    heap_data_t *data;
+    HeapItem* data;
     int count;
     int capacity;
 };
@@ -17,7 +17,7 @@ Helper functions implementation.
 *******************************/
 
 // Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void *pointer)
+static inline void check_pointer(const void* pointer)
 {
     if (pointer == NULL)
     {
@@ -30,14 +30,14 @@ static inline void check_pointer(const void *pointer)
 Interface functions implementation.
 *******************************/
 
-heap_t *MaxHeap_Create(void)
+Heap* MaxHeap_Create(void)
 {
-    heap_t *heap = (heap_t *)malloc(sizeof(heap_t));
+    Heap* heap = (Heap*)malloc(sizeof(Heap));
     check_pointer(heap);
 
     heap->count = 0;
     heap->capacity = 8;
-    heap->data = (heap_data_t *)malloc(heap->capacity * sizeof(heap_data_t));
+    heap->data = (HeapItem*)malloc(heap->capacity * sizeof(HeapItem));
     check_pointer(heap->data);
 
     heap->data[0] = MAX_ITEM;
@@ -45,80 +45,80 @@ heap_t *MaxHeap_Create(void)
     return heap;
 }
 
-void MaxHeap_Destroy(heap_t *heap)
+void MaxHeap_Destroy(Heap* self)
 {
-    free(heap->data);
-    free(heap);
+    free(self->data);
+    free(self);
 }
 
-int MaxHeap_Size(const heap_t *heap)
+int MaxHeap_Size(const Heap* self)
 {
-    return heap->count;
+    return self->count;
 }
 
-bool MaxHeap_IsEmpty(const heap_t *heap)
+bool MaxHeap_IsEmpty(const Heap* self)
 {
-    return heap->count == 0;
+    return self->count == 0;
 }
 
-void MaxHeap_Push(heap_t *heap, heap_data_t data)
+void MaxHeap_Push(Heap* self, HeapItem data)
 {
-    if (heap->count == heap->capacity) // need to expand capacity
+    if (self->count == self->capacity) // need to expand capacity
     {
-        heap->capacity *= 2; // double the capacity
-        heap->data = (heap_data_t *)realloc(heap->data, sizeof(heap_data_t) * heap->capacity);
-        check_pointer(heap->data);
+        self->capacity *= 2; // double the capacity
+        self->data = (HeapItem*)realloc(self->data, sizeof(HeapItem) * self->capacity);
+        check_pointer(self->data);
     }
 
     int pos;
-    for (pos = ++heap->count; heap->data[pos / 2] < data; pos /= 2)
+    for (pos = ++self->count; self->data[pos / 2] < data; pos /= 2)
     {
-        heap->data[pos] = heap->data[pos / 2];
+        self->data[pos] = self->data[pos / 2];
     }
-    heap->data[pos] = data;
+    self->data[pos] = data;
 }
 
-heap_data_t MaxHeap_Pop(heap_t *heap)
+HeapItem MaxHeap_Pop(Heap* self)
 {
-    if (heap->count == 0)
+    if (self->count == 0)
     {
         fprintf(stderr, "ERROR: The heap is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    heap_data_t max_item = heap->data[1];
-    heap_data_t tmp = heap->data[heap->count--];
+    HeapItem max_item = self->data[1];
+    HeapItem tmp = self->data[self->count--];
 
     int parent, child;
-    for (parent = 1; parent * 2 <= heap->count; parent = child)
+    for (parent = 1; parent * 2 <= self->count; parent = child)
     {
         child = parent * 2;
-        if ((child != heap->count) && (heap->data[child] < heap->data[child + 1]))
+        if ((child != self->count) && (self->data[child] < self->data[child + 1]))
         {
             child++;
         }
 
-        if (tmp >= heap->data[child])
+        if (tmp >= self->data[child])
         {
             break;
         }
         else
         {
-            heap->data[parent] = heap->data[child];
+            self->data[parent] = self->data[child];
         }
     }
-    heap->data[parent] = tmp;
+    self->data[parent] = tmp;
 
     return max_item;
 }
 
-heap_data_t MaxHeap_Top(heap_t *heap)
+HeapItem MaxHeap_Top(Heap* self)
 {
-    if (heap->count == 0)
+    if (self->count == 0)
     {
         fprintf(stderr, "ERROR: The heap is empty.\n");
         exit(EXIT_FAILURE);
     }
 
-    return heap->data[1];
+    return self->data[1];
 }

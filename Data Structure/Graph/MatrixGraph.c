@@ -12,7 +12,7 @@ struct graph
 {
     int vertex_num;
     int edge_num;
-    graph_edge_t matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
+    GraphEdge matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
 };
 
 static bool visited[VERTEX_NUMBER] = {false};
@@ -33,18 +33,18 @@ static inline void check_pointer(const void* pointer)
 
 static void clean_visited_flag(void)
 {
-    for (graph_vertex_t i = 0; i < VERTEX_NUMBER; i++)
+    for (GraphVertex i = 0; i < VERTEX_NUMBER; i++)
     {
         visited[i] = false;
     }
 }
 
-static void dfs(graph_t* G, graph_vertex_t startV, void (*p_visit)(graph_vertex_t V))
+static void dfs(Graph* G, GraphVertex startV, void (*p_visit)(GraphVertex V))
 {
     p_visit(startV);
     visited[startV] = true;
 
-    for (graph_vertex_t V1 = 0; V1 < G->vertex_num; V1++)
+    for (GraphVertex V1 = 0; V1 < G->vertex_num; V1++)
     {
         if (MatrixGraph_IsAdjacent(G, startV, V1) && !visited[V1])
         {
@@ -53,12 +53,12 @@ static void dfs(graph_t* G, graph_vertex_t startV, void (*p_visit)(graph_vertex_
     }
 }
 
-static graph_vertex_t find_min_dist(const graph_t* G, graph_edge_t dist[])
+static GraphVertex find_min_dist(const Graph* G, GraphEdge dist[])
 {
-    graph_vertex_t min_v;
+    GraphVertex min_v;
     int min_dist = NO_PATH;
 
-    for (graph_vertex_t V = 0; V < G->vertex_num; V++)
+    for (GraphVertex V = 0; V < G->vertex_num; V++)
     {
         if (!visited[V] && dist[V] < min_dist)
         {
@@ -74,17 +74,17 @@ static graph_vertex_t find_min_dist(const graph_t* G, graph_edge_t dist[])
 Interface functions implementation.
 *******************************/
 
-graph_t* MatrixGraph_Create(void)
+Graph* MatrixGraph_Create(void)
 {
-    graph_t* G = (graph_t*)malloc(sizeof(graph_t));
+    Graph* G = (Graph*)malloc(sizeof(Graph));
     check_pointer(G);
 
     G->vertex_num = VERTEX_NUMBER;
     G->edge_num = 0;
 
-    for (graph_vertex_t V1 = 0; V1 < G->vertex_num; V1++)
+    for (GraphVertex V1 = 0; V1 < G->vertex_num; V1++)
     {
-        for (graph_vertex_t V2 = 0; V2 < G->vertex_num; V2++)
+        for (GraphVertex V2 = 0; V2 < G->vertex_num; V2++)
         {
             G->matrix[V1][V2] = NO_PATH;
         }
@@ -93,54 +93,54 @@ graph_t* MatrixGraph_Create(void)
     return G;
 }
 
-void MatrixGraph_Destroy(graph_t* G)
+void MatrixGraph_Destroy(Graph* self)
 {
-    free(G);
+    free(self);
 }
 
-void MatrixGraph_Link(graph_t* G, graph_vertex_t V1, graph_vertex_t V2, graph_edge_t E)
+void MatrixGraph_Link(Graph* self, GraphVertex V1, GraphVertex V2, GraphEdge E)
 {
-    G->matrix[V1][V2] = E;
+    self->matrix[V1][V2] = E;
 #ifdef UNDIRECTED
-    G->matrix[V2][V1] = E;
+    self->matrix[V2][V1] = E;
 #endif
 }
 
-void MatrixGraph_Unlink(graph_t* G, graph_vertex_t V1, graph_vertex_t V2)
+void MatrixGraph_Unlink(Graph* self, GraphVertex V1, GraphVertex V2)
 {
-    G->matrix[V1][V2] = NO_PATH;
+    self->matrix[V1][V2] = NO_PATH;
 #ifdef UNDIRECTED
-    G->matrix[V2][V1] = NO_PATH;
+    self->matrix[V2][V1] = NO_PATH;
 #endif
 }
 
-bool MatrixGraph_IsAdjacent(const graph_t* G, graph_vertex_t V1, graph_vertex_t V2)
+bool MatrixGraph_IsAdjacent(const Graph* self, GraphVertex V1, GraphVertex V2)
 {
-    return G->matrix[V1][V2] != NO_PATH ? true : false;
+    return self->matrix[V1][V2] != NO_PATH ? true : false;
 }
 
-void MatrixGraph_DFS(graph_t* G, graph_vertex_t startV, void (*p_visit)(graph_vertex_t V))
+void MatrixGraph_DFS(Graph* self, GraphVertex startV, void (*p_visit)(GraphVertex V))
 {
     clean_visited_flag();
 
-    dfs(G, startV, p_visit);
+    dfs(self, startV, p_visit);
 }
 
-void MatrixGraph_BFS(graph_t* G, graph_vertex_t startV, void (*p_visit)(graph_vertex_t V))
+void MatrixGraph_BFS(Graph* self, GraphVertex startV, void (*p_visit)(GraphVertex V))
 {
     clean_visited_flag();
 
     p_visit(startV);
     visited[startV] = true;
 
-    queue_t* Q = ArrayQueue_Create();
+    Queue* Q = ArrayQueue_Create();
     ArrayQueue_Enqueue(Q, startV);
     while (!ArrayQueue_IsEmpty(Q))
     {
-        graph_vertex_t V1 = ArrayQueue_Dequeue(Q);
-        for (graph_vertex_t V2 = 0; V2 < G->vertex_num; V2++)
+        GraphVertex V1 = ArrayQueue_Dequeue(Q);
+        for (GraphVertex V2 = 0; V2 < self->vertex_num; V2++)
         {
-            if (!visited[V2] && MatrixGraph_IsAdjacent(G, V1, V2))
+            if (!visited[V2] && MatrixGraph_IsAdjacent(self, V1, V2))
             {
                 p_visit(V2);
                 visited[V2] = true;
@@ -151,14 +151,14 @@ void MatrixGraph_BFS(graph_t* G, graph_vertex_t startV, void (*p_visit)(graph_ve
     ArrayQueue_Destroy(Q);
 }
 
-bool MatrixGraph_Dijkstra(const graph_t* G, graph_edge_t dist[], graph_vertex_t path[], graph_vertex_t startV)
+bool MatrixGraph_Dijkstra(const Graph* self, GraphEdge dist[], GraphVertex path[], GraphVertex startV)
 {
     clean_visited_flag();
 
     // init array state
-    for (graph_vertex_t V1 = 0; V1 < G->vertex_num; V1++)
+    for (GraphVertex V1 = 0; V1 < self->vertex_num; V1++)
     {
-        dist[V1] = G->matrix[startV][V1];
+        dist[V1] = self->matrix[startV][V1];
         path[V1] = dist[V1] < NO_PATH ? startV : NOT_FOUND;
     }
 
@@ -167,23 +167,23 @@ bool MatrixGraph_Dijkstra(const graph_t* G, graph_edge_t dist[], graph_vertex_t 
 
     while (1)
     {
-        graph_vertex_t V1 = find_min_dist(G, dist);
+        GraphVertex V1 = find_min_dist(self, dist);
         if (V1 == NOT_FOUND)
         {
             break;
         }
         visited[V1] = true;
-        for (graph_vertex_t V2 = 0; V2 < G->vertex_num; V2++)
+        for (GraphVertex V2 = 0; V2 < self->vertex_num; V2++)
         {
-            if (visited[V2] == false && G->matrix[V1][V2] < NO_PATH)
+            if (visited[V2] == false && self->matrix[V1][V2] < NO_PATH)
             {
-                if (G->matrix[V1][V2] < 0)
+                if (self->matrix[V1][V2] < 0)
                 {
                     return false;
                 }
-                if (dist[V1] + G->matrix[V1][V2] < dist[V2])
+                if (dist[V1] + self->matrix[V1][V2] < dist[V2])
                 {
-                    dist[V2] = dist[V1] + G->matrix[V1][V2];
+                    dist[V2] = dist[V1] + self->matrix[V1][V2];
                     path[V2] = V1;
                 }
             }
@@ -193,22 +193,22 @@ bool MatrixGraph_Dijkstra(const graph_t* G, graph_edge_t dist[], graph_vertex_t 
     return true;
 }
 
-bool MatrixGraph_Floyd(const graph_t* G, graph_edge_t dist[][VERTEX_NUMBER], graph_vertex_t path[][VERTEX_NUMBER])
+bool MatrixGraph_Floyd(const Graph* self, GraphEdge dist[][VERTEX_NUMBER], GraphVertex path[][VERTEX_NUMBER])
 {
-    for (graph_vertex_t i = 0; i < G->vertex_num; i++)
+    for (GraphVertex i = 0; i < self->vertex_num; i++)
     {
-        for (graph_vertex_t j = 0; j < G->vertex_num; j++)
+        for (GraphVertex j = 0; j < self->vertex_num; j++)
         {
-            dist[i][j] = G->matrix[i][j];
+            dist[i][j] = self->matrix[i][j];
             path[i][j] = NOT_FOUND;
         }
     }
 
-    for (graph_vertex_t k = 0; k < G->vertex_num; k++)
+    for (GraphVertex k = 0; k < self->vertex_num; k++)
     {
-        for (graph_vertex_t i = 0; i < G->vertex_num; i++)
+        for (GraphVertex i = 0; i < self->vertex_num; i++)
         {
-            for (graph_vertex_t j = 0; j < G->vertex_num; j++)
+            for (GraphVertex j = 0; j < self->vertex_num; j++)
             {
                 if (dist[i][k] + dist[k][j] < dist[i][j])
                 {

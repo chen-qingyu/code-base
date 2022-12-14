@@ -6,7 +6,7 @@
 
 char str[64] = {0};
 
-void Visit(graph_vertex_t V)
+void Visit(GraphVertex V)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", V);
@@ -15,7 +15,7 @@ void Visit(graph_vertex_t V)
 
 void TestMatrixGraph(void)
 {
-    graph_t* G = MatrixGraph_Create();
+    Graph* G = MatrixGraph_Create();
 
     MatrixGraph_Link(G, 0, 1, 2);
     MatrixGraph_Link(G, 0, 3, 1);

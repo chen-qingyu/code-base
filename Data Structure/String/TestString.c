@@ -13,7 +13,7 @@ int main()
 {
     // String_Create() String_Size() String_IsEmpty() String_Set()
 
-    string_t* s1 = String_Create();
+    String* s1 = String_Create();
     assert(String_Size(s1) == 0);
     assert(String_IsEmpty(s1) == true);
 
@@ -27,7 +27,7 @@ int main()
 
     // String_Equal() String_At()
 
-    string_t* s2 = String_Create();
+    String* s2 = String_Create();
     assert(String_Equal(s1, s2) == false);
     String_Set(s2, "Hello World!");
     assert(String_Equal(s1, s2) == true);
@@ -38,8 +38,8 @@ int main()
 
     // String_Reverse()
 
-    string_t* s3 = String_Create();
-    string_t* s4 = String_Create();
+    String* s3 = String_Create();
+    String* s4 = String_Create();
     String_Reverse(s3);
     assert(String_Equal(s3, s4) == true);
 
@@ -68,7 +68,7 @@ int main()
 
     // String_Copy()
 
-    string_t* s5 = String_Copy(s4);
+    String* s5 = String_Copy(s4);
     assert(String_Equal(s4, s5) == true);
 
     // String_Compare()
@@ -211,7 +211,7 @@ int main()
 
     // String_Split() String_DestroyArray()
 
-    string_t** str_arr = NULL;
+    String** str_arr = NULL;
 
     String_Set(s1, "this is my code!");
     String_Set(s2, " ");
@@ -426,14 +426,14 @@ int main()
 
     // String_From()
 
-    string_t* s6 = String_From("new string");
+    String* s6 = String_From("new string");
     String_Set(s1, "new string");
     assert(String_Equal(s1, s6));
     String_Set(s1, "new string!");
     assert(String_Equal(s1, s6) == false);
 
     char s[] = "null-terminated byte string.";
-    string_t* s7 = String_From(s);
+    String* s7 = String_From(s);
     String_Set(s1, s);
     assert(String_Equal(s1, s7));
     s[0] = ' ';

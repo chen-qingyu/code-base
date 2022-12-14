@@ -66,7 +66,7 @@
 #define STR_NOT_FOUND (-1)
 
 // String structure declaration.
-typedef struct string string_t;
+typedef struct string String;
 
 // Used for string comparison.
 enum order
@@ -87,250 +87,307 @@ enum order
 
 /**
  * @brief Create an empty string. Constructor. O(1)
- *        Like `string new_str();` in C++.
- *        Example: string *new_str = String_Create();
+ *
+ * Like `string new_str();` in C++.
+ *
+ * Example: string *new_str = String_Create();
+ *
  * @return A pointer to the empty string.
  */
-string_t* String_Create(void);
+String* String_Create(void);
 
 /**
  * @brief Create a string from null-terminated byte string. O(N)
- *        Like `string new_str("hello");` in C++.
- *        Example: string *new_str = String_From("hello");
+ *
+ * Like `string new_str("hello");` in C++.
+ *
+ * Example: string *new_str = String_From("hello");
+ *
  * @param chars A pointer to a null-terminated byte string.
  * @return A pointer to the new string.
  */
-string_t* String_From(const char* chars);
+String* String_From(const char* chars);
 
 /**
  * @brief Copy constructor. O(N)
- *        Like `string new_str(str);` in C++.
- *        Example: string *new_str = String_Copy(str);
+ *
+ * Like `string new_str(str);` in C++.
+ *
+ * Example: string *new_str = String_Copy(str);
+ *
  * @param str A pointer to the string.
  * @return A pointer to the copied string.
  */
-string_t* String_Copy(const string_t* str);
+String* String_Copy(const String* str);
 
 /**
  * @brief Move constructor. O(1)
- *        Like `string new_str(std::move(str));` in C++.
- *        Example: string *new_str = String_Move(str); // after moved, `str` is an empty string
+ *
+ * Like `string new_str(std::move(str));` in C++.
+ *
+ * Example: string *new_str = String_Move(str); // after moved, `str` is an empty string
+ *
  * @param str A pointer to the string to be moved.
  * @return A pointer to the moved string.
  */
-string_t* String_Move(string_t* str);
+String* String_Move(String* str);
 
 /**
  * @brief Destroy a string. O(1)
- *        Like `str.~string();` in C++.
- *        Example: String_Destroy(self);
+ *
+ * Like `str.~string();` in C++.
+ *
+ * Example: String_Destroy(self);
+ *
  * @param self A pointer to the string to be destroyed.
  */
-void String_Destroy(string_t* self);
+void String_Destroy(String* self);
 
 /**
  * @brief Copy assignment operation. O(N)
- *        Like `self = that;` in C++.
- *        Example: String_CopyAssign(self, that);
+ *
+ * Like `self = that;` in C++.
+ *
+ * Example: String_CopyAssign(self, that);
+ *
  * @param self A pointer to the left hand side string.
  * @param that A pointer to the right hand side string.
  */
-void String_CopyAssign(string_t* self, const string_t* that);
+void String_CopyAssign(String* self, const String* that);
 
 /**
  * @brief Move assignment operation. O(1)
- *        Like `self = std::move(that);` in C++.
- *        Example: String_MoveAssign(self, that);
+ *
+ * Like `self = std::move(that);` in C++.
+ *
+ * Example: String_MoveAssign(self, that);
+ *
  * @param self A pointer to the left hand side string.
  * @param that A pointer to the right hand side string.
  */
-void String_MoveAssign(string_t* self, string_t* that);
+void String_MoveAssign(String* self, String* that);
 
 /**
  * @brief Get the copy of the contents of the string. O(N)
- *        Example: char *chars = String_Get(self);
+ *
+ * Example: char *chars = String_Get(self);
+ *
  * @param self A pointer to the string.
  * @param chars A null-terminated byte string.
  */
-char* String_Get(const string_t* self);
+char* String_Get(const String* self);
 
 /**
  * @brief Set the contents of the string using null-terminated byte string. O(N)
- *        Example: String_Set(self, "hello");
+ *
+ * Example: String_Set(self, "hello");
+ *
  * @param self A pointer to the string to be set.
  * @param chars A pointer to a null-terminated byte string.
  */
-void String_Set(string_t* self, const char* chars);
+void String_Set(String* self, const char* chars);
 
 /**
  * @brief Print the contents of the string. O(N)
+ *
  * @param self A pointer to the string to be printed.
  */
-void String_Print(const string_t* self);
+void String_Print(const String* self);
 
 /**
  * @brief Find the size of the string. O(1)
+ *
  * @param self A pointer to the string.
  * @return The size of the string.
  */
-int String_Size(const string_t* self);
+int String_Size(const String* self);
 
 /**
  * @brief Determine whether the string is empty. O(1)
+ *
  * @param self A pointer to the string.
  * @return Returns true if the string is empty, false otherwise.
  */
-bool String_IsEmpty(const string_t* self);
+bool String_IsEmpty(const String* self);
 
 /**
  * @brief Take the i-th character of the string. O(1)
+ *
  * @param self A pointer to the string.
  * @param i Index (0 <= i < String_Size(self)).
  * @return The i-th character.
  */
-char String_At(const string_t* self, int i);
+char String_At(const String* self, int i);
 
 /**
  * @brief Determine whether the two strings have the same contents. O(N)
+ *
  * @param self A pointer to the first string.
  * @param that A pointer to the second string.
  * @return Returns true if the contents of the two strings are the same, false otherwise.
  */
-bool String_Equal(const string_t* self, const string_t* that);
+bool String_Equal(const String* self, const String* that);
 
 /**
  * @brief Compare two strings lexicographically. O(N)
+ *
  * @param self A pointer to the first string.
  * @param that A pointer to the second string.
  * @return An enumeration value: order{LT, EQ, GT}.
  */
-enum order String_Compare(const string_t* self, const string_t* that);
+enum order String_Compare(const String* self, const String* that);
 
 /**
  * @brief Find the position of the pattern. O(N + M)
+ *
  * @param self A pointer to the string.
  * @param pattern A pointer to the pattern string.
  * @return Returns the starting substring index or STR_NOT_FOUND.
  */
-int String_Find(const string_t* self, const string_t* pattern);
+int String_Find(const String* self, const String* pattern);
 
 /**
  * @brief Split string with separator. O(N)
- *        Example: string *str = String_From("one, two, three");
- *                 string *sep = String_From(", ");
- *                 string **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
- *        Don't forget use String_DestroyArray(return-value).
+ *
+ * Example: string *str = String_From("one, two, three");
+ *          string *sep = String_From(", ");
+ *          string **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
+ *
+ * Don't forget use String_DestroyArray(return-value).
+ *
  * @param self String to be split.
  * @param sep Separator string.
  * @return A null-terminated array of split string pointers.
  */
-string_t** String_Split(const string_t* self, const string_t* sep);
+String** String_Split(const String* self, const String* sep);
 
 /**
  * @brief Destroy a string array. For String_Split(). O(N)
+ *
  * @param str_arr A pointer to the string array to be destroyed.
  */
-void String_DestroyArray(string_t** str_arr);
+void String_DestroyArray(String** str_arr);
 
 /**
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
- *        If the string is too big to be representable will return `HUGE_VAL`.
- *        If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
- *        If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `[+-]?INFINITY`.
- *        Example: string *str1 = String_From("233.33");
- *                 double number = String_ToDecimal(str1); // => 233.33
- *                 string *str2 = String_From("1e+600");
- *                 double number = String_ToDecimal(str2); // => HUGE_VAL
- *                 string *str3 = String_From("nan");
- *                 double number = String_ToDecimal(str3); // => NAN
- *                 string *str4 = String_From("inf");
- *                 double number = String_ToDecimal(str4); // => INFINITY
+ *
+ * If the string is too big to be representable will return `HUGE_VAL`.
+ * If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
+ * If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `[+-]?INFINITY`.
+ *
+ * Example: string *str1 = String_From("233.33");
+ *          double number1 = String_ToDecimal(str1); // => 233.33
+ *
+ *          string *str2 = String_From("1e+600");
+ *          double number2 = String_ToDecimal(str2); // => HUGE_VAL
+ *
+ *          string *str3 = String_From("nan");
+ *          double number3 = String_ToDecimal(str3); // => NAN
+ *
+ *          string *str4 = String_From("inf");
+ *          double number4 = String_ToDecimal(str4); // => INFINITY
+ *
  * @param self String to be parsed.
  * @return A number that can represent the string or HUGE_VAL or NAN or [+-]?INFINITY.
  */
-double String_ToDecimal(const string_t* self);
+double String_ToDecimal(const String* self);
 
 /**
  * @brief Convert the string to an integer number based on 2-36 base. O(N)
- *        Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).
- *        Example: string *str1 = String_From("233");
- *                 long long number = String_ToInteger(str1, 10); // => 233
- *                 string *str2 = String_From("cafebabe");
- *                 long long number = String_ToInteger(str2, 16); // => 3405691582
- *                 string *str3 = String_From("z");
- *                 long long number = String_ToInteger(str3, 36); // => 35
+ *
+ * Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).
+ *
+ * Example: string *str1 = String_From("233");
+ *          long long number1 = String_ToInteger(str1, 10); // => 233
+ *
+ *          string *str2 = String_From("cafebabe");
+ *          long long number2 = String_ToInteger(str2, 16); // => 3405691582
+ *
+ *          string *str3 = String_From("z");
+ *          long long number3 = String_ToInteger(str3, 36); // => 35
+ *
  * @param self String to be parsed.
  * @param base The base of an integer (2 <= base <= 36).
  * @return An integer number that can represent the string.
  */
-long long String_ToInteger(const string_t* self, int base);
+long long String_ToInteger(const String* self, int base);
 
 /**
  * @brief Convert the string to lowercase. O(N)
+ *
  * @param self A pointer to the string.
  */
-void String_Lower(string_t* self);
+void String_Lower(String* self);
 
 /**
  * @brief Convert the string to uppercase. O(N)
+ *
  * @param self A pointer to the string.
  */
-void String_Upper(string_t* self);
+void String_Upper(String* self);
 
 /**
  * @brief Append new string to the tail. O(N)
+ *
  * @param self A pointer to the string.
  * @param str A pointer to the new string.
  */
-void String_Append(string_t* self, const string_t* str);
+void String_Append(String* self, const String* str);
 
 /**
  * @brief Erase the contents of a range of string. O(N)
+ *
  * @param self A pointer to the string to be erased.
  * @param begin Begin range subscript (included).
  * @param end End range subscript (not included).
  */
-void String_Erase(string_t* self, int begin, int end);
+void String_Erase(String* self, int begin, int end);
 
 /**
  * @brief Reverse the string in place. O(N)
+ *
  * @param self A pointer to the string.
  */
-void String_Reverse(string_t* self);
+void String_Reverse(String* self);
 
 /**
  * @brief Replace character in the string. O(N)
+ *
  * @param self A pointer to the string.
  * @param old_char The old character to be replaced.
  * @param new_char The new character to replace.
  */
-void String_ReplaceChar(string_t* self, const char old_char, const char new_char);
+void String_ReplaceChar(String* self, const char old_char, const char new_char);
 
 /**
  * @brief Replace the string. O(N)
+ *
  * @param self A pointer to the string to be replaced.
  * @param old_str Old substring.
  * @param new_str New substring.
  */
-void String_Replace(string_t* self, const string_t* old_str, const string_t* new_str);
+void String_Replace(String* self, const String* old_str, const String* new_str);
 
 /**
  * @brief Remove leading and trailing blank characters of the string. O(N)
+ *
  * @param self A pointer to the string.
  */
-void String_Strip(string_t* self);
+void String_Strip(String* self);
 
 /**
  * @brief Swap the contents of two strings. O(1)
+ *
  * @param self A pointer to the first string.
  * @param that A pointer to the second string.
  */
-void String_Swap(string_t* self, string_t* that);
+void String_Swap(String* self, String* that);
 
 /**
  * @brief Clear the contents of the string. O(1)
+ *
  * @param self A pointer to the string.
  */
-void String_Clear(string_t* self);
+void String_Clear(String* self);
 
-#endif // MY_STRING_H
+#endif // STRING_H

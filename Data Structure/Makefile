@@ -7,14 +7,14 @@ test: TestTree TestTable TestList TestHeap TestQueue TestStack TestGraph TestStr
 TestTree: Tree/TestTree.exe
 	./Tree/TestTree.exe
 
-Tree/TestTree.exe: Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForBST.o # need QueueForBST
-	gcc -Wall Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForBST.o -o Tree/TestTree.exe
+Tree/TestTree.exe: Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForTree.o # need QueueForTree
+	gcc -Wall Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForTree.o -o Tree/TestTree.exe
 
 Tree/BinarySearchTree.o: Tree/BinarySearchTree.c Tree/BinarySearchTree.h
 	gcc -Wall -c Tree/BinarySearchTree.c -o Tree/BinarySearchTree.o
 
-Tree/QueueForBST.o: Tree/QueueForBST.h Tree/QueueForBST.c
-	gcc -Wall -c Tree/QueueForBST.c -o Tree/QueueForBST.o
+Tree/QueueForTree.o: Tree/QueueForTree.h Tree/QueueForTree.c
+	gcc -Wall -c Tree/QueueForTree.c -o Tree/QueueForTree.o
 
 # Table
 

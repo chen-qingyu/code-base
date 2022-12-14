@@ -6,11 +6,11 @@
 
 void TestArrayQueue(void)
 {
-    queue_t *queue = ArrayQueue_Create();
+    Queue* queue = ArrayQueue_Create();
     assert(ArrayQueue_Size(queue) == 0);
     assert(ArrayQueue_IsEmpty(queue) == true);
 
-    queue_data_t arr[] = {1, 2, 3, 4};
+    QueueItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -33,11 +33,11 @@ void TestArrayQueue(void)
 
 void TestLinkedQueue(void)
 {
-    queue_t *queue = LinkedQueue_Create();
+    Queue* queue = LinkedQueue_Create();
     assert(LinkedQueue_Size(queue) == 0);
     assert(LinkedQueue_IsEmpty(queue) == true);
 
-    queue_data_t arr[] = {1, 2, 3, 4};
+    QueueItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
