@@ -242,9 +242,9 @@ bool String_IsEmpty(const String* self)
 
 char String_At(const String* self, int i)
 {
-    check_bounds(i, 0, self->size);
+    check_bounds(i, -self->size, self->size);
 
-    return self->data[i];
+    return i >= 0 ? self->data[i] : self->data[i + self->size];
 }
 
 bool String_Equal(const String* self, const String* that)
@@ -504,6 +504,19 @@ long long String_ToInteger(const String* self, int base)
     }
 
     return sign * integer_part;
+}
+
+int String_Count(const String* self, char x)
+{
+    int cnt = 0;
+    for (int i = 0; i < self->size; i++)
+    {
+        if (self->data[i] == x)
+        {
+            cnt++;
+        }
+    }
+    return cnt;
 }
 
 void String_Lower(String* self)

@@ -2,7 +2,7 @@
 
 MineDataStructure，简称MDS（没错灵感来源于Minecraft）
 
-一共有 `Graph  Heap  List  Queue  Stack  String  Table  Tree` 这么多模块，其中每个模块是一个抽象的接口，也叫ADT，每个ADT可能有多种不同的实现，比如List有ArrayList和LinkedList实现。
+一共有 `Graph  Heap  List  Queue  Stack  String  Table  Tree` 这么多模块。
 
 采用面向对象的设计理念
 

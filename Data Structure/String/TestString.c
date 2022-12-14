@@ -27,6 +27,7 @@ int main()
 
     // String_Equal() String_At()
 
+    String_Set(s1, "Hello World!");
     String* s2 = String_Create();
     assert(String_Equal(s1, s2) == false);
     String_Set(s2, "Hello World!");
@@ -35,6 +36,8 @@ int main()
     assert(String_At(s2, 0) == 'H');
     assert(String_At(s2, 5) == ' ');
     assert(String_At(s2, 11) == '!');
+    assert(String_At(s2, -1) == '!');
+    assert(String_At(s2, -String_Size(s2)) == 'H');
 
     // String_Reverse()
 
@@ -438,6 +441,15 @@ int main()
     assert(String_Equal(s1, s7));
     s[0] = ' ';
     assert(String_Equal(s1, s7));
+
+    // String_Count
+    String_Set(s1, "Hello World");
+    assert(String_Count(s1, ' ') == 1);
+    assert(String_Count(s1, 'o') == 2);
+    assert(String_Count(s1, 'l') == 3);
+    assert(String_Count(s1, '!') == 0);
+    String_Set(s1, "Hello World!!!");
+    assert(String_Count(s1, '!') == 3);
 
     // String_Destroy()
 

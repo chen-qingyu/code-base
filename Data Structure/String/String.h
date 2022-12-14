@@ -33,6 +33,7 @@
  *   - String_DestroyArray  Destroy a string array. For String_Split().
  *   - String_ToDecimal     Convert the string to a double-precision floating-point decimal number.
  *   - String_ToInteger     Convert the string to an integer number based on 2-36 base.
+ *   - String_Count         Count the number of occurrences of a specified character.
  * - String manipulation (will change the string itself):
  *   - String_Lower         Convert the string to lowercase.
  *   - String_Upper         Convert the string to uppercase.
@@ -213,8 +214,10 @@ bool String_IsEmpty(const String* self);
 /**
  * @brief Take the i-th character of the string. O(1)
  *
+ * If i is negative, the index is relative to the end of the string.
+ *
  * @param self A pointer to the string.
- * @param i Index (0 <= i < String_Size(self)).
+ * @param i Index (-String_Size(self) <= i < String_Size(self)).
  * @return The i-th character.
  */
 char String_At(const String* self, int i);
@@ -311,6 +314,14 @@ double String_ToDecimal(const String* self);
  * @return An integer number that can represent the string.
  */
 long long String_ToInteger(const String* self, int base);
+
+/**
+ * @brief Count the number of occurrences of a specified character. O(N)
+ *
+ * @param self A pointer to the string.
+ * @return The total number of occurrences of x in the string.
+ */
+int String_Count(const String* self, char x);
 
 /**
  * @brief Convert the string to lowercase. O(N)
