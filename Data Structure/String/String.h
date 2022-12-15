@@ -189,6 +189,14 @@ char* String_Get(const String* self);
 void String_Set(String* self, const char* chars);
 
 /**
+ * @brief Get the buffer of the contents of the string. O(1)
+ *
+ * @param self A pointer to the string.
+ * @return The buffer of the contents of the string.
+ */
+const char* String_Buffer(const String* self);
+
+/**
  * @brief Print the contents of the string. O(N)
  *
  * @param self A pointer to the string to be printed.

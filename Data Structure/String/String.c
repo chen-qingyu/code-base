@@ -225,6 +225,11 @@ void String_Set(String* self, const char* chars)
     self->data[self->size] = '\0';
 }
 
+const char* String_Buffer(const String* self)
+{
+    return self->data;
+}
+
 void String_Print(const String* self)
 {
     printf("%s\n", self->data);
