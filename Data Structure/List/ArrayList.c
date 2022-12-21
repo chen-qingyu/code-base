@@ -74,9 +74,9 @@ bool ArrayList_IsEmpty(const List* self)
 
 ListItem ArrayList_At(const List* self, int i) // self[i]
 {
-    check_bounds(i, 0, self->count);
+    check_bounds(i, -self->count, self->count);
 
-    return self->data[i];
+    return i >= 0 ? self->data[i] : self->data[i + self->count];
 }
 
 int ArrayList_Find(const List* self, ListItem data)

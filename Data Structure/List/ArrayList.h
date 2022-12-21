@@ -57,7 +57,7 @@ bool ArrayList_IsEmpty(const List* self);
  * @brief 取列表的第 i 个元素
  *
  * @param self 一个指向列表的指针
- * @param i 下标 (0 <= i < Size(self))
+ * @param i 下标 (-Size(self) <= i < Size(self))
  * @return 第 i 个元素
  */
 ListItem ArrayList_At(const List* self, int i);

@@ -29,6 +29,7 @@ void TestArrayList(void)
     }
     assert(ArrayList_Size(list1) == 4);
     assert(ArrayList_IsEmpty(list1) == false);
+    assert(ArrayList_At(list1, -1) == 4);
 
     ArrayList_Traverse(list1, Visit);
     assert(strcmp(str, "1 2 3 4 ") == 0);
@@ -92,6 +93,7 @@ void TestLinkedList(void)
     }
     assert(LinkedList_Size(list1) == 4);
     assert(LinkedList_IsEmpty(list1) == false);
+    assert(LinkedList_At(list1, -1) == 4);
 
     LinkedList_Traverse(list1, Visit);
     assert(strcmp(str, "1 2 3 4 ") == 0);

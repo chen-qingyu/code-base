@@ -85,7 +85,9 @@ bool LinkedList_IsEmpty(const List* self)
 
 ListItem LinkedList_At(const List* self, int i) // self[i]
 {
-    check_bounds(i, 0, self->count);
+    check_bounds(i, -self->count, self->count);
+
+    i = i >= 0 ? i : i + self->count;
 
     struct node* current = self->header->next;
 
