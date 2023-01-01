@@ -42,7 +42,8 @@ REPOS = (
     ("F:/STM32/STM32 Programs", (GITEE, GITHUB), True),
     ("F:/TeX", (GITEE, GITHUB), True),
     ("F:/Projects/TestTime", (GITEE, GITHUB), True),
-    ("F:/Projects/MDS", (GITEE, GITHUB), True)
+    ("F:/Projects/MDS", (GITEE, GITHUB), True),
+    ("F:/Projects/MDSPP", (GITEE, GITHUB), False)
 )
 
 
