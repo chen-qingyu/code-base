@@ -1,27 +1,29 @@
 #ifndef SORT_H
 #define SORT_H
 
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
-#define SIZE 100          // Maximum number of elements
-#define Sedgewick_SIZE 10 // For shellSort()
-#define CUTOFF 50         // For quickSort()
-#define MAX_DIGIT 5       // For radixSort()
-#define RADIX 10          // For radixSort()
 
 typedef int item_t;
 
-void bubbleSort(item_t arr[], int n);
-void insertionSort(item_t arr[], int n);
-void shellSort(item_t arr[], int n);
-void selectionSort(item_t arr[], int n);
-void heapSort(item_t arr[], int n);
-void mergeSort(item_t arr[], int n);
-void quickSort(item_t arr[], int n);
-void radixSort(item_t arr[], int n);
+// Check whether the pointer is a non-null pointer.
+static inline void check_pointer(const void* pointer)
+{
+    if (pointer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+}
 
-#endif
+void bubble_sort(item_t arr[], int n);
+void insertion_sort(item_t arr[], int n);
+void shell_sort(item_t arr[], int n);
+void selection_sort(item_t arr[], int n);
+void heap_sort(item_t arr[], int n);
+void merge_sort(item_t arr[], int n);
+void quick_sort(item_t arr[], int n);
+void radix_sort(item_t arr[], int n);
+
+#endif // SORT_H

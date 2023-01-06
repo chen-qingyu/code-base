@@ -1,6 +1,6 @@
-#include "Sort.h"
+#include "sort.h"
 
-void insertionSort(item_t arr[], int n)
+void insertion_sort(item_t arr[], int n)
 {
     for (int i = 1, j; i < n; i++)
     {

@@ -1,8 +1,14 @@
-#include "Sort.h"
+#include "sort.h"
+
+#include <math.h> // pow
+
+#define Sedgewick_SIZE 10
 
 int* Sedgewick(int n)
 {
-    int *sedgewick = (int *)malloc(sizeof(int) * n);
+    int* sedgewick = (int*)malloc(sizeof(int) * n);
+    check_pointer(sedgewick);
+
     for (int i = 0; i < n; i += 2)
     {
         sedgewick[i] = 9 * pow(4, i) - 9 * pow(2, i) + 1;
@@ -11,10 +17,11 @@ int* Sedgewick(int n)
             sedgewick[i + 1] = pow(4, i + 2) - 3 * pow(2, i + 2) + 1;
         }
     }
+
     return sedgewick; // {s[0]=1, s[1]=5, s[2]=19, s[3]=41, ..., s[n-1]}
 }
 
-void shellSort(item_t arr[], int n)
+void shell_sort(item_t arr[], int n)
 {
     int* sedgewick = Sedgewick(Sedgewick_SIZE);
 

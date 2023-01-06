@@ -1,20 +1,24 @@
-#include "Sort.h"
+#include "sort.h"
+
+#define MAX_DIGIT 5
+#define RADIX 10
 
 struct node
 {
     item_t key;
-    struct node *next;
+    struct node* next;
 };
-typedef struct node *node_t;
+typedef struct node* node_t;
 
-struct headNode
+struct head_node
 {
     node_t head;
     node_t tail;
 };
-typedef struct headNode bucket_t[RADIX];
 
-int getDigit(item_t item, int D)
+typedef struct head_node bucket_t[RADIX];
+
+int get_digit(item_t item, int D)
 {
     int digit;
 
@@ -26,18 +30,13 @@ int getDigit(item_t item, int D)
     return digit;
 }
 
-void radixSort(item_t arr[], int n)
+void radix_sort(item_t arr[], int n)
 {
     for (int i = 0; i < n; i++)
     {
         if (arr[i] < 0)
         {
             fprintf(stderr, "Radix sort can't handle negative numbers yet.\n");
-            return;
-        }
-        if (sizeof(arr[i]) == sizeof(double))
-        {
-            fprintf(stderr, "Radix sort can't handle float numbers yet.\n");
             return;
         }
     }
@@ -54,11 +53,8 @@ void radixSort(item_t arr[], int n)
     for (int i = 0; i < n; i++)
     {
         tmp = (node_t)malloc(sizeof(struct node));
-        if (tmp == NULL)
-        {
-            fprintf(stderr, "ERROR: file %s, function %s, line %d : There was not enough memory.\n", __FILE__, __FUNCTION__, __LINE__);
-            exit(-2);
-        }
+        check_pointer(tmp);
+
         tmp->key = arr[i];
         tmp->next = list;
         list = tmp;
@@ -69,7 +65,7 @@ void radixSort(item_t arr[], int n)
         p = list;
         while (p)
         {
-            digit = getDigit(p->key, D);
+            digit = get_digit(p->key, D);
 
             tmp = p;
             p = p->next;

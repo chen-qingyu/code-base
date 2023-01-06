@@ -1,6 +1,6 @@
-#include "Sort.h"
+#include "sort.h"
 
-void bubbleSort(item_t arr[], int n)
+void bubble_sort(item_t arr[], int n)
 {
     bool swapped;
     for (int i = 0; i < n - 1; i++)
