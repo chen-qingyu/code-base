@@ -53,6 +53,8 @@ LIBS = (
     "pyqt6",  # PyQt6
 
     "graph-tools",
+
+    "objprint",
 )
 
 if __name__ == '__main__':
