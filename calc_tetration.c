@@ -3,9 +3,9 @@
 
 int main(void)
 {
-    double x, tetration;
-    x = sqrt(2);
-    tetration = x;
+    double x = sqrt(2);
+    double tetration = x;
+
     printf("The x: %lf\n\n", x);
     for (int i = 1; i < 10; ++i)
     {
@@ -15,7 +15,6 @@ int main(void)
         }
         printf("%d0th tetration: %lf\n", i, tetration);
     }
-    getchar();
 
     return 0;
 }

@@ -1,23 +1,28 @@
 #include <stdio.h>
 
-// 计算Fibonacci数列的第n项(f(0)=0,f(1)=1)
-unsigned long long fib(int n)
+// 计算Fibonacci数列的前n项(f(0)=0,f(1)=1)，结果放进f数组里
+void fib(int n, unsigned int f[])
 {
-    unsigned long long fst = 0, snd = 1;
-    while (n-- > 0)
+    unsigned int fst = 0, snd = 1;
+    for (int x = n; n > 0; n--)
     {
-        unsigned long long tmp = fst + snd;
+        f[x - n] = fst;
+        unsigned int tmp = fst + snd;
         fst = snd;
         snd = tmp;
     }
-    return fst;
 }
 
 int main(void)
 {
-    for (int i = 0; i < 50; ++i)
+    int size = 48;
+    unsigned int f[size];
+
+    fib(size, f);
+
+    for (int i = 0; i < size; ++i)
     {
-        printf("fib(%d) = %llu\n", i, fib(i));
+        printf("fib(%d) = %u\n", i, f[i]);
     }
 
     return 0;

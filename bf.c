@@ -28,7 +28,7 @@ int memory_ptr = 0;
 int targets[MAX_CODE_SIZE] = {0};
 
 // Read the contents of the file.
-void read_file(char *file);
+void read_file(char* file);
 
 // Preprocess and check whether the brackets match.
 void preprocess();
@@ -36,7 +36,7 @@ void preprocess();
 // Execute the program.
 void interpret();
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     if (argc != 2)
     {
@@ -53,9 +53,9 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void read_file(char *file)
+void read_file(char* file)
 {
-    FILE *program;
+    FILE* program;
     if (fopen_s(&program, file, "r"))
     {
         fprintf(stderr, "Can't open file: \"%s\".\n", file);

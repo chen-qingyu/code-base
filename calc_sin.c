@@ -1,18 +1,5 @@
 #include <stdio.h>
 
-double sin(double x);
-
-int main(void)
-{
-    double x;
-    printf("x = ");
-    scanf("%lf", &x);
-    printf("sin(x) = %lf\n", sin(x));
-    getchar();
-    getchar();
-    return 0;
-}
-
 double sin(double x)
 {
     double t = x, s = x;
@@ -22,4 +9,15 @@ double sin(double x)
         s += t;
     }
     return s;
+}
+
+int main(void)
+{
+    double x;
+    printf("x = ");
+    scanf("%lf", &x);
+
+    printf("sin(x) = %lf\n", sin(x));
+
+    return 0;
 }

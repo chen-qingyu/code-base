@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    const int chars_per_line = 64; // The number of characters per line
+    const int chars_per_line = 64;              // The number of characters per line
     const int chars_total = chars_per_line * 7; // There are 448 characters in total
 
     for (int i = chars_total - 1; i >= 0; i--) // i: 447, 446, 445, ..., 2, 1, 0.
@@ -96,7 +96,7 @@ int main(void)
                 get lower 3 bits(2,1,0) of bitmap
 
             for example:
-            if i is 447(‭1 1011 1111‬):
+            if i is 447(1 1011 1111):
                 ((i * 2) & 8) is 8
                 (i / chars_per_line) is 6
                 ((i * 2) & 8) | (i / chars_per_line) is 14
@@ -105,7 +105,7 @@ int main(void)
                 get lower 3 bits 000
                 so bitmap is 0
 
-            if i is 0(‭‭0000 0000):
+            if i is 0(0000 0000):
                 ((i * 2) & 8) is 0
                 (i / chars_per_line) is 0
                 ((i * 2) & 8) | (i / chars_per_line) is 0
