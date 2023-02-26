@@ -14,9 +14,7 @@ void selection_sort(item_t arr[], int n)
         }
         if (min_position != i)
         {
-            item_t tmp = arr[i];
-            arr[i] = arr[min_position];
-            arr[min_position] = tmp;
+            swap(&arr[i], &arr[min_position]);
         }
     }
 }

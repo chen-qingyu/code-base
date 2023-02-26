@@ -18,46 +18,62 @@ int reverse_cmp(const void* a, const void* b)
     return (*(item_t*)b) - (*(item_t*)a);
 }
 
-struct time_result
+struct result
 {
     double random_time;
     double order_time;
     double reverse_time;
+    item_t* data;
 };
 
-struct time_result time_test(sort_func_t method)
+static item_t random[TEST_SIZE], order[TEST_SIZE], reverse[TEST_SIZE];
+
+void prepare_data()
 {
-    // 生成数据
-    item_t random[TEST_SIZE], order[TEST_SIZE], reverse[TEST_SIZE];
+    srand(time(NULL));
     for (int i = 0; i < TEST_SIZE; ++i)
     {
         random[i] = order[i] = reverse[i] = rand();
     }
-
     qsort(order, TEST_SIZE, sizeof(item_t), order_cmp);
     qsort(reverse, TEST_SIZE, sizeof(item_t), reverse_cmp);
+}
+
+struct result time_test(sort_func_t method)
+{
+    static item_t random_local[TEST_SIZE], order_local[TEST_SIZE], reverse_local[TEST_SIZE];
+    // 生成数据
+    for (int i = 0; i < TEST_SIZE; ++i)
+    {
+        random_local[i] = random[i];
+        order_local[i] = order[i];
+        reverse_local[i] = reverse[i];
+    }
+
     clock_t start, end;
-    struct time_result tr;
+    struct result result;
 
     // 随机数据排序
     start = clock();
-    method(random, TEST_SIZE);
+    method(random_local, TEST_SIZE);
     end = clock();
-    tr.random_time = (double)(end - start) / CLOCKS_PER_SEC;
+    result.random_time = (double)(end - start) / CLOCKS_PER_SEC;
 
     // 顺序数据排序
     start = clock();
-    method(order, TEST_SIZE);
+    method(order_local, TEST_SIZE);
     end = clock();
-    tr.order_time = (double)(end - start) / CLOCKS_PER_SEC;
+    result.order_time = (double)(end - start) / CLOCKS_PER_SEC;
 
     // 逆序数据排序
     start = clock();
-    method(reverse, TEST_SIZE);
+    method(reverse_local, TEST_SIZE);
     end = clock();
-    tr.reverse_time = (double)(end - start) / CLOCKS_PER_SEC;
+    result.reverse_time = (double)(end - start) / CLOCKS_PER_SEC;
 
-    return tr;
+    result.data = random_local;
+
+    return result;
 }
 
 sort_func_t functions[] = {
@@ -69,14 +85,21 @@ const char* func_names[] = {
 void test_mode(void)
 {
     printf("TEST_SIZE: %d\n", TEST_SIZE);
-    printf("\t\trandom_time\torder_time\treverse_time (seconds)\n");
-    struct time_result tr;
+    printf("\t\trandom_time\torder_time\treverse_time\tdata\n");
+    struct result result;
 
+    prepare_data();
     for (int i = 0; i < sizeof(functions) / sizeof(sort_func_t); ++i)
     {
-        tr = time_test(functions[i]);
-        printf("%s:\t%lf\t%lf\t%lf\n", func_names[i], tr.random_time, tr.order_time, tr.reverse_time);
+        result = time_test(functions[i]);
+        printf("%s:\t%lfs\t%lfs\t%lfs\t", func_names[i], result.random_time, result.order_time, result.reverse_time);
+        for (int i = 0; i < 10; i++)
+        {
+            printf("%d ", result.data[i]);
+        }
+        printf("...\n");
     }
+    printf("Test finished.\n");
 }
 
 void user_mode(void)

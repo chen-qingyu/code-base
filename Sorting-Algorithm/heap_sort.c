@@ -1,8 +1,8 @@
 #include "sort.h"
 
-void perc_down(item_t arr[], int r, int n)
+static inline void perc_down(item_t arr[], int r, int n)
 {
-    /* 将n个元素的数组中以arr[r]为根的子堆调整为最大堆 */
+    // 将n个元素的数组中以arr[r]为根的子堆调整为最大堆
     int parent, child;
     item_t tmp;
 
@@ -35,9 +35,7 @@ void heap_sort(item_t arr[], int n)
 
     for (int i = n - 1; i > 0; i--)
     {
-        item_t tmp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = tmp;
+        swap(&arr[0], &arr[i]);
 
         perc_down(arr, 0, i);
     }

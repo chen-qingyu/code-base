@@ -4,7 +4,7 @@
 
 #define Sedgewick_SIZE 10
 
-int* Sedgewick(int n)
+static inline int* Sedgewick(int n)
 {
     int* sedgewick = (int*)malloc(sizeof(int) * n);
     check_pointer(sedgewick);

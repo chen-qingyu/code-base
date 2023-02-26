@@ -18,7 +18,7 @@ struct head_node
 
 typedef struct head_node bucket_t[RADIX];
 
-int get_digit(item_t item, int D)
+static inline int get_digit(item_t item, int D)
 {
     int digit;
 
