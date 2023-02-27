@@ -3,16 +3,15 @@
 
 char* get_string(void)
 {
-    static const int INIT_CAPACITY = 16;
-    char* str = (char*)malloc(INIT_CAPACITY);
+    int size = 0;                        // number of characters
+    int capacity = 16;                   // available capacity, initially 16
+    char* str = (char*)malloc(capacity); // pointer to the data
     if (str == NULL)
     {
         fprintf(stderr, "malloc failed!\n");
         exit(EXIT_FAILURE);
     }
 
-    int size = 0;
-    int capacity = INIT_CAPACITY;
     int ch;
     while ((ch = getchar()) != '\n')
     {
