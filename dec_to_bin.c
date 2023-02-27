@@ -1,9 +1,10 @@
 #include <limits.h>
 #include <stdio.h>
+
 #define SIZE (CHAR_BIT * sizeof(int))
 
-void dtob(int, char *);
-void show(const char *);
+void dtob(int n, char* p);
+void show(const char* p);
 
 int main(void)
 {
@@ -16,16 +17,14 @@ int main(void)
         dtob(num, bin);
         show(bin);
     }
-    puts("\nBye~");
+    puts("Bye~");
 
     return 0;
 }
 
-void dtob(int n, char *p)
+void dtob(int n, char* p)
 {
-    int i;
-
-    for (i = SIZE - 1; i >= 0; i--)
+    for (int i = SIZE - 1; i >= 0; i--)
     {
         p[i] = (1 & n) + '0';
         n >>= 1;
@@ -33,18 +32,15 @@ void dtob(int n, char *p)
     p[SIZE] = '\0';
 }
 
-void show(const char *p)
+void show(const char* p)
 {
-    int i = 0;
-
-    while (p[i])
+    for (int i = 0; p[i] != '\0'; i++)
     {
         putchar(p[i]);
-        if (++i % 4 == 0)
+        if ((i + 1) % 4 == 0)
         {
             putchar(' ');
         }
     }
-    putchar('\n');
-    putchar('\n');
+    printf("\n\n");
 }

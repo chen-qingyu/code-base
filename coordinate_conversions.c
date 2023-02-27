@@ -5,20 +5,33 @@
 #define RECT_TO_POLAR 1
 #define POLAR_TO_RECT 2
 
-typedef struct
+struct rect
 {
     double x;
     double y;
-} rect;
+};
 
-typedef struct
+struct polar
 {
     double radius;
     double angle;
-} polar;
+};
 
-polar rect_to_polar(rect r);
-rect polar_to_rect(polar p);
+struct polar rect_to_polar(struct rect r)
+{
+    struct polar p;
+    p.radius = sqrt(r.x * r.x + r.y * r.y);
+    p.angle = (180 / PI) * atan2(r.y, r.x);
+    return p;
+}
+
+struct rect polar_to_rect(struct polar p)
+{
+    struct rect r;
+    r.x = p.radius * cos(p.angle * PI / 180);
+    r.y = p.radius * sin(p.angle * PI / 180);
+    return r;
+}
 
 int main(void)
 {
@@ -30,25 +43,25 @@ int main(void)
 
     if (choice == RECT_TO_POLAR)
     {
-        rect input;
-        polar result;
+        struct rect input;
+        struct polar result;
         printf("(x, y) = ");
         scanf("%lf %lf", &input.x, &input.y);
 
         result = rect_to_polar(input);
 
-        printf("\n(rho, theta(degree)) = (%.2lf, %.2lf)\n", result.radius, result.angle);
+        printf("(radius, angle(degree)) = (%.2lf, %.2lf)\n", result.radius, result.angle);
     }
     else if (choice == POLAR_TO_RECT)
     {
-        polar input;
-        rect result;
-        printf("(rho, theta(degree)) = ");
+        struct polar input;
+        struct rect result;
+        printf("(radius, angle(degree)) = ");
         scanf("%lf %lf", &input.radius, &input.angle);
 
         result = polar_to_rect(input);
 
-        printf("\n(x, y) = (%.2lf, %.2lf)\n", result.x, result.y);
+        printf("(x, y) = (%.2lf, %.2lf)\n", result.x, result.y);
     }
     else
     {
@@ -56,20 +69,4 @@ int main(void)
     }
 
     return 0;
-}
-
-polar rect_to_polar(rect r)
-{
-    polar p;
-    p.radius = sqrt(r.x * r.x + r.y * r.y);
-    p.angle = (180 / PI) * atan2(r.y, r.x);
-    return p;
-}
-
-rect polar_to_rect(polar p)
-{
-    rect r;
-    r.x = p.radius * cos(p.angle * PI / 180);
-    r.y = p.radius * sin(p.angle * PI / 180);
-    return r;
 }

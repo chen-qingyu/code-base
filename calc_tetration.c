@@ -4,16 +4,16 @@
 int main(void)
 {
     double x = sqrt(2);
-    double tetration = x;
-
     printf("The x: %lf\n\n", x);
-    for (int i = 1; i < 10; ++i)
+
+    double tetration = x;
+    for (int i = 0; i < 100; ++i)
     {
-        for (int j = 0; j < 10; ++j)
+        if (i % 10 == 0)
         {
-            tetration = pow(x, tetration);
+            printf("%dth tetration: %lf\n", i, tetration);
         }
-        printf("%d0th tetration: %lf\n", i, tetration);
+        tetration = pow(x, tetration);
     }
 
     return 0;

@@ -13,7 +13,7 @@ int main(void)
     printf("</head>");
     printf("<body>");
     printf("<h1>");
-    char *qs = getenv("QUERY_STRING");
+    char* qs = getenv("QUERY_STRING");
     if (qs == NULL || *qs == '\0')
     {
         printf("Hello CGI!");

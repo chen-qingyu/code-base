@@ -1,24 +1,22 @@
 ﻿#include <stdio.h>
 
-#define WIDTH 20
-#define HEIGHT 20
+#define R 10
 
 int f(int x, int y)
 {
-    return (x - 10) * (x - 10) + (y - 10) * (y - 10) <= 8 * 8;
+    return (x - R) * (x - R) + (y - R) * (y - R) <= R * R;
 }
 
 int main(void)
 {
-    int x, y;
-    for (y = 0; y < HEIGHT; y++)
+    for (int y = 0; y <= 2 * R; y++)
     {
-        for (x = 0; x < WIDTH; x++)
+        for (int x = 0; x <= 2 * R; x++)
         {
             printf(f(x, y) ? "* " : "  ");
         }
-        puts("");
+        printf("\n");
     }
-    getchar();
+
     return 0;
 }
