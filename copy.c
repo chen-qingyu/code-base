@@ -43,10 +43,10 @@ int main(int argc, char const* argv[])
     while (1)
     {
         // 从源文件中读取内容
-        size_t ret = fread(buff, 1, BUFFSIZE, fin);
+        size_t size = fread(buff, 1, BUFFSIZE, fin);
 
         // 写入到目标文件中
-        fwrite(buff, ret, 1, fout);
+        fwrite(buff, size, 1, fout);
 
         // 读到源文件结尾则退出
         if (feof(fin))

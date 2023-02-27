@@ -1,54 +1,47 @@
-﻿#include <conio.h>
-#include <stdio.h>
-#include <windows.h>
+﻿#include <stdio.h>
+#include <stdlib.h>
 
-#define STEP 10
+char* get_string(void)
+{
+    static const int init_capacity = 10;
+    char* str = (char*)malloc(init_capacity);
+    if (str == NULL)
+    {
+        fprintf(stderr, "malloc failed!\n");
+        exit(EXIT_FAILURE);
+    }
 
-char *getstr(void);
+    int size = 0;
+    int capacity = init_capacity;
+    int ch;
+    while ((ch = getchar()) != '\n')
+    {
+        if (size + 1 == capacity) // need to expand capacity, be careful '\0'
+        {
+            capacity *= 2;
+            str = (char*)realloc(str, capacity);
+            if (str == NULL)
+            {
+                fprintf(stderr, "malloc failed!\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+        str[size++] = ch; // append a char
+    }
+    str[size] = '\0';
+
+    return str;
+}
 
 int main(void)
 {
+    printf("Arbitrary length string input function.\n");
     while (1)
     {
-        char *str = NULL;
-        str = getstr();
-        printf("str=%s\n\n", str);
+        printf(">>> ");
+        char* str = get_string();
+        printf("input=\"%s\"\n\n", str);
         free(str);
     }
     return 0;
-}
-
-char *getstr(void)
-{
-    char *tmp, *str = (char *)malloc(STEP);
-    int c = 0, len = 0, times = 1, number = 0;
-    if (!str)
-    {
-        printf("鍐呭瓨涓嶈冻!\n");
-        return (char *)NULL;
-    }
-
-    number += times * STEP;
-    while ((c = getchar()) != '\n')
-    {
-        if (len == number)
-        {
-            times++;
-            number = times * STEP;
-            tmp = str;
-            str = (char *)realloc(str, number);
-            if (str == NULL)
-            {
-                puts("鍐呭瓨涓嶈冻!\n");
-                str = tmp;
-                break;
-            }
-        }
-        *(str + len) = c;
-        len++;
-    }
-    str = (char *)realloc(str, len + 1);
-    *(str + len) = '\0';
-
-    return str;
 }
