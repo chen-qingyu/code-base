@@ -1,4 +1,4 @@
-﻿#include <math.h>
+#include <math.h>
 #include <stdio.h>
 
 #define L (3.14 * 2)

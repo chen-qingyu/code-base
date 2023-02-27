@@ -1,4 +1,4 @@
-﻿#include <math.h>
+#include <math.h>
 #include <stdio.h>
 
 #define PI 3.1415926
