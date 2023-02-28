@@ -1,6 +1,15 @@
 ﻿#include <stdio.h>
 
-int power2(int);
+int log2(int x)
+{
+    int i = 0;
+    while (x > 1)
+    {
+        x >>= 1;
+        i++;
+    }
+    return i;
+}
 
 int main(void)
 {
@@ -16,7 +25,7 @@ int main(void)
             }
             else
             {
-                printf("%d is the %d power of 2.\n", x, power2(x));
+                printf("%d is the %d power of 2.\n", x, log2(x));
             }
         }
         else
@@ -27,15 +36,4 @@ int main(void)
 
     printf("Bye!\n");
     return 0;
-}
-
-int power2(int x)
-{
-    int i = 0;
-    while (x > 1)
-    {
-        x >>= 1;
-        i++;
-    }
-    return i;
 }

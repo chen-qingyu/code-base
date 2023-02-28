@@ -148,14 +148,7 @@ static inline void print_calendar(int year, int month)
 
     for (int i = 1; i <= days; i++)
     {
-        if ((i + dow) % 7 == 0 || i == days)
-        {
-            printf("%02d\n", i);
-        }
-        else
-        {
-            printf("%02d ", i);
-        }
+        printf("%02d%c", i, (i + dow) % 7 == 0 || i == days ? '\n' : ' ');
     }
 }
 
@@ -165,6 +158,7 @@ int main(void)
     printf("Designed by C\n");
     printf(" - N: Show calendar for next month.\n");
     printf(" - P: Show calendar for previous month.\n");
+    printf(" - C: Show calendar for current month.\n");
     printf(" - Q: Quit.\n");
     printf("\n");
 
@@ -216,6 +210,11 @@ int main(void)
                 show_year--;
                 show_month += 12;
             }
+        }
+        else if (choice == 'C' || choice == 'c')
+        {
+            show_year = year;
+            show_month = month;
         }
     }
 
