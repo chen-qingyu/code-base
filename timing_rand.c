@@ -7,7 +7,7 @@ double my_mod(const double x, const double m)
     return x - (int)(x / m) * m;
 }
 
-double my_rand_gen(double *r)
+double my_rand_gen(double* r)
 {
     const static double m = 256, a = 17, c = 233;
     *r = my_mod(a * (*r) + c, m);

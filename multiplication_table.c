@@ -19,6 +19,6 @@ int main(void)
         }
     }
     printf("By ChenQingyu.\n");
-    getchar();
+
     return 0;
 }
