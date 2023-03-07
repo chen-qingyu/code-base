@@ -8,7 +8,7 @@ static inline void sort(item_t arr[], int left, int right)
         int i = left, j = right, pivot = arr[left];
         while (i < j)
         {
-            while (i < j && arr[j] >= pivot)
+            while (i < j && arr[j] > pivot)
             {
                 j--;
             }
