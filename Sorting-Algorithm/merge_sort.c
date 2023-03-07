@@ -13,15 +13,15 @@ static inline void merge(item_t arr[], int start, int median, int stop, item_t s
     {
         B[i] = A[i];
     }
-    for (int i = 0, j = 0, k = 0; (j < lb) || (k < lc);)
+    for (int i = 0, j = 0, k = 0; j < lb;)
     {
-        if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
-        {
-            A[i++] = B[j++];
-        }
-        if ((k < lc) && (!(j < lb) || (C[k] < B[j])))
+        if ((k < lc) && (C[k] < B[j]))
         {
             A[i++] = C[k++];
+        }
+        if ((lc <= k) || (B[j] <= C[k]))
+        {
+            A[i++] = B[j++];
         }
     }
 }
