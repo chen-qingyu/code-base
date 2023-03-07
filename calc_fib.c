@@ -4,9 +4,9 @@
 void fib(int n, unsigned int f[])
 {
     unsigned int fst = 0, snd = 1;
-    for (int x = n; n > 0; n--)
+    for (int i = 0; i < n; i++)
     {
-        f[x - n] = fst;
+        f[i] = fst;
         unsigned int tmp = fst + snd;
         fst = snd;
         snd = tmp;
@@ -15,7 +15,7 @@ void fib(int n, unsigned int f[])
 
 int main(void)
 {
-    int size = 48;
+    const int size = 48;
     unsigned int f[size];
 
     fib(size, f);
