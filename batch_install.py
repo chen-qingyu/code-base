@@ -55,6 +55,7 @@ LIBS = (
     "graph-tools",
 
     "objprint",
+    "viztracer",
 )
 
 if __name__ == '__main__':
