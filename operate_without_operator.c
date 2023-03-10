@@ -1,58 +1,70 @@
+#include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int plus(int a, int b);  // a + b
-int minus(int a, int b); // a - b
-int mult(int a, int b);  // a * b
-int div(int a, int b);   // a / b
-
-static int negative(int a); // -a
+int negative(const int a);              // -a
+int plus(const int a, const int b);     // a + b
+int minus(const int a, const int b);    // a - b
+int multiply(const int a, const int b); // a * b
+int divide(const int a, const int b);   // a / b
 
 int main(void)
 {
-    int test_data[] = {1, 1, 0, -1, 0, 1, 3, 5, 4, 2};
-    int test_data_size = sizeof(test_data) / sizeof(test_data[0]);
+    assert(0 == negative(0));
+    assert(1 == negative(-1));
+    assert(-1 == negative(1));
 
-    printf("\ntest plus:\n");
-    for (int i = 1; i < test_data_size; ++i)
-    {
-        printf("%d + %d = %d\n", test_data[i - 1], test_data[i], plus(test_data[i - 1], test_data[i]));
-    }
-    printf("\ntest minus:\n");
-    for (int i = 1; i < test_data_size; ++i)
-    {
-        printf("%d - %d = %d\n", test_data[i - 1], test_data[i], minus(test_data[i - 1], test_data[i]));
-    }
-    printf("\ntest mult:\n");
-    for (int i = 1; i < test_data_size; ++i)
-    {
-        printf("%d * %d = %d\n", test_data[i - 1], test_data[i], mult(test_data[i - 1], test_data[i]));
-    }
-    printf("\ntest div:\n");
-    for (int i = 1; i < test_data_size; ++i)
-    {
-        printf("%d / %d = %d\n", test_data[i - 1], test_data[i], div(test_data[i - 1], test_data[i]));
-    }
+    assert(0 == plus(0, 0));
+    assert(1 == plus(0, 1));
+    assert(1 == plus(1, 0));
+    assert(2 == plus(1, 1));
+    assert(-2 == plus(-1, -1));
+    assert(0 == plus(1, -1));
+
+    assert(0 == minus(0, 0));
+    assert(-1 == minus(0, 1));
+    assert(1 == minus(1, 0));
+    assert(0 == minus(1, 1));
+    assert(0 == minus(-1, -1));
+    assert(2 == minus(1, -1));
+
+    assert(0 == multiply(0, 0));
+    assert(0 == multiply(0, 1));
+    assert(0 == multiply(1, 0));
+    assert(1 == multiply(1, 1));
+    assert(1 == multiply(-1, -1));
+    assert(-1 == multiply(1, -1));
+
+    assert(0 == divide(0, 1));
+    assert(1 == divide(1, 1));
+    assert(1 == divide(-1, -1));
+    assert(-1 == divide(1, -1));
+    assert(0 == divide(1, 2));
+    assert(2 == divide(2, 1));
+
+    printf("Test OK.\n");
 
     return 0;
 }
 
-int plus(int a, int b)
+int plus(const int a, const int b)
 {
-    while (b != 0)
+    int x = a, y = b;
+    while (y != 0)
     {
-        int carry = (a & b) << 1;
-        a = a ^ b;
-        b = carry;
+        int carry = (x & y) << 1;
+        x = x ^ y;
+        y = carry;
     }
-    return a;
+    return x;
 }
 
-int minus(int a, int b)
+int minus(const int a, const int b)
 {
     return plus(a, negative(b));
 }
 
-int mult(int a, int b)
+int multiply(const int a, const int b)
 {
     int x = a < 0 ? negative(a) : a;
     int y = b < 0 ? negative(b) : b;
@@ -69,13 +81,14 @@ int mult(int a, int b)
     return (a ^ b) >= 0 ? res : negative(res);
 }
 
-int div(int a, int b)
+int divide(const int a, const int b)
 {
     if (b == 0)
     {
-        printf("Error: divide by zero!\n");
-        return -1;
+        fprintf(stderr, "Error: divide by zero!\n");
+        exit(EXIT_FAILURE);
     }
+
     int x = a < 0 ? negative(a) : a;
     int y = b < 0 ? negative(b) : b;
     int result = 0;
@@ -90,7 +103,7 @@ int div(int a, int b)
     return (a ^ b) >= 0 ? result : -result;
 }
 
-static int negative(int a)
+int negative(const int a)
 {
     return plus(~a, 1);
 }
