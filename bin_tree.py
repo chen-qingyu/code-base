@@ -1,5 +1,2 @@
-for i in range(1, 256):
-    str = bin(i).replace("0b", "").replace("0", " ").replace("1", "*")
-    while len(str) != 32:
-        str = " " + str
-    print("{:3d}{}".format(i, str))
+for i in range(256):
+    print("{:3d}{}".format(i, bin(i)[2:].replace("0", " ").replace("1", "*").rjust(16)))

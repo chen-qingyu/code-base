@@ -10,16 +10,12 @@ def draw(sides: int):
 
 
 if __name__ == '__main__':
-    sides = eval(input("Please input the sides (2-36): "))
+    sides = 0
     while sides < 2 or sides > 36:
-        sides = eval(input("Please input the sides (2-36): "))
+        sides = int(input("Please input the sides (2-36): "))
     turtle.bgcolor("black")
     turtle.pencolor("white")
     turtle.hideturtle()
     turtle.tracer(2)
     draw(sides)
-    turtle.penup()
-    turtle.goto(0, -200)
-    turtle.pendown()
-    turtle.write('@ 青羽', font=("楷体", 16, "normal"))
     turtle.done()

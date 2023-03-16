@@ -1,3 +1,5 @@
+""" 刚开始跟着嵩天老师学Python时写的程序，留作纪念 """
+
 import turtle
 
 if __name__ == '__main__':

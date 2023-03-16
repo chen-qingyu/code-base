@@ -7,10 +7,12 @@ def curve(degree):
         turtle.forward(1)
 
 
+turtle.title("My heart")
 turtle.tracer(2)
 turtle.bgcolor("pink")
 turtle.color("red")
 turtle.pensize(2)
+turtle.setup(800, 600)
 turtle.hideturtle()
 
 turtle.begin_fill()

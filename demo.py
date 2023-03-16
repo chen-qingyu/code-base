@@ -1,6 +1,3 @@
-""" demo """
-
-
 ''' 进制格式化输出 '''
 # print("bin:{:6b},{:6b},{:6b},{:6b}".format(2, 4, 8, 16))
 # print("oct:{:6o},{:6o},{:6o},{:6o}".format(2, 4, 8, 16))
@@ -8,71 +5,29 @@
 # print("hex:{:6x},{:6x},{:6x},{:6x}".format(2, 4, 8, 16))
 
 
-''' 序列倒序 '''
-# ch = "I LOVE YOU"
-# ls = [0, 1, 2, 3]
-# st = (0, 1, 2, 3)
-# print(ch[::-1])
-# print(ls[::-1])
-# print(st[::-1])
-
-
 ''' * 与 ** 参数 '''
-# def testTuple(*args):
+# def test_tuple(*args):
 #     # *args 代表一个元组类型，是位置参数
+#     print(args)
 #     result = 0
 #     for arg in args:
 #         result += arg
-#     print(args)
 #     return result
-#
-#
-# def testDict(**kwargs):
+
+# def test_dict(**kwargs):
 #     # **kwargs 代表一个字典类型，是默认参数
+#     print(kwargs)
 #     result = ""
 #     for arg in kwargs:
 #         result += arg
-#     print(kwargs)
 #     return result
-#
-#
-# print(testTuple(1, 2, 3, 4))
-# print(testDict(m=1, n=2))
 
-
-''' this库 '''
-# import this
-
-
-''' keyword库 '''
-# import keyword
-# print(keyword.kwlist)
-# print(len(keyword.kwlist))
-
-
-''' dis库 '''
-# import dis
-# def foo(a, b):
-#     return a + b
-# dis.dis(foo)
-
-
-''' os库 '''
-# import os
-# print(os.getcwd())
-# print(os.cpu_count())
-# print(os.getlogin())
-# print(os.urandom(10))
-# print(os.system("echo Hello World!"))
-# print(os.sep)
-# print(os.altsep)
-# print(os.linesep)
-# print(os.pathsep)
+# print(test_tuple(1, 2, 3, 4))
+# print(test_dict(m=1, n=2))
 
 
 ''' Unicode码 '''
-# ch = "0123456789\x00abcd\x00编程喵\x00(●'◡'●)"
-# print(list(map(ord, list(ch))))
+# print(list(map(ord, list("0123456789\0abcd\0编程喵(●'◡'●)"))))
 
 
 ''' 皮卡丘~ '''
@@ -93,49 +48,21 @@
 # """)
 
 
-''' 列表生成式 '''
-# print([x * x for x in range(10) if x % 2])
-# d = {'Adam': 95, 'Lisa': 89, 'Bill': 60}
-# table = ["<tr><td>%s</td><td>%s</td></tr>" % (name, score) for name, score in d.items()]
-# with open("out.html", "w") as fo:
-#     fo.write('<table border="1"><tr><th>name</th><th>score</th></tr>' + "\n".join(table) + "</table>")
-
-
-''' switch '''
-# case = input("Please input a case: ")
-# switch = {'1': 'case 1', '2': 'case 2', '3': 'case 3', '4': 'case 4'}
-# print(switch.get(case, 'Invalid input'))
-
-
-''' 提取每一位数字 '''
-# print(list(map(eval, list(str(2333)))))
-
-
-''' 数字范围映射 '''
-# def num_map(x, x_min, x_max, y_min, y_max):
-#     slope = (y_max - y_min) / (x_max - x_min)
-#     return y_min + round(slope * (x - x_min))
-#
-#
-# print(num_map(5, 0, 10, 0, 100))  # => 50
-# print(num_map(128, 0, 256, 0, 1024))  # => 512
-
-
 ''' 参数类型声明 '''
 # def f(*x: int):
 #     print(x)
 # f(1, 2, 3)
-#
+
 # def g(x: tuple[int, ...]):
 #     print(x)
 # g((1, 2, 3))
-#
+
 # def h(x: list[int, any, ...]):
 #     print(x)
 # h([1, "1", 1.0])
 
 
-''' better switch '''
+''' switch '''
 # status = 400
 # match status:
 #     case 400:
@@ -149,7 +76,6 @@
 
 
 ''' 从Haskell得到的灵感 '''
-# # list comprehension
 # # In Haskell: [2^n | n <- [0 .. 20], 2^n > 1000]
 # [2**n for n in range(21) if 2**n > 1000]
 # # return [1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576]
@@ -157,37 +83,3 @@
 # # In Haskell: fac n = product [1 .. n]
 # def fac(n): return 1 if n == 0 else n * fac(n - 1)
 # # fac(500) is OK
-
-
-''' 删除空文件夹 '''
-# import os
-# def clean(path: str = "./"):
-#     ''' clean up empty directories. '''
-#     os.chdir(path)
-#     for root, dirs, files in os.walk(path):
-#         for d in dirs:
-#             # delete empty folders recursively
-#             try:
-#                 if os.listdir(os.path.join(root, d)) == []:
-#                     os.removedirs(os.path.join(root, d))
-#                     print(os.path.join(root, d) + " deleted.")
-#             except Exception as e:
-#                 print(e)
-
-
-''' platform库 '''
-# import platform
-# print(platform.machine())
-# print(platform.node())
-# print(platform.platform())
-# print(platform.processor())
-# print(platform.python_build())
-# print(platform.python_compiler())
-# print(platform.python_branch())
-# print(platform.python_implementation())
-# print(platform.python_revision())
-# print(platform.python_version())
-# print(platform.release())
-# print(platform.system())
-# print(platform.version())
-# print(platform.uname())

@@ -11,10 +11,10 @@ import turtle
 import math
 import random
 
-# 此变量决定图形大小
+# 图形大小
 L = 700
 
-# 此变量决定密度
+# 密度
 density = 100
 
 # Initial
@@ -27,12 +27,11 @@ turtle.radians()  # Set the angle measurement units to radians
 done = False
 
 
-def init() -> None:
+def init():
     turtle.penup()
     turtle.hideturtle()
 
 
-# Draw
 def draw(r: list[float], g: list[float], b: list[float]):
     global done
     done = False
@@ -88,7 +87,7 @@ if __name__ == '__main__':
     init()
     draw(list(range(256)), list(range(256)), list(range(256)))
     turtle.goto(0, -L / 2)
-    turtle.write("左键换图形颜色，右键换背景颜色，请欣赏吧~  By 青羽", align="center", font=('楷体', 16, 'normal'))
+    turtle.write("左键换图形颜色，右键换背景颜色，请欣赏吧~", align="center", font=('楷体', 16, 'normal'))
 
     turtle.onscreenclick(onclick_left)
     turtle.onscreenclick(onclick_right, btn=3)

@@ -31,10 +31,11 @@ def my_range(start: float, stop: float, step: float = 1) -> list[float, ...]:
 
 
 # RGB颜色分量映射算子 from begin to end divided to |begin-end| parts. begin, end belongs [0, 255]
-zero = lambda n: [0 for _ in range(n)]
-linear = lambda begin, end, parts: my_range(begin, end, (end - begin) / parts)
-sin_up = lambda: [int(255 * math.sin(x)) for x in my_range(0, math.pi / 2, (math.pi / 2) / 255)]
-sin_down = lambda: [int(255 * math.sin(x)) for x in my_range(math.pi / 2, math.pi, (math.pi / 2) / 255)]
+def zero(n): return [0 for _ in range(n)]
+def linear(begin, end, parts): return my_range(begin, end, (end - begin) / parts)
+def sin_up(): return [int(255 * math.sin(x)) for x in my_range(0, math.pi / 2, (math.pi / 2) / 255)]
+def sin_down(): return [int(255 * math.sin(x)) for x in my_range(math.pi / 2, math.pi, (math.pi / 2) / 255)]
+
 
 colors = {  # https://www.schemecolor.com/shades-of-sky-blue.php
     "Blueberry": (64, 138, 241),  # darker
