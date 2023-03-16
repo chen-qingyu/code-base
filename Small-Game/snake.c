@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 #define HEIGHT 20
 #define WIDTH 50
@@ -13,10 +14,8 @@
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int canvas[HEIGHT][WIDTH] = {0}; // -2 food; -1 wall; 0 space; 1 head; >1 body;
 int direction;
@@ -29,8 +28,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -58,12 +57,12 @@ void init()
     food_y = rand() % (HEIGHT - 2) + 1;
     food_x = rand() % (WIDTH - 2) + 1;
     canvas[food_y][food_x] = -2;
-    hide();
+    hide_cursor();
 }
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < HEIGHT; ++i)
     {
         for (int j = 0; j < WIDTH; ++j)
@@ -96,47 +95,36 @@ void show()
     Sleep(500 / (score + 1));
 }
 
-void updateWithInput()
+void update_with_input()
 {
     char input;
 
     if (kbhit())
     {
         input = getch();
-        if (direction != DOWN)
+        if (direction != DOWN && (input == 'w' || input == 'W'))
         {
-            if (input == 'w' || input == 'W')
-            {
-                direction = UP;
-            }
+            direction = UP;
         }
-        if (direction != UP)
+        else if (direction != UP && (input == 's' || input == 'S'))
         {
-            if (input == 's' || input == 'S')
-            {
-                direction = DOWN;
-            }
+            direction = DOWN;
         }
-        if (direction != RIGHT)
+        else if (direction != RIGHT && (input == 'a' || input == 'A'))
         {
-            if (input == 'a' || input == 'A')
-            {
-                direction = LEFT;
-            }
+            direction = LEFT;
         }
-        if (direction != LEFT)
+        else if (direction != LEFT && (input == 'd' || input == 'D'))
         {
-            if (input == 'd' || input == 'D')
-            {
-                direction = RIGHT;
-            }
+            direction = RIGHT;
         }
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
-    int max = 0, oldTail_i, oldTail_j, oldHead_i, oldHead_j, newHead_i, newHead_j;
+    int max = 0;
+    int old_tail_i, old_tail_j, old_head_i, old_head_j, new_head_i, new_head_j;
     for (int i = 0; i < HEIGHT; ++i)
     {
         for (int j = 0; j < WIDTH; ++j)
@@ -147,39 +135,39 @@ void updateWithoutInput()
                 if (max < canvas[i][j])
                 {
                     max = canvas[i][j];
-                    oldTail_i = i;
-                    oldTail_j = j;
+                    old_tail_i = i;
+                    old_tail_j = j;
                 }
                 if (canvas[i][j] == 2)
                 {
-                    oldHead_i = i;
-                    oldHead_j = j;
+                    old_head_i = i;
+                    old_head_j = j;
                 }
             }
         }
     }
     if (direction == UP)
     {
-        newHead_i = oldHead_i - 1;
-        newHead_j = oldHead_j;
+        new_head_i = old_head_i - 1;
+        new_head_j = old_head_j;
     }
-    if (direction == DOWN)
+    else if (direction == DOWN)
     {
-        newHead_i = oldHead_i + 1;
-        newHead_j = oldHead_j;
+        new_head_i = old_head_i + 1;
+        new_head_j = old_head_j;
     }
-    if (direction == LEFT)
+    else if (direction == LEFT)
     {
-        newHead_i = oldHead_i;
-        newHead_j = oldHead_j - 1;
+        new_head_i = old_head_i;
+        new_head_j = old_head_j - 1;
     }
-    if (direction == RIGHT)
+    else if (direction == RIGHT)
     {
-        newHead_i = oldHead_i;
-        newHead_j = oldHead_j + 1;
+        new_head_i = old_head_i;
+        new_head_j = old_head_j + 1;
     }
 
-    if (canvas[newHead_i][newHead_j] == -2)
+    if (canvas[new_head_i][new_head_j] == -2)
     {
         canvas[food_y][food_x] = 0;
         food_y = rand() % (HEIGHT - 2) + 1;
@@ -194,32 +182,17 @@ void updateWithoutInput()
     }
     else
     {
-        canvas[oldTail_i][oldTail_j] = 0;
+        canvas[old_tail_i][old_tail_j] = 0;
     }
 
-    if (canvas[newHead_i][newHead_j] > 0 || canvas[newHead_i][newHead_j] == -1)
+    if (canvas[new_head_i][new_head_j] > 0 || canvas[new_head_i][new_head_j] == -1)
     {
         printf(">_<\npress ENTER to exit...");
         getchar();
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
     else
     {
-        canvas[newHead_i][newHead_j] = 1;
+        canvas[new_head_i][new_head_j] = 1;
     }
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
 }

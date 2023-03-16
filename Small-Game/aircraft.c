@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int height, width;
 int plane_x, plane_y;
@@ -23,8 +22,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -41,19 +40,12 @@ void init()
     target_x = width / 2;
     target_y = 0;
     score = 0;
-    hide();
+    hide_cursor();
     for (int i = 0; i <= height; ++i)
     {
         for (int j = 0; j <= width; ++j)
         {
-            if ((i == height) || (j == width))
-            {
-                printf("+");
-            }
-            else
-            {
-                printf(" ");
-            }
+            putchar((i == height) || (j == width) ? '+' : ' ');
         }
         printf("\n");
     }
@@ -62,7 +54,7 @@ void init()
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
@@ -89,7 +81,7 @@ void show()
     printf("\n\nScore: %d", score);
 }
 
-void updateWithInput()
+void update_with_input()
 {
     char input;
 
@@ -97,33 +89,21 @@ void updateWithInput()
     {
         input = getch();
 
-        if (plane_y != 0)
+        if (plane_y != 0 && (input == 'w' || input == 'W'))
         {
-            if (input == 'w' || input == 'W')
-            {
-                plane_y--;
-            }
+            plane_y--;
         }
-        if (plane_y != height - 1)
+        if (plane_y != height - 1 && (input == 's' || input == 'S'))
         {
-            if (input == 's' || input == 'S')
-            {
-                plane_y++;
-            }
+            plane_y++;
         }
-        if (plane_x != 0)
+        if (plane_x != 0 && (input == 'a' || input == 'A'))
         {
-            if (input == 'a' || input == 'A')
-            {
-                plane_x--;
-            }
+            plane_x--;
         }
-        if (plane_x != width - 1)
+        if (plane_x != width - 1 && (input == 'd' || input == 'D'))
         {
-            if (input == 'd' || input == 'D')
-            {
-                plane_x++;
-            }
+            plane_x++;
         }
         if (input == ' ')
         {
@@ -133,7 +113,7 @@ void updateWithInput()
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
     if ((bullet_x == target_x) && (bullet_y == target_y))
     {
@@ -148,7 +128,7 @@ void updateWithoutInput()
     {
         printf("\n>_<\npress ENTER to exit...");
         getchar();
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
 
     static int speed = 0;
@@ -162,31 +142,14 @@ void updateWithoutInput()
         target_y = 0;
         target_x = rand() % width;
     }
-    else
+    else if (speed >= 20 - score)
     {
-        if (speed >= 20 - score)
-        {
-            target_y++;
-            speed = 0;
-        }
+        target_y++;
+        speed = 0;
     }
+
     if (bullet_y > -1)
     {
         bullet_y--;
     }
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
 }

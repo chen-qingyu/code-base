@@ -1,14 +1,13 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int height, width;
 int bird_x, bird_y;
@@ -21,8 +20,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -37,12 +36,12 @@ void init()
     bar_y1 = height / 4;
     bar_y2 = height / 2;
     score = 0;
-    hide();
+    hide_cursor();
 }
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
@@ -66,22 +65,15 @@ void show()
     printf("Score: %d", score);
 }
 
-void updateWithInput()
+void update_with_input()
 {
-    char input;
-
-    if (kbhit())
+    if (kbhit() && getch() == ' ')
     {
-        input = getch();
-
-        if (input == ' ')
-        {
-            bird_y -= 2;
-        }
+        bird_y -= 2;
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
     bird_y++;
 
@@ -89,7 +81,7 @@ void updateWithoutInput()
     {
         printf("\n>_<\npress ENTER to exit...");
         getchar();
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
 
     if (bar_x > 0)
@@ -114,24 +106,9 @@ void updateWithoutInput()
         {
             printf("\n>_<\npress ENTER to exit...");
             getchar();
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
     }
 
-    Sleep(150);
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+    Sleep(100);
 }

@@ -2,19 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
-#define N 5
+
+#include "my_tools.h"
+
+#define MONSTER_NUMBER 5
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int height, width;
 int man_x, man_y;
-int monster_x[N], monster_y[N];
+int monster_x[MONSTER_NUMBER], monster_y[MONSTER_NUMBER];
 clock_t start, end;
 
 int main(void)
@@ -23,8 +23,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -35,24 +35,17 @@ void init()
     height = 20;
     man_x = width / 2;
     man_y = height / 2;
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < MONSTER_NUMBER; ++i)
     {
         monster_x[i] = rand() % width;
         monster_y[i] = rand() % height;
     }
-    hide();
+    hide_cursor();
     for (int i = 0; i <= height; ++i)
     {
         for (int j = 0; j <= width; ++j)
         {
-            if ((i == height) || (j == width))
-            {
-                printf("+");
-            }
-            else
-            {
-                printf(" ");
-            }
+            putchar((i == height) || (j == width) ? '+' : ' ');
         }
         printf("\n");
     }
@@ -62,7 +55,7 @@ void init()
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
@@ -102,7 +95,7 @@ void show()
     printf("\n\nTime: %.2lf s\n", (double)(end - start) / CLOCKS_PER_SEC);
 }
 
-void updateWithInput()
+void update_with_input()
 {
     char input;
 
@@ -110,55 +103,41 @@ void updateWithInput()
     {
         input = getch();
 
-        if (man_y != 0)
+        if (man_y != 0 && (input == 'w' || input == 'W'))
         {
-            if (input == 'w' || input == 'W')
-            {
-                man_y--;
-            }
+            man_y--;
         }
-        if (man_y != height - 1)
+        if (man_y != height - 1 && (input == 's' || input == 'S'))
         {
-            if (input == 's' || input == 'S')
-            {
-                man_y++;
-            }
+            man_y++;
         }
-        if (man_x != 0)
+        if (man_x != 0 && (input == 'a' || input == 'A'))
         {
-            if (input == 'a' || input == 'A')
-            {
-                man_x--;
-            }
+            man_x--;
         }
-        if (man_x != width - 1)
+        if (man_x != width - 1 && (input == 'd' || input == 'D'))
         {
-            if (input == 'd' || input == 'D')
-            {
-                man_x++;
-            }
+            man_x++;
         }
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < MONSTER_NUMBER; ++i)
     {
         if ((man_x == monster_x[i]) && (man_y == monster_y[i]))
         {
             if ((double)(end - start) / CLOCKS_PER_SEC > 20)
             {
                 printf("\nYou're tooooooooo agile!\n");
-                getchar();
-                exit(0);
             }
             else
             {
                 printf("\n>_<\npress ENTER to exit...");
-                getchar();
-                exit(0);
             }
+            getchar();
+            exit(EXIT_SUCCESS);
         }
     }
 
@@ -169,7 +148,7 @@ void updateWithoutInput()
     }
     if (speed >= 20 - (end - start) / CLOCKS_PER_SEC)
     {
-        for (int i = 0; i < N; ++i)
+        for (int i = 0; i < MONSTER_NUMBER; ++i)
         {
             if (monster_x[i] < man_x)
             {
@@ -190,19 +169,4 @@ void updateWithoutInput()
         }
         speed = 0;
     }
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
 }

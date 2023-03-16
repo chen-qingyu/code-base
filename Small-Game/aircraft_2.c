@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 #define HEIGHT 20
 #define WIDTH 50
@@ -10,12 +11,10 @@
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
-int canvas[HEIGHT][WIDTH] = {0}; //0:space; 1:plane; 2:bullet; 3:target;
+int canvas[HEIGHT][WIDTH] = {0}; // 0:space; 1:plane; 2:bullet; 3:target;
 int plane_x, plane_y;
 int target_x[TARGET], target_y[TARGET];
 int score;
@@ -27,8 +26,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -47,19 +46,12 @@ void init()
     }
     score = 0;
     weapon = 0;
-    hide();
+    hide_cursor();
     for (int i = 0; i <= HEIGHT; ++i)
     {
         for (int j = 0; j <= WIDTH; ++j)
         {
-            if ((i == HEIGHT) || (j == WIDTH))
-            {
-                printf("+");
-            }
-            else
-            {
-                printf(" ");
-            }
+            putchar((i == HEIGHT) || (j == WIDTH) ? '+' : ' ');
         }
         printf("\n");
     }
@@ -68,7 +60,7 @@ void init()
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < HEIGHT; ++i)
     {
         for (int j = 0; j < WIDTH; ++j)
@@ -95,7 +87,7 @@ void show()
     printf("\n\nScore: %d ", score);
 }
 
-void updateWithInput()
+void update_with_input()
 {
     char input;
 
@@ -103,41 +95,29 @@ void updateWithInput()
     {
         input = getch();
 
-        if (plane_y != 0)
+        if (plane_y != 0 && (input == 'w' || input == 'W'))
         {
-            if (input == 'w' || input == 'W')
-            {
-                canvas[plane_y][plane_x] = 0;
-                plane_y--;
-                canvas[plane_y][plane_x] = 1;
-            }
+            canvas[plane_y][plane_x] = 0;
+            plane_y--;
+            canvas[plane_y][plane_x] = 1;
         }
-        if (plane_y != HEIGHT - 1)
+        if (plane_y != HEIGHT - 1 && (input == 's' || input == 'S'))
         {
-            if (input == 's' || input == 'S')
-            {
-                canvas[plane_y][plane_x] = 0;
-                plane_y++;
-                canvas[plane_y][plane_x] = 1;
-            }
+            canvas[plane_y][plane_x] = 0;
+            plane_y++;
+            canvas[plane_y][plane_x] = 1;
         }
-        if (plane_x != 0)
+        if (plane_x != 0 && (input == 'a' || input == 'A'))
         {
-            if (input == 'a' || input == 'A')
-            {
-                canvas[plane_y][plane_x] = 0;
-                plane_x--;
-                canvas[plane_y][plane_x] = 1;
-            }
+            canvas[plane_y][plane_x] = 0;
+            plane_x--;
+            canvas[plane_y][plane_x] = 1;
         }
-        if (plane_x != WIDTH - 1)
+        if (plane_x != WIDTH - 1 && (input == 'd' || input == 'D'))
         {
-            if (input == 'd' || input == 'D')
-            {
-                canvas[plane_y][plane_x] = 0;
-                plane_x++;
-                canvas[plane_y][plane_x] = 1;
-            }
+            canvas[plane_y][plane_x] = 0;
+            plane_x++;
+            canvas[plane_y][plane_x] = 1;
         }
         if (input == ' ')
         {
@@ -158,16 +138,15 @@ void updateWithInput()
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
-    int i, j, k;
-    for (i = 0; i < HEIGHT; ++i)
+    for (int i = 0; i < HEIGHT; ++i)
     {
-        for (j = 0; j < WIDTH; ++j)
+        for (int j = 0; j < WIDTH; ++j)
         {
             if (canvas[i][j] == 2)
             {
-                for (k = 0; k < TARGET; ++k)
+                for (int k = 0; k < TARGET; ++k)
                 {
                     if (i == target_y[k] && j == target_x[k])
                     {
@@ -191,7 +170,7 @@ void updateWithoutInput()
         }
     }
 
-    for (k = 0; k < TARGET; ++k)
+    for (int k = 0; k < TARGET; ++k)
     {
         if (target_y[k] > HEIGHT)
         {
@@ -210,7 +189,7 @@ void updateWithoutInput()
     }
     if (speed >= 20 - score / 2)
     {
-        for (k = 0; k < TARGET; ++k)
+        for (int k = 0; k < TARGET; ++k)
         {
             canvas[target_y[k]][target_x[k]] = 0;
             target_y[k]++;
@@ -219,28 +198,13 @@ void updateWithoutInput()
         }
     }
 
-    for (i = 0; i < TARGET; ++i)
+    for (int i = 0; i < TARGET; ++i)
     {
         if ((plane_x == target_x[i]) && (plane_y == target_y[i]))
         {
             printf("\n>_<\npress ENTER to exit...");
             getchar();
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
     }
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
 }

@@ -1,22 +1,17 @@
-// around 3 lives: live
-// around 2 lives: hold
-// others: die
-
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 #define HEIGHT 50
 #define WIDTH 100
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int cells[HEIGHT][WIDTH];
 
@@ -26,8 +21,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -39,64 +34,56 @@ void init()
     {
         for (int j = 0; j < WIDTH; ++j)
         {
-            cells[i][j] = rand() % 2; // or cells[i][j] = 1;
+            cells[i][j] = rand() % 2;
         }
         printf("\n");
     }
     printf("Just look.\n");
     printf("Press Q to quit.\n");
-    hide();
+    hide_cursor();
 }
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < HEIGHT; ++i)
     {
         for (int j = 0; j < WIDTH; ++j)
         {
-            if (cells[i][j] == 1)
-            {
-                printf("*");
-            }
-            else
-            {
-                printf(" ");
-            }
+            putchar(cells[i][j] == 1 ? '*' : ' ');
         }
         printf("\n");
     }
 }
 
-void updateWithInput()
+void update_with_input()
 {
     if (kbhit())
     {
         char c = getch();
         if (c == 'Q' || c == 'q')
         {
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
     }
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
     int tmp[HEIGHT][WIDTH];
-    int i, j, adjacent = 0;
-    for (i = 0; i < HEIGHT; ++i)
+    for (int i = 0; i < HEIGHT; ++i)
     {
-        for (j = 0; j < WIDTH; ++j)
+        for (int j = 0; j < WIDTH; ++j)
         {
             tmp[i][j] = cells[i][j];
         }
     }
 
-    for (i = 1; i < HEIGHT - 1; ++i)
+    for (int i = 1; i < HEIGHT - 1; ++i)
     {
-        for (j = 1; j < WIDTH - 1; ++j)
+        for (int j = 1; j < WIDTH - 1; ++j)
         {
-            adjacent = cells[i - 1][j - 1] + cells[i - 1][j] + cells[i - 1][j + 1] + cells[i][j - 1] + cells[i][j + 1] + cells[i + 1][j - 1] + cells[i + 1][j] + cells[i + 1][j + 1];
+            int adjacent = cells[i - 1][j - 1] + cells[i - 1][j] + cells[i - 1][j + 1] + cells[i][j - 1] + cells[i][j + 1] + cells[i + 1][j - 1] + cells[i + 1][j] + cells[i + 1][j + 1];
             if (adjacent == 3)
             {
                 tmp[i][j] = 1;
@@ -112,28 +99,13 @@ void updateWithoutInput()
         }
     }
 
-    for (i = 0; i < HEIGHT; ++i)
+    for (int i = 0; i < HEIGHT; ++i)
     {
-        for (j = 0; j < WIDTH; ++j)
+        for (int j = 0; j < WIDTH; ++j)
         {
             cells[i][j] = tmp[i][j];
         }
     }
 
-    Sleep(200);
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+    Sleep(100);
 }

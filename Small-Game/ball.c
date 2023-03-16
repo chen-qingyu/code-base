@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 void init();
 void show();
-void updateWithInput();
-void updateWithoutInput();
-void gotoxy(int x, int y);
-void hide();
+void update_with_input();
+void update_without_input();
 
 int height, width;
 int ball_x, ball_y;
@@ -24,8 +23,8 @@ int main(void)
     while (1)
     {
         show();
-        updateWithInput();
-        updateWithoutInput();
+        update_with_input();
+        update_without_input();
     }
     return 0;
 }
@@ -47,19 +46,12 @@ void init()
     score = 0;
     money_x = width / 2;
     money = 0;
-    hide();
+    hide_cursor();
     for (int i = 0; i <= height; ++i)
     {
         for (int j = 0; j <= width; ++j)
         {
-            if ((i == height) || (j == width))
-            {
-                printf("+");
-            }
-            else
-            {
-                printf(" ");
-            }
+            putchar((i == height) || (j == width) ? '+' : ' ');
         }
         printf("\n");
     }
@@ -68,7 +60,7 @@ void init()
 
 void show()
 {
-    gotoxy(0, 0);
+    move_cursor(0, 0);
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
@@ -95,7 +87,7 @@ void show()
     printf("\n\nScore: %d\nMoney: $ %d", score, money);
 }
 
-void updateWithInput()
+void update_with_input()
 {
     char input;
 
@@ -103,25 +95,19 @@ void updateWithInput()
     {
         input = getch();
 
-        if (position_x != 0)
+        if (position_x != 0 && (input == 'a' || input == 'A'))
         {
-            if (input == 'a' || input == 'A')
-            {
-                position_x--;
-            }
+            position_x--;
         }
-        if (position_x != width - 1)
+        if (position_x != width - 1 && (input == 'd' || input == 'D'))
         {
-            if (input == 'd' || input == 'D')
-            {
-                position_x++;
-            }
+            position_x++;
         }
     }
     Sleep(80);
 }
 
-void updateWithoutInput()
+void update_without_input()
 {
     left = position_x - radius;
     right = position_x + radius;
@@ -137,7 +123,7 @@ void updateWithoutInput()
         {
             printf("\n>_<\npress ENTER to exit...");
             getchar();
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
     }
 
@@ -159,19 +145,4 @@ void updateWithoutInput()
     {
         v_x = -v_x;
     }
-}
-
-void gotoxy(int x, int y)
-{
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(handle, pos);
-}
-
-void hide()
-{
-    CONSOLE_CURSOR_INFO cursor = {1, 0};
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
 }

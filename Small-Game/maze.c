@@ -1,7 +1,8 @@
 #include <conio.h>
 #include <stdio.h>
 #include <time.h>
-#include <windows.h>
+
+#include "my_tools.h"
 
 // 地图元素
 #define WALL 1
@@ -25,12 +26,18 @@
 int map[MAX_SIZE][MAX_SIZE];
 
 // 步骤
-int step_arr[MAX_STEP] = {0};
+int steps[MAX_STEP] = {0};
 
 // 重来标记
-int reset_flag = 0;
+int restart;
 
-/* Function prototypes for functions */
+// 迷宫的高度，必须为奇数
+int height = 25;
+
+// 迷宫的宽度，必须为奇数
+int width = 25;
+
+// 函数原型
 void menu(void);
 void init_map(void);
 void create_map(int x, int y);
@@ -39,15 +46,6 @@ void draw_point(int x, int y);
 void game();
 void print_step();
 
-/* Function prototypes for helper functions */
-static void move_cursor(int x, int y);
-static void hide_cursor();
-
-// 迷宫的高度，必须为奇数
-int height = 25;
-// 迷宫的宽度，必须为奇数
-int width = 25;
-
 int main()
 {
     do
@@ -55,7 +53,7 @@ int main()
         menu();
         init_map();
         game();
-    } while (reset_flag);
+    } while (restart);
     print_step();
 
     return 0;
@@ -64,6 +62,7 @@ int main()
 void menu(void)
 {
     system("cls");
+    system("title Maze Game");
 
     printf("Welcome to the maze game!\n");
     printf("\n");
@@ -115,27 +114,22 @@ void menu(void)
 
     if (choice == 0)
     {
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
-
-    system("cls");
 }
 
 void init_map(void)
 {
-    // 标题
-    system("title Maze Game");
-    // 初始化随机种子
+    system("cls");
     srand(time(NULL));
-    // 隐藏光标
     hide_cursor();
 
     for (int i = 0; i < MAX_STEP; i++)
     {
-        step_arr[i] = 0;
+        steps[i] = 0;
     }
 
-    reset_flag = 0;
+    restart = 0;
 
     // 初始化迷宫
     for (int i = 0; i <= height + 1; i++)
@@ -194,7 +188,7 @@ void init_map(void)
 void create_map(int x, int y)
 {
     // 四个方向
-    int c[4][2] = {0, 1, 1, 0, 0, -1, -1, 0};
+    int c[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     // 将方向打乱
     for (int i = 0; i < 4; i++)
@@ -225,7 +219,7 @@ void create_map(int x, int y)
 int get_key()
 {
     char c;
-    while (c = getch())
+    while ((c = getch()))
     {
         if (c == 'R' || c == 'r' ||
             c == 'Q' || c == 'q' ||
@@ -289,8 +283,8 @@ void game()
     int x = 2, y = 1; // 玩家当前位置，刚开始在入口处
     int c;            // 接收按键
     int step = 0;
-    step_arr[step] = x;
-    step_arr[step + 1] = y;
+    steps[step] = x;
+    steps[step + 1] = y;
     step += 2;
     while (1)
     {
@@ -313,13 +307,13 @@ void game()
         }
         if (c == 'R' || c == 'r')
         {
-            reset_flag = 1;
+            restart = 1;
             break;
         }
         if (c == 'Q' || c == 'q')
         {
             printf("Boodbye.\n");
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
         switch (c)
         {
@@ -328,8 +322,8 @@ void game()
                 {
                     draw_point(x, y);
                     x--;
-                    step_arr[step] = x;
-                    step_arr[step + 1] = y;
+                    steps[step] = x;
+                    steps[step + 1] = y;
                     step += 2;
                 }
                 break;
@@ -338,8 +332,8 @@ void game()
                 {
                     draw_point(x, y);
                     x++;
-                    step_arr[step] = x;
-                    step_arr[step + 1] = y;
+                    steps[step] = x;
+                    steps[step + 1] = y;
                     step += 2;
                 }
                 break;
@@ -348,8 +342,8 @@ void game()
                 {
                     draw_point(x, y);
                     y--;
-                    step_arr[step] = x;
-                    step_arr[step + 1] = y;
+                    steps[step] = x;
+                    steps[step + 1] = y;
                     step += 2;
                 }
                 break;
@@ -358,8 +352,8 @@ void game()
                 {
                     draw_point(x, y);
                     y++;
-                    step_arr[step] = x;
-                    step_arr[step + 1] = y;
+                    steps[step] = x;
+                    steps[step + 1] = y;
                     step += 2;
                 }
                 break;
@@ -373,30 +367,9 @@ void print_step()
 {
     move_cursor(0, height + 2);
     printf("step: (x, y)\n");
-    for (int i = 0; step_arr[i] != 0 && step_arr[i + 1] != 0; i += 2)
+    for (int i = 0; steps[i] != 0 && steps[i + 1] != 0; i += 2)
     {
-        printf("%4d: (%d, %d)\n", (i / 2) + 1, step_arr[i + 1] - 1, step_arr[i] - 1);
+        printf("%4d: (%d, %d)\n", (i / 2) + 1, steps[i + 1] - 1, steps[i] - 1);
     }
     getch();
-}
-
-/* Helper Functions */
-
-// 移动光标
-static void move_cursor(int x, int y)
-{
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
-// 隐藏光标
-static void hide_cursor()
-{
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_CURSOR_INFO cci;
-    GetConsoleCursorInfo(hOut, &cci);
-    cci.bVisible = 0; //赋1为显示，赋0为隐藏
-    SetConsoleCursorInfo(hOut, &cci);
 }
