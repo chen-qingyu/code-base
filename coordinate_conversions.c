@@ -42,22 +42,20 @@ int main(void)
     if (choice == 1)
     {
         struct rect input;
-        struct polar result;
         printf("(x, y) = ");
         scanf("%lf %lf", &input.x, &input.y);
 
-        result = rect_to_polar(input);
+        struct polar result = rect_to_polar(input);
 
         printf("(radius, angle(degree)) = (%.2lf, %.2lf)\n", result.radius, result.angle);
     }
     else if (choice == 2)
     {
         struct polar input;
-        struct rect result;
         printf("(radius, angle(degree)) = ");
         scanf("%lf %lf", &input.radius, &input.angle);
 
-        result = polar_to_rect(input);
+        struct rect result = polar_to_rect(input);
 
         printf("(x, y) = (%.2lf, %.2lf)\n", result.x, result.y);
     }
