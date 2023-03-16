@@ -2,8 +2,6 @@
 #include <stdio.h>
 
 #define PI 3.1415926
-#define RECT_TO_POLAR 1
-#define POLAR_TO_RECT 2
 
 struct rect
 {
@@ -41,7 +39,7 @@ int main(void)
     printf("Your choice: ");
     scanf("%d", &choice);
 
-    if (choice == RECT_TO_POLAR)
+    if (choice == 1)
     {
         struct rect input;
         struct polar result;
@@ -52,7 +50,7 @@ int main(void)
 
         printf("(radius, angle(degree)) = (%.2lf, %.2lf)\n", result.radius, result.angle);
     }
-    else if (choice == POLAR_TO_RECT)
+    else if (choice == 2)
     {
         struct polar input;
         struct rect result;
