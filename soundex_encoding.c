@@ -4,27 +4,28 @@
 
 #define MAX_LEN 1024
 
-void append(char *buffer, char c)
+void append(char* buffer, char c)
 {
-    for (int i = 0; i < MAX_LEN; i++)
+    for (int i = 0; i < MAX_LEN - 1; i++)
     {
         if (buffer[i] == '\0')
         {
             buffer[i] = c;
+            buffer[i + 1] = '\0';
             return;
         }
     }
 }
 
-char *soundex_encoding(char *s)
+char* soundex_encoding(const char* s)
 {
-    char MAP[] = {
-        //A   B    C    D    E    F    G    H    I    J    K    L    M
+    const char MAP[] = {
+        // A    B    C    D    E    F    G    H    I    J    K    L    M
         '0', '1', '2', '3', '0', '1', '2', '0', '0', '2', '2', '4', '5',
-        //N   O    P    Q    R    S    T    U    V    W    X    Y    Z
+        // N    O    P    Q    R    S    T    U    V    W    X    Y    Z
         '5', '0', '1', '2', '6', '2', '3', '0', '1', '0', '2', '0', '2'};
 
-    char *str = malloc(sizeof(MAX_LEN * (sizeof(char))));
+    char* str = malloc(sizeof(MAX_LEN * (sizeof(char))));
     strcpy(str, s);
     str = strupr(str);
     char buffer[MAX_LEN];
@@ -32,7 +33,7 @@ char *soundex_encoding(char *s)
     {
         buffer[i] = '\0';
     }
-    char prev = '?', prevOutput = '?'; // 符号字符
+    char prev = '?', prev_output = '?'; // 符号字符
 
     // 沿用首字符
     append(buffer, str[0]);
@@ -45,10 +46,10 @@ char *soundex_encoding(char *s)
             prev = c;
             char m = MAP[c - 'A'];
             // 去除重复的字母
-            if (m != '0' && m != prevOutput)
+            if (m != '0' && m != prev_output)
             {
                 append(buffer, m);
-                prevOutput = m;
+                prev_output = m;
             }
         }
     }
@@ -67,14 +68,14 @@ char *soundex_encoding(char *s)
         append(buffer, '0');
     }
 
-    char *result = malloc(sizeof(MAX_LEN * (sizeof(char))));
+    char* result = malloc(sizeof(MAX_LEN * (sizeof(char))));
     strcpy(result, buffer);
     return result;
 }
 
 int main(void)
 {
-    char s[][20] = {"Marc", "Tttaylor", "Taaaaaylor", "ChenQingyu", "ChanQingyu"};
+    char* s[] = {"Marc", "Earc", "Taylor", "Tttaylor", "Taaaaaylor", "ChenQingyu", "ChanQingyu!!"};
 
     for (int i = 0; i < sizeof(s) / sizeof(s[0]); i++)
     {

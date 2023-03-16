@@ -1,34 +1,36 @@
-/*
-比较不同的计算位1的个数的算法的时间复杂度
-*/
-
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 
 #define INT_BIT (CHAR_BIT * sizeof(int))
 
-typedef int (*pfun_t)(int x);
+int count_bit1_1(int x);
+int count_bit1_2(int x);
+int count_bit1_3(int x);
+int count_bit1_4(int x);
 
-int method_1(int x);
-int method_2(int x);
-int method_3(int x);
-int method_4(int x);
-void time_test(pfun_t method);
+typedef int (*function_t)(int x);
+void time_test(function_t function, const char* message, int x);
 
 int main(void)
 {
-    time_test(method_1); // 循环右移
-    time_test(method_2); // 优化的循环右移
-    time_test(method_3); // x &= x - 1消去最右边的1
-    time_test(method_4); // 查表
+    int xs[] = {-1, 0, 9, 2147483647};
+    for (int i = 0; i < sizeof(xs) / sizeof(int); i++)
+    {
+        printf("Count bit 1 in %d:\n", xs[i]);
+        time_test(count_bit1_1, "Rotate right", xs[i]);
+        time_test(count_bit1_2, "Optimized rotate right", xs[i]);
+        time_test(count_bit1_3, "Eliminate the rightmost 1", xs[i]);
+        time_test(count_bit1_4, "Look-up table", xs[i]);
+        printf("\n");
+    }
+
     return 0;
 }
 
-// 平均循环（INT_BIT）次
-int method_1(int x)
+// O(INT_BIT)
+int count_bit1_1(int x)
 {
     int cnt = 0;
 
@@ -40,8 +42,8 @@ int method_1(int x)
     return cnt;
 }
 
-// 平均循环（INT_BIT - N）次，N=前导零个数分布均值
-int method_2(int x)
+// O(INT_BIT - N), N=前导零个数分布均值
+int count_bit1_2(int x)
 {
     int cnt = 0;
 
@@ -61,8 +63,8 @@ int method_2(int x)
     return cnt;
 }
 
-// 平均循环（INT_BIT/2 - N）次
-int method_3(int x)
+// O(INT_BIT/2 - N), N=前导零个数分布均值
+int count_bit1_3(int x)
 {
     int cnt = 0;
 
@@ -75,8 +77,8 @@ int method_3(int x)
     return cnt;
 }
 
-// 平均循环（INT_BIT/M - N）次，M=log2(sizeof(table))，N=前导零个数分布均值
-int method_4(int x)
+// O(INT_BIT/M - N), M=log2(sizeof(table))，N=前导零个数分布均值
+int count_bit1_4(int x)
 {
     // 0-15 位1的个数(M=4)
     static int table[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4};
@@ -99,22 +101,16 @@ int method_4(int x)
     return cnt;
 }
 
-void time_test(pfun_t method)
+void time_test(function_t function, const char* message, int x)
 {
-    clock_t start, end;
-    static int i = 0;
-    i++;
+    int result;
 
-    int loop = 1e6; // 多次运行取平均值
-    int result;     // 计算结果
-
-    start = clock();
-    for (int i = 0; i < loop; i++)
+    clock_t start = clock();
+    for (int i = 0; i < 1000000; i++)
     {
-        result = method(9); // 计算9中位1的个数 => 2
+        result = function(x);
     }
-    end = clock();
+    clock_t end = clock();
 
-    printf("method %d result: %d\n", i, result);
-    printf("method %d duration: %.2e s\n\n", i, (double)(end - start) / CLOCKS_PER_SEC / loop);
+    printf("result: %d, duration: %6.2lfms (%s)\n", result, (double)(end - start) / CLOCKS_PER_SEC * 1000, message);
 }

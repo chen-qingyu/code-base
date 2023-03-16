@@ -1,4 +1,4 @@
-﻿#include <float.h>
+#include <float.h>
 #include <limits.h>
 #include <stdio.h>
 
