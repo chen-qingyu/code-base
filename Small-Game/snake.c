@@ -7,6 +7,7 @@
 
 #define HEIGHT 20
 #define WIDTH 50
+
 #define UP 1
 #define DOWN 2
 #define LEFT 3
@@ -17,7 +18,7 @@ void show();
 void update_with_input();
 void update_without_input();
 
-int canvas[HEIGHT][WIDTH] = {0}; // -2 food; -1 wall; 0 space; 1 head; >1 body;
+int canvas[HEIGHT][WIDTH] = {0}; // -2: food, -1: wall, 0: space, 1: head, >1: body
 int direction;
 int food_x, food_y;
 int score;

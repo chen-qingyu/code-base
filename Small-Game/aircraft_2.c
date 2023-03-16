@@ -14,7 +14,7 @@ void show();
 void update_with_input();
 void update_without_input();
 
-int canvas[HEIGHT][WIDTH] = {0}; // 0:space; 1:plane; 2:bullet; 3:target;
+int canvas[HEIGHT][WIDTH] = {0}; // 0: space, 1: plane, 2: bullet, 3: target
 int plane_x, plane_y;
 int target_x[TARGET], target_y[TARGET];
 int score;
