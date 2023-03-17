@@ -52,7 +52,7 @@ def ascii_art(file, sample_rate=0.4):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert any image to ascii art.")
-    parser.add_argument("file", type=str, help="input image file",)
+    parser.add_argument("file", type=str, help="input image file")
     args = parser.parse_args()
 
     ascii_art(args.file)
