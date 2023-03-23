@@ -1,87 +1,90 @@
 def bit_inverse(num: str) -> str:
     """
-    Binary number bit-inversion.
-      bit_inverse("0000") -> "1111"
-      bit_inverse("1010") -> "0101"
+    Binary integer bit-inversion.
 
-    :param num: a binary number
-    :return: binary number after bit-inversion
+    :param num: a binary integer
+    :return: binary integer after bit-inversion
+
+    >>> bit_inverse("0000")
+    '1111'
+    >>> bit_inverse("1010")
+    '0101'
     """
     return ''.join(map(lambda c: "0" if c == "1" else "1", num))
 
 
-assert bit_inverse("0000") == "1111"
-assert bit_inverse("1010") == "0101"
-
-
 def bit_plus_one(num: str) -> str:
     """
-    Binary number plus one.
-      bit_plus_one("0000") -> "0001"
-      bit_plus_one("1111") -> "0000"
+    Binary integer plus one.
 
-    :param num: a binary number
-    :return: binary number after adding one
+    :param num: a binary integer
+    :return: binary integer after adding one
+
+    >>> bit_plus_one("0000")
+    '0001'
+    >>> bit_plus_one("1111")
+    '0000'
     """
     bits = len(num)
-    num = bin(eval("0b" + num) + 0b1).removeprefix("0b")
-    while len(num) <= bits:  # 补零至原长度
-        num = "0" + num
+    num = bin(int(num, 2) + 1)[2:].rjust(bits, '0')
     return num[-bits:]  # 丢弃溢出位
-
-
-assert bit_plus_one("0000") == "0001"
-assert bit_plus_one("1111") == "0000"
 
 
 def binary_form(num: str, base=10) -> str:
     """
-    To convert a number into its binary form.
-      binary_form("3") -> "+11"
-      binary_form("-3") -> "-11"
-      binary_form("11", 2) -> "+11"
-      binary_form("-11", 2) -> "-11"
+    Convert an integer into its binary form.
 
-    :param num: a number
+    :param num: an integer
     :param base: base system, 2 or 10
     :return: binary form of num
-    """
-    sign_bit = '+' if num[0] != '-' else '-'
-    num = num.lstrip("+-")
 
-    if base == 10:
-        num = bin(eval(num)).removeprefix("0b")
-    elif base == 2:
-        pass
-    else:
+    >>> binary_form("3")
+    '+11'
+    >>> binary_form("-3")
+    '-11'
+    >>> binary_form("11", 2)
+    '+11'
+    >>> binary_form("-11", 2)
+    '-11'
+    """
+    if base not in (2, 10):
         raise RuntimeError("The base can only be 2 or 10")
+
+    sign_bit = '+' if num[0] != '-' else '-'
+    num = bin(int(num.lstrip("+-"), base))[2:]
 
     return sign_bit + num
 
 
-assert binary_form("3") == "+11"
-assert binary_form("-3") == "-11"
-assert binary_form("11", 2) == "+11"
-assert binary_form("-11", 2) == "-11"
-
-
 def true_form(num: str, word_length=8, base=10) -> str:
     """
-    To convert a number into its true form.
-      true_form("0", 4) -> "0000"
-      true_form("7", 4) -> "0111"
-      true_form("8", 4) -> ValueError: Machine word length is not enough
-      true_form("8") -> "00001000"
-      true_form("-0", 4) -> "1000"
-      true_form("-7", 4) -> "1111"
-      true_form("101", 4, 2) -> "0101"
-      true_form("00000101", 4, 2) -> "0101"
-      true_form("-0101", 4, 2) -> "1101"
+    Convert an integer into its true form.
 
-    :param num: a number
+    :param num: an integer
     :param word_length: machine word length
     :param base: base system, 2 or 10
     :return: true form of num
+
+    >>> true_form("0", 4)
+    '0000'
+    >>> true_form("7", 4)
+    '0111'
+    >>> true_form("8", 4)
+    Traceback (most recent call last):
+        ...
+    ValueError: Machine word length is not enough
+    >>> true_form("8")
+    '00001000'
+    >>> true_form("-0", 4)
+    '1000'
+    >>> true_form("-7", 4)
+    '1111'
+    >>> true_form("101", 4, 2)
+    '0101'
+    >>> true_form("00000101", 4, 2)
+    '0101'
+    >>> true_form("-0101", 4, 2)
+    '1101'
     """
     num = binary_form(num, base)
 
@@ -92,77 +95,68 @@ def true_form(num: str, word_length=8, base=10) -> str:
         raise ValueError("Machine word length is not enough")
 
     # 原码等于二进制符号位 +: 0, -: 1，数值位不变，一共字长位
-    while len(num) != word_length - 1:
-        num = "0" + num
-
-    return sign_bit + num
-
-
-assert true_form("0", 4) == "0000"
-assert true_form("7", 4) == "0111"
-try:
-    true_form("8", 4)
-except ValueError as e:
-    assert e.args[0] == "Machine word length is not enough"
-assert true_form("8") == "00001000"
-assert true_form("-0", 4) == "1000"
-assert true_form("-7", 4) == "1111"
-assert true_form("101", 4, 2) == "0101"
-assert true_form("00000101", 4, 2) == "0101"
-assert true_form("-0101", 4, 2) == "1101"
+    return sign_bit + num.rjust(word_length - 1, '0')
 
 
 def inverse_form(num: str, word_length=8, base=10) -> str:
+    """
+    Convert an integer into its inverse form.
+
+    >>> inverse_form("0")
+    '00000000'
+    >>> inverse_form("-0")
+    '11111111'
+    >>> inverse_form("1")
+    '00000001'
+    >>> inverse_form("-1")
+    '11111110'
+    """
     num = true_form(num, word_length, base)
 
-    if num[0] == "0":  # 正数反码等于原码
-        inverse = num
-    else:  # 负数反码等于原码符号位不变，数值位取反
-        inverse = num[0] + bit_inverse(num[1:])
-
-    return inverse
-
-
-assert inverse_form("0") == "00000000"
-assert inverse_form("-0") == "11111111"
-assert inverse_form("1") == "00000001"
-assert inverse_form("-1") == "11111110"
+    # 正数反码等于原码；负数反码等于原码符号位不变，数值位取反
+    return num if num[0] == "0" else num[0] + bit_inverse(num[1:])
 
 
 def complement_form(num: str, word_length=8, base=10) -> str:
+    """
+    Convert an integer into its complement form.
+
+    >>> complement_form("0")
+    '00000000'
+    >>> complement_form("-0")
+    '00000000'
+    >>> complement_form("-1")
+    '11111111'
+    >>> complement_form("+5")
+    '00000101'
+    """
     num = inverse_form(num, word_length, base)
 
-    if num[0] == "0":  # 正数补码等于反码
-        complement = num
-    else:  # 负数补码等于反码加一
-        complement = bit_plus_one(num)
-
-    return complement
-
-
-assert complement_form("0") == "00000000"
-assert complement_form("-0") == "00000000"
-assert complement_form("-1") == "11111111"
-assert complement_form("+5") == "00000101"
+    # 正数补码等于反码；负数补码等于反码加一
+    return num if num[0] == "0" else bit_plus_one(num)
 
 
 def shift_form(num: str, word_length=8, base=10) -> str:
+    """
+    Convert an integer into its shift form.
+
+    >>> shift_form("0")
+    '10000000'
+    >>> shift_form("-0")
+    '10000000'
+    >>> shift_form("-1")
+    '01111111'
+    >>> shift_form("+5")
+    '10000101'
+    """
     num = complement_form(num, word_length, base)
 
     # 移码等于补码符号位取反
-    shift = ("0" if num[0] == "1" else "1") + num[1:]
-
-    return shift
-
-
-assert shift_form("0") == "10000000"
-assert shift_form("-0") == "10000000"
-assert shift_form("-1") == "01111111"
-assert shift_form("+5") == "10000101"
+    return bit_inverse(num[0]) + num[1:]
 
 
 def machine_representation(num: str, word_length=8, base=10) -> dict:
-    d = {
+    return {
         "真值": num,
         "二进制": binary_form(num, base),
         "原码": true_form(num, word_length, base),
@@ -171,29 +165,38 @@ def machine_representation(num: str, word_length=8, base=10) -> dict:
         "移码": shift_form(num, word_length, base)
     }
 
-    return d
-
 
 # for number in ["-5", "-2", "-1", "-0", "0", "1", "2", "5"]:
 #     for desc, code in machine_representation(number).items():
 #         print(desc + ": " + code[:4] + " " + code[4:])
 #     print()
 
+
 def bit_add(x: str, y: str) -> str:
+    """
+    Bit addition.
+
+    >>> bit_add("0", "0")
+    '0'
+    >>> bit_add("1", "1")
+    '0'
+    >>> bit_add("01", "10")
+    '11'
+    >>> bit_add("11", "11")
+    '10'
+    >>> bit_add("0001", "1110")
+    '1111'
+    """
     if len(x) != len(y):
         raise RuntimeError("x's and y's bits are required to be equal")
 
     word_length = len(x)
-    num = bin(eval("0b" + x) + eval("0b" + y)).removeprefix("0b")[-word_length:]
-    while len(num) != word_length:
-        num = "0" + num
-    return num
+    return bin(int(x, 2) + int(y, 2))[2:].rjust(word_length, '0')[-word_length:]
 
 
 def booth(x: str, y: str, word_length=5, base=2, print_step=False) -> str:
     """
     Booth algorithm.
-      booth("-0.1101", "0.1011") -> "-0.10001111"
 
     :param x: a number
     :param y: a number
@@ -201,6 +204,19 @@ def booth(x: str, y: str, word_length=5, base=2, print_step=False) -> str:
     :param base: base system, 2 or 10
     :param print_step: whether print steps
     :return: binary representation of the result of multiplication
+
+    >>> booth("-0.1101", "0.1011") 
+    '-0.10001111'
+    >>> booth("2", "4", base=10) 
+    '+00001000'
+    >>> booth("-2", "4", base=10)
+    '-00001000'
+    >>> booth("2", "-4", base=10) 
+    '-00001000'
+    >>> booth("-2", "-4", base=10)
+    '+00001000'
+    >>> booth("1", "1", base=10) 
+    '+00000001'
     """
     is_decimal = False
     if '.' in x and '.' in y:
@@ -268,9 +284,6 @@ def booth(x: str, y: str, word_length=5, base=2, print_step=False) -> str:
     return ('+' if is_positive_or_0 else '-') + num
 
 
-assert booth("-0.1101", "0.1011", print_step=False) == "-0.10001111"
-assert booth("2", "4", base=10, print_step=False) == "+00001000"
-assert booth("-2", "4", base=10, print_step=False) == "-00001000"
-assert booth("2", "-4", base=10, print_step=False) == "-00001000"
-assert booth("-2", "-4", base=10, print_step=False) == "+00001000"
-assert booth("1", "1", base=10, print_step=False) == "+00000001"
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
