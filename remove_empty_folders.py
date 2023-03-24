@@ -2,7 +2,7 @@ import os
 
 
 def clean(path: str = "./"):
-    ''' clean up empty directories. '''
+    """ clean up empty directories. """
     os.chdir(path)
     for root, dirs, files in os.walk(path):
         for d in dirs:

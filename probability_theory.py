@@ -1,5 +1,5 @@
 def P(n, N):
-    # n个盒子，N个球，n>N，每个盒子最多有一个球的概率，古典概型分球入杯问题
+    # n个盒子，N个球，n>N，求每个盒子最多有一个球的概率。古典概型分球入杯问题
     product = 1
     for i in range(n, n - N, -1):
         product *= i

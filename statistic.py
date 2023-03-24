@@ -1,31 +1,27 @@
-def getNumbers():
-    nums = input("Please input numbers(split by space): ").split(' ')
-    return list(map(eval, nums))
-
-
-def getAverage(nums):
+def get_average(nums):
     return sum(nums) / len(nums)
 
 
-def getVariance(nums, average):
+def get_variance(nums):
+    average = get_average(nums)
     dev = 0.0
     for num in nums:
         dev += (num - average) ** 2
     return dev / (len(nums) - 1)
 
 
-def getMedian(nums):
+def get_median(nums):
     nums = sorted(nums)
     size = len(nums)
-    if size % 2:
+    if size % 2 == 1:
         med = nums[size // 2]
     else:
         med = (nums[size // 2 - 1] + nums[size // 2]) / 2
     return med
 
 
-numbers = getNumbers()
-average = getAverage(numbers)
-variance = getVariance(numbers, average)
-median = getMedian(numbers)
-print("平均数：{:.2f} 方差：{:.2f} 中位数：{}".format(average, variance, median))
+numbers = list(map(eval, input("Please input numbers(split by space): ").split(' ')))
+average = get_average(numbers)
+variance = get_variance(numbers)
+median = get_median(numbers)
+print(f"平均数：{average} 方差：{variance} 中位数：{median}")

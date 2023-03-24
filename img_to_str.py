@@ -1,27 +1,24 @@
 from PIL import Image
-
-# 映射字符串
-char_maping = 'MND8OZ$7I?+=~:,. '
+import argparse
 
 
-def preprocess(imgPath, scale=20):
-    img = Image.open(imgPath)
+def preprocess(img_path, scale=20):
+    img = Image.open(img_path)
     img = img.convert("RGB")  # 转为RGB格式
-    width, height = img.size
-    width, height = width // scale, height // scale  # 缩放倍数
+    width, height = img.size[0] // scale, img.size[1] // (2 * scale)  # 缩放倍数
     img = img.resize((width, height))
     return img
 
 
-def RGBToChar(r, g, b):
-    length = len(char_maping)
+def rgb_to_char(r, g, b):
+    # 映射字符串
+    char_maping = 'MND8OZ$7I?+=~:,. '
     gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
-    unit = 256 / length
-    idx = int(gray / unit)
-    return char_maping[idx]
+    unit = 256 / len(char_maping)
+    return char_maping[int(gray / unit)]
 
 
-def imgToStr(img, savePath):
+def img_to_str(img, save_path):
     width, height = img.size
     txt = ''
 
@@ -29,15 +26,19 @@ def imgToStr(img, savePath):
     for i in range(height):
         line = ''
         for j in range(width):
-            line += RGBToChar(*img.getpixel((j, i)))
-        txt = txt + line + '\n'
+            line += rgb_to_char(*img.getpixel((j, i)))
+        txt += line + '\n'
 
     # 保存字符画
-    with open(savePath, 'w', encoding='utf-8') as f:
+    with open(save_path, 'w', encoding='utf-8') as f:
         f.write(txt)
 
 
-imgPath = './test.jpg'
-savePath = './out.txt'
-img = preprocess(imgPath)
-imgToStr(img, savePath)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert any image to ascii text.")
+    parser.add_argument("file", type=str, help="input image file")
+    args = parser.parse_args()
+
+    img_path = args.file
+    save_path = img_path + ".ascii.txt"
+    img_to_str(preprocess(img_path), save_path)

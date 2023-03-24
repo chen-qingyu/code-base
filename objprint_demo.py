@@ -1,9 +1,11 @@
 from objprint import objprint
 
+
 class Position:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
 
 class Player:
     def __init__(self):
@@ -12,6 +14,7 @@ class Player:
         self.items = ["axe", "armor"]
         self.coins = {"gold": 1, "silver": 33, "bronze": 57}
         self.position = Position(3, 5)
+
 
 player = Player()
 print(player)

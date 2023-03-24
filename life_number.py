@@ -76,17 +76,17 @@ ref https://www.bilibili.com/video/BV11x411f7vz
 """
 
 
-def lifeNumber(name: str, birthday: int):
+def life_number(name: str, birthday: str):
     # 算生命灵数的函数
     # name: string.
-    # birthday: 8-digit number, format: yyyymmdd.
+    # birthday: 8-digit number string, format: "yyyymmdd".
     path = []
-    num = sum(list(map(eval, list(str(birthday)))))
+    num = sum(list(map(int, list(birthday))))
     path.append(num)
     while num >= 10 and (num not in [11, 22, 33]):
-        num = sum(list(map(eval, list(str(num)))))
+        num = sum(list(map(int, list(str(num)))))
         path.append(num)
     print(name + "的生命灵数路径是：", path)
 
 
-lifeNumber('小陈', 19981001)
+life_number("青羽", "19981001")

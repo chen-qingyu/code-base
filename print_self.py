@@ -1,1 +1,2 @@
-I='I=%r;print(I%%I)';print(I%I)
+I = 'I = %r\nprint(I %% I)\n'
+print(I % I)

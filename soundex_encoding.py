@@ -1,7 +1,20 @@
 import functools
 
 
-def soundex_encoding(string: str):
+def soundex_encoding(string: str) -> str:
+    """
+    >>> soundex_encoding('Aerc')
+    'A620'
+    >>> soundex_encoding('Earc')
+    'E620'
+    >>> soundex_encoding('Taylor')
+    'T460'
+    >>> soundex_encoding('Ttttaylor')
+    'T460'
+    >>> soundex_encoding('ChenQingyu~')
+    'C525'
+    """
+
     SOUNDEX_MAP = {
         'A': '0', 'B': '1', 'C': '2', 'D': '3', 'E': '0',
         'F': '1', 'G': '2', 'H': '0', 'I': '0', 'J': '2',
@@ -16,16 +29,12 @@ def soundex_encoding(string: str):
     filtered = filter(lambda c: c != '0', mapped)
     code = functools.reduce(lambda s, c: s + (c if c != s[-1] else ""), filtered)
 
-    code = code[1:] if SOUNDEX_MAP.get(string[0]) == code[0] else code
-
-    while len(code) < 3:
-        code += "0"
+    code = code[1:] if SOUNDEX_MAP[string[0]] == code[0] else code
+    code = code.ljust(3, '0')
 
     return string[0] + code[:3]
 
 
-if __name__ == '__main__':
-    strings = ["Aerc", "Earc", "Taylor!!!", "Ttttaylor!!!", "ChenQingyu~"]
-
-    for string in strings:
-        print(soundex_encoding(string), string)
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

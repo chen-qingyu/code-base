@@ -45,14 +45,8 @@ def check2(s: str) -> int:
     return max_depth if process([], preprocess(s)) == [] else 0
 
 
-print(check1("<>()"))
-print(check1("{[()()]}"))
-print(check1("{ [}]"))
-print(check1("{ [hello]} "))
-print(check1("( [ ( a + b ) * c + d * e ] / { ( f + g ) – h } )"))
-print()
-print(check2("<>()"))
-print(check2("{[()()]}"))
-print(check2("{ [}]"))
-print(check2("{ [hello]} "))
-print(check2("( [ ( a + b ) * c + d * e ] / { ( f + g ) – h } )"))
+assert check1("<>()") == check2("<>()") == 1
+assert check1("{[()()]}") == check2("{[()()]}") == 3
+assert check1("{ [}]") == check2("{ [}]") == 0
+assert check1("{ [hello]} ") == check2("{ [hello]} ") == 2
+assert check1("( [ ( a + b ) * c + d * e ] / { ( f + g ) - h } )") == check2("( [ ( a + b ) * c + d * e ] / { ( f + g ) - h } )") == 3

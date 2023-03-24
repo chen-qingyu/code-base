@@ -1,3 +1,26 @@
+class Stream:
+    """ C++ std::cout """
+
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):  # Implement singleton
+        if not cls.__instance:
+            cls.__instance = super().__new__(cls)
+        return cls.__instance
+
+    def __lshift__(self, other):
+        print(other, end='')
+        return self
+
+
+cout = Stream()
+cout2 = Stream()
+
+cout << "Hello" << " " << "World" << "!" << "\n"
+cout2 << "Python" << " " << "cout" << "~" << "\n"
+cout << "cout is cout2: " << (cout is cout2) << "\n"
+
+
 class Point:
     """ operator overload demo """
 
@@ -6,10 +29,13 @@ class Point:
         self.y = y
 
     def __str__(self):
-        return "({},{})".format(self.x, self.y)
+        return f"({self.x}, {self.y})"
+
+    def __abs__(self):
+        return (self.x ** 2 + self.y ** 2) ** 0.5
 
     def __eq__(self, other):
-        return self.x == other.x or self.y == other.y
+        return self.x == other.x and self.y == other.y
 
     def __ne__(self, other):
         return not self == other
@@ -36,31 +62,8 @@ class Point:
 p1 = Point()
 p2 = Point(1, 1)
 print(p1, p2)
+print(abs(p1), abs(p2))
 print(p1 <= p2)
 print(p1 >= p2)
 print(p1 + p2)
 print(p1 - p2)
-print(p1, p2)
-
-
-class Stream:
-    """ C++ std cout """
-
-    __instance = None
-
-    def __new__(cls, *args, **kwargs):  # Implement singleton
-        if not cls.__instance:
-            cls.__instance = super().__new__(cls)
-        return cls.__instance
-
-    def __lshift__(self, other):
-        print(other, end='')
-        return self
-
-
-cout = Stream()
-cout2 = Stream()
-
-cout << "Hello" << " " << "World" << "!" << '\n'
-cout2 << "Python" << " " << "cout" << "~" << '\n'
-cout << "cout is cout2: " << (cout is cout2)
