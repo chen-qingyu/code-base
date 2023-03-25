@@ -5,7 +5,7 @@ HOST = "127.0.0.1"
 PORT = 9999
 BUFFER_SIZE = 1024
 
-DATABASE_PATH = "./data.db"
+DATABASE_PATH = "./tcp_data.db"
 
 sql_conn = sqlite3.connect(DATABASE_PATH)
 sql_cur = sql_conn.cursor()
