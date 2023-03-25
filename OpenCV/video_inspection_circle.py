@@ -3,10 +3,9 @@ import cv2
 
 capture = cv2.VideoCapture(0)  # 打开摄像头
 while True:
-    ret, frame = capture.read()
+    _, frame = capture.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 100,
-                               param1=100, param2=40, minRadius=10, maxRadius=100)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 100, param1=100, param2=40, minRadius=10, maxRadius=100)
     if circles is None:
         if cv2.waitKey(20) == ord(' '):
             break

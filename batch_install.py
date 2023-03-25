@@ -24,8 +24,8 @@ LIBS = (
     "matplotlib",
     "scipy",
     "pandas",
-
     "pillow",  # PIL
+
     "pyinstaller",
     "pygame",
     "pyautogui",
@@ -37,15 +37,13 @@ LIBS = (
     "requests",
     "beautifulsoup4",  # bs4
 
-    "opencv-python",  # cv2
+    "opencv-python",  # cv2, version conflict with easyocr
 
     "tensorflow",
 
     "jupyter",
 
     "autopep8",
-
-    "easyocr",
 
     "colorama",
 

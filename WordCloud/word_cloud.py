@@ -7,7 +7,7 @@ with open("./data/yuri.txt", encoding="utf-8") as fo:
     txt = fo.read()
 
 # 分词
-words = jieba.cut(txt)
+words = jieba.lcut(txt)
 
 # 加载停用词
 with open("./data/hit_stopwords.txt", encoding="utf-8") as fo:
