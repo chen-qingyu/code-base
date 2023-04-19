@@ -54,6 +54,9 @@ LIBS = (
 
     "objprint",
     "viztracer",
+
+    "django",
+    "djlint",
 )
 
 if __name__ == '__main__':
