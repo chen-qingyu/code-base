@@ -1,4 +1,4 @@
-# FileName: git_sync.py
+# FileName: batch_sync.py
 # Brief: Python3 script for automating batch synchronization of Git remote repositories.
 # Author: Qing Yu
 # CreateDate: 2022.02.11
