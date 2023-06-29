@@ -43,6 +43,8 @@ LIBS = (
     "pyside6",  # PySide6
     "pyqt6",  # PyQt6
 
+    "pyqt5", # PyQt5
+
     "graph-tools",
 
     "objprint",
