@@ -3,8 +3,8 @@
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 # Functions:
-#   - batch check Git repositories status
-#   - batch push Git remote repositories
+#   - check Git repositories status
+#   - push local repositories to remote repositories.
 #   - clean up redundant files and directories
 
 import os
