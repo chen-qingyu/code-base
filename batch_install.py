@@ -57,7 +57,7 @@ LIBS = (
 if __name__ == '__main__':
     for i in range(len(LIBS)):
         print(f"({i + 1}/{len(LIBS)}) Start install/upgrade {LIBS[i]}")
-        os.system("python -m pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple/ " + LIBS[i])
+        os.system("python -m pip install --upgrade -i https://mirrors.aliyun.com/pypi/simple/ " + LIBS[i])
         print()
 
     print(f"A total of {len(LIBS)} libraries have been installed/upgraded.")

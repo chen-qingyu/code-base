@@ -3,8 +3,9 @@
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 # Functions:
-#   - clean up redundant files and directories
+#   - batch check Git repositories status
 #   - batch synchronize Git remote repositories
+#   - clean up redundant files and directories
 
 import os
 import colorama
@@ -46,19 +47,19 @@ REPOS = (
 )
 
 
-def clean():
-    # use "root/.gitignore" as pattern to clean up redundant files and directories.
-    print(COLOR_START + "Start cleaning.")
+def status():
+    print(COLOR_START + "Start checking.")
 
-    for root, _, need_clean in REPOS:
-        if need_clean:  # clean = True
-            os.chdir(root)  # cd root/
-            os.system("git clean -d -f -X")  # remove files ignored by Git recursively.
+    for root, _, _ in REPOS:
+        os.chdir(root)  # cd root/
+        print(COLOR_INFO + f"Start checking {root}:")
+        os.system("git status")
+        print()
 
-    print(COLOR_FINISH + "Cleaning completed.")
+    print(COLOR_FINISH + "Checking completed.")
 
 
-def sync():
+def push():
     # synchronize Git remote repositories.
     print(COLOR_START + "Start synchronize.")
 
@@ -77,16 +78,33 @@ def sync():
     print(COLOR_FINISH + f"Synchronize completed, {len(REPOS)} repositories are synchronized.")
 
 
+def clean():
+    # use "root/.gitignore" as pattern to clean up redundant files and directories.
+    print(COLOR_START + "Start cleaning.")
+
+    for root, _, need_clean in REPOS:
+        if need_clean:  # clean = True
+            os.chdir(root)  # cd root/
+            print(COLOR_INFO + f"Start cleaning {root}:")
+            os.system("git clean -d -f -X")  # remove files ignored by Git recursively.
+            print()
+
+    print(COLOR_FINISH + "Cleaning completed.")
+
+
 if __name__ == '__main__':
     while True:
         print()
+        print("S: Status check.")
+        print("P: Push repositories.")
         print("C: Clean redundant files.")
-        print("S: Synchronize repositories.")
         print("Q: Quit.")
 
-        x = input("Your choice [C/S(default)/Q]: ").strip()
+        x = input("Your choice [S(default)/P/C/Q]: ").strip()
         if x in "sS":  # "" in "sS" is True
-            sync()
+            status()
+        elif x in "pP":
+            push()
         elif x in "cC":
             clean()
         elif x in "qQ":
