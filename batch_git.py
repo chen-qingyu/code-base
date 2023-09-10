@@ -4,7 +4,7 @@
 # CreateDate: 2022.02.11
 # Functions:
 #   - batch check Git repositories status
-#   - batch synchronize Git remote repositories
+#   - batch push Git remote repositories
 #   - clean up redundant files and directories
 
 import os
@@ -48,48 +48,47 @@ REPOS = (
 
 
 def status():
-    print(COLOR_START + "Start checking.")
+    # check status
+    print(COLOR_START + "Start check.")
 
     for root, _, _ in REPOS:
         os.chdir(root)  # cd root/
-        print(COLOR_INFO + f"Start checking {root}:")
+        print(COLOR_INFO + f"Checking {root}:")
         os.system("git status")
         print()
 
-    print(COLOR_FINISH + "Checking completed.")
+    print(COLOR_FINISH + "Check completed.")
 
 
 def push():
-    # synchronize Git remote repositories.
-    print(COLOR_START + "Start synchronize.")
+    # push local repositories to remote repositories.
+    print(COLOR_START + "Start push.")
 
     for i in range(len(REPOS)):
         root = REPOS[i][0]
         remote = REPOS[i][1]
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Start syncing {root}:")
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Pushing {root}:")
         os.chdir(root)
-        # if modified, commit successfully, or skip remote confirmation
-        if os.system("git add . && git commit -m \"batch synchronize\"") == 0:
-            for address in remote:
-                print(COLOR_INFO + f"---{address}---")
-                os.system(f"git push {address}")
+        for address in remote:
+            print(COLOR_INFO + f"---{address}---")
+            os.system(f"git push {address}")
         print()
 
-    print(COLOR_FINISH + f"Synchronize completed, {len(REPOS)} repositories are synchronized.")
+    print(COLOR_FINISH + f"Push completed.")
 
 
 def clean():
     # use "root/.gitignore" as pattern to clean up redundant files and directories.
-    print(COLOR_START + "Start cleaning.")
+    print(COLOR_START + "Start clean.")
 
     for root, _, need_clean in REPOS:
         if need_clean:  # clean = True
             os.chdir(root)  # cd root/
-            print(COLOR_INFO + f"Start cleaning {root}:")
+            print(COLOR_INFO + f"Cleaning {root}:")
             os.system("git clean -d -f -X")  # remove files ignored by Git recursively.
             print()
 
-    print(COLOR_FINISH + "Cleaning completed.")
+    print(COLOR_FINISH + "Clean completed.")
 
 
 if __name__ == '__main__':
