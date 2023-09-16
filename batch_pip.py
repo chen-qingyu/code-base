@@ -1,10 +1,7 @@
-# FileName: batch_install.py
+# FileName: batch_pip.py
 # Brief: Python3 script for automating batch install/upgrade libraries.
 # Author: Qing Yu
 # CreateDate: 2020.10.04
-# Functions:
-#   - install libraries
-#   - upgrade libraries
 
 import os
 
@@ -42,8 +39,6 @@ LIBS = (
 
     "pyside6",  # PySide6
     "pyqt6",  # PyQt6
-
-    "pyqt5", # PyQt5
 
     "graph-tools",
 
