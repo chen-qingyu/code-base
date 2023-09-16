@@ -41,6 +41,38 @@ REPOS = (
 )
 
 
+def main():
+    print("Welcome to the automatic git management program!")
+    print()
+    print("S: status -- check repositories status.")
+    print("P: push -- push local repositories to remote repositories.")
+    print("C: clean -- clean up redundant files and directories.")
+    print("R: remote -- show a list of existing remote repositories.")
+    print("G: gc -- optimize the local repositories.")
+    print()
+    print("Q: quit -- quit this program.")
+    print()
+
+    while True:
+        x = input("\nYour choice [S(default)/P/C/R/G/Q]: ").strip()
+        if x in "sS":  # "" in "sS" is True
+            status()
+        elif x in "pP":
+            push()
+        elif x in "cC":
+            clean()
+        elif x in "rR":
+            remote()
+        elif x in "gG":
+            gc()
+        elif x in "qQ":
+            break
+        else:
+            print(COLOR_ERROR + "Invalid option: " + x)
+
+    print("Bye!")
+
+
 def status():
     print(COLOR_START + "Start status.")
 
@@ -86,7 +118,7 @@ def remote():
 
     for root, _, _ in REPOS:
         os.chdir(root)
-        print(COLOR_INFO + f"Checking {root}:")
+        print(COLOR_INFO + f"Showing {root}:")
         os.system("git remote --verbose")
         print()
 
@@ -106,32 +138,4 @@ def gc():
 
 
 if __name__ == '__main__':
-    print("Welcome to the automatic git management program!")
-    print()
-    print("S: status -- check Git repositories status.")
-    print("P: push -- push local repositories to remote repositories.")
-    print("C: clean -- clean up redundant files and directories.")
-    print("R: remote -- shows a list of existing remotes.")
-    print("G: gc -- optimize the local repositories.")
-    print()
-    print("Q: quit -- quit this program.")
-    print()
-
-    while True:
-        x = input("\nYour choice [S(default)/P/C/R/G/Q]: ").strip()
-        if x in "sS":  # "" in "sS" is True
-            status()
-        elif x in "pP":
-            push()
-        elif x in "cC":
-            clean()
-        elif x in "rR":
-            remote()
-        elif x in "gG":
-            gc()
-        elif x in "qQ":
-            break
-        else:
-            print(COLOR_ERROR + "Invalid option: " + x)
-
-    print("Bye!")
+    main()
