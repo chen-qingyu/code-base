@@ -1,11 +1,7 @@
-# FileName: batch_sync.py
-# Brief: Python3 script for automating batch synchronization of Git remote repositories.
+# FileName: batch_git.py
+# Brief: Python3 script for automating batch manage git repositories.
 # Author: Qing Yu
 # CreateDate: 2022.02.11
-# Functions:
-#   - check Git repositories status
-#   - push local repositories to remote repositories.
-#   - clean up redundant files and directories
 
 import os
 import colorama
@@ -17,15 +13,13 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
-
 # remote repository address: "host branch"
 GITHUB = "github master"
 GITEE = "gitee master"
 
-
-# REPOS: ((root, remote, clean), ...)
+# REPOS: ((root, addresses, clean), ...)
 # root: string, the root path of the local repository.
-# remote: (string, ...), remote repository address.
+# addresses: (string, ...), remote repository addresses.
 # clean: bool, True if use "root/.gitignore" as pattern to clean up redundant files and directories.
 REPOS = (
     ("F:/C/C Programs", (GITEE, GITHUB), True),
@@ -48,64 +42,93 @@ REPOS = (
 
 
 def status():
-    # check status
-    print(COLOR_START + "Start check.")
+    print(COLOR_START + "Start status.")
 
     for root, _, _ in REPOS:
-        os.chdir(root)  # cd root/
+        os.chdir(root)
         print(COLOR_INFO + f"Checking {root}:")
         os.system("git status")
         print()
 
-    print(COLOR_FINISH + "Check completed.")
+    print(COLOR_FINISH + "Finish status.")
 
 
 def push():
-    # push local repositories to remote repositories.
     print(COLOR_START + "Start push.")
 
-    for i in range(len(REPOS)):
-        root = REPOS[i][0]
-        remote = REPOS[i][1]
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Pushing {root}:")
+    for root, addresses, _ in REPOS:
+        print(COLOR_INFO + f"Pushing {root}:")
         os.chdir(root)
-        for address in remote:
-            print(COLOR_INFO + f"---{address}---")
+        for address in addresses:
+            print(COLOR_INFO + f"to {address}:")
             os.system(f"git push {address}")
         print()
 
-    print(COLOR_FINISH + f"Push completed.")
+    print(COLOR_FINISH + "Finish push.")
 
 
 def clean():
-    # use "root/.gitignore" as pattern to clean up redundant files and directories.
     print(COLOR_START + "Start clean.")
 
-    for root, _, need_clean in REPOS:
-        if need_clean:  # clean = True
-            os.chdir(root)  # cd root/
+    for root, _, clean in REPOS:
+        if clean:
+            os.chdir(root)
             print(COLOR_INFO + f"Cleaning {root}:")
-            os.system("git clean -d -f -X")  # remove files ignored by Git recursively.
+            # use ".gitignore" as pattern to clean up redundant files and directories recursively.
+            os.system("git clean -d -f -X")
             print()
 
-    print(COLOR_FINISH + "Clean completed.")
+    print(COLOR_FINISH + "Finish clean.")
+
+
+def remote():
+    print(COLOR_START + "Start remote.")
+
+    for root, _, _ in REPOS:
+        os.chdir(root)
+        print(COLOR_INFO + f"Checking {root}:")
+        os.system("git remote --verbose")
+        print()
+
+    print(COLOR_FINISH + "Finish remote.")
+
+
+def gc():
+    print(COLOR_START + "Start gc.")
+
+    for root, _, _ in REPOS:
+        os.chdir(root)
+        print(COLOR_INFO + f"Optimizing {root}:")
+        os.system("git gc --aggressive")
+        print()
+
+    print(COLOR_FINISH + "Finish gc.")
 
 
 if __name__ == '__main__':
-    while True:
-        print()
-        print("S: Status check.")
-        print("P: Push repositories.")
-        print("C: Clean redundant files.")
-        print("Q: Quit.")
+    print("Welcome to the automatic git management program!")
+    print()
+    print("S: status -- check Git repositories status.")
+    print("P: push -- push local repositories to remote repositories.")
+    print("C: clean -- clean up redundant files and directories.")
+    print("R: remote -- shows a list of existing remotes.")
+    print("G: gc -- optimize the local repositories.")
+    print()
+    print("Q: quit -- quit this program.")
+    print()
 
-        x = input("Your choice [S(default)/P/C/Q]: ").strip()
+    while True:
+        x = input("\nYour choice [S(default)/P/C/R/G/Q]: ").strip()
         if x in "sS":  # "" in "sS" is True
             status()
         elif x in "pP":
             push()
         elif x in "cC":
             clean()
+        elif x in "rR":
+            remote()
+        elif x in "gG":
+            gc()
         elif x in "qQ":
             break
         else:
