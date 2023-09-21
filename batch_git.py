@@ -74,7 +74,7 @@ def main():
 
 
 def status():
-    print(COLOR_START + "Start status.")
+    print(COLOR_START + "Start status.\n")
 
     for root, _, _ in REPOS:
         os.chdir(root)
@@ -86,7 +86,7 @@ def status():
 
 
 def push():
-    print(COLOR_START + "Start push.")
+    print(COLOR_START + "Start push.\n")
 
     for root, addresses, _ in REPOS:
         print(COLOR_INFO + f"Pushing {root}:")
@@ -100,7 +100,7 @@ def push():
 
 
 def clean():
-    print(COLOR_START + "Start clean.")
+    print(COLOR_START + "Start clean.\n")
 
     for root, _, clean in REPOS:
         if clean:
@@ -114,7 +114,7 @@ def clean():
 
 
 def remote():
-    print(COLOR_START + "Start remote.")
+    print(COLOR_START + "Start remote.\n")
 
     for root, _, _ in REPOS:
         os.chdir(root)
@@ -126,7 +126,7 @@ def remote():
 
 
 def gc():
-    print(COLOR_START + "Start gc.")
+    print(COLOR_START + "Start gc.\n")
 
     for root, _, _ in REPOS:
         os.chdir(root)
