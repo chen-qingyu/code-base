@@ -17,19 +17,26 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
+# how to automatically download and install softwares
+MANUAL = 0
+AUTO_DOWNLOAD = 1
+AUTO_DOWNLOAD_INSTALL = 2
+USE_WINGET = 3
+
+# keys
+NAME = 'name'  # software name, use the full name in winget if method is USE_WINGET
+METHOD = 'method'  # how to install the software
+DOWNLOAD_URL = 'download url'  # if automatic download, the download address
+INSTALL_ARGS = 'install args'  # if automatic install, the install arguments
 
 SOFTWARES = (
-    {'name': 'Qt',
-     'auto_download': True,
-     'auto_install': True,
-     'url': 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe',
-     'params': '--mirror https://mirror.nju.edu.cn/qt'},
+    {NAME: 'Qt',
+     METHOD: AUTO_DOWNLOAD_INSTALL,
+     DOWNLOAD_URL: 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe',
+     INSTALL_ARGS: '--mirror https://mirror.nju.edu.cn/qt'},
 
-    {'name': 'Sublime Text',
-     'auto_download': False,
-     'auto_install': False,
-     'url': '',
-     'params': ''},
+    {NAME: 'Sublime Text',
+     METHOD: MANUAL},
 )
 
 DOWNLOADS = './Downloads/'
@@ -56,38 +63,42 @@ def init():
 
 def process():
     for i, software in zip(range(len(SOFTWARES)), SOFTWARES):
-        print(COLOR_START + f"({i + 1}/{len(SOFTWARES)}) Start download/install {software['name']}...")
+        print(COLOR_START + f"({i + 1}/{len(SOFTWARES)}) Start download/install {software[NAME]}...")
 
-        if software['auto_download']:
+        if software[METHOD] == USE_WINGET:
+            os.system('winget install ' + software[NAME])
+        elif software[METHOD] == AUTO_DOWNLOAD_INSTALL:
             download(software)
-            if software['auto_install']:
-                install(software)
-            else:
-                input(COLOR_INFO + f"Please install {software['name']} manually.")
+            install(software)
+        elif software[METHOD] == AUTO_DOWNLOAD:
+            download(software)
+            input(COLOR_INFO + f"Please install {software[NAME]} manually.")
+        elif software[METHOD] == MANUAL:
+            input(COLOR_INFO + f"Please download and install {software[NAME]} manually.")
         else:
-            input(COLOR_INFO + f"Please download and install {software['name']} manually.")
+            print(COLOR_ERROR + "ERROR: Wrong method.")
 
-        print(COLOR_FINISH + f"Finish download/install {software['name']}.\n")
+        print(COLOR_FINISH + f"Finish download/install {software[NAME]}.\n")
 
 
 def download(software: dict):
-    print(COLOR_INFO + f"Downloading {software['name']}...")
-    file_name = software['url'].split('/')[-1]
-    response = requests.get(software['url'], stream=True)
+    print(COLOR_INFO + f"Downloading {software[NAME]}...")
+    file_name = software[DOWNLOAD_URL].split('/')[-1]
+    response = requests.get(software[DOWNLOAD_URL], stream=True)
     length = int(response.headers.get('content-length', 0))
     with open(DOWNLOADS + file_name, 'wb') as fo, tqdm.tqdm(
             desc=file_name, total=length, unit='iB', unit_scale=True, unit_divisor=1024) as bar:
         for data in response.iter_content(chunk_size=1024):
             size = fo.write(data)
             bar.update(size)
-    print(COLOR_INFO + f"Downloaded {software['name']}.")
+    print(COLOR_INFO + f"Downloaded {software[NAME]}.")
 
 
 def install(software: dict):
-    print(COLOR_INFO + f"Installing {software['name']}...")
-    file_name = software['url'].split('/')[-1]
-    os.system('PowerShell ' + DOWNLOADS + file_name + ' ' + software['params'])
-    print(COLOR_INFO + f"Installed {software['name']}.")
+    print(COLOR_INFO + f"Installing {software[NAME]}...")
+    file_name = software[DOWNLOAD_URL].split('/')[-1]
+    os.system('PowerShell ' + DOWNLOADS + file_name + ' ' + software[INSTALL_ARGS])
+    print(COLOR_INFO + f"Installed {software[NAME]}.")
 
 
 if __name__ == '__main__':
