@@ -55,8 +55,8 @@ def init():
 
 
 def process():
-    for software in SOFTWARES:
-        print(COLOR_START + f"Start download/install {software['name']}...")
+    for i, software in zip(range(len(SOFTWARES)), SOFTWARES):
+        print(COLOR_START + f"({i + 1}/{len(SOFTWARES)}) Start download/install {software['name']}...")
 
         if software['auto_download']:
             download(software)

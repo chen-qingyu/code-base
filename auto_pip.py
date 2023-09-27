@@ -86,9 +86,9 @@ def init():
 def process():
     print(COLOR_START + "Start install/upgrade libraries.\n")
 
-    for i in range(len(LIBS)):
-        print(COLOR_INFO + f"({i + 1}/{len(LIBS)}) installing/upgrading {LIBS[i]}")
-        os.system("python -m pip install --upgrade " + LIBS[i])
+    for i, lib in zip(range(len(LIBS)), LIBS):
+        print(COLOR_INFO + f"({i + 1}/{len(LIBS)}) installing/upgrading {lib}")
+        os.system("python -m pip install --upgrade " + lib)
         print()
 
     print(COLOR_FINISH + f"A total of {len(LIBS)} libraries have been installed/upgraded.")

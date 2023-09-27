@@ -77,9 +77,9 @@ def main():
 def status():
     print(COLOR_START + "Start status.\n")
 
-    for root, _, _ in REPOS:
+    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
         os.chdir(root)
-        print(COLOR_INFO + f"Checking {root}:")
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Checking {root}:")
         os.system("git status")
         print()
 
@@ -89,8 +89,8 @@ def status():
 def push():
     print(COLOR_START + "Start push.\n")
 
-    for root, addresses, _ in REPOS:
-        print(COLOR_INFO + f"Pushing {root}:")
+    for i, (root, addresses, _) in zip(range(len(REPOS)), REPOS):
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Pushing {root}:")
         os.chdir(root)
         for address in addresses:
             print(COLOR_INFO + f"to {address}:")
@@ -117,9 +117,9 @@ def clean():
 def remote():
     print(COLOR_START + "Start remote.\n")
 
-    for root, _, _ in REPOS:
+    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
         os.chdir(root)
-        print(COLOR_INFO + f"Showing {root}:")
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Showing {root}:")
         os.system("git remote --verbose")
         print()
 
@@ -129,9 +129,9 @@ def remote():
 def gc():
     print(COLOR_START + "Start gc.\n")
 
-    for root, _, _ in REPOS:
+    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
         os.chdir(root)
-        print(COLOR_INFO + f"Optimizing {root}:")
+        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Optimizing {root}:")
         os.system("git gc --aggressive")
         print()
 
