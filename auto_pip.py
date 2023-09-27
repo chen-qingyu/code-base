@@ -1,4 +1,4 @@
-# FileName: batch_pip.py
+# FileName: auto_pip.py
 # Brief: Python3 script for automating batch install/upgrade libraries.
 # Author: Qing Yu
 # CreateDate: 2020.10.04
@@ -45,6 +45,10 @@ LIBS = (
 
     "django",
     "djlint",
+
+    "git-archive-all",
+
+    "tqdm",
 )
 
 

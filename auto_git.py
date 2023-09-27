@@ -1,9 +1,10 @@
-# FileName: batch_git.py
+# FileName: auto_git.py
 # Brief: Python3 script for automating batch manage git repositories.
 # Author: Qing Yu
 # CreateDate: 2022.02.11
 
 import os
+
 import colorama
 
 colorama.init(autoreset=True)
@@ -37,7 +38,7 @@ REPOS = (
     ("F:/TeX", (GITEE, GITHUB), True),
     ("F:/Projects/TestTime", (GITEE, GITHUB), True),
     ("F:/Projects/MDS", (GITEE, GITHUB), False),
-    ("F:/Projects/MDSPP", (GITEE, GITHUB), False)
+    ("F:/Projects/MDSPP", (GITEE, GITHUB), False),
 )
 
 
