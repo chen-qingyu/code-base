@@ -60,6 +60,10 @@ def main():
 def init():
     print("Start init.\n")
 
+    print("Configuring mirror source.")
+    os.system("python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple")
+    print("Configured mirror source.\n")
+
     print("Upgrading pip tools.")
     os.system("python -m pip install --upgrade pip setuptools wheel")
     print("Upgraded pip tools.\n")
