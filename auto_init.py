@@ -36,7 +36,7 @@ SOFTWARES = (
         NAME: 'Qt',
         METHOD: AUTO_DOWNLOAD_INSTALL,
         DOWNLOAD_URL: 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe',
-        INSTALL_ARGS: '--mirror https://mirror.nju.edu.cn/qt',
+        INSTALL_ARGS: '',
     },
 
     {
