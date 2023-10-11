@@ -5,6 +5,7 @@
 
 import os
 import platform
+import webbrowser
 
 import colorama
 import requests
@@ -17,26 +18,38 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
-# how to automatically download and install softwares
+# software information keys
+NAME = 'name'  # software name, use the full name in winget if method is USE_WINGET
+METHOD = 'method'  # how to install the software
+DOWNLOAD_URL = 'download url'  # if automatic download, the download address
+INSTALL_ARGS = 'install args'  # if automatic install, the install arguments
+DOWNLOAD_LINK = 'download link'  # if manual download and install, the download link
+
+# METHOD: how to automatically download and install softwares
 MANUAL = 0
 AUTO_DOWNLOAD = 1
 AUTO_DOWNLOAD_INSTALL = 2
 USE_WINGET = 3
 
-# keys
-NAME = 'name'  # software name, use the full name in winget if method is USE_WINGET
-METHOD = 'method'  # how to install the software
-DOWNLOAD_URL = 'download url'  # if automatic download, the download address
-INSTALL_ARGS = 'install args'  # if automatic install, the install arguments
-
 SOFTWARES = (
-    {NAME: 'Qt',
-     METHOD: AUTO_DOWNLOAD_INSTALL,
-     DOWNLOAD_URL: 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe',
-     INSTALL_ARGS: '--mirror https://mirror.nju.edu.cn/qt'},
+    {
+        NAME: 'Qt',
+        METHOD: AUTO_DOWNLOAD_INSTALL,
+        DOWNLOAD_URL: 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe',
+        INSTALL_ARGS: '--mirror https://mirror.nju.edu.cn/qt',
+    },
 
-    {NAME: 'Sublime Text',
-     METHOD: MANUAL},
+    {
+        NAME: 'Sublime Text',
+        METHOD: MANUAL,
+        DOWNLOAD_LINK: 'https://www.sublimetext.com/download_thanks?target=win-x64',
+    },
+
+    {
+        NAME: 'Bandizip',
+        METHOD: MANUAL,
+        DOWNLOAD_LINK: 'https://www.bandisoft.com/bandizip/dl.php?web',
+    },
 )
 
 DOWNLOADS = './Downloads/'
@@ -74,6 +87,7 @@ def process():
             download(software)
             input(COLOR_INFO + f"Please install {software[NAME]} manually.")
         elif software[METHOD] == MANUAL:
+            webbrowser.open(software[DOWNLOAD_LINK])
             input(COLOR_INFO + f"Please download and install {software[NAME]} manually.")
         else:
             print(COLOR_ERROR + "ERROR: Wrong method.")
