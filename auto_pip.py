@@ -4,7 +4,7 @@
 # CreateDate: 2020.10.04
 
 import os
-import importlib
+import importlib.util
 
 LIBS = (
     "numpy",
