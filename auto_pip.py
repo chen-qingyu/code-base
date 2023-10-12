@@ -19,8 +19,8 @@ LIBS = (
     "pyautogui",
     "pyserial",  # serial
 
-    "wordcloud",
-    "jieba",
+    # "wordcloud",
+    # "jieba",
 
     "requests",
     "beautifulsoup4",  # bs4
@@ -35,7 +35,7 @@ LIBS = (
 
     "colorama",
 
-    "pyside6",  # PySide6
+    # "pyside6",  # PySide6
     "pyqt6",  # PyQt6
 
     "graph-tools",
@@ -55,6 +55,7 @@ LIBS = (
 def main():
     init()
     process()
+    purge()
 
 
 def init():
@@ -91,7 +92,13 @@ def process():
         os.system("python -m pip install --upgrade " + lib)
         print()
 
-    print(COLOR_FINISH + f"A total of {len(LIBS)} libraries have been installed/upgraded.")
+    print(COLOR_FINISH + f"A total of {len(LIBS)} libraries have been installed/upgraded.\n")
+
+
+def purge():
+    print(COLOR_START + "Purging cache.")
+    os.system("python -m pip cache purge")
+    print(COLOR_FINISH + "Purged cache.\n")
 
 
 if __name__ == '__main__':
