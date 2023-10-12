@@ -7,7 +7,7 @@ import os
 import importlib
 
 LIBS = (
-    # "numpy",  # the latest version conflicts with tensorflow
+    "numpy",
     "scipy",
     "pandas",
 
@@ -25,9 +25,9 @@ LIBS = (
     "requests",
     "beautifulsoup4",  # bs4
 
-    "opencv-python",  # cv2, name conflict with easyocr's dep: opencv-python-headless
+    "opencv-python",  # cv2, name conflicts with easyocr's dep: opencv-python-headless
 
-    "tensorflow",
+    # "tensorflow",  # the latest version conflicts with numpy
 
     "jupyter",
 
