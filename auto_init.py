@@ -50,6 +50,12 @@ SOFTWARES = (
         METHOD: MANUAL,
         DOWNLOAD_LINK: 'https://www.bandisoft.com/bandizip/dl.php?web',
     },
+
+    {
+        NAME: 'Android Studio',
+        METHOD: MANUAL,
+        DOWNLOAD_LINK: 'https://developer.android.com/studio',
+    },
 )
 
 DOWNLOADS = './Downloads/'
