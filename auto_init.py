@@ -6,10 +6,16 @@
 import os
 import platform
 import webbrowser
+import importlib
 
-import colorama
-import requests
-import tqdm
+# install/upgrade libraries and clean cache
+os.system('python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple --requirement ./auto_init_requirements.txt')
+os.system("python -m pip cache purge")
+
+# dynamically loading third-party libraries
+colorama = importlib.import_module('colorama')
+requests = importlib.import_module('requests')
+tqdm = importlib.import_module('tqdm')
 
 colorama.init(autoreset=True)
 

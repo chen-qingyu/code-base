@@ -1,0 +1,49 @@
+# List of third-party Python libraries that need to be installed/upgraded
+
+# The first three are necessary and fixed
+pip
+setuptools
+wheel
+
+numpy
+scipy
+pandas
+
+matplotlib
+pillow  # PIL
+
+pyinstaller
+pygame
+pyautogui
+pyserial  # serial
+
+# wordcloud
+# jieba
+
+requests
+beautifulsoup4  # bs4
+
+opencv-python  # cv2, name conflicts with easyocr's dep: opencv-python-headless
+
+# tensorflow  # the latest version conflicts with numpy
+
+jupyter
+
+autopep8
+
+colorama
+
+# PySide6
+PyQt6
+
+graph-tools
+
+objprint
+viztracer
+
+django
+djlint
+
+git-archive-all
+
+tqdm
