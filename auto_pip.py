@@ -35,8 +35,8 @@ LIBS = (
 
     "colorama",
 
-    # "pyside6",  # PySide6
-    "pyqt6",  # PyQt6
+    # "PySide6",
+    "PyQt6",
 
     "graph-tools",
 
