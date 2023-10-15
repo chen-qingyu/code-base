@@ -1,0 +1,75 @@
+# List of environment configurations
+
+# Python third-party libraries that need to be installed/upgraded
+libraries = [
+    # The first three are necessary and fixed
+    'pip',
+    'setuptools',
+    'wheel',
+
+    'numpy',
+    'scipy',
+    'pandas',
+
+    'matplotlib',
+    'pillow',     # PIL
+
+    'pyinstaller',
+    'pygame',
+    'pyautogui',
+    'pyserial',    # serial
+
+    # 'wordcloud',
+    # 'jieba',
+
+    'requests',
+    'beautifulsoup4', # bs4
+
+    'opencv-python', # cv2, name conflicts with easyocr's dep: opencv-python-headless
+
+    # 'tensorflow', # the latest version conflicts with numpy
+
+    'jupyter',
+
+    'autopep8',
+
+    'colorama',
+
+    # 'PySide6',
+    'PyQt6',
+
+    'graph-tools',
+
+    'objprint',
+    'viztracer',
+
+    'django',
+    'djlint',
+
+    'git-archive-all',
+
+    'tqdm',
+]
+
+# Softwares that need to be installed
+
+[[softwares]]
+name = 'Qt'
+method = 'auto_download_install'
+download_url = 'https://mirror.nju.edu.cn/qt/official_releases/online_installers/qt-unified-windows-x64-online.exe'
+install_args = '--mirror https://mirror.nju.edu.cn/qt'
+
+[[softwares]]
+name = 'Sublime Text'
+method = 'manual'
+download_link = 'https://www.sublimetext.com/download_thanks?target=win-x64'
+
+[[softwares]]
+name = 'Bandizip'
+method = 'manual'
+download_link = 'https://www.bandisoft.com/bandizip/dl.php?web'
+
+[[softwares]]
+name = 'Android Studio'
+method = 'manual'
+download_link = 'https://developer.android.com/studio'
