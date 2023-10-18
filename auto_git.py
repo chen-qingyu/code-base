@@ -24,7 +24,9 @@ def main():
     print("Welcome to the automatic git management program!")
     print()
     print("status: check repositories status.")
+    print("clone:  clone remote repositories to local repositories.")
     print("push:   push local repositories to remote repositories.")
+    print("pull:   pull remote repositories to local repositories.")
     print("clean:  clean up redundant files and directories.")
     print("remote: show a list of existing remote repositories.")
     print("gc:     optimize the local repositories.")
@@ -36,8 +38,12 @@ def main():
         x = input("\nYour choice [status(default)/push/clean/remote/gc/exit]: ").strip().lower()
         if x == 'status' or x == '':
             status()
+        elif x == 'clone':
+            clone()
         elif x == 'push':
             push()
+        elif x == 'pull':
+            pull()
         elif x == 'clean':
             clean()
         elif x == 'remote':
@@ -63,25 +69,43 @@ def status():
     print(COLOR_START + "Start status.\n")
 
     for i, repo in zip(range(size), data['repos']):
-        if not exist_path(repo['root'], i):
+        if not exist_path(repo['local'], i):
             continue
-        os.chdir(repo['root'])
-        print(COLOR_INFO + f"({i + 1}/{size}) Checking {repo['root']}:")
+        os.chdir(repo['local'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Checking {repo['local']}:")
         os.system("git status")
         print()
 
     print(COLOR_FINISH + "Finish status.")
 
 
+def clone():
+    print(COLOR_START + "Start clone.\n")
+
+    for i, repo in zip(range(size), data['repos']):
+        print(COLOR_INFO + f"({i + 1}/{size}) Cloning {repo['local']}:")
+        if not os.path.exists(repo['local']):
+            path, name = '/'.join(repo['local'].split('/')[:-1]), repo['local'].split('/')[-1]
+            if not os.path.exists(path):
+                os.mkdir(path)
+            os.chdir(path)
+            os.system(f'git clone {repo['remote'][0]} "{name}"')
+            print()
+        else:
+            print(COLOR_INFO + f"{repo['local']} already exists.\n")
+
+    print(COLOR_FINISH + "Finish clone.")
+
+
 def push():
     print(COLOR_START + "Start push.\n")
 
     for i, repo in zip(range(size), data['repos']):
-        if not exist_path(repo['root'], i):
+        if not exist_path(repo['local'], i):
             continue
-        print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['root']}:")
-        os.chdir(repo['root'])
-        for address in repo['addresses']:
+        print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['local']}:")
+        os.chdir(repo['local'])
+        for address in repo['remote']:
             print(COLOR_INFO + f"to {address}:")
             os.system(f"git push {address}")
         print()
@@ -89,15 +113,28 @@ def push():
     print(COLOR_FINISH + "Finish push.")
 
 
+def pull():
+    print(COLOR_START + "Start pull.\n")
+
+    for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['local'], i):
+            continue
+        print(COLOR_INFO + f"({i + 1}/{size}) Pulling {repo['local']}:")
+        os.chdir(repo['local'])
+        os.system(f'git pull {repo['remote'][0]}')
+
+    print(COLOR_FINISH + "Finish pull.")
+
+
 def clean():
     print(COLOR_START + "Start clean.\n")
 
     for i, repo in zip(range(size), data['repos']):
-        if not exist_path(repo['root'], i):
+        if not exist_path(repo['local'], i):
             continue
         if repo['clean']:
-            os.chdir(repo['root'])
-            print(COLOR_INFO + f"({i + 1}/{size}) Cleaning {repo['root']}:")
+            os.chdir(repo['local'])
+            print(COLOR_INFO + f"({i + 1}/{size}) Cleaning {repo['local']}:")
             # use ".gitignore" as pattern to clean up redundant files and directories recursively.
             os.system("git clean -d -f -X")
             print()
@@ -109,10 +146,10 @@ def remote():
     print(COLOR_START + "Start remote.\n")
 
     for i, repo in zip(range(size), data['repos']):
-        if not exist_path(repo['root'], i):
+        if not exist_path(repo['local'], i):
             continue
-        os.chdir(repo['root'])
-        print(COLOR_INFO + f"({i + 1}/{size}) Showing {repo['root']}:")
+        os.chdir(repo['local'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Showing {repo['local']}:")
         os.system("git remote --verbose")
         print()
 
@@ -123,10 +160,10 @@ def gc():
     print(COLOR_START + "Start gc.\n")
 
     for i, repo in zip(range(size), data['repos']):
-        if not exist_path(repo['root'], i):
+        if not exist_path(repo['local'], i):
             continue
-        os.chdir(repo['root'])
-        print(COLOR_INFO + f"({i + 1}/{size}) Optimizing {repo['root']}:")
+        os.chdir(repo['local'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Optimizing {repo['local']}:")
         os.system("git gc --aggressive")
         print()
 

@@ -1,83 +1,116 @@
-# root: string, the root path of the local repository.
-# addresses: [string, ...], remote repository addresses: "host branch"
-# clean: bool, true if use "root/.gitignore" as pattern to clean up redundant files and directories.
+# local: string, the root path of the local repository.
+# remote: [string, ...], remote repository addresses, latest ranked first
+# clean: bool, true if use "local/.gitignore" as pattern to clean up redundant files and directories.
+
+# [[repos]]
+# local = 'F:/C/C Programs'
+# remote = [
+#     'https://github.com/chen-qingyu/C-Programs.git',
+#     'https://gitee.com/ChobitsY/c-programs.git',
+# ]
+# clean = true
 
 [[repos]]
-root = 'F:/C/C Programs'
-addresses = ['github master', 'gitee master']
-clean = true
+local = 'F:/Python/Python Programs'
+remote = [
+    'https://github.com/chen-qingyu/Python-Programs.git',
+    'https://gitee.com/ChobitsY/python-programs.git',
+]
+clean = false
+
+# [[repos]]
+# local = 'F:/Java/Java Programs'
+# remote = [
+#     'https://github.com/chen-qingyu/Java-Programs.git',
+#     'https://gitee.com/ChobitsY/java-programs.git',
+# ]
+# clean = false
+
+# [[repos]]
+# local = 'F:/C/C Primer Plus'
+# remote = [
+#     'https://github.com/chen-qingyu/C-Primer-Plus.git',
+#     'https://gitee.com/ChobitsY/c-primer-plus.git',
+# ]
+# clean = true
+
+# [[repos]]
+# local = 'F:/Java/StuScore'
+# remote = [
+#     'https://github.com/chen-qingyu/StuScore.git',
+#     'https://gitee.com/ChobitsY/stu-score.git',
+# ]
+# clean = false
+
+# [[repos]]
+# local = 'F:/OSTEP'
+# remote = [
+#     'https://github.com/chen-qingyu/OSTEP.git',
+#     'https://gitee.com/ChobitsY/ostep.git',
+# ]
+# clean = false
+
+# [[repos]]
+# local = 'F:/Projects/BadApple'
+# remote = [
+#     'https://github.com/chen-qingyu/Bad-Apple',
+#     'https://gitee.com/ChobitsY/bad-apple',
+# ]
+# clean = true
 
 [[repos]]
-root = 'F:/Python/Python Programs'
-addresses = ['github master', 'gitee master']
+local = 'F:/Projects/HelloWorld'
+remote = [
+    'https://github.com/chen-qingyu/Hello-World.git',
+    'https://gitee.com/ChobitsY/hello-world.git',
+]
 clean = false
 
 [[repos]]
-root = 'F:/Java/Java Programs'
-addresses = ['github master', 'gitee master']
+local = 'F:/Projects/LinearAlgebra'
+remote = [
+    'https://github.com/chen-qingyu/Linear-Algebra.git',
+    'https://gitee.com/ChobitsY/linear-algebra.git',
+]
+clean = false
+
+# [[repos]]
+# local = 'F:/Projects/Love Miao'
+# remote = ['github', 'gitee']
+# clean = false
+
+# [[repos]]
+# local = 'F:/Racket/HtDP'
+# remote = ['github', 'gitee']
+# clean = false
+
+# [[repos]]
+# local = 'F:/STM32/STM32 Programs'
+# remote = ['github', 'gitee']
+# clean = true
+
+# [[repos]]
+# local = 'F:/TeX'
+# remote = ['github', 'gitee']
+# clean = true
+
+# [[repos]]
+# local = 'F:/Projects/TestTime'
+# remote = ['github', 'gitee']
+# clean = true
+
+[[repos]]
+local = 'F:/Projects/MDS'
+remote = [
+    'https://github.com/chen-qingyu/MDS.git',
+    'https://gitee.com/ChobitsY/mds.git',
+]
 clean = false
 
 [[repos]]
-root = 'F:/C/C Primer Plus'
-addresses = ['github master', 'gitee master']
-clean = true
-
-[[repos]]
-root = 'F:/Java/StuScore'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/OSTEP'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/Projects/BadApple'
-addresses = ['github master', 'gitee master']
-clean = true
-
-[[repos]]
-root = 'F:/Projects/HelloWorld'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/Projects/LinearAlgebra'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/Projects/Love Miao'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/Racket/HtDP'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/STM32/STM32 Programs'
-addresses = ['github master', 'gitee master']
-clean = true
-
-[[repos]]
-root = 'F:/TeX'
-addresses = ['github master', 'gitee master']
-clean = true
-
-[[repos]]
-root = 'F:/Projects/TestTime'
-addresses = ['github master', 'gitee master']
-clean = true
-
-[[repos]]
-root = 'F:/Projects/MDS'
-addresses = ['github master', 'gitee master']
-clean = false
-
-[[repos]]
-root = 'F:/Projects/MDSPP'
-addresses = ['github master', 'gitee master']
+local = 'F:/Projects/MDSPP'
+remote = [
+    'https://github.com/chen-qingyu/MDSPP.git',
+    'https://gitee.com/ChobitsY/mdspp.git',
+]
 clean = false
