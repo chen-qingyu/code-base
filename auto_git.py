@@ -45,28 +45,28 @@ REPOS = (
 def main():
     print("Welcome to the automatic git management program!")
     print()
-    print("S: status -- check repositories status.")
-    print("P: push -- push local repositories to remote repositories.")
-    print("C: clean -- clean up redundant files and directories.")
-    print("R: remote -- show a list of existing remote repositories.")
-    print("G: gc -- optimize the local repositories.")
+    print("status: check repositories status.")
+    print("push: push local repositories to remote repositories.")
+    print("clean: clean up redundant files and directories.")
+    print("remote: show a list of existing remote repositories.")
+    print("gc: optimize the local repositories.")
     print()
-    print("Q: quit -- quit this program.")
+    print("exit: exit this program.")
     print()
 
     while True:
-        x = input("\nYour choice [S(default)/P/C/R/G/Q]: ").strip()
-        if x in "sS":  # "" in "sS" is True
+        x = input("\nYour choice [status(default)/push/clean/remote/gc/exit]: ").strip().lower()
+        if x == 'status' or x == '':
             status()
-        elif x in "pP":
+        elif x == 'push':
             push()
-        elif x in "cC":
+        elif x == 'clean':
             clean()
-        elif x in "rR":
+        elif x == 'remote':
             remote()
-        elif x in "gG":
+        elif x == 'gc':
             gc()
-        elif x in "qQ":
+        elif x == 'exit':
             break
         else:
             print(COLOR_ERROR + "Invalid option: " + x)
