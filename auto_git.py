@@ -4,8 +4,13 @@
 # CreateDate: 2022.02.11
 
 import os
+import tomllib
 
 import colorama
+
+with open('auto_git.toml', 'rb') as f:
+    data = tomllib.load(f)
+    size = len(data['repos'])
 
 colorama.init(autoreset=True)
 
@@ -14,44 +19,17 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
-# remote repository address: "host branch"
-GITHUB = "github master"
-GITEE = "gitee master"
-
-# REPOS: ((root, addresses, clean), ...)
-# root: string, the root path of the local repository.
-# addresses: (string, ...), remote repository addresses.
-# clean: bool, True if use "root/.gitignore" as pattern to clean up redundant files and directories.
-REPOS = (
-    ("F:/C/C Programs", (GITEE, GITHUB), True),
-    ("F:/Python/Python Programs", (GITEE, GITHUB), False),
-    ("F:/Java/Java Programs", (GITEE, GITHUB), False),
-    ("F:/C/C Primer Plus", (GITEE, GITHUB), True),
-    ("F:/Java/StuScore", (GITEE, GITHUB), False),
-    ("F:/OSTEP", (GITEE, GITHUB), False),
-    ("F:/Projects/BadApple", (GITEE, GITHUB), True),
-    ("F:/Projects/HelloWorld", (GITEE, GITHUB), False),
-    ("F:/Projects/LinearAlgebra", (GITEE, GITHUB), False),
-    ("F:/Projects/Love Miao", (GITEE, GITHUB), False),
-    ("F:/Racket/HtDP", (GITEE, GITHUB), False),
-    ("F:/STM32/STM32 Programs", (GITEE, GITHUB), True),
-    ("F:/TeX", (GITEE, GITHUB), True),
-    ("F:/Projects/TestTime", (GITEE, GITHUB), True),
-    ("F:/Projects/MDS", (GITEE, GITHUB), False),
-    ("F:/Projects/MDSPP", (GITEE, GITHUB), False),
-)
-
 
 def main():
     print("Welcome to the automatic git management program!")
     print()
     print("status: check repositories status.")
-    print("push: push local repositories to remote repositories.")
-    print("clean: clean up redundant files and directories.")
+    print("push:   push local repositories to remote repositories.")
+    print("clean:  clean up redundant files and directories.")
     print("remote: show a list of existing remote repositories.")
-    print("gc: optimize the local repositories.")
+    print("gc:     optimize the local repositories.")
     print()
-    print("exit: exit this program.")
+    print("exit:   exit this program.")
     print()
 
     while True:
@@ -77,9 +55,9 @@ def main():
 def status():
     print(COLOR_START + "Start status.\n")
 
-    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
-        os.chdir(root)
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Checking {root}:")
+    for i, repo in zip(range(size), data['repos']):
+        os.chdir(repo['root'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Checking {repo['root']}:")
         os.system("git status")
         print()
 
@@ -89,10 +67,10 @@ def status():
 def push():
     print(COLOR_START + "Start push.\n")
 
-    for i, (root, addresses, _) in zip(range(len(REPOS)), REPOS):
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Pushing {root}:")
-        os.chdir(root)
-        for address in addresses:
+    for i, repo in zip(range(size), data['repos']):
+        print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['root']}:")
+        os.chdir(repo['root'])
+        for address in repo['addresses']:
             print(COLOR_INFO + f"to {address}:")
             os.system(f"git push {address}")
         print()
@@ -103,10 +81,10 @@ def push():
 def clean():
     print(COLOR_START + "Start clean.\n")
 
-    for root, _, clean in REPOS:
-        if clean:
-            os.chdir(root)
-            print(COLOR_INFO + f"Cleaning {root}:")
+    for repo in data['repos']:
+        if repo['clean']:
+            os.chdir(repo['root'])
+            print(COLOR_INFO + f"Cleaning {repo['root']}:")
             # use ".gitignore" as pattern to clean up redundant files and directories recursively.
             os.system("git clean -d -f -X")
             print()
@@ -117,9 +95,9 @@ def clean():
 def remote():
     print(COLOR_START + "Start remote.\n")
 
-    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
-        os.chdir(root)
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Showing {root}:")
+    for i, repo in zip(range(size), data['repos']):
+        os.chdir(repo['root'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Showing {repo['root']}:")
         os.system("git remote --verbose")
         print()
 
@@ -129,9 +107,9 @@ def remote():
 def gc():
     print(COLOR_START + "Start gc.\n")
 
-    for i, (root, _, _) in zip(range(len(REPOS)), REPOS):
-        os.chdir(root)
-        print(COLOR_INFO + f"({i + 1}/{len(REPOS)}) Optimizing {root}:")
+    for i, repo in zip(range(size), data['repos']):
+        os.chdir(repo['root'])
+        print(COLOR_INFO + f"({i + 1}/{size}) Optimizing {repo['root']}:")
         os.system("git gc --aggressive")
         print()
 

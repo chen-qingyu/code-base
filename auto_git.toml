@@ -1,0 +1,83 @@
+# root: string, the root path of the local repository.
+# addresses: [string, ...], remote repository addresses: "host branch"
+# clean: bool, true if use "root/.gitignore" as pattern to clean up redundant files and directories.
+
+[[repos]]
+root = 'F:/C/C Programs'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/Python/Python Programs'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Java/Java Programs'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/C/C Primer Plus'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/Java/StuScore'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/OSTEP'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Projects/BadApple'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/Projects/HelloWorld'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Projects/LinearAlgebra'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Projects/Love Miao'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Racket/HtDP'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/STM32/STM32 Programs'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/TeX'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/Projects/TestTime'
+addresses = ['github master', 'gitee master']
+clean = true
+
+[[repos]]
+root = 'F:/Projects/MDS'
+addresses = ['github master', 'gitee master']
+clean = false
+
+[[repos]]
+root = 'F:/Projects/MDSPP'
+addresses = ['github master', 'gitee master']
+clean = false
