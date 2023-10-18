@@ -114,3 +114,11 @@ remote = [
     'https://gitee.com/ChobitsY/mdspp.git',
 ]
 clean = false
+
+[[repos]]
+local = 'F:/Projects/MyLinearAlgebra'
+remote = [
+    'https://github.com/chen-qingyu/MyLinearAlgebra.git',
+    'https://gitee.com/ChobitsY/my-linear-algebra.git',
+]
+clean = true

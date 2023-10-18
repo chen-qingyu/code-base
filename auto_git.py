@@ -35,7 +35,7 @@ def main():
     print()
 
     while True:
-        x = input("\nYour choice [status(default)/push/clean/remote/gc/exit]: ").strip().lower()
+        x = input("\nYour choice [status(default)/clone/push/pull/clean/remote/gc/exit]: ").strip().lower()
         if x == 'status' or x == '':
             status()
         elif x == 'clone':
