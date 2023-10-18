@@ -52,10 +52,19 @@ def main():
     print("Bye!")
 
 
+def exist_path(path, idx) -> bool:
+    if not os.path.exists(path):
+        print(COLOR_ERROR + f"({idx + 1}/{size}) {path} not exists.\n")
+        return False
+    return True
+
+
 def status():
     print(COLOR_START + "Start status.\n")
 
     for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['root'], i):
+            continue
         os.chdir(repo['root'])
         print(COLOR_INFO + f"({i + 1}/{size}) Checking {repo['root']}:")
         os.system("git status")
@@ -68,6 +77,8 @@ def push():
     print(COLOR_START + "Start push.\n")
 
     for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['root'], i):
+            continue
         print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['root']}:")
         os.chdir(repo['root'])
         for address in repo['addresses']:
@@ -81,10 +92,12 @@ def push():
 def clean():
     print(COLOR_START + "Start clean.\n")
 
-    for repo in data['repos']:
+    for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['root'], i):
+            continue
         if repo['clean']:
             os.chdir(repo['root'])
-            print(COLOR_INFO + f"Cleaning {repo['root']}:")
+            print(COLOR_INFO + f"({i + 1}/{size}) Cleaning {repo['root']}:")
             # use ".gitignore" as pattern to clean up redundant files and directories recursively.
             os.system("git clean -d -f -X")
             print()
@@ -96,6 +109,8 @@ def remote():
     print(COLOR_START + "Start remote.\n")
 
     for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['root'], i):
+            continue
         os.chdir(repo['root'])
         print(COLOR_INFO + f"({i + 1}/{size}) Showing {repo['root']}:")
         os.system("git remote --verbose")
@@ -108,6 +123,8 @@ def gc():
     print(COLOR_START + "Start gc.\n")
 
     for i, repo in zip(range(size), data['repos']):
+        if not exist_path(repo['root'], i):
+            continue
         os.chdir(repo['root'])
         print(COLOR_INFO + f"({i + 1}/{size}) Optimizing {repo['root']}:")
         os.system("git gc --aggressive")
