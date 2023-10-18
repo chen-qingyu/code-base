@@ -21,7 +21,7 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
-    print("Welcome to the automatic git management program!")
+    print(COLOR_INFO + "Welcome to the automatic git management program!")
     print()
     print("status: check repositories status.")
     print("clone:  clone remote repositories to local repositories.")
