@@ -152,9 +152,9 @@ def push(name):
             continue
 
         os.chdir(root)
-        for host, url in repo['remote'].items():
+        for host in repo['remote']:
             print(COLOR_INFO + f"to {host}:")
-            os.system(f'git push {url}')
+            os.system(f'git push {host}')
 
     print(COLOR_FINISH + "Finish push.")
 
