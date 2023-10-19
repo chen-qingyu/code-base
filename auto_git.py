@@ -5,6 +5,8 @@
 
 import os
 import tomllib
+import sys
+import argparse
 
 import colorama
 
@@ -21,6 +23,13 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
+    if len(sys.argv) == 1:
+        interactive()
+    else:
+        command()
+
+
+def interactive():
     print(COLOR_INFO + "Welcome to the automatic git management program!")
     print()
     print("status: check repositories status.")
@@ -35,27 +44,37 @@ def main():
     print()
 
     while True:
-        x = input("\nYour choice [status(default)/clone/push/pull/clean/remote/gc/exit]: ").strip().lower()
-        if x == 'status' or x == '':
-            status()
-        elif x == 'clone':
-            clone()
-        elif x == 'push':
-            push()
-        elif x == 'pull':
-            pull()
-        elif x == 'clean':
-            clean()
-        elif x == 'remote':
-            remote()
-        elif x == 'gc':
-            gc()
-        elif x == 'exit':
+        action = input("\nYour choice [status(default)/clone/push/pull/clean/remote/gc/exit]: ").strip().lower()
+        if action == 'exit':
             break
-        else:
-            print(COLOR_ERROR + "Invalid option: " + x)
-
+        process(action)
     print("Bye!")
+
+
+def command():
+    parser = argparse.ArgumentParser(description="Python3 script for automating batch manage git repositories.")
+    parser.add_argument("action", type=str, help="git action: [status/clone/push/pull/clean/remote/gc]")
+    args = parser.parse_args()
+    process(args.action)
+
+
+def process(x: str):
+    if x == 'status' or x == '':
+        status()
+    elif x == 'clone':
+        clone()
+    elif x == 'push':
+        push()
+    elif x == 'pull':
+        pull()
+    elif x == 'clean':
+        clean()
+    elif x == 'remote':
+        remote()
+    elif x == 'gc':
+        gc()
+    else:
+        print(COLOR_ERROR + "Invalid action: " + x)
 
 
 def exist_path(path) -> bool:
