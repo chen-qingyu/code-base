@@ -131,6 +131,9 @@ def clone(name):
         os.system(f'git clone {repo['remote'][repo['upstream']]} "{repo['name']}"')
         os.chdir(repo['name'])
         os.system(f'git remote rename origin {repo['upstream']}')
+        for host, url in repo['remote'].items():
+            if host != repo['upstream']:
+                os.system(f'git remote add {host} {url}')
 
     print(COLOR_FINISH + "Finish clone.")
 
