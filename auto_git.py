@@ -23,66 +23,42 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
-    if len(sys.argv) == 1:
-        interactive()
-    else:
-        command()
-
-
-def interactive():
-    print(COLOR_INFO + "Welcome to the automatic git management program!")
-    print()
-    print("status: check repositories status.")
-    print("clone:  clone remote repositories to local repositories.")
-    print("push:   push local repositories to remote repositories.")
-    print("pull:   pull remote repositories to local repositories.")
-    print("clean:  clean up redundant files and directories.")
-    print("remote: show a list of existing remote repositories.")
-    print("gc:     optimize the local repositories.")
-    print()
-    print("exit:   exit this program.")
-    print()
-
-    while True:
-        match input("\nYour choice <status(default)/clone/push/pull/clean/remote/gc/exit> [name]: ").strip().lower().split():
-            case ['exit']:
-                break
-            case []:
-                process('status')
-            case [action]:
-                process(action)
-            case [action, name]:
-                process(action, name)
-            case _ as x:
-                print(COLOR_ERROR + "Invalid action: " + ' '.join(x))
-    print("Bye!")
-
-
-def command():
     parser = argparse.ArgumentParser(prog='auto_git', description="Python3 script for automating batch manage git repositories.")
-    parser.add_argument("action", type=str, help="git action: <status/clone/push/pull/clean/remote/gc>")
-    parser.add_argument("name", type=str, help="Abbreviation of repository name", nargs='?')
-    args = parser.parse_args()
-    process(args.action.lower(), args.name.lower() if args.name else None)
+    parser.add_argument("action", type=str, help="git action", choices=['status', 'clone', 'push', 'pull', 'clean', 'remote', 'gc'])
+    parser.add_argument("name", type=str, help="Abbreviation of repository name", nargs='?', default='')
 
-
-def process(x: str, name=None):
-    if x == 'status' or x == '':
-        status(name)
-    elif x == 'clone':
-        clone(name)
-    elif x == 'push':
-        push(name)
-    elif x == 'pull':
-        pull(name)
-    elif x == 'clean':
-        clean(name)
-    elif x == 'remote':
-        remote(name)
-    elif x == 'gc':
-        gc(name)
+    # interactive mode
+    if len(sys.argv) == 1:
+        print(COLOR_INFO + "Welcome to the automatic git management program!")
+        print()
+        print("status: check repositories status.")
+        print("clone:  clone remote repositories to local repositories.")
+        print("push:   push local repositories to remote repositories.")
+        print("pull:   pull remote repositories to local repositories.")
+        print("clean:  clean up redundant files and directories.")
+        print("remote: show a list of existing remote repositories.")
+        print("gc:     optimize the local repositories.")
+        print()
+        print("exit:   exit this program.")
+        print()
+        while True:
+            choice = input("\nYour choice (default = status): ").strip().lower().split()
+            if choice == []:
+                process('status', '')
+            elif choice == ['exit']:
+                print("Bye!")
+                break
+            else:
+                args = parser.parse_args(choice)
+                process(args.action, args.name)
+    # command mode
     else:
-        print(COLOR_ERROR + "Invalid action: " + (x + ' ' + name if name else x))
+        args = parser.parse_args()
+        process(args.action, args.name)
+
+
+def process(action: str, name: str):
+    eval(f'{action.lower()}(\'{name.lower()}\')')
 
 
 def exist_path(path) -> bool:
@@ -96,7 +72,7 @@ def status(name):
     print(COLOR_START + "Start status.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -115,7 +91,7 @@ def clone(name):
     print(COLOR_START + "Start clone.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -142,7 +118,7 @@ def push(name):
     print(COLOR_START + "Start push.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -163,7 +139,7 @@ def pull(name):
     print(COLOR_START + "Start pull.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -182,7 +158,7 @@ def clean(name):
     print(COLOR_START + "Start clean.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -204,7 +180,7 @@ def remote(name):
     print(COLOR_START + "Start remote.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
@@ -223,7 +199,7 @@ def gc(name):
     print(COLOR_START + "Start gc.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if name != None and name != repo['abbr'].lower():
+        if name != '' and name != repo['abbr'].lower():
             continue
 
         root = repo['local'] + repo['name']
