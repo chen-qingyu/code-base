@@ -54,9 +54,9 @@ def process_cmd(cmd: str) -> str:
         case ["find", key]:
             return find_data(key)
         case ["write", key, value]:
-            return write_data(key[:-1], value)
+            return write_data(key, value)
         case ["update", key, value]:
-            return update_data(key[:-1], value)
+            return update_data(key, value)
         case ["delete", key]:
             return delete_data(key)
         case _:
