@@ -173,7 +173,7 @@ def pull(name):
             continue
 
         os.chdir(root)
-        os.system(f'git pull {repo['remote'][repo['upstream']]}')
+        os.system(f'git pull')
 
     print(COLOR_FINISH + "Finish pull.")
 
