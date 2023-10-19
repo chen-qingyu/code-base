@@ -77,8 +77,7 @@ def download(software: dict):
     file_name = software['download_url'].split('/')[-1]
     response = requests.get(software['download_url'], stream=True)
     length = int(response.headers.get('content-length', 0))
-    with open(DOWNLOAD + file_name, 'wb') as fo, tqdm.tqdm(
-            desc=file_name, total=length, unit='iB', unit_scale=True, unit_divisor=1024) as bar:
+    with open(DOWNLOAD + file_name, 'wb') as fo, tqdm.tqdm(desc=file_name, total=length, unit='iB', unit_scale=True, unit_divisor=1024) as bar:
         for data in response.iter_content(chunk_size=1024):
             size = fo.write(data)
             bar.update(size)

@@ -1,7 +1,7 @@
 # name: the repository name.
 # abbr: the abbreviation of repository name, no spaces, case insensitive.
 # local: the root path of the local repository.
-# remote: remote repository addresses, latest ranked first.
+# remote: remote repository addresses.
 # upstream: the upstream remote repository host.
 # clean: true if use ".gitignore" as pattern to clean up redundant files and directories recursively.
 
