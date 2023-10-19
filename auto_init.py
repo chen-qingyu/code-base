@@ -10,11 +10,12 @@ import importlib
 import tomllib
 
 with open('auto_init.toml', 'rb') as f:
-    data = tomllib.load(f)
+    DATA = tomllib.load(f)
+    SIZE = len(DATA['softwares'])
 
 # install/upgrade libraries and clean cache
-os.system(f'python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple {' '.join(data['libraries'])}')
-os.system("python -m pip cache purge")
+os.system(f'python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple {' '.join(DATA['libraries'])}')
+os.system('python -m pip cache purge')
 
 # dynamically loading third-party libraries
 colorama = importlib.import_module('colorama')
@@ -28,7 +29,7 @@ COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
 COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
 COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
-DOWNLOADS = './Downloads/'
+DOWNLOAD = './Download/'
 
 
 def main():
@@ -43,16 +44,16 @@ def init():
         print(COLOR_ERROR + "This script currently only supports the Windows platform.\n")
         exit(-1)
 
-    if not os.path.exists(DOWNLOADS):
-        print(COLOR_INFO + f"Creates downloads folder: {DOWNLOADS}")
-        os.mkdir(DOWNLOADS)
+    if not os.path.exists(DOWNLOAD):
+        print(COLOR_INFO + f"Creates downloads folder: {DOWNLOAD}")
+        os.mkdir(DOWNLOAD)
 
     print(COLOR_FINISH + "Finish init.\n")
 
 
 def process():
-    for i, software in zip(range(len(data['softwares'])), data['softwares']):
-        print(COLOR_START + f"({i + 1}/{len(data['softwares'])}) Start download/install {software['name']}...")
+    for i, software in zip(range(SIZE), DATA['softwares']):
+        print(COLOR_START + f"({i + 1}/{SIZE}) Start download/install {software['name']}...")
 
         if software['method'] == 'use_winget':
             os.system('winget install ' + software['name'])
@@ -66,7 +67,7 @@ def process():
             webbrowser.open(software['download_link'])
             input(COLOR_INFO + f"Please download and install {software['name']} manually.")
         else:
-            print(COLOR_ERROR + "ERROR: Wrong method.")
+            print(COLOR_ERROR + "Error: Wrong method.")
 
         print(COLOR_FINISH + f"Finish download/install {software['name']}.\n")
 
@@ -76,7 +77,7 @@ def download(software: dict):
     file_name = software['download_url'].split('/')[-1]
     response = requests.get(software['download_url'], stream=True)
     length = int(response.headers.get('content-length', 0))
-    with open(DOWNLOADS + file_name, 'wb') as fo, tqdm.tqdm(
+    with open(DOWNLOAD + file_name, 'wb') as fo, tqdm.tqdm(
             desc=file_name, total=length, unit='iB', unit_scale=True, unit_divisor=1024) as bar:
         for data in response.iter_content(chunk_size=1024):
             size = fo.write(data)
@@ -87,7 +88,8 @@ def download(software: dict):
 def install(software: dict):
     print(COLOR_INFO + f"Installing {software['name']}...")
     file_name = software['download_url'].split('/')[-1]
-    os.system('PowerShell ' + DOWNLOADS + file_name + ' ' + software['install_args'])
+    os.system(f'PowerShell {DOWNLOAD + file_name} {software['install_args']}')
+    input(COLOR_INFO + "Wait for the installation to complete.")
     print(COLOR_INFO + f"Installed {software['name']}.")
 
 
