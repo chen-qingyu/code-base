@@ -1,5 +1,6 @@
 # local: string, the root path of the local repository.
 # remote: [string, ...], remote repository addresses, latest ranked first
+# upstream: string, the upstream remote repository host
 # clean: bool, true if use "local/.gitignore" as pattern to clean up redundant files and directories.
 
 # [[repos]]
@@ -12,6 +13,7 @@
 
 [[repos]]
 local = 'F:/Python/Python Programs'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/Python-Programs.git', gitee = 'https://gitee.com/ChobitsY/python-programs.git' }
 clean = false
 
@@ -57,11 +59,13 @@ clean = false
 
 [[repos]]
 local = 'F:/Projects/HelloWorld'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/Hello-World.git', gitee = 'https://gitee.com/ChobitsY/hello-world.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/LinearAlgebra'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/Linear-Algebra.git', gitee = 'https://gitee.com/ChobitsY/linear-algebra.git' }
 clean = false
 
@@ -92,15 +96,18 @@ clean = false
 
 [[repos]]
 local = 'F:/Projects/MDS'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/MDS.git', gitee = 'https://gitee.com/ChobitsY/mds.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/MDSPP'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/MDSPP.git', gitee = 'https://gitee.com/ChobitsY/mdspp.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/MyLinearAlgebra'
+upstream = 'github'
 remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/my-linear-algebra.git' }
 clean = true

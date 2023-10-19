@@ -89,9 +89,9 @@ def clone():
             if not os.path.exists(path):
                 os.mkdir(path)
             os.chdir(path)
-            os.system(f'git clone {repo['remote']['github']} "{name}"')
+            os.system(f'git clone {repo['remote'][repo['upstream']]} "{name}"')
             os.chdir(name)
-            os.system('git remote rename origin github')
+            os.system(f'git remote rename origin {repo['upstream']}')
             print()
         else:
             print(COLOR_INFO + f"{repo['local']} already exists.\n")
@@ -123,7 +123,7 @@ def pull():
             continue
         print(COLOR_INFO + f"({i + 1}/{size}) Pulling {repo['local']}:")
         os.chdir(repo['local'])
-        os.system(f'git pull {repo['remote']['github']}')
+        os.system(f'git pull {repo['remote'][repo['upstream']]}')
 
     print(COLOR_FINISH + "Finish pull.")
 
