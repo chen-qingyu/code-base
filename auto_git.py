@@ -58,116 +58,131 @@ def main():
     print("Bye!")
 
 
-def exist_path(path, idx) -> bool:
+def exist_path(path) -> bool:
     if not os.path.exists(path):
-        print(COLOR_ERROR + f"({idx + 1}/{SIZE}) {path} not exists.\n")
+        print(COLOR_ERROR + f"{path} not exists.")
         return False
     return True
 
 
 def status():
-    print(COLOR_START + "Start status.\n")
+    print(COLOR_START + "Start status.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Checking {root}:")
+
+        if not exist_path(root):
             continue
-        os.chdir(repo['local'])
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Checking {repo['local']}:")
+
+        os.chdir(root)
         os.system('git status')
-        print()
 
     print(COLOR_FINISH + "Finish status.")
 
 
 def clone():
-    print(COLOR_START + "Start clone.\n")
+    print(COLOR_START + "Start clone.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Cloning {repo['local']}:")
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Cloning {root}:")
+
+        if os.path.exists(root):
+            print(COLOR_INFO + f"{root} already exists.")
+            continue
+
         if not os.path.exists(repo['local']):
-            path, name = '/'.join(repo['local'].split('/')[:-1]), repo['local'].split('/')[-1]
-            if not os.path.exists(path):
-                os.mkdir(path)
-            os.chdir(path)
-            os.system(f'git clone {repo['remote'][repo['upstream']]} "{name}"')
-            os.chdir(name)
-            os.system(f'git remote rename origin {repo['upstream']}')
-            print()
-        else:
-            print(COLOR_INFO + f"{repo['local']} already exists.\n")
+            os.mkdir(repo['local'])
+        os.chdir(repo['local'])
+        os.system(f'git clone {repo['remote'][repo['upstream']]} "{repo['name']}"')
+        os.chdir(repo['name'])
+        os.system(f'git remote rename origin {repo['upstream']}')
 
     print(COLOR_FINISH + "Finish clone.")
 
 
 def push():
-    print(COLOR_START + "Start push.\n")
+    print(COLOR_START + "Start push.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Pushing {root}:")
+
+        if not exist_path(root):
             continue
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Pushing {repo['local']}:")
-        os.chdir(repo['local'])
+
+        os.chdir(root)
         for host, url in repo['remote'].items():
             print(COLOR_INFO + f"to {host}:")
             os.system(f'git push {url}')
-        print()
 
     print(COLOR_FINISH + "Finish push.")
 
 
 def pull():
-    print(COLOR_START + "Start pull.\n")
+    print(COLOR_START + "Start pull.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Pulling {root}:")
+
+        if not exist_path(root):
             continue
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Pulling {repo['local']}:")
-        os.chdir(repo['local'])
+
+        os.chdir(root)
         os.system(f'git pull {repo['remote'][repo['upstream']]}')
 
     print(COLOR_FINISH + "Finish pull.")
 
 
 def clean():
-    print(COLOR_START + "Start clean.\n")
+    print(COLOR_START + "Start clean.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Cleaning {root}:")
+
+        if not exist_path(root):
             continue
+
         if repo['clean']:
-            os.chdir(repo['local'])
-            print(COLOR_INFO + f"({i + 1}/{SIZE}) Cleaning {repo['local']}:")
-            # use ".gitignore" as pattern to clean up redundant files and directories recursively.
+            os.chdir(root)
             os.system('git clean -d -f -X')
-            print()
+        else:
+            print(COLOR_INFO + "Skip.")
 
     print(COLOR_FINISH + "Finish clean.")
 
 
 def remote():
-    print(COLOR_START + "Start remote.\n")
+    print(COLOR_START + "Start remote.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Showing {root}:")
+
+        if not exist_path(root):
             continue
-        os.chdir(repo['local'])
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Showing {repo['local']}:")
+
+        os.chdir(root)
         os.system('git remote --verbose')
-        print()
 
     print(COLOR_FINISH + "Finish remote.")
 
 
 def gc():
-    print(COLOR_START + "Start gc.\n")
+    print(COLOR_START + "Start gc.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
-        if not exist_path(repo['local'], i):
+        root = repo['local'] + repo['name']
+        print(COLOR_INFO + f"({i + 1}/{SIZE}) Optimizing {root}:")
+
+        if not exist_path(root):
             continue
-        os.chdir(repo['local'])
-        print(COLOR_INFO + f"({i + 1}/{SIZE}) Optimizing {repo['local']}:")
+
+        os.chdir(root)
         os.system('git gc --aggressive')
-        print()
 
     print(COLOR_FINISH + "Finish gc.")
 
