@@ -21,6 +21,8 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
+    init()
+
     print(COLOR_INFO + "Welcome to the automatic git management program!")
     print()
     print("status: check repositories status.")
@@ -58,6 +60,10 @@ def main():
     print("Bye!")
 
 
+def init():
+    os.system('git config --global push.autoSetupRemote true')
+
+
 def exist_path(path, idx) -> bool:
     if not os.path.exists(path):
         print(COLOR_ERROR + f"({idx + 1}/{size}) {path} not exists.\n")
@@ -89,7 +95,9 @@ def clone():
             if not os.path.exists(path):
                 os.mkdir(path)
             os.chdir(path)
-            os.system(f'git clone {repo['remote'][0]} "{name}"')
+            os.system(f'git clone {repo['remote']['github']} "{name}"')
+            os.chdir(name)
+            os.system('git remote remove origin')
             print()
         else:
             print(COLOR_INFO + f"{repo['local']} already exists.\n")
@@ -105,7 +113,7 @@ def push():
             continue
         print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['local']}:")
         os.chdir(repo['local'])
-        for address in repo['remote']:
+        for address in repo['remote'].values():
             print(COLOR_INFO + f"to {address}:")
             os.system(f"git push {address}")
         print()
@@ -121,7 +129,7 @@ def pull():
             continue
         print(COLOR_INFO + f"({i + 1}/{size}) Pulling {repo['local']}:")
         os.chdir(repo['local'])
-        os.system(f'git pull {repo['remote'][0]}')
+        os.system(f'git pull {repo['remote']['github']}')
 
     print(COLOR_FINISH + "Finish pull.")
 

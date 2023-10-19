@@ -12,10 +12,7 @@
 
 [[repos]]
 local = 'F:/Python/Python Programs'
-remote = [
-    'https://github.com/chen-qingyu/Python-Programs.git',
-    'https://gitee.com/ChobitsY/python-programs.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/Python-Programs.git', gitee = 'https://gitee.com/ChobitsY/python-programs.git' }
 clean = false
 
 # [[repos]]
@@ -60,18 +57,12 @@ clean = false
 
 [[repos]]
 local = 'F:/Projects/HelloWorld'
-remote = [
-    'https://github.com/chen-qingyu/Hello-World.git',
-    'https://gitee.com/ChobitsY/hello-world.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/Hello-World.git', gitee = 'https://gitee.com/ChobitsY/hello-world.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/LinearAlgebra'
-remote = [
-    'https://github.com/chen-qingyu/Linear-Algebra.git',
-    'https://gitee.com/ChobitsY/linear-algebra.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/Linear-Algebra.git', gitee = 'https://gitee.com/ChobitsY/linear-algebra.git' }
 clean = false
 
 # [[repos]]
@@ -101,24 +92,15 @@ clean = false
 
 [[repos]]
 local = 'F:/Projects/MDS'
-remote = [
-    'https://github.com/chen-qingyu/MDS.git',
-    'https://gitee.com/ChobitsY/mds.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/MDS.git', gitee = 'https://gitee.com/ChobitsY/mds.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/MDSPP'
-remote = [
-    'https://github.com/chen-qingyu/MDSPP.git',
-    'https://gitee.com/ChobitsY/mdspp.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/MDSPP.git', gitee = 'https://gitee.com/ChobitsY/mdspp.git' }
 clean = false
 
 [[repos]]
 local = 'F:/Projects/MyLinearAlgebra'
-remote = [
-    'https://github.com/chen-qingyu/MyLinearAlgebra.git',
-    'https://gitee.com/ChobitsY/my-linear-algebra.git',
-]
+remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/my-linear-algebra.git' }
 clean = true
