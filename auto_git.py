@@ -44,37 +44,45 @@ def interactive():
     print()
 
     while True:
-        action = input("\nYour choice [status(default)/clone/push/pull/clean/remote/gc/exit]: ").strip().lower()
-        if action == 'exit':
-            break
-        process(action)
+        match input("\nYour choice <status(default)/clone/push/pull/clean/remote/gc/exit> [name]: ").strip().lower().split():
+            case ['exit']:
+                break
+            case []:
+                process('status')
+            case [action]:
+                process(action)
+            case [action, name]:
+                process(action, name)
+            case _ as x:
+                print(COLOR_ERROR + "Invalid action: " + ' '.join(x))
     print("Bye!")
 
 
 def command():
-    parser = argparse.ArgumentParser(description="Python3 script for automating batch manage git repositories.")
-    parser.add_argument("action", type=str, help="git action: [status/clone/push/pull/clean/remote/gc]")
+    parser = argparse.ArgumentParser(prog='auto_git', description="Python3 script for automating batch manage git repositories.")
+    parser.add_argument("action", type=str, help="git action: <status/clone/push/pull/clean/remote/gc>")
+    parser.add_argument("name", type=str, help="Abbreviation of repository name", nargs='?')
     args = parser.parse_args()
-    process(args.action)
+    process(args.action.lower(), args.name.lower() if args.name else None)
 
 
-def process(x: str):
+def process(x: str, name=None):
     if x == 'status' or x == '':
-        status()
+        status(name)
     elif x == 'clone':
-        clone()
+        clone(name)
     elif x == 'push':
-        push()
+        push(name)
     elif x == 'pull':
-        pull()
+        pull(name)
     elif x == 'clean':
-        clean()
+        clean(name)
     elif x == 'remote':
-        remote()
+        remote(name)
     elif x == 'gc':
-        gc()
+        gc(name)
     else:
-        print(COLOR_ERROR + "Invalid action: " + x)
+        print(COLOR_ERROR + "Invalid action: " + (x + ' ' + name if name else x))
 
 
 def exist_path(path) -> bool:
@@ -84,10 +92,13 @@ def exist_path(path) -> bool:
     return True
 
 
-def status():
+def status(name):
     print(COLOR_START + "Start status.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Checking {root}:")
 
@@ -100,10 +111,13 @@ def status():
     print(COLOR_FINISH + "Finish status.")
 
 
-def clone():
+def clone(name):
     print(COLOR_START + "Start clone.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Cloning {root}:")
 
@@ -121,10 +135,13 @@ def clone():
     print(COLOR_FINISH + "Finish clone.")
 
 
-def push():
+def push(name):
     print(COLOR_START + "Start push.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Pushing {root}:")
 
@@ -139,10 +156,13 @@ def push():
     print(COLOR_FINISH + "Finish push.")
 
 
-def pull():
+def pull(name):
     print(COLOR_START + "Start pull.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Pulling {root}:")
 
@@ -155,10 +175,13 @@ def pull():
     print(COLOR_FINISH + "Finish pull.")
 
 
-def clean():
+def clean(name):
     print(COLOR_START + "Start clean.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Cleaning {root}:")
 
@@ -174,10 +197,13 @@ def clean():
     print(COLOR_FINISH + "Finish clean.")
 
 
-def remote():
+def remote(name):
     print(COLOR_START + "Start remote.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Showing {root}:")
 
@@ -190,10 +216,13 @@ def remote():
     print(COLOR_FINISH + "Finish remote.")
 
 
-def gc():
+def gc(name):
     print(COLOR_START + "Start gc.")
 
     for i, repo in zip(range(SIZE), DATA['repos']):
+        if name != None and name != repo['abbr'].lower():
+            continue
+
         root = repo['local'] + repo['name']
         print(COLOR_INFO + f"({i + 1}/{SIZE}) Optimizing {root}:")
 

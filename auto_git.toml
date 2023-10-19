@@ -1,4 +1,5 @@
 # name: the repository name.
+# abbr: the abbreviation of repository name, no spaces, case insensitive.
 # local: the root path of the local repository.
 # remote: remote repository addresses, latest ranked first.
 # upstream: the upstream remote repository host.
@@ -14,6 +15,7 @@
 
 [[repos]]
 name = 'Python Programs'
+abbr = 'PP'
 local = 'F:/Python/'
 remote = { github = 'https://github.com/chen-qingyu/Python-Programs.git', gitee = 'https://gitee.com/ChobitsY/python-programs.git' }
 upstream = 'github'
@@ -61,6 +63,7 @@ clean = false
 
 [[repos]]
 name = 'HelloWorld'
+abbr = 'HW'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/Hello-World.git', gitee = 'https://gitee.com/ChobitsY/hello-world.git' }
 upstream = 'github'
@@ -68,6 +71,7 @@ clean = false
 
 [[repos]]
 name = 'LinearAlgebra'
+abbr = 'LA'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/Linear-Algebra.git', gitee = 'https://gitee.com/ChobitsY/linear-algebra.git' }
 upstream = 'github'
@@ -100,6 +104,7 @@ clean = false
 
 [[repos]]
 name = 'MDS'
+abbr = 'MDS'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/MDS.git', gitee = 'https://gitee.com/ChobitsY/mds.git' }
 upstream = 'github'
@@ -107,6 +112,7 @@ clean = false
 
 [[repos]]
 name = 'MDSPP'
+abbr = 'MDSPP'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/MDSPP.git', gitee = 'https://gitee.com/ChobitsY/mdspp.git' }
 upstream = 'github'
@@ -114,6 +120,7 @@ clean = false
 
 [[repos]]
 name = 'MyLinearAlgebra'
+abbr = 'MLA'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/my-linear-algebra.git' }
 upstream = 'github'
