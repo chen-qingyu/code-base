@@ -113,9 +113,9 @@ def push():
             continue
         print(COLOR_INFO + f"({i + 1}/{size}) Pushing {repo['local']}:")
         os.chdir(repo['local'])
-        for address in repo['remote'].values():
-            print(COLOR_INFO + f"to {address}:")
-            os.system(f"git push {address}")
+        for host, url in repo['remote'].items():
+            print(COLOR_INFO + f"to {host}:")
+            os.system(f"git push {url}")
         print()
 
     print(COLOR_FINISH + "Finish push.")
