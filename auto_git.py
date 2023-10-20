@@ -167,11 +167,8 @@ def clean(name):
         if not exist_path(root):
             continue
 
-        if repo['clean']:
-            os.chdir(root)
-            os.system('git clean -d -f -X')
-        else:
-            print(COLOR_INFO + "Skip.")
+        os.chdir(root)
+        os.system('git clean -d -f -X')
 
     print(COLOR_FINISH + "Finish clean.")
 

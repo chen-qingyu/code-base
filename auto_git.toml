@@ -3,7 +3,6 @@
 # local: the root path of the local repository.
 # remote: remote repository addresses.
 # upstream: the upstream remote repository host.
-# clean: true if use ".gitignore" as pattern to clean up redundant files and directories recursively.
 
 [[repos]]
 name = 'HelloWorld'
@@ -11,7 +10,6 @@ abbr = 'HW'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/HelloWorld.git', gitee = 'https://gitee.com/ChobitsY/HelloWorld.git' }
 upstream = 'github'
-clean = false
 
 [[repos]]
 name = 'HelloDataStructure'
@@ -19,7 +17,6 @@ abbr = 'HDS'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/HelloDataStructure.git', gitee = 'https://gitee.com/ChobitsY/HelloDataStructure.git' }
 upstream = 'github'
-clean = false
 
 [[repos]]
 name = 'MyDataStructure'
@@ -27,7 +24,6 @@ abbr = 'MDS'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/MyDataStructure.git', gitee = 'https://gitee.com/ChobitsY/MyDataStructure.git' }
 upstream = 'github'
-clean = false
 
 [[repos]]
 name = 'MyLinearAlgebra'
@@ -35,7 +31,6 @@ abbr = 'MLA'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/MyLinearAlgebra.git' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'BadApple'
@@ -43,7 +38,6 @@ abbr = 'BA'
 local = 'F:/Projects/'
 remote = { github = 'https://github.com/chen-qingyu/BadApple', gitee = 'https://gitee.com/ChobitsY/BadApple' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'C Code'
@@ -51,7 +45,6 @@ abbr = 'CC'
 local = 'F:/'
 remote = { github = 'https://github.com/chen-qingyu/C-Code.git', gitee = 'https://gitee.com/ChobitsY/C-Code.git' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'Python Code'
@@ -59,7 +52,6 @@ abbr = 'PC'
 local = 'F:/'
 remote = { github = 'https://github.com/chen-qingyu/Python-Code.git', gitee = 'https://gitee.com/ChobitsY/Python-Code.git' }
 upstream = 'github'
-clean = false
 
 [[repos]]
 name = 'STM32 Code'
@@ -67,7 +59,6 @@ abbr = 'SC'
 local = 'F:/'
 remote = { github = 'https://github.com/chen-qingyu/STM32-Code.git', gitee = 'https://gitee.com/ChobitsY/STM32-Code.git' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'TeX Code'
@@ -75,7 +66,6 @@ abbr = 'TC'
 local = 'F:/'
 remote = { github = 'https://github.com/chen-qingyu/TeX-Code.git', gitee = 'https://gitee.com/ChobitsY/TeX-Code.git' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'C Primer Plus'
@@ -83,7 +73,6 @@ abbr = 'CPP'
 local = 'F:/Learn/'
 remote = { github = 'https://github.com/chen-qingyu/C-Primer-Plus.git', gitee = 'https://gitee.com/ChobitsY/c-primer-plus.git' }
 upstream = 'github'
-clean = true
 
 [[repos]]
 name = 'OSTEP'
@@ -91,7 +80,6 @@ abbr = 'OSTEP'
 local = 'F:/Learn/'
 remote = { github = 'https://github.com/chen-qingyu/OSTEP.git', gitee = 'https://gitee.com/ChobitsY/ostep.git' }
 upstream = 'github'
-clean = false
 
 [[repos]]
 name = 'HtDP'
@@ -99,4 +87,3 @@ abbr = 'HTDP'
 local = 'F:/Learn/'
 remote = { github = 'https://github.com/chen-qingyu/HtDP.git', gitee = 'https://gitee.com/ChobitsY/htdp.git' }
 upstream = 'github'
-clean = false
