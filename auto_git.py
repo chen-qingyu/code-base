@@ -106,10 +106,9 @@ def clone(name):
         os.chdir(repo['local'])
         os.system(f'git clone {repo['remote'][repo['upstream']]} "{repo['name']}"')
         os.chdir(repo['name'])
-        os.system(f'git remote rename origin {repo['upstream']}')
         for host, url in repo['remote'].items():
             if host != repo['upstream']:
-                os.system(f'git remote add {host} {url}')
+                os.system(f'git remote set-url --add origin {url}')
 
     print(COLOR_FINISH + "Finish clone.")
 
@@ -128,9 +127,7 @@ def push(name):
             continue
 
         os.chdir(root)
-        for host in repo['remote']:
-            print(COLOR_INFO + f"to {host}:")
-            os.system(f'git push {host}')
+        os.system(f'git push')
 
     print(COLOR_FINISH + "Finish push.")
 
