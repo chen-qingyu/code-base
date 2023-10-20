@@ -23,7 +23,7 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='auto_git', description="Python3 script for automating batch manage git repositories.")
+    parser = argparse.ArgumentParser(prog="auto_git", description="Python3 script for automating batch manage git repositories.")
     parser.add_argument("action", type=str, help="git action", choices=['status', 'clone', 'push', 'pull', 'clean', 'remote', 'gc'])
     parser.add_argument("name", type=str, help="Abbreviation of repository name", nargs='?', default='')
 
