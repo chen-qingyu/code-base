@@ -2,7 +2,7 @@
  * @file bf.c
  * @author 青羽 (chen_qingyu@qq.com)
  * @brief Brainfuck interpreter implementation in C. Reference to http://brainfuck.org/
- * @version 1.0
+ * @version 1.0.0
  * @date 2022.10.08
  *
  * @copyright Copyright (c) 2022
@@ -11,6 +11,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define BF_VERSION "1.0.0"
 
 #define MAX_CODE_SIZE 65536
 #define MEMORY_SIZE (65536 * 2)
@@ -42,6 +45,12 @@ int main(int argc, char** argv)
     {
         fprintf(stderr, "Usage: bf <filename>\n");
         exit(EXIT_FAILURE);
+    }
+
+    if (strcmp(argv[1], "--version") == 0)
+    {
+        printf("bf.exe %s\n", BF_VERSION);
+        exit(EXIT_SUCCESS);
     }
 
     read_file(argv[1]);
