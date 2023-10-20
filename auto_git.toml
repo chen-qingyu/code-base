@@ -5,116 +5,27 @@
 # upstream: the upstream remote repository host.
 # clean: true if use ".gitignore" as pattern to clean up redundant files and directories recursively.
 
-# [[repos]]
-# local = 'F:/C/C Programs'
-# remote = [
-#     'https://github.com/chen-qingyu/C-Programs.git',
-#     'https://gitee.com/ChobitsY/c-programs.git',
-# ]
-# clean = true
-
-[[repos]]
-name = 'Python Programs'
-abbr = 'PP'
-local = 'F:/Python/'
-remote = { github = 'https://github.com/chen-qingyu/Python-Programs.git', gitee = 'https://gitee.com/ChobitsY/python-programs.git' }
-upstream = 'github'
-clean = false
-
-# [[repos]]
-# local = 'F:/Java/Java Programs'
-# remote = [
-#     'https://github.com/chen-qingyu/Java-Programs.git',
-#     'https://gitee.com/ChobitsY/java-programs.git',
-# ]
-# clean = false
-
-# [[repos]]
-# local = 'F:/C/C Primer Plus'
-# remote = [
-#     'https://github.com/chen-qingyu/C-Primer-Plus.git',
-#     'https://gitee.com/ChobitsY/c-primer-plus.git',
-# ]
-# clean = true
-
-# [[repos]]
-# local = 'F:/Java/StuScore'
-# remote = [
-#     'https://github.com/chen-qingyu/StuScore.git',
-#     'https://gitee.com/ChobitsY/stu-score.git',
-# ]
-# clean = false
-
-# [[repos]]
-# local = 'F:/OSTEP'
-# remote = [
-#     'https://github.com/chen-qingyu/OSTEP.git',
-#     'https://gitee.com/ChobitsY/ostep.git',
-# ]
-# clean = false
-
-# [[repos]]
-# local = 'F:/Projects/BadApple'
-# remote = [
-#     'https://github.com/chen-qingyu/Bad-Apple',
-#     'https://gitee.com/ChobitsY/bad-apple',
-# ]
-# clean = true
-
 [[repos]]
 name = 'HelloWorld'
 abbr = 'HW'
 local = 'F:/Projects/'
-remote = { github = 'https://github.com/chen-qingyu/Hello-World.git', gitee = 'https://gitee.com/ChobitsY/hello-world.git' }
+remote = { github = 'https://github.com/chen-qingyu/HelloWorld.git', gitee = 'https://gitee.com/ChobitsY/HelloWorld.git' }
 upstream = 'github'
 clean = false
 
 [[repos]]
-name = 'LinearAlgebra'
-abbr = 'LA'
+name = 'HelloDataStructure'
+abbr = 'HDS'
 local = 'F:/Projects/'
-remote = { github = 'https://github.com/chen-qingyu/Linear-Algebra.git', gitee = 'https://gitee.com/ChobitsY/linear-algebra.git' }
+remote = { github = 'https://github.com/chen-qingyu/HelloDataStructure.git', gitee = 'https://gitee.com/ChobitsY/HelloDataStructure.git' }
 upstream = 'github'
 clean = false
 
-# [[repos]]
-# local = 'F:/Projects/Love Miao'
-# remote = ['github', 'gitee']
-# clean = false
-
-# [[repos]]
-# local = 'F:/Racket/HtDP'
-# remote = ['github', 'gitee']
-# clean = false
-
-# [[repos]]
-# local = 'F:/STM32/STM32 Programs'
-# remote = ['github', 'gitee']
-# clean = true
-
-# [[repos]]
-# local = 'F:/TeX'
-# remote = ['github', 'gitee']
-# clean = true
-
-# [[repos]]
-# local = 'F:/Projects/TestTime'
-# remote = ['github', 'gitee']
-# clean = true
-
 [[repos]]
-name = 'MDS'
+name = 'MyDataStructure'
 abbr = 'MDS'
 local = 'F:/Projects/'
-remote = { github = 'https://github.com/chen-qingyu/MDS.git', gitee = 'https://gitee.com/ChobitsY/mds.git' }
-upstream = 'github'
-clean = false
-
-[[repos]]
-name = 'MDSPP'
-abbr = 'MDSPP'
-local = 'F:/Projects/'
-remote = { github = 'https://github.com/chen-qingyu/MDSPP.git', gitee = 'https://gitee.com/ChobitsY/mdspp.git' }
+remote = { github = 'https://github.com/chen-qingyu/MyDataStructure.git', gitee = 'https://gitee.com/ChobitsY/MyDataStructure.git' }
 upstream = 'github'
 clean = false
 
@@ -122,6 +33,70 @@ clean = false
 name = 'MyLinearAlgebra'
 abbr = 'MLA'
 local = 'F:/Projects/'
-remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/my-linear-algebra.git' }
+remote = { github = 'https://github.com/chen-qingyu/MyLinearAlgebra.git', gitee = 'https://gitee.com/ChobitsY/MyLinearAlgebra.git' }
 upstream = 'github'
 clean = true
+
+[[repos]]
+name = 'BadApple'
+abbr = 'BA'
+local = 'F:/Projects/'
+remote = { github = 'https://github.com/chen-qingyu/BadApple', gitee = 'https://gitee.com/ChobitsY/BadApple' }
+upstream = 'github'
+clean = true
+
+[[repos]]
+name = 'C Code'
+abbr = 'CC'
+local = 'F:/'
+remote = { github = 'https://github.com/chen-qingyu/C-Code.git', gitee = 'https://gitee.com/ChobitsY/C-Code.git' }
+upstream = 'github'
+clean = true
+
+[[repos]]
+name = 'Python Code'
+abbr = 'PC'
+local = 'F:/'
+remote = { github = 'https://github.com/chen-qingyu/Python-Code.git', gitee = 'https://gitee.com/ChobitsY/Python-Code.git' }
+upstream = 'github'
+clean = false
+
+[[repos]]
+name = 'STM32 Code'
+abbr = 'SC'
+local = 'F:/'
+remote = { github = 'https://github.com/chen-qingyu/STM32-Code.git', gitee = 'https://gitee.com/ChobitsY/STM32-Code.git' }
+upstream = 'github'
+clean = true
+
+[[repos]]
+name = 'TeX Code'
+abbr = 'TC'
+local = 'F:/'
+remote = { github = 'https://github.com/chen-qingyu/TeX-Code.git', gitee = 'https://gitee.com/ChobitsY/TeX-Code.git' }
+upstream = 'github'
+clean = true
+
+[[repos]]
+name = 'C Primer Plus'
+abbr = 'CPP'
+local = 'F:/Learn/'
+remote = { github = 'https://github.com/chen-qingyu/C-Primer-Plus.git', gitee = 'https://gitee.com/ChobitsY/c-primer-plus.git' }
+upstream = 'github'
+clean = true
+
+[[repos]]
+name = 'OSTEP'
+abbr = 'OSTEP'
+local = 'F:/Learn/'
+remote = { github = 'https://github.com/chen-qingyu/OSTEP.git', gitee = 'https://gitee.com/ChobitsY/ostep.git' }
+upstream = 'github'
+clean = false
+
+[[repos]]
+name = 'HtDP'
+abbr = 'HTDP'
+local = 'F:/Learn/'
+remote = { github = 'https://github.com/chen-qingyu/HtDP.git', gitee = 'https://gitee.com/ChobitsY/htdp.git' }
+upstream = 'github'
+clean = false
