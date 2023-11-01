@@ -20,7 +20,7 @@ DOWNLOAD = './Download/'
 def main():
     # parse command
     parser = argparse.ArgumentParser(prog="auto_init", description="Python3 script for automating initialize the system environment.")
-    parser.add_argument("action", type=str, help="action", choices=['lib', 'pkg', 'all'])
+    parser.add_argument("action", type=str, help="Action", choices=['lib', 'pkg', 'all'])
     parser.add_argument("name", type=str, help="Python library name or software package name", nargs='?', default='')
     args = parser.parse_args()
 

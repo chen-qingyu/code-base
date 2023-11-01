@@ -49,14 +49,14 @@ libraries = [
 # Softwares that need to be installed
 
 # name: the name of the software package
-# method:
-# - automatic:
-#   - download_url:
-#   - install_args:
-# - manual:
-#   - download_link:
-# - winget:
-#   - id:
+# method: one of ['automatic', 'manual', 'winget']
+# - automatic: automatically download and try automatic installation
+#   - download_url: the URL download the file directly
+#   - install_args: install arguments
+# - manual: manual download and installation
+#   - download_link: the download link at which the browser opens
+# - winget: download and install using winget
+#   - id: the ID of the software package in winget
 
 [[softwares]]
 name = 'Qt'
