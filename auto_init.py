@@ -41,7 +41,6 @@ def main():
 
     print("Start colorize.")
     colorama.init(autoreset=True)
-
     COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
     COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
     COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
@@ -84,19 +83,18 @@ def pkg(name: str):
 
         print(COLOR_START + f"({i + 1}/{SIZE}) Start download/install {software['name']}...")
 
-        if software['method'] == 'use_winget':
-            os.system('winget install ' + software['name'])
-        elif software['method'] == 'auto_download_install':
-            download(software)
-            install(software)
-        elif software['method'] == 'auto_download':
-            download(software)
-            input(COLOR_INFO + f"Please install {software['name']} manually.")
-        elif software['method'] == 'manual':
-            webbrowser.open(software['download_link'])
-            input(COLOR_INFO + f"Please download and install {software['name']} manually.")
-        else:
-            print(COLOR_ERROR + "Error: Wrong method.")
+        match software['method']:
+            case 'automatic':
+                download(software)
+            case 'manual':
+                input(COLOR_INFO + f"Please download and install {software['name']} manually.")
+                webbrowser.open(software['download_link'])
+            case 'winget':
+                print(COLOR_INFO + f"Installing {software['name']} using winget...")
+                os.system('winget install ' + software['id'])
+                print(COLOR_INFO + f"Installed {software['name']} using winget.")
+            case _:
+                print(COLOR_ERROR + "Error: Wrong method.")
 
         print(COLOR_FINISH + f"Finish download/install {software['name']}.\n")
 
@@ -112,8 +110,6 @@ def download(software: dict):
             bar.update(size)
     print(COLOR_INFO + f"Downloaded {software['name']}.")
 
-
-def install(software: dict):
     print(COLOR_INFO + f"Installing {software['name']}...")
     file_name = software['download_url'].split('/')[-1]
     os.system(f'PowerShell {DOWNLOAD + file_name} {software['install_args']}')
