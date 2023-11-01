@@ -23,42 +23,24 @@ COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="auto_git", description="Python3 script for automating batch manage git repositories.")
-    parser.add_argument("action", type=str, help="git action", choices=['status', 'clone', 'push', 'pull', 'clean', 'remote', 'gc'])
+    help_text = """
+    Welcome to the automatic git management program!\n
+
+    status: check repositories status.
+    clone:  clone remote repositories to local repositories.
+    push:   push local repositories to remote repositories.
+    pull:   pull remote repositories to local repositories.
+    clean:  clean up redundant files and directories.
+    remote: show a list of existing remote repositories.
+    gc:     optimize the local repositories.
+    """
+
+    parser = argparse.ArgumentParser(prog="auto_git", description=help_text, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("action", type=str, help="Action of git operation", choices=['status', 'clone', 'push', 'pull', 'clean', 'remote', 'gc'])
     parser.add_argument("name", type=str, help="Abbreviation of repository name", nargs='?', default='')
+    args = parser.parse_args()
 
-    # interactive mode
-    if len(sys.argv) == 1:
-        print(COLOR_INFO + "Welcome to the automatic git management program!")
-        print()
-        print("status: check repositories status.")
-        print("clone:  clone remote repositories to local repositories.")
-        print("push:   push local repositories to remote repositories.")
-        print("pull:   pull remote repositories to local repositories.")
-        print("clean:  clean up redundant files and directories.")
-        print("remote: show a list of existing remote repositories.")
-        print("gc:     optimize the local repositories.")
-        print()
-        print("exit:   exit this program.")
-        print()
-        while True:
-            choice = input("\nYour choice (default = status): ").strip().lower().split()
-            if choice == []:
-                process('status', '')
-            elif choice == ['exit']:
-                print("Bye!")
-                break
-            else:
-                args = parser.parse_args(choice)
-                process(args.action, args.name)
-    # command mode
-    else:
-        args = parser.parse_args()
-        process(args.action, args.name)
-
-
-def process(action: str, name: str):
-    eval(f'{action.lower()}(\'{name.lower()}\')')
+    eval(f'{args.action}(\'{args.name.lower()}\')')
 
 
 def exist_path(path) -> bool:
