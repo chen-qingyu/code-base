@@ -80,6 +80,6 @@ method = 'manual'
 download_link = 'https://developer.android.com/studio'
 
 [[softwares]]
-name = 'git'
+name = 'Git'
 method = 'winget'
 id = 'Git.Git'
