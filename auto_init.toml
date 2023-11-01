@@ -2,14 +2,9 @@
 
 # Python third-party libraries that need to be installed/upgraded
 libraries = [
-    # The first three are necessary and fixed
-    'pip',
-    'setuptools',
-    'wheel',
-
     'numpy',
     'scipy',
-    'pandas',
+    'sympy',
 
     'matplotlib',
     'pillow',     # PIL
