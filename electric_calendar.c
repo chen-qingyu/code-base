@@ -3,12 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define SUNDAY 0
-
-const int base_year = 1589;
-const int base_year_jan_1 = SUNDAY;
-const int max_year = 2999;
-
 static inline void print_header(const int year, const int month)
 {
     switch (month)
@@ -60,66 +54,11 @@ static inline bool is_leap_year(int year)
     return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
 }
 
-static inline bool is_valid_date(int year, int month, int day)
-{
-    bool is_valid_year = (year >= base_year && year <= max_year);
-    bool is_valid_month = (month >= 1 && month <= 12);
-    bool is_valid_day = false;
-
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-    {
-        is_valid_day = (day >= 1 && day <= 31);
-    }
-    else if (month == 4 || month == 6 || month == 9 || month == 11)
-    {
-        is_valid_day = (day >= 1 && day <= 30);
-    }
-    else // month == 2
-    {
-        is_valid_day = is_leap_year(year) ? (day >= 1 && day <= 29) : (day >= 1 && day <= 28);
-    }
-
-    return is_valid_year && is_valid_month && is_valid_day;
-}
-
 static inline int day_of_week(int year, int month, int day)
 {
-    int dow = base_year_jan_1 - 1;
-
-    for (int y = base_year; y < year; y++)
-    {
-        for (int m = 1; m <= 12; m++)
-        {
-            for (int d = 1; d <= 31; d++)
-            {
-                if (is_valid_date(y, m, d))
-                {
-                    dow++;
-                }
-            }
-        }
-    }
-
-    for (int m = 1; m < month; m++)
-    {
-        for (int d = 1; d <= 31; d++)
-        {
-            if (is_valid_date(year, m, d))
-            {
-                dow++;
-            }
-        }
-    }
-
-    for (int d = 1; d <= day; d++)
-    {
-        if (is_valid_date(year, month, d))
-        {
-            dow++;
-        }
-    }
-
-    return dow % 7;
+    // Tomohiko Sakamoto's Algorithm
+    year -= month < 3;
+    return (year + year / 4 - year / 100 + year / 400 + "-bed=pen+mad."[month] + day) % 7;
 }
 
 static inline void print_calendar(int year, int month)
@@ -140,7 +79,7 @@ static inline void print_calendar(int year, int month)
         days = is_leap_year(year) ? 29 : 28;
     }
 
-    int dow = day_of_week(year, month, 1);
+    int dow = day_of_week(year, month, 1); // Sunday is 0
     for (int i = 0; i < dow; i++)
     {
         printf("   ");
