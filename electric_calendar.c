@@ -1,7 +1,7 @@
 /**
  * @file electric_calendar.c
  * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Simple and elegant electronic calendar.
+ * @brief A simple and elegant electronic calendar.
  * @version 1.0
  * @date 2021.01.28
  *
