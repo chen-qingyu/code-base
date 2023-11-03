@@ -19,7 +19,7 @@ static inline void print_header(const int year, const int month)
         "====November %d===\n",
         "====December %d===\n",
     };
-    printf(headers[1 + month], year);
+    printf(headers[month - 1], year);
     printf("Su Mo Tu We Th Fr Sa\n");
 }
 
