@@ -5,7 +5,6 @@
 
 import os
 import tomllib
-import sys
 import argparse
 
 import colorama
