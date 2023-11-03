@@ -5,47 +5,21 @@
 
 static inline void print_header(const int year, const int month)
 {
-    switch (month)
-    {
-        case 1:
-            printf("====January %d====\n", year);
-            break;
-        case 2:
-            printf("====February %d===\n", year);
-            break;
-        case 3:
-            printf("====March %d======\n", year);
-            break;
-        case 4:
-            printf("====April %d======\n", year);
-            break;
-        case 5:
-            printf("====May %d========\n", year);
-            break;
-        case 6:
-            printf("====June %d=======\n", year);
-            break;
-        case 7:
-            printf("====July %d=======\n", year);
-            break;
-        case 8:
-            printf("====August %d=====\n", year);
-            break;
-        case 9:
-            printf("====September %d==\n", year);
-            break;
-        case 10:
-            printf("====October %d====\n", year);
-            break;
-        case 11:
-            printf("====November %d===\n", year);
-            break;
-        case 12:
-            printf("====December %d===\n", year);
-            break;
-        default:
-            break;
-    }
+    static const char* headers[] = {
+        "====January %d====\n",
+        "====February %d===\n",
+        "====March %d======\n",
+        "====April %d======\n",
+        "====May %d========\n",
+        "====June %d=======\n",
+        "====July %d=======\n",
+        "====August %d=====\n",
+        "====September %d==\n",
+        "====October %d====\n",
+        "====November %d===\n",
+        "====December %d===\n",
+    };
+    printf(headers[1 + month], year);
     printf("Su Mo Tu We Th Fr Sa\n");
 }
 
