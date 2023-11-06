@@ -4,10 +4,21 @@
 # CreateDate: 2022.02.11
 
 import os
+import sys
 import tomllib
 import argparse
 
-import colorama
+# check version
+if not (sys.version_info.major == 3 and sys.version_info.minor >= 12):
+    print("Require at least Python >= 3.12")
+
+# dynamically load third-party libraries
+try:
+    import colorama
+except ModuleNotFoundError:
+    os.system('python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple pip setuptools wheel colorama')
+    os.system('python -m pip cache purge')
+    import colorama
 
 with open('auto_git.toml', 'rb') as f:
     DATA = tomllib.load(f)
