@@ -54,7 +54,7 @@ def main():
 
     # process command
     if args.action == 'lib':
-        lib(args.name)
+        lib(args.name if args.name != '' else ' '.join(DATA['libraries']))
     elif args.action == 'pkg':
         pkg(args.name)
     else:
