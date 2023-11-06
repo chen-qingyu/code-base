@@ -4,6 +4,7 @@
 # CreateDate: 2023.09.27
 
 import os
+import sys
 import platform
 import webbrowser
 import importlib
