@@ -7,7 +7,6 @@ import os
 import sys
 import platform
 import webbrowser
-import importlib
 import tomllib
 import argparse
 
@@ -16,11 +15,28 @@ if not (sys.version_info.major == 3 and sys.version_info.minor >= 12):
     print("Require at least Python >= 3.12")
     exit(1)
 
+# dynamically load third-party libraries
+try:
+    import colorama
+    import requests
+    import tqdm
+except ModuleNotFoundError:
+    os.system('python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple pip setuptools wheel colorama requests tqdm')
+    os.system('python -m pip cache purge')
+    import colorama
+    import requests
+    import tqdm
+
+colorama.init(autoreset=True)
+
+COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
+COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
+COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
+COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
+
 with open('auto_init.toml', 'rb') as f:
     DATA = tomllib.load(f)
     SIZE = len(DATA['softwares'])
-
-DOWNLOAD = './Download/'
 
 
 def main():
@@ -30,39 +46,10 @@ def main():
     parser.add_argument("name", type=str, help="Python library name or software package name", nargs='?', default='')
     args = parser.parse_args()
 
-    global COLOR_START, COLOR_INFO, COLOR_FINISH, COLOR_ERROR
-    COLOR_START, COLOR_INFO, COLOR_FINISH, COLOR_ERROR = '', '', '', ''
-
-    print("Start upgrade pip tools.")
-    lib('pip setuptools wheel')
-    print("Finish upgrade pip tools.")
-
-    print("Start dynamically load third-party libraries.")
-    lib('colorama requests tqdm')
-    global colorama, requests, tqdm
-    colorama = importlib.import_module('colorama')
-    requests = importlib.import_module('requests')
-    tqdm = importlib.import_module('tqdm')
-    print("Finish dynamically load third-party libraries.")
-
-    print("Start colorize.")
-    colorama.init(autoreset=True)
-    COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
-    COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
-    COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
-    COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
-    print(COLOR_FINISH + "Finish colorize.")
-
     print(COLOR_START + "Checking platform...")
     if platform.system() != 'Windows':
         print(COLOR_ERROR + "This script currently only supports the Windows platform.\n")
         exit(-1)
-    print(COLOR_FINISH + "OK.")
-
-    print(COLOR_START + "Creating download folder...")
-    if not os.path.exists(DOWNLOAD):
-        os.mkdir(DOWNLOAD)
-        print(COLOR_INFO + f"Created: {DOWNLOAD}")
     print(COLOR_FINISH + "OK.")
 
     # process command
@@ -106,6 +93,13 @@ def pkg(name: str):
 
 
 def download(software: dict):
+    DOWNLOAD = './Download/'
+    print(COLOR_START + "Creating download folder...")
+    if not os.path.exists(DOWNLOAD):
+        os.mkdir(DOWNLOAD)
+        print(COLOR_INFO + f"Created: {DOWNLOAD}")
+    print(COLOR_FINISH + "OK.")
+
     print(COLOR_INFO + f"Downloading {software['name']}...")
     file_name = software['download_url'].split('/')[-1]
     response = requests.get(software['download_url'], stream=True)
