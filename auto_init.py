@@ -14,6 +14,7 @@ import argparse
 # check version
 if not (sys.version_info.major == 3 and sys.version_info.minor >= 12):
     print("Require at least Python >= 3.12")
+    exit(1)
 
 with open('auto_init.toml', 'rb') as f:
     DATA = tomllib.load(f)
