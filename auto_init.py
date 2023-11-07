@@ -19,7 +19,6 @@ if not (sys.version_info.major == 3 and sys.version_info.minor >= 12):
 
 with open('auto_init.toml', 'rb') as f:
     DATA = tomllib.load(f)
-    SIZE = len(DATA['softwares'])
 
 DOWNLOAD = './Download/'
 
@@ -35,11 +34,11 @@ def main():
     COLOR_START, COLOR_INFO, COLOR_FINISH, COLOR_ERROR = '', '', '', ''
 
     print("Start upgrade pip tools.")
-    lib('pip setuptools wheel')
+    lib(['pip', 'setuptools', 'wheel'])
     print("Finish upgrade pip tools.")
 
     print("Start dynamically load third-party libraries.")
-    lib('colorama requests tqdm')
+    lib(['colorama', 'requests', 'tqdm'])
     global colorama, requests, tqdm
     colorama = importlib.import_module('colorama')
     requests = importlib.import_module('requests')
@@ -68,34 +67,32 @@ def main():
 
     # process command
     if args.action == 'lib':
-        lib(args.name if args.name != '' else ' '.join(DATA['libraries']))
+        lib(DATA['libraries'] if args.name == '' else [args.name])
     elif args.action == 'pkg':
-        pkg(args.name)
+        pkg(DATA['softwares'] if args.name == '' else [args.name])
     else:
-        lib(' '.join(DATA['libraries']))
-        pkg('')
+        lib(DATA['libraries'])
+        pkg(DATA['softwares'])
 
 
-def lib(name: str):
-    print(COLOR_START + f"Start install/upgrade libraries: {name}")
-    os.system(f'python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple {name}')
+def lib(libs: list[str, ...]):
+    print(COLOR_START + f"Start install/upgrade libraries: {', '.join(libs)}")
+    os.system(f'python -m pip install --upgrade --index-url https://pypi.tuna.tsinghua.edu.cn/simple {' '.join(libs)}')
     os.system('python -m pip cache purge')
-    print(COLOR_FINISH + f"Finish install/upgrade libraries: {name}")
+    print(COLOR_FINISH + f"Finish install/upgrade libraries: {', '.join(libs)}")
 
 
-def pkg(name: str):
-    for i, software in zip(range(SIZE), DATA['softwares']):
-        if name != '' and software['name'].lower() != name.lower():
-            continue
+def pkg(pkgs: list[dict, ...]):
+    for i, software in zip(range(len(pkgs)), pkgs):
 
-        print(COLOR_START + f"({i + 1}/{SIZE}) Start download/install {software['name']}...")
+        print(COLOR_START + f"({i + 1}/{len(pkgs)}) Start download/install {software['name']}...")
 
         match software['method']:
             case 'automatic':
                 download(software)
             case 'manual':
-                input(COLOR_INFO + f"Please download and install {software['name']} manually.")
                 webbrowser.open(software['download_link'])
+                input(COLOR_INFO + f"Please download and install {software['name']} manually.")
             case 'winget':
                 print(COLOR_INFO + f"Installing {software['name']} using winget...")
                 os.system('winget install ' + software['id'])
