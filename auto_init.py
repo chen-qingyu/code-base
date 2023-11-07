@@ -69,7 +69,13 @@ def main():
     if args.action == 'lib':
         lib(DATA['libraries'] if args.name == '' else [args.name])
     elif args.action == 'pkg':
-        pkg(DATA['softwares'] if args.name == '' else [args.name])
+        if args.name != '':
+            for software in DATA['softwares']:
+                if software['name'].lower() == args.name.lower():
+                    pkg([software])
+                    break
+        else:
+            pkg(DATA['softwares'])
     else:
         lib(DATA['libraries'])
         pkg(DATA['softwares'])
