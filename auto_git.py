@@ -158,7 +158,7 @@ def clean(name):
             continue
 
         os.chdir(root)
-        os.system('git clean -d -f -X')
+        os.system('git clean -d -f -x')
 
     print(COLOR_FINISH + "Finish clean.")
 
