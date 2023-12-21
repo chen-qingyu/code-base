@@ -1,9 +1,8 @@
 import os
 import sys
 
-from PyQt6.QtCore import QDataStream, QFile, QIODevice, QDateTime, QTimer, QUrl
-from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PyQt6.QtWidgets import QApplication, QWidget, QTableWidget, QHBoxLayout, QPushButton, QVBoxLayout, \
+from PySide6.QtCore import QDataStream, QFile, QIODevice, QDateTime, QTimer, QUrl
+from PySide6.QtWidgets import QApplication, QWidget, QTableWidget, QHBoxLayout, QPushButton, QVBoxLayout, \
     QComboBox, QDateTimeEdit, QMessageBox, QLabel, QLineEdit, QHeaderView
 
 
@@ -34,11 +33,6 @@ class TodoTool(QWidget):
         self.timer = QTimer()
         self.timer.timeout.connect(self.check_todo)
         self.timer.start(1000 * 60)  # 1分钟
-
-        self.player = QMediaPlayer()  # 需要实例化为成员变量以防自动回收导致无法播放
-        self.output = QAudioOutput()  # 需要实例化为成员变量以防自动回收导致无法播放
-        self.player.setAudioOutput(self.output)
-        self.player.setSource(QUrl.fromLocalFile("sound.mp3"))
 
         self.init_ui()
 
@@ -115,10 +109,10 @@ class TodoTool(QWidget):
         file.open(QIODevice.OpenModeFlag.WriteOnly)
         stream = QDataStream(file)
         row_cnt = self.table.rowCount()
-        stream.writeInt(row_cnt)
+        stream.writeInt32(row_cnt)
         for r in range(row_cnt):
-            stream.writeInt(self.table.cellWidget(r, 0).currentIndex())
-            stream.writeString(self.table.cellWidget(r, 1).text().encode())
+            stream.writeInt32(self.table.cellWidget(r, 0).currentIndex())
+            stream.writeString(self.table.cellWidget(r, 1).text())
             stream << QDateTime(self.table.cellWidget(r, 2).dateTime())
             stream << QDateTime(self.table.cellWidget(r, 3).dateTime())
         file.close()
@@ -127,17 +121,17 @@ class TodoTool(QWidget):
         file = QFile(self.FILE)
         file.open(QIODevice.OpenModeFlag.ReadOnly)
         stream = QDataStream(file)
-        row_cnt = stream.readInt()
+        row_cnt = stream.readInt32()
         self.table.setRowCount(row_cnt)
         for r in range(row_cnt):
             combo = QComboBox()
             combo.addItems(self.COMBO)
-            combo.setCurrentIndex(stream.readInt())
+            combo.setCurrentIndex(stream.readInt32())
             combo.currentIndexChanged.connect(self.save_data)
             self.table.setCellWidget(r, 0, combo)
 
             line = QLineEdit()
-            line.setText(stream.readString().decode())
+            line.setText(stream.readString())
             line.textChanged.connect(self.save_data)
             self.table.setCellWidget(r, 1, line)
 
@@ -184,7 +178,6 @@ class TodoTool(QWidget):
             if start.dateTime().date() == now.date() \
                     and start.dateTime().time().hour() == now.time().hour() \
                     and start.dateTime().time().minute() == now.time().minute():
-                self.player.play()
                 btn = QMessageBox.information(self, "时间到了！", f"第{r + 1}行的待办事项开始时间到了，延迟十分钟吗？",
                                               QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
                 if btn == QMessageBox.StandardButton.Ok:
@@ -192,7 +185,6 @@ class TodoTool(QWidget):
             elif end.dateTime().date() == now.date() \
                     and end.dateTime().time().hour() == now.time().hour() \
                     and end.dateTime().time().minute() == now.time().minute():
-                self.player.play()
                 btn = QMessageBox.information(self, "时间到了！", f"第{r + 1}行的待办事项截止时间到了，延迟十分钟吗？",
                                               QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
                 if btn == QMessageBox.StandardButton.Ok:
