@@ -75,15 +75,21 @@ static inline void print_calendar(int year, int month)
     }
 }
 
-int main(void)
+void print_help(void)
 {
     printf("Welcome to the electronic calendar program!\n");
     printf("Designed by C\n");
     printf(" - N: Show calendar for next month.\n");
     printf(" - P: Show calendar for previous month.\n");
     printf(" - C: Show calendar for current month.\n");
+    printf(" - H: Show help.\n");
     printf(" - Q: Quit.\n");
     printf("\n");
+}
+
+int main(void)
+{
+    print_help();
 
     time_t now = time(NULL);
     struct tm* tm = localtime(&now);
@@ -133,6 +139,10 @@ int main(void)
         {
             show_year = tm->tm_year + 1900;
             show_month = tm->tm_mon + 1;
+        }
+        else if (choice == 'H' || choice == 'h')
+        {
+            print_help();
         }
     }
 
