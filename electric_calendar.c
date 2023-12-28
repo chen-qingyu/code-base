@@ -112,12 +112,7 @@ int main(void)
         scanf("%c", &choice);
         fflush(stdin);
 
-        if (choice == 'Q' || choice == 'q')
-        {
-            printf("Bye.\n");
-            break;
-        }
-        else if (choice == 'N' || choice == 'n')
+        if (choice == 'N' || choice == 'n')
         {
             show_month++;
             if (show_month > 12)
@@ -143,6 +138,11 @@ int main(void)
         else if (choice == 'H' || choice == 'h')
         {
             print_help();
+        }
+        else if (choice == 'Q' || choice == 'q')
+        {
+            printf("Bye.\n");
+            break;
         }
     }
 
