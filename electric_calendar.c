@@ -87,6 +87,8 @@ int main(void)
 
     time_t now = time(NULL);
     struct tm* tm = localtime(&now);
+    const int buf_maxsize = 64;
+    char buffer[buf_maxsize];
 
     int show_year = tm->tm_year + 1900;
     int show_month = tm->tm_mon + 1;
@@ -96,16 +98,9 @@ int main(void)
         now = time(NULL);
         tm = localtime(&now);
 
-        int year = tm->tm_year + 1900;
-        int month = tm->tm_mon + 1;
-        int day = tm->tm_mday;
-        int hour = tm->tm_hour;
-        int minute = tm->tm_min;
-        int second = tm->tm_sec;
-
         print_calendar(show_year, show_month);
-        printf("\n");
-        printf("Now: %d.%02d.%02d %02d:%02d:%02d\n", year, month, day, hour, minute, second);
+        strftime(buffer, buf_maxsize, "\nNow: %Y.%m.%d %H:%M:%S\n", tm);
+        printf(buffer);
 
         char choice = '\0';
         scanf("%c", &choice);
@@ -136,8 +131,8 @@ int main(void)
         }
         else if (choice == 'C' || choice == 'c')
         {
-            show_year = year;
-            show_month = month;
+            show_year = tm->tm_year + 1900;
+            show_month = tm->tm_mon + 1;
         }
     }
 
