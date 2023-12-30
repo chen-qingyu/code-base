@@ -131,8 +131,8 @@ void test()
 
 enum
 {
-    Encode = 0,
-    Decode = 1,
+    Encode,
+    Decode,
 };
 
 void encode_or_decode(const char* filename, int mode)
@@ -158,12 +158,12 @@ void encode_or_decode(const char* filename, int mode)
 
     // read data to buffer
     size_t result = fread(buffer, 1, file_size, file);
+    fclose(file);
     if (result != file_size)
     {
         fprintf(stderr, "reading error.");
         exit(3);
     }
-    fclose(file);
 
     // encode or decode
     char* out_filename;
@@ -196,14 +196,14 @@ void encode_or_decode(const char* filename, int mode)
         exit(1);
     }
     result = fwrite(out, 1, out_size, file);
+    fclose(file);
+    free(out_filename);
+    free(out);
     if (result != out_size)
     {
         fprintf(stderr, "write file failed.");
         exit(2);
     }
-    fclose(file);
-    free(out_filename);
-    free(out);
 }
 
 int main(int argc, char const* argv[])
