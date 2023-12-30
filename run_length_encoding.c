@@ -1,6 +1,8 @@
 // Run-length encoding
 
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static int is_repeat(const unsigned char* src, int size)
@@ -102,7 +104,7 @@ int rle_decode(const unsigned char* src, int src_size, unsigned char* dst, int d
     return decode_size;
 }
 
-int main(void)
+void test()
 {
     char* src;
     unsigned char encode_out[32];
@@ -125,6 +127,104 @@ int main(void)
     memset(decode_out, 0, 32);
     decode_size = rle_decode(encode_out, encode_size, decode_out, 32);
     assert(memcmp(decode_out, src, decode_size) == 0);
+}
+
+enum
+{
+    Encode = 0,
+    Decode = 1,
+};
+
+void encode_or_decode(const char* filename, int mode)
+{
+    // read src file
+    FILE* file = fopen(filename, "rb");
+    if (file == NULL)
+    {
+        fprintf(stderr, "open src file failed.");
+        exit(1);
+    }
+
+    // alloc buffer
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    rewind(file);
+    unsigned char* buffer = (unsigned char*)malloc(sizeof(char) * file_size);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "memory error.");
+        exit(2);
+    }
+
+    // read data to buffer
+    size_t result = fread(buffer, 1, file_size, file);
+    if (result != file_size)
+    {
+        fprintf(stderr, "reading error.");
+        exit(3);
+    }
+    fclose(file);
+
+    // encode or decode
+    char* out_filename;
+    unsigned char* out;
+    int out_size;
+    if (mode == Encode)
+    {
+        out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5); // + ".rle"
+        strcpy(out_filename, filename);
+        strcat(out_filename, ".rle");
+
+        out = (unsigned char*)malloc(sizeof(char) * file_size * 2);
+        out_size = rle_encode(buffer, file_size, out, sizeof(char) * file_size * 2);
+    }
+    else if (mode == Decode)
+    {
+        out_filename = (char*)calloc(strlen(filename), sizeof(char));
+        strncpy(out_filename, filename, strlen(filename) - 4);
+
+        out = (unsigned char*)malloc(sizeof(char) * file_size * 10);
+        out_size = rle_decode(buffer, file_size, out, sizeof(char) * file_size * 10);
+    }
+    free(buffer);
+
+    // write out file
+    file = fopen(out_filename, "wb");
+    if (file == NULL)
+    {
+        fprintf(stderr, "open out file failed.");
+        exit(1);
+    }
+    result = fwrite(out, 1, out_size, file);
+    if (result != out_size)
+    {
+        fprintf(stderr, "write file failed.");
+        exit(2);
+    }
+    fclose(file);
+    free(out_filename);
+    free(out);
+}
+
+int main(int argc, char const* argv[])
+{
+    test();
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "usage: run_length_encoding file[.rle]");
+        exit(-1);
+    }
+
+    const char* suffix = argv[1] + strlen(argv[1]) - 4;
+    if ((strlen(argv[1]) > 4) && (strcmp(suffix, ".rle") == 0))
+    {
+        encode_or_decode(argv[1], Decode);
+    }
+    else
+    {
+        encode_or_decode(argv[1], Encode);
+    }
 
     return 0;
 }
