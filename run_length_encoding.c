@@ -152,7 +152,7 @@ void encode_or_decode(const char* filename, int mode)
     unsigned char* buffer = (unsigned char*)malloc(sizeof(char) * file_size);
     if (buffer == NULL)
     {
-        fprintf(stderr, "memory error.");
+        fprintf(stderr, "alloc memory failed.");
         exit(2);
     }
 
@@ -161,7 +161,7 @@ void encode_or_decode(const char* filename, int mode)
     fclose(file);
     if (result != file_size)
     {
-        fprintf(stderr, "reading error.");
+        fprintf(stderr, "read file failed.");
         exit(3);
     }
 
