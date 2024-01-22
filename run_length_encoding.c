@@ -169,22 +169,25 @@ void encode_or_decode(const char* filename, int mode)
     char* out_filename;
     unsigned char* out;
     int out_size;
+    int scalar;
     if (mode == Encode)
     {
         out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5); // + ".rle"
         strcpy(out_filename, filename);
         strcat(out_filename, ".rle");
 
-        out = (unsigned char*)malloc(sizeof(char) * file_size * 2);
-        out_size = rle_encode(buffer, file_size, out, sizeof(char) * file_size * 2);
+        scalar = 2;
+        out = (unsigned char*)malloc(sizeof(char) * file_size * scalar);
+        out_size = rle_encode(buffer, file_size, out, sizeof(char) * file_size * scalar);
     }
     else if (mode == Decode)
     {
         out_filename = (char*)calloc(strlen(filename), sizeof(char));
         strncpy(out_filename, filename, strlen(filename) - 4);
 
-        out = (unsigned char*)malloc(sizeof(char) * file_size * 10);
-        out_size = rle_decode(buffer, file_size, out, sizeof(char) * file_size * 10);
+        scalar = 64; // 128 / 2
+        out = (unsigned char*)malloc(sizeof(char) * file_size * scalar);
+        out_size = rle_decode(buffer, file_size, out, sizeof(char) * file_size * scalar);
     }
     free(buffer);
 
