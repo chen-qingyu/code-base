@@ -86,9 +86,9 @@ double calc_pi_3(int n)
 double calc_pi_4(int n)
 {
     double pi = 1, x = 1;
-    for (double i = 1; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
-        x *= i / (2 * i + 1);
+        x *= (double)i / (2 * i + 1);
         pi += x;
     }
     return pi * 2;
@@ -119,7 +119,7 @@ double calc_e_1(int n)
 double calc_e_2(int n)
 {
     double e = 1, x = 1;
-    for (double i = 1; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
         x *= 1.0 / i;
         e += x;

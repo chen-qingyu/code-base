@@ -12,7 +12,7 @@ int main(void)
         return 0;
     }
 
-    printf("The equation: %.2lfx^2 + %.2lfx + %.2lf = 0\n", a, b, c);
+    printf("The equation: %.2lfx^2%+.2lfx%+.2lf = 0\n", a, b, c);
 
     if (a == 0) // and b != 0
     {
@@ -24,11 +24,11 @@ int main(void)
 
     double delta = b * b - 4 * a * c;
     double m = -b / (2 * a);
-    double n = sqrt(fabs(delta)) / (2 * fabs(a));
+    double n = sqrt(fabs(delta)) / (2 * a);
     if (delta < 0)
     {
         printf("The equation has two different plural roots:\n");
-        printf("x1 = %.2lf+%.2lfi, x2 = %.2lf-%.2lfi\n", m, n, m, n);
+        printf("x1 = %.2lf%+.2lfi, x2 = %.2lf%+.2lfi\n", m, n, m, -n);
     }
     else if (delta == 0)
     {
