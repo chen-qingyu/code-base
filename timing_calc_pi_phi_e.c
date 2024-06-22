@@ -8,15 +8,16 @@ double calc_pi_2(int n);
 double calc_pi_3(int n);
 double calc_pi_4(int n);
 
-double calc_phi_1(int n);
+double calc_phi_1(int _);
 double calc_phi_2(int n);
+double calc_phi_3(int n);
 
 double calc_e_1(int n);
 double calc_e_2(int n);
 double calc_e_3(int n);
 
 typedef double (*function_t)(int n);
-void time_test(function_t function, const char* message, int n);
+void time_test(function_t function, const char *message, int n);
 
 int main(void)
 {
@@ -28,8 +29,9 @@ int main(void)
     printf("\n");
 
     printf("Calculate phi:\n");
-    time_test(calc_phi_1, "Fibonacci sequence", 100);
-    time_test(calc_phi_2, "Consecutive fraction", 100);
+    time_test(calc_phi_1, "Algebraic", 100);
+    time_test(calc_phi_2, "Fibonacci sequence", 100);
+    time_test(calc_phi_3, "Continued fraction", 100);
     printf("\n");
 
     printf("Calculate e:\n");
@@ -94,7 +96,12 @@ double calc_pi_4(int n)
     return pi * 2;
 }
 
-double calc_phi_1(int n)
+double calc_phi_1(int _)
+{
+    return (1 + sqrt(5)) / 2;
+}
+
+double calc_phi_2(int n)
 {
     double t1 = 0, t2 = 1;
     for (int i = 0; i < n; ++i)
@@ -103,12 +110,12 @@ double calc_phi_1(int n)
         t1 = t2;
         t2 = next;
     }
-    return t1 / t2;
+    return t2 / t1;
 }
 
-double calc_phi_2(int n)
+double calc_phi_3(int n)
 {
-    return n == 0 ? 0.618 : 1.0 / (calc_phi_2(n - 1) + 1);
+    return n == 0 ? 1.618 : 1 + 1 / calc_phi_3(n - 1);
 }
 
 double calc_e_1(int n)
@@ -140,7 +147,7 @@ double calc_e_3(int n)
     return (double)k / n;
 }
 
-void time_test(function_t function, const char* message, int n)
+void time_test(function_t function, const char *message, int n)
 {
     double result;
 
@@ -151,5 +158,5 @@ void time_test(function_t function, const char* message, int n)
     }
     clock_t end = clock();
 
-    printf("result: %lf, duration: %6.2lfms (%s)\n", result, (double)(end - start) / CLOCKS_PER_SEC * 1000, message);
+    printf("iteration: %4d, result: %.14lf, duration: %6.2lfms (%s)\n", n, result, (double)(end - start) / CLOCKS_PER_SEC * 1000, message);
 }
