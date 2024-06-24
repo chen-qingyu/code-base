@@ -22,22 +22,22 @@ void time_test(function_t function, const char *message, int n);
 int main(void)
 {
     printf("Calculate pi:\n");
-    time_test(calc_pi_1, "Monte Carlo method", 2000);
-    time_test(calc_pi_2, "Uniform sprinkling method", 2000);
-    time_test(calc_pi_3, "Series summation", 2000);
-    time_test(calc_pi_4, "Advanced series summation", 2000);
+    time_test(calc_pi_1, "Monte Carlo method", 1000);
+    time_test(calc_pi_2, "Uniform sprinkling method", 1000);
+    time_test(calc_pi_3, "Series summation", 1000);
+    time_test(calc_pi_4, "Advanced series summation", 1000);
     printf("\n");
 
     printf("Calculate phi:\n");
-    time_test(calc_phi_1, "Algebraic", 100);
-    time_test(calc_phi_2, "Fibonacci sequence", 100);
-    time_test(calc_phi_3, "Continued fraction", 100);
+    time_test(calc_phi_1, "Algebraic", 1000);
+    time_test(calc_phi_2, "Fibonacci sequence", 1000);
+    time_test(calc_phi_3, "Continued fraction", 1000);
     printf("\n");
 
     printf("Calculate e:\n");
-    time_test(calc_e_1, "Definition", 2000);
-    time_test(calc_e_2, "Series summation", 2000);
-    time_test(calc_e_3, "Unknown advanced method", 2000);
+    time_test(calc_e_1, "Definition", 1000);
+    time_test(calc_e_2, "Series summation", 1000);
+    time_test(calc_e_3, "Unknown advanced method", 1000);
     printf("\n");
 
     return 0;
@@ -55,7 +55,7 @@ double calc_pi_1(int n)
             hits++;
         }
     }
-    return ((double)hits / n) * 4;
+    return (double)hits / n * 4;
 }
 
 double calc_pi_2(int n)
@@ -71,7 +71,7 @@ double calc_pi_2(int n)
             }
         }
     }
-    return ((double)hits / n) * 4;
+    return (double)hits / n * 4;
 }
 
 double calc_pi_3(int n)
@@ -98,6 +98,7 @@ double calc_pi_4(int n)
 
 double calc_phi_1(int _)
 {
+    (void)_; // unused
     return (1 + sqrt(5)) / 2;
 }
 
@@ -137,6 +138,7 @@ double calc_e_2(int n)
 double calc_e_3(int n)
 {
     int k = 0;
+    n /= 2.718; // keep for loop count equals n as far as possible
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j <= RAND_MAX; j += rand())
@@ -149,14 +151,11 @@ double calc_e_3(int n)
 
 void time_test(function_t function, const char *message, int n)
 {
-    double result;
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    double result = function(n);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    time_t nanoseconds = end.tv_nsec - start.tv_nsec;
 
-    clock_t start = clock();
-    for (int i = 0; i < 2000; i++)
-    {
-        result = function(n);
-    }
-    clock_t end = clock();
-
-    printf("iteration: %4d, result: %.14lf, duration: %6.2lfms (%s)\n", n, result, (double)(end - start) / CLOCKS_PER_SEC * 1000, message);
+    printf("iteration: %d, result: %.14lf, duration: %5lld ns (%s)\n", n, result, nanoseconds, message);
 }
