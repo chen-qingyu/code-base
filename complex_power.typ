@@ -5,7 +5,7 @@ z =& u^v
 \ \
 =& (a + b i)^(c + d i)
 \ \
-& "let" m = sqrt(a^2 + b^2) = abs(u), w = arctan(b / a) = arg(u)
+& "let" m = sqrt(a^2 + b^2) = abs(u), space w = arctan(b / a) = arg(u)
 \ \
 =& (m e^(i w))^(c + d i)
 \ \
@@ -31,5 +31,5 @@ z =& u^v
 \ \
 =& underbrace(r cos theta, "real part") + underbrace(r sin theta, "imag part") space i
 \ \
-& r = abs(u)^c e^(-d arg(u)), theta = c arg(u) + d ln abs(u)
+& r = abs(u)^c e^(-d arg(u)), space theta = c arg(u) + d ln abs(u)
 $
