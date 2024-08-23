@@ -118,6 +118,7 @@ mod tests {
         assert_eq!(fraction_to_decimal("123/999"), "0.123123123...");
         assert_eq!(fraction_to_decimal("123/1"), "123");
         assert_eq!(fraction_to_decimal("187/1665"), "0.1123123123...");
+        assert_eq!(fraction_to_decimal("61111/4950"), "12.34565656...");
     }
 
     #[test]
@@ -131,5 +132,10 @@ mod tests {
         assert_eq!(decimal_to_fraction("0.~123"), "41/333"); // 0.123123123...
         assert_eq!(decimal_to_fraction("123"), "123");
         assert_eq!(decimal_to_fraction("0.1~123"), "187/1665"); // 0.1123123123...
+        assert_eq!(decimal_to_fraction("12.34~56"), "61111/4950"); // 12.34565656...
+        assert_eq!(decimal_to_fraction("0.24~9"), "1/4"); // 0.24999... = 0.25
+        assert_eq!(decimal_to_fraction("0.~375"), "125/333"); // 0.375375375...
+        assert_eq!(decimal_to_fraction("4.~518"), "122/27"); // 4.518518518...
+        assert_eq!(decimal_to_fraction("0.~9"), "1"); // 0.999... = 1
     }
 }
