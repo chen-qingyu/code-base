@@ -4,7 +4,7 @@ use pyinrs::Fraction;
 use regex::Regex;
 
 fn main() {
-    println!("小数/分数转换系统 demo");
+    println!("小数/分数转换系统 demo by 青羽");
     println!("输入小数，输出分数，反之亦然");
     println!("小数格式：整数部分[.小数部分[~循环节]]");
     println!("分数格式：分子整数/分母整数");
@@ -47,12 +47,12 @@ fn fraction_to_decimal(line: &str) -> String {
 fn decimal_to_fraction(line: &str) -> String {
     let re_dec = Regex::new(r"^([-+]?\d+)\.?(\d+)?~?(\d+)?$").unwrap();
 
-    let caps = re_dec.captures(&line).unwrap();
+    let caps = re_dec.captures(line).unwrap();
     let integral = caps[1].parse::<i32>().unwrap();
     let decimal = caps.get(2).map(|x| x.as_str().parse::<i32>().unwrap());
     let cyclic = caps.get(3).map(|x| x.as_str().parse::<i32>().unwrap());
 
-    return match (integral, decimal, cyclic) {
+    match (integral, decimal, cyclic) {
         // 整数
         (i, None, None) => format!("{}", Fraction::from(i)),
         // 非循环小数
@@ -75,7 +75,7 @@ fn decimal_to_fraction(line: &str) -> String {
                     + Fraction::from((c, (i32::pow(10, cyclic_len) - 1) * i32::pow(10, decimal_len)))
             )
         }
-    };
+    }
 }
 
 /// a: 被除数, b: 除数, 返回(循环节起始位置, 循环节长度)
