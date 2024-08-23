@@ -1,0 +1,8 @@
+[package]
+name = "decimal_to_fraction"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pyinrs = "1.8"
+regex = "1.10"
