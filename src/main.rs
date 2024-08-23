@@ -72,7 +72,7 @@ fn decimal_to_fraction(line: &str) -> String {
             format!(
                 "{}",
                 Fraction::from((i * i32::pow(10, decimal_len) + d, i32::pow(10, decimal_len)))
-                    + Fraction::from((c, (i32::pow(10, cyclic_len) - 1) * i32::pow(10, cyclic_len)))
+                    + Fraction::from((c, (i32::pow(10, cyclic_len) - 1) * i32::pow(10, decimal_len)))
             )
         }
     };
@@ -117,6 +117,7 @@ mod tests {
         assert_eq!(fraction_to_decimal("123/1000"), "0.123");
         assert_eq!(fraction_to_decimal("123/999"), "0.123123123...");
         assert_eq!(fraction_to_decimal("123/1"), "123");
+        assert_eq!(fraction_to_decimal("187/1665"), "0.1123123123...");
     }
 
     #[test]
@@ -129,5 +130,6 @@ mod tests {
         assert_eq!(decimal_to_fraction("0.123"), "123/1000");
         assert_eq!(decimal_to_fraction("0.~123"), "41/333"); // 0.123123123...
         assert_eq!(decimal_to_fraction("123"), "123");
+        assert_eq!(decimal_to_fraction("0.1~123"), "187/1665"); // 0.1123123123...
     }
 }
