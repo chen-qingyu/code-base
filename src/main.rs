@@ -52,6 +52,7 @@ fn decimal_to_fraction(line: &str) -> String {
     let cyclic = caps.get(3).map(|x| x.as_str().parse::<i32>().unwrap());
     let is_negative = caps[1].contains('-');
 
+    // x = c/((10^len(c)-1)*(10^len(d))) = c/(10^len(c+d)-10^len(d))
     let f = match (integral, decimal, cyclic) {
         // 整数
         (i, None, None) => Fraction::from(i),
@@ -70,7 +71,7 @@ fn decimal_to_fraction(line: &str) -> String {
             let decimal_len = caps[2].len() as u32;
             let cyclic_len = caps[3].len() as u32;
             Fraction::from((i * i32::pow(10, decimal_len) + d, i32::pow(10, decimal_len)))
-                + Fraction::from((c, (i32::pow(10, cyclic_len) - 1) * i32::pow(10, decimal_len)))
+                + Fraction::from((c, i32::pow(10, cyclic_len + decimal_len) - i32::pow(10, decimal_len)))
         }
     };
     format!("{}", if is_negative { -f } else { f })
