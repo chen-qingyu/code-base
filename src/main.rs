@@ -1,3 +1,4 @@
+use core::str;
 use std::io::{self, Write};
 
 use pyinrs::Fraction;
@@ -25,22 +26,13 @@ fn main() {
 }
 
 fn fraction_to_decimal(line: &str) -> String {
-    let re_fra = Regex::new(r"^([-+]?\d+)/([-+]?\d+)$").unwrap();
-    let caps = re_fra.captures(line).unwrap();
-    let num = caps[1].parse::<i32>().unwrap();
-    let den = caps[2].parse::<i32>().unwrap();
+    let f = line.parse::<Fraction>().unwrap();
 
-    if let Some((start, length)) = find_cyclic(num, den) {
-        let s = (num as f64 / den as f64).to_string();
-        let s = s.split('.').collect::<Vec<&str>>();
-        format!(
-            "{}.{}{}...",
-            s[0],
-            s[1].chars().take(start).collect::<String>(),
-            s[1].chars().skip(start).take(length).cycle().take(length * 3).collect::<String>()
-        )
+    if let Some((start, length)) = find_cyclic(f.numerator(), f.denominator()) {
+        let s = f64::from(f).to_string();
+        format!("{}...", str::from_utf8(&s.as_bytes()[..=(s.find('.').unwrap() + start + length * 3)]).unwrap())
     } else {
-        format!("{}", num as f64 / den as f64)
+        format!("{}", f64::from(f))
     }
 }
 
