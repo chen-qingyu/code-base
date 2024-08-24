@@ -142,9 +142,9 @@ mod tests {
         assert_eq!(decimal_to_fraction("0.~9"), "1"); // 0.999... = 1
 
         assert_eq!(decimal_to_fraction("-1"), "-1");
-        assert_eq!(decimal_to_fraction("-0.~1"), "-1/9");
+        assert_eq!(decimal_to_fraction("-0.~1"), "-1/9"); // -0.111...
         assert_eq!(decimal_to_fraction("-1.9"), "-19/10");
-        assert_eq!(decimal_to_fraction("-1.~9"), "-2");
-        assert_eq!(decimal_to_fraction("-1.1~9"), "-6/5");
+        assert_eq!(decimal_to_fraction("-1.~9"), "-2"); // -1.999... = -2
+        assert_eq!(decimal_to_fraction("-1.1~9"), "-6/5"); // -1.1999... = -1.2
     }
 }
