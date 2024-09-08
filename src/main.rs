@@ -25,6 +25,7 @@ fn main() {
         print!("> ");
         io::stdout().flush().unwrap();
     }
+    println!("\rGood bye~");
 }
 
 fn fraction_to_decimal(line: &str) -> String {
