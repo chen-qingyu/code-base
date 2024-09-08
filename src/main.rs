@@ -7,8 +7,10 @@ use regex::Regex;
 fn main() {
     println!("小数/分数转换系统 demo by 青羽");
     println!("输入小数，输出分数，反之亦然");
-    println!("小数格式：整数部分[.小数部分[~循环节]]");
+    println!("小数格式：整数部分[.小数部分[~循环节]][#进制]");
+    println!("Example: 1, 1.23, 0.~3, 0.24~9, 0.0~0011#2");
     println!("分数格式：分子整数/分母整数");
+    println!("Example: 1/2, 1/3, 3/10");
     println!("Ctrl + Z 退出");
     println!();
 
@@ -37,33 +39,37 @@ fn fraction_to_decimal(line: &str) -> String {
 }
 
 fn decimal_to_fraction(line: &str) -> String {
-    let re_dec = Regex::new(r"^([-+]?\d+)\.?(\d+)?~?(\d+)?$").unwrap();
+    let re_dec = Regex::new(r"^([-+]?\d+)\.?(\d+)?~?(\d+)?#?(\d+)?$").unwrap();
     let caps = re_dec.captures(line).unwrap();
-    let integral = caps[1].parse::<i32>().unwrap().abs();
-    let decimal = caps.get(2).map(|x| x.as_str().parse::<i32>().unwrap());
-    let cyclic = caps.get(3).map(|x| x.as_str().parse::<i32>().unwrap());
-    let is_negative = caps[1].contains('-');
+    let base = caps.get(4).map_or(10, |x| x.as_str().parse::<u32>().unwrap());
 
-    // x = c/((10^len(c)-1)*(10^len(d))) = c/(10^len(c+d)-10^len(d))
+    let integral = i32::from_str_radix(&caps[1], base).unwrap().abs();
+    let decimal = caps.get(2).map(|x| i32::from_str_radix(x.as_str(), base).unwrap());
+    let cyclic = caps.get(3).map(|x| i32::from_str_radix(x.as_str(), base).unwrap());
+
+    let is_negative = caps[1].contains('-');
+    let base = base as i32;
+
+    // x = c/((base^len(c)-1)*(base^len(d))) = c/(base^len(c+d)-base^len(d))
     let f = match (integral, decimal, cyclic) {
         // 整数
         (i, None, None) => Fraction::from(i),
         // 非循环小数
         (i, Some(d), None) => {
             let decimal_len = caps[2].len() as u32;
-            Fraction::from((i * i32::pow(10, decimal_len) + d, i32::pow(10, decimal_len)))
+            Fraction::from((i * i32::pow(base, decimal_len) + d, i32::pow(base, decimal_len)))
         }
         // 循环小数-无非循环部分
         (i, None, Some(c)) => {
             let cyclic_len = caps[3].len() as u32;
-            Fraction::from(i) + Fraction::from((c, i32::pow(10, cyclic_len) - 1))
+            Fraction::from(i) + Fraction::from((c, i32::pow(base, cyclic_len) - 1))
         }
         // 循环小数-有非循环部分
         (i, Some(d), Some(c)) => {
             let decimal_len = caps[2].len() as u32;
             let cyclic_len = caps[3].len() as u32;
-            Fraction::from((i * i32::pow(10, decimal_len) + d, i32::pow(10, decimal_len)))
-                + Fraction::from((c, i32::pow(10, cyclic_len + decimal_len) - i32::pow(10, decimal_len)))
+            Fraction::from((i * i32::pow(base, decimal_len) + d, i32::pow(base, decimal_len)))
+                + Fraction::from((c, i32::pow(base, cyclic_len + decimal_len) - i32::pow(base, decimal_len)))
         }
     };
     format!("{}", if is_negative { -f } else { f })
@@ -139,5 +145,14 @@ mod tests {
         assert_eq!(decimal_to_fraction("-1.9"), "-19/10");
         assert_eq!(decimal_to_fraction("-1.~9"), "-2"); // -1.999... = -2
         assert_eq!(decimal_to_fraction("-1.1~9"), "-6/5"); // -1.1999... = -1.2
+
+        assert_eq!(decimal_to_fraction("11"), "11"); // 11
+        assert_eq!(decimal_to_fraction("11#10"), "11"); // 11(10) = 11(10)
+        assert_eq!(decimal_to_fraction("11#2"), "3"); // 11(2) = 3(10)
+        assert_eq!(decimal_to_fraction("11#16"), "17"); // 11(16) = 17(10)
+        assert_eq!(decimal_to_fraction("0.1#2"), "1/2"); // 0.1(2) = 0.5(10)
+        assert_eq!(decimal_to_fraction("0.0~0011#2"), "1/10"); // 0.0001100110011...(2) = 0.1(10)
+        assert_eq!(decimal_to_fraction("-0.0~0011#2"), "-1/10"); // -0.0001100110011...(2) = -0.1(10)
+        assert_eq!(decimal_to_fraction("0.~1#2"), "1"); // 0.111...(2) = 0.999...(10) = 1
     }
 }
