@@ -1,3 +1,10 @@
+//! @file main.rs
+//! @author 青羽 <236521827@qq.com>
+//! @brief 任意进制小数和分数转换系统 demo
+//! @version
+//!   - v0.1.0 实现十进制循环小数和分数互相转换的功能
+//!   - v0.2.0 十进制小数拓展到任意进制小数
+
 use core::str;
 use std::io::{self, Write};
 
@@ -5,7 +12,7 @@ use pyinrs::Fraction;
 use regex::Regex;
 
 fn main() {
-    println!("小数/分数转换系统 demo by 青羽");
+    println!("小数/分数转换系统 demo v0.2.0 by 青羽");
     println!("输入小数，输出分数，反之亦然");
     println!("小数格式：整数部分[.小数部分[~循环节]][#进制]");
     println!("Example: 1, 1.23, 0.~3, 0.24~9, 0.0~0011#2");
