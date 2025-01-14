@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	\begin{align*}
+		&\ \lim_{x \to 0} \left( \frac{a_1^x + a_2^x + a_3^x + \cdots + a_n^x}{n} \right)^{\frac{1}{x}}
+		\\
+		= &\ \lim_{x \to 0} e^{\left( \frac{1}{x} \ln{\frac{a_1^x + a_2^x + a_3^x + \cdots + a_n^x}{n}} \right)}
+		\\
+		= &\ \lim_{x \to 0} e^{\left( \frac{1}{x} \ln{(1 + \frac{a_1^x + a_2^x + a_3^x + \cdots + a_n^x - n}{n})} \right)}
+		\\
+		= &\ \lim_{x \to 0} e^{\left( \frac{1}{x} (\frac{a_1^x + a_2^x + a_3^x + \cdots + a_n^x - n}{n}) \right)}
+		\\
+		= &\ \lim_{x \to 0} e^{\left( \frac{a_1^x + a_2^x + a_3^x + \cdots + a_n^x - n}{n x} \right)}
+		\\
+		= &\ \lim_{x \to 0} e^{\left( \frac{a_1^x \ln{a_1} + a_2^x \ln{a_2} + a_3^x \ln{a_3} + \cdots + a_n^x \ln{a_n}}{n} \right)}
+		\\
+		= &\ e^{\left( \frac{\ln{a_1} + \ln{a_2} + \ln{a_3} + \cdots + \ln{a_n}}{n} \right)}
+		\\
+		= &\ e^{\left( \frac{1}{n} \ln{(a_1 a_2 a_3 \cdots a_n)} \right)}
+		\\
+		= &\ (a_1 a_2 a_3 \cdots a_n)^{\frac{1}{n}}
+	\end{align*}
+\end{document}

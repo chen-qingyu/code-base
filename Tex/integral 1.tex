@@ -1,0 +1,49 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 4em
+	\setlength{\baselineskip}{4em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	% for shorten minus delta
+	\newcommand{\mdelta}{4 a c - b^2}
+	% for shorten x^2 + \frac{b}{a} x + \frac{c}{a}
+	\newcommand{\denA}{x^2 + \frac{b}{a} x + \frac{c}{a}}
+	% for shorten (x + \frac{b}{2 a})^2 + \frac{c}{a} - \frac{b^2}{4 a^2}
+	\newcommand{\denB}{(x + \frac{b}{2 a})^2 + \frac{c}{a} - \frac{b^2}{4 a^2}}
+	
+	\begin{align*}
+		&\ \int \frac{mx + n}{a x^2 + b x + c} \d \ \ (a \neq 0)
+		\\
+		= &\ \int \frac{\frac{m}{a} x + \frac{n}{a}}{\denA} \d
+		\\
+		= &\ \int \frac{\frac{m}{a} x + \frac{n}{a}}{\denB} \d
+		\\
+		= &\ \frac{m}{a} \int \frac{x}{\denB} \d + \frac{n}{a} \int \frac{1}{\denB} \d
+		\\
+		= &\ \frac{m}{2 a} \int \frac{2 x + \frac{b}{a} - \frac{b}{a}}{\denB} \d + \frac{n}{a} \int \frac{1}{\denB} \d
+		\\
+		= &\ \frac{m}{2 a} \int \frac{2 x + \frac{b}{a}}{\denB} \d + \frac{2 n a - m b}{2 a^2} \int \frac{1}{\denB} \d
+		\\
+		= &\ \frac{m}{2 a} \int \frac{1}{\denA} \d[(\denA)] + \frac{2 n a - m b}{2 a^2} \int \frac{1}{(x + \frac{b}{2 a})^2 + (\sqrt{\frac{\mdelta}{4 a^2}})^2} \d[(x + \frac{b}{2 a})]
+		\\
+		= &\ \frac{m}{2 a} \ln{|\denA|} + \frac{2 n a - m b}{2 a^2} \frac{1}{\sqrt{\frac{\mdelta}{4 a^2}}} \arctan\frac{x + \frac{b}{2 a}}{\sqrt{\frac{\mdelta}{4 a^2}}} + C
+		\\
+		= &\ \frac{m}{2 a} \ln{|a x^2 + b x + c|} + \frac{2 n a - m b}{a\sqrt{\mdelta}} \arctan\frac{2 a x + b}{\sqrt{\mdelta}} + C
+	\end{align*}
+\end{document}

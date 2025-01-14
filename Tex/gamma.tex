@@ -1,0 +1,47 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	\begin{align*}
+		\Gamma(s) & = \int_{0}^{+\infty} e^{-x} x^{s-1} \d \ \ (s > 0)
+		\\
+		& = \int_{0}^{+\infty} -x^{s-1} \d[(e^{-x})]
+		\\
+		& = 0 - \int_{0}^{+\infty} e^{-x} \d[(-x^{s-1})]
+		\\
+		& = \int_{0}^{+\infty} e^{-x} \d[(x^{s-1})]
+		\\
+		& = \int_{0}^{+\infty} e^{-x} (s - 1) x^{s-2} \d
+		\\
+		& = (s - 1) \int_{0}^{+\infty} e^{-x} x^{s-2} \d
+		\\
+		& = (s - 1) \Gamma(s - 1)
+		\\
+		& = (s - 1) (s - 2) \Gamma(s - 2)
+		\\
+		& = (s - 1) (s - 2) \cdots \Gamma(1)
+		\\
+		& = (s - 1) (s - 2) \cdots 1
+		\\
+		& = (s - 1)!
+	\end{align*}
+\end{document}

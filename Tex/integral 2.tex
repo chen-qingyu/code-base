@@ -1,0 +1,48 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+% Don't show the header and footer
+\pagestyle{empty}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 3em
+	\setlength{\baselineskip}{3em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	\begin{align*}
+		&\ \int \sqrt{1 + x^2} \d
+		\\
+		&\ let\ \ x = \tan{t}
+		\\
+		= &\ I
+		\\
+		= &\ \int \sec{t} \d[\tan{t}]
+		\\
+		= &\ \sec{t} \tan{t} - \int \tan{t} \d[\sec{t}]
+		\\
+		= &\ \sec{t} \tan{t} - \int \tan^2{t} \sec{t} \d[t]
+		\\
+		= &\ \sec{t} \tan{t} - \int (\sec^2{t} - 1) \sec{t} \d[t]
+		\\
+		= &\ \sec{t} \tan{t} - \int \sec^3{t} \d[t] + \int \sec{t} \d[t]
+		\\
+		= &\ \sec{t} \tan{t} - I + \ln{|\sec{t} + \tan{t}|} + C
+		\\
+		\\
+		\Rightarrow I = &\ \frac{1}{2} (\sec{t} \tan{t} + \ln{|\sec{t} + \tan{t}|}) + C
+		\\
+		= &\ \frac{1}{2} (x \sqrt{1 + x^2} + \ln{(x + \sqrt{1 + x^2})}) + C 
+	\end{align*}
+\end{document}

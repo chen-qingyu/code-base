@@ -1,0 +1,44 @@
+\documentclass{article}
+
+% American Mathematical Society
+\usepackage{amsmath}
+
+% For \geometry{}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{a4paper, scale=0.9}
+
+\begin{document}
+	% set the font size to large
+	\large
+	% set the line spacing to 4em
+	\setlength{\baselineskip}{4em}
+	
+	% dx or d[#1]
+	\renewcommand{\d}[1][x]{\ \text{d}#1}
+	
+	\section*{Maclaurin Series}
+	
+	\begin{align}
+		& e^x & & = 1 + x + \frac{1}{2} x^2 + o(x^2) && = \sum_{n = 0}^{\infty} \frac{1}{n!} x^n,\ x \in (-\infty, +\infty)
+		\\
+		& \sin x & & = x - \frac{1}{6} x^3 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n + 1)!} x^{2n + 1},\ x \in (-\infty, +\infty)
+		\\
+		\stackrel{Derivation}{\Longrightarrow} \ & \cos x & & = 1 - \frac{1}{2} x^2 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n},\ x \in (-\infty, +\infty)
+		\\
+		& \arcsin x & & = x + \frac{1}{6} x^3 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(2n)!}{4^n (n!)^2 (2n + 1)} x^{2n + 1},\ x \in [-1, 1]
+		\\
+		& \tan x & & = x + \frac{1}{3} x^3 + o(x^3) && = \sum_{n = 1}^{\infty} \frac{B_{2n} (-4)^n (1 - 4^n)}{(2n)!} x^{2n - 1},\ x \in (-\frac{\pi}{2}, \frac{\pi}{2})
+		\\
+		& \arctan x & & = x - \frac{1}{3} x^3 + o(x^3) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{2n + 1} x^{2n + 1},\ x \in [-1, 1]
+		\\
+		& (1 + x)^\alpha & & = 1 + \alpha x + \frac{\alpha (\alpha - 1)}{2} x^2 + o(x^2) && = \sum_{n = 0}^{\infty} C_{\alpha}^{n} x^n,\ x \in (-1, 1)
+		\\
+		& \ln{(1 + x)} & & = x - \frac{1}{2} x^2 + o(x^2) && = \sum_{n = 0}^{\infty} \frac{(-1)^n}{n + 1} x^{n + 1},\ x \in (-1, 1]
+		\\
+		\stackrel{Derivation}{\Longrightarrow} \ & \frac{1}{1 + x} & & = 1 - x + x^2 + o(x^2) && = \sum_{n = 0}^{\infty} (-1)^n x^n,\ x \in (-1, 1)
+		\\
+		\stackrel{x \rightarrow (-x)}{\Longrightarrow} \ & \frac{1}{1 - x} & & = 1 + x + x^2 + o(x^2) && = \sum_{n = 0}^{\infty} x^n,\ x \in (-1, 1)
+	\end{align}
+\end{document}
