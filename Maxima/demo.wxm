@@ -1,0 +1,160 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 23.05.1 ] */
+/* [wxMaxima: input   start ] */
+/* Calculus */;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sin(%pi/3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f:x^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(f,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+integrate(f,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+integrate(f,x,0,1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(sin(x)/x,x,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Matrix */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m:matrix([0,1,a],[1,0,1],[1,1,0]);
+/* [wxMaxima: input   end   ] */
+/* [wxMaxima: question  start ] */
+Answer 1, 2, 3 or 4 :
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+4;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 3 Column 3:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+0;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 2 Column 1:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+1;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 3 Column 2:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+1;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 1 Column 1:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+0;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 1 Column 2:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+1;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 3 Column 1:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+1;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 2 Column 2:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+0;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 1 Column 3:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+a;
+/* [wxMaxima: answer  end   ] */
+/* [wxMaxima: question  start ] */
+Row 2 Column 3:
+/* [wxMaxima: question  end   ] */
+/* [wxMaxima: answer  start ] */
+1;
+/* [wxMaxima: answer  end   ] */
+
+
+/* [wxMaxima: input   start ] */
+determinant(m);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+invert(m);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m . %;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rank(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eigenvectors(m);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Plot */;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([sin(x)],[x,0,4*%pi]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot3d((x^2-y^2),[x,-1,1], [y,-1,1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ plot2d([cos(x), sin(x), tan(x)], [x, -2*%pi, 2*%pi], [y, -2*%pi, 2*%pi]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 23.05.1"$
