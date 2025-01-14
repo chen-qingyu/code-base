@@ -10,16 +10,14 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3891,        110]
-NotebookOptionsPosition[      3278,         91]
-NotebookOutlinePosition[      3810,        109]
-CellTagsIndexPosition[      3767,        106]
+NotebookDataLength[      3137,         90]
+NotebookOptionsPosition[      2652,         74]
+NotebookOutlinePosition[      3184,         92]
+CellTagsIndexPosition[      3141,         89]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-
-Cell[CellGroupData[{
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -72,22 +70,7 @@ Cell[BoxData[{
  CellChangeTimes->{{3.8388079028374224`*^9, 3.8388079231918464`*^9}, 
    3.8388079625199547`*^9, 3.838811466611869*^9},
  CellLabel->
-  "In[365]:=",ExpressionUUID->"bea0a6c9-d1e0-44ae-a97a-0416665ed000"],
-
-Cell[BoxData[
- TemplateBox[{
-  "Export","noopen",
-   "\"\:65e0\:6cd5\:6253\:5f00 \
-\\!\\(\\*RowBox[{\\\"\\\\\\\"C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\YU\\\\\\\\\
-\\\\\\\\AppData\\\\\\\\\\\\\\\\Roaming\\\\\\\\\\\\\\\\Mathematica\\\\\\\\\\\\\
-\\\\SystemFiles\\\\\\\\\\\\\\\\FrontEnd\\\\\\\\\\\\\\\\StyleSheets\\\\\\\\\\\\\
-\\\\myStyle.nb\\\\\\\"\\\"}]\\).\"",2,366,33,21094001749223010016,"Local"},
-  "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.838811467457383*^9},
- CellLabel->
-  "\:6b63\:5728\:8ba1\:7b97In[365]:=",ExpressionUUID->"51d56f5c-60c0-486d-\
-9c31-3b9c3756c681"]
-}, Open  ]]
+  "In[365]:=",ExpressionUUID->"bea0a6c9-d1e0-44ae-a97a-0416665ed000"]
 },
 WindowSize->{1536, 781},
 WindowMargins->{{-8, Automatic}, {Automatic, -8}},
@@ -108,10 +91,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[CellGroupData[{
-Cell[580, 22, 2090, 52, 414, "Input",ExpressionUUID->"bea0a6c9-d1e0-44ae-a97a-0416665ed000"],
-Cell[2673, 76, 589, 12, 24, "Message",ExpressionUUID->"51d56f5c-60c0-486d-9c31-3b9c3756c681"]
-}, Open  ]]
+Cell[558, 20, 2090, 52, 414, "Input",ExpressionUUID->"bea0a6c9-d1e0-44ae-a97a-0416665ed000"]
 }
 ]
 *)
