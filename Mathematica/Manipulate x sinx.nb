@@ -1,0 +1,139 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4707,        131]
+NotebookOptionsPosition[      3852,        111]
+NotebookOutlinePosition[      4384,        129]
+CellTagsIndexPosition[      4341,        126]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"x", " ", 
+      RowBox[{"Sin", "[", "x", "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "u"}], ",", "u"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"u", ",", "1", ",", "100"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.84799640931756*^9, 3.8479964459432783`*^9}, 
+   3.847996602710515*^9, 3.8479971861616755`*^9, {3.9295086833423877`*^9, 
+   3.929508684196516*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"04b2ba19-5d67-42e1-aef5-51bd3b03ec11"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"Sin", "[", "x", "]"}], "x"], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "u"}], ",", "u"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"u", ",", "1", ",", "100"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.847996456764303*^9, 3.8479965107939615`*^9}, 
+   3.847996602724478*^9, 3.8479971863082275`*^9, {3.9295086833484693`*^9, 
+   3.92950868421171*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"3d82a66e-359d-4998-b52a-d82a80db7221"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     FractionBox["x", 
+      RowBox[{"Sin", "[", "x", "]"}]], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "u"}], ",", "u"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"u", ",", "1", ",", "100"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.929508350142706*^9, 3.9295084171037025`*^9}, {
+   3.929508455117017*^9, 3.9295084552537365`*^9}, {3.9295085217317314`*^9, 
+   3.9295085443926153`*^9}, 3.929508584082678*^9, {3.929508683358473*^9, 
+   3.929508684224772*^9}},
+ CellLabel->"In[18]:=",ExpressionUUID->"e1af65cb-458a-4976-baf1-b8b6e8f003b8"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"x", " ", 
+      RowBox[{"Sin", "[", 
+       FractionBox["1", "x"], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "u"}], ",", "u"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"u", ",", "0.01", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.929508683368471*^9, 3.9295086842330246`*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"6017d096-857b-44aa-88b9-bac3c41f85df"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"Sin", "[", 
+       FractionBox["1", "x"], "]"}], "x"], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "u"}], ",", "u"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"u", ",", "0.01", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8479965335324793`*^9, 3.8479965532328477`*^9}, 
+   3.84799660273846*^9, 3.8479971863750873`*^9, {3.9295086833784704`*^9, 
+   3.9295086842499733`*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"d6526d63-3065-4627-a57a-939ac123c75e"]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (2018\:5e743\:670828\
+\:65e5)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "C:", "Users", "YU", 
+   "AppData", "Roaming", "Mathematica", "SystemFiles", "FrontEnd", 
+   "StyleSheets"}, "myStyle.nb", CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 650, 16, 56, "Input",ExpressionUUID->"04b2ba19-5d67-42e1-aef5-51bd3b03ec11"],
+Cell[1211, 38, 648, 16, 80, "Input",ExpressionUUID->"3d82a66e-359d-4998-b52a-d82a80db7221"],
+Cell[1862, 56, 725, 17, 81, "Input",ExpressionUUID->"e1af65cb-458a-4976-baf1-b8b6e8f003b8"],
+Cell[2590, 75, 576, 15, 79, "Input",ExpressionUUID->"6017d096-857b-44aa-88b9-bac3c41f85df"],
+Cell[3169, 92, 679, 17, 90, "Input",ExpressionUUID->"d6526d63-3065-4627-a57a-939ac123c75e"]
+}
+]
+*)
+
