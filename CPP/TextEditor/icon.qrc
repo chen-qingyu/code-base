@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/icons8-bold-48.png</file>
+        <file>images/icons8-copy-48.png</file>
+        <file>images/icons8-cut-48.png</file>
+        <file>images/icons8-exit-48.png</file>
+        <file>images/icons8-italic-48.png</file>
+        <file>images/icons8-new-48.png</file>
+        <file>images/icons8-open-48.png</file>
+        <file>images/icons8-paste-48.png</file>
+        <file>images/icons8-underline-48.png</file>
+        <file>images/icons8-about-48.png</file>
+        <file>images/icons8-choose-font-48.png</file>
+        <file>images/icons8-font-size-48.png</file>
+        <file>images/icons8-save-48.png</file>
+    </qresource>
+</RCC>
