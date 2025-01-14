@@ -1,0 +1,128 @@
+<TMU|<tuple|1.0.3|1.2.9.1>>
+
+<style|<tuple|generic|chinese|goldfish>>
+
+<\body>
+  <\session|goldfish|default>
+    <\output>
+      Goldfish Scheme 17.10.5 Community Edition by LiiiLabs
+
+      implemented on S7 Scheme (10.12, 16-Aug-2024)
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (decimal-\<gtr\>fraction x)
+
+      \ \ (let* ((base (get-base x))
+
+      \ \ \ \ \ \ \ \ \ (a (string-\<gtr\>number (get-a x) base))
+
+      \ \ \ \ \ \ \ \ \ (k (get-k x))
+
+      \ \ \ \ \ \ \ \ \ (b (string-\<gtr\>number (get-b x) base))
+
+      \ \ \ \ \ \ \ \ \ (l (string-length (get-b x)))
+
+      \ \ \ \ \ \ \ \ \ (n (+ (* a (- (expt base (- l k))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (expt base (- k))))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (* b (expt base (- k)))))
+
+      \ \ \ \ \ \ \ \ \ (d (- (expt base l) 1)))
+
+      \ \ (/ n d)))
+
+      \;
+    <|unfolded-io>
+      <goldfish-result|decimal-\>fraction>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (import (scheme base))
+    <|unfolded-io>
+      <goldfish-result|(rootlet)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define-record-type :decimal
+
+      \ \ (make-decimal a k b base)
+
+      \ \ decimal?
+
+      \ \ (a get-a)
+
+      \ \ (k get-k)
+
+      \ \ (b get-b)
+
+      \ \ (base get-base))
+
+      \;
+    <|unfolded-io>
+      <goldfish-result|:decimal>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "0" 0 "1" 2))
+    <|unfolded-io>
+      <goldfish-result|1>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "0" 0 "1" 10))
+    <|unfolded-io>
+      <goldfish-result|1/9>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "0" 1 "0011" 2))
+    <|unfolded-io>
+      <goldfish-result|1/10>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "11" 0 "0" 10))
+    <|unfolded-io>
+      <goldfish-result|11>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "11" 0 "0" 2))
+    <|unfolded-io>
+      <goldfish-result|3>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (decimal-\<gtr\>fraction (make-decimal "11" 0 "0" 16))
+    <|unfolded-io>
+      <goldfish-result|17>
+    </unfolded-io>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
