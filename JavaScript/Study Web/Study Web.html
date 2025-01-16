@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- My first web page -->
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Consolas;
+      }
+
+      abbr {
+        color: red;
+      }
+
+      #div1,
+      #div2 {
+        float: left;
+        width: 256px;
+        height: 144px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+      }
+
+      a {
+        color: blue;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: cyan;
+      }
+
+      marquee {
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        position: fixed;
+        background-image: url("image/light.jpg");
+      }
+    </style>
+    <title>Study Web</title>
+    <script>
+      function Hello() {
+        document.getElementById("Hello").innerHTML = "Hello JavaScript!";
+      }
+
+      function init(img) {
+        img.preventDefault();
+      }
+
+      function drag(img) {
+        img.dataTransfer.setData("Text", img.target.id);
+      }
+
+      function drop(img) {
+        img.preventDefault();
+        var data = img.dataTransfer.getData("Text");
+        img.target.appendChild(document.getElementById(data));
+      }
+
+      function displayDate() {
+        document.getElementById("time").innerHTML = Date();
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>My First Title</h1>
+    <hr />
+    <p id="Hello">Hello World!</p>
+    <button type="button" onclick="Hello()">click me</button>
+    <hr />
+    <p id="time">time</p>
+    <button onclick="displayDate()">click me</button>
+    <hr />
+    <a href="https://github.com" target="new">一个神秘网站</a>
+    <br /><br />
+    <a href="#media">来点音乐？</a>
+    <hr />
+    <abbr title="Chen Qingyu">CQY</abbr>
+    <hr />
+    <p>
+      <var>E = m c<sup>2</sup></var>
+    </p>
+    <hr />
+    <div id="div1" ondrop="drop(event)" ondragover="init(event)">
+      <img
+        alt="desktop.jpg"
+        src="image/desktop.jpg"
+        width="256"
+        height="144"
+        draggable="true"
+        ondragstart="drag(event)"
+        id="picture"
+      />
+    </div>
+    <div id="div2" ondrop="drop(event)" ondragover="init(event)"></div>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <hr />
+    <p>喵喜欢吃：<br /></p>
+    <ul>
+      <li>双皮奶</li>
+      <li>螺蛳粉</li>
+      <li>烧烤</li>
+    </ul>
+    <hr />
+    <form>
+      你的名字：
+      <input type="text" name="name" required="required" />
+      <br /><br />
+      你的性别：
+      <select name="sex">
+        <option value="secret">保密</option>
+        <option value="male">男</option>
+        <option value="female">女</option>
+      </select>
+      <br /><br />
+      你的生日：
+      <input type="date" name="birthday" required="required" />
+      <br /><br />
+      你的职业：
+      <label
+        ><input type="radio" name="occupation" value="teacher" /> 教师</label
+      >
+      <label
+        ><input type="radio" name="occupation" value="student" /> 学生</label
+      >
+      <br /><br />
+      你喜欢吃：
+      <label><input type="checkbox" name="food" value="spn" /> 双皮奶</label>
+      <label><input type="checkbox" name="food" value="lsf" /> 螺蛳粉</label>
+      <label><input type="checkbox" name="food" value="sk" /> 烧烤</label>
+      <br /><br />
+      喜欢的颜色：
+      <input type="color" name="color" />
+      <br /><br />
+      <textarea
+        name="info"
+        rows="10"
+        cols="20"
+        placeholder="请输入个人简介"
+      ></textarea>
+      <br /><br />
+      <input type="submit" value="提交" />
+      <br /><br />
+      <input type="button" onclick="alert('Nice!')" value="click me!" />
+    </form>
+    <hr />
+    <a id="media"></a>
+    <p>Rainbow Girl</p>
+    <audio controls="controls" src="./audio/RainbowGirl.mp3">
+      Your browser doesn't support the audio tag.
+    </audio>
+    <p>花札一手・からす</p>
+    <audio controls="controls" src="./audio/花札一手・からす.mp3">
+      Your browser doesn't support the audio tag.
+    </audio>
+    <hr />
+    <img src="image/starmap.jpg" alt="StarMap" usemap="#star" />
+    <map id="star">
+      <area
+        shape="rect"
+        coords="0,0,110,260"
+        href="image/Sun.gif"
+        target="new"
+        alt="Sun"
+      />
+      <area
+        shape="circle"
+        coords="180,139,14"
+        href="image/Venus.jpg"
+        target="new"
+        alt="Venus"
+      />
+      <area
+        shape="circle"
+        coords="129,161,10"
+        href="image/Mercury.jpg"
+        target="new"
+        alt="Mercury"
+      />
+    </map>
+    <hr />
+    <table border="1">
+      <tr>
+        <th>Color</th>
+        <th>Color HEX</th>
+      </tr>
+      <tr>
+        <td style="background-color: #000000"></td>
+        <td>#000000</td>
+      </tr>
+      <tr>
+        <td style="background-color: #0000ff"></td>
+        <td>#0000FF</td>
+      </tr>
+      <tr>
+        <td style="background-color: #00ff00"></td>
+        <td>#00FF00</td>
+      </tr>
+      <tr>
+        <td style="background-color: #00ffff"></td>
+        <td>#00FFFF</td>
+      </tr>
+      <tr>
+        <td style="background-color: #ff0000"></td>
+        <td>#FF0000</td>
+      </tr>
+      <tr>
+        <td style="background-color: #ff00ff"></td>
+        <td>#FF00FF</td>
+      </tr>
+      <tr>
+        <td style="background-color: #ffff00"></td>
+        <td>#FFFF00</td>
+      </tr>
+      <tr>
+        <td style="background-color: #ffffff"></td>
+        <td>#FFFFFF</td>
+      </tr>
+      <tr>
+        <td style="background-color: #7f7f7f"></td>
+        <td>#7F7F7F</td>
+      </tr>
+    </table>
+    <hr />
+    <pre><code>
+// Print Multiplication Table
+
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    for (int i = 1; i <= 9; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            printf(" %d * %d = %2d |", i, j, i * j);
+            if (i == j)
+            {
+                printf("\n");
+                for (int k = 0; k < i; k++)
+                {
+                    printf("-------------");
+                }
+                printf("\n");
+            }
+        }
+    }
+
+    return 0;
+}
+</code></pre>
+    <hr />
+    <marquee>&copy;2018 陈青羽</marquee>
+  </body>
+</html>
