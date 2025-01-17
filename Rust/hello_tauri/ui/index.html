@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Index</title>
+  </head>
+  <body>
+    <h1 id="header">Hello Tauri!</h1>
+
+    <script>
+      // access the pre-bundled global API functions
+      const { invoke } = window.__TAURI__.tauri;
+
+      invoke("greet", { name: "World" }).then((response) => {
+        window.header.innerHTML = response;
+      });
+    </script>
+  </body>
+</html>
