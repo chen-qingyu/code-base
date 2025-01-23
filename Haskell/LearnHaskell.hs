@@ -12,17 +12,3 @@ fac n = product [1 .. n]
 
 trd :: (a, b, c) -> c
 trd (_, _, c) = c
-
-quickSort :: Ord a => [a] -> [a]
-quickSort [] = []
-quickSort (p : xs) = quickSort lesser ++ [p] ++ quickSort greater
-  where
-    lesser = filter (< p) xs
-    greater = filter (>= p) xs
-
-qsort :: (Ord a) => [a] -> [a]
-qsort [] = []
-qsort (x : xs) =
-  let smallerSorted = qsort [a | a <- xs, a <= x]
-      biggerSorted = qsort [a | a <- xs, a > x]
-   in smallerSorted ++ [x] ++ biggerSorted
