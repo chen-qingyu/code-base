@@ -1,12 +1,10 @@
 pub struct List<T> {
-    head: Link<T>,
+    head: Option<Box<Node<T>>>,
 }
-
-type Link<T> = Option<Box<Node<T>>>;
 
 struct Node<T> {
     elem: T,
-    next: Link<T>,
+    next: Option<Box<Node<T>>>,
 }
 
 impl<T> List<T> {
@@ -15,12 +13,9 @@ impl<T> List<T> {
     }
 
     pub fn push(&mut self, elem: T) {
-        let new_node = Box::new(Node {
-            elem,
-            next: self.head.take(),
-        });
+        let new_node = Box::new(Node { elem, next: self.head.take() });
 
-        self.head = Link::Some(new_node);
+        self.head = Some(new_node);
     }
 
     pub fn pop(&mut self) -> Option<T> {
@@ -43,22 +38,18 @@ impl<T> List<T> {
     }
 
     pub fn iter(&self) -> Iter<T> {
-        Iter {
-            next: self.head.as_deref(),
-        }
+        Iter { next: self.head.as_deref() }
     }
 
     pub fn iter_mut(&mut self) -> IterMut<'_, T> {
-        IterMut {
-            next: self.head.as_deref_mut(),
-        }
+        IterMut { next: self.head.as_deref_mut() }
     }
 }
 
 impl<T> Drop for List<T> {
     fn drop(&mut self) {
         let mut cur_link = self.head.take();
-        while let Link::Some(mut boxed_node) = cur_link {
+        while let Some(mut boxed_node) = cur_link {
             cur_link = boxed_node.next.take();
         }
     }
