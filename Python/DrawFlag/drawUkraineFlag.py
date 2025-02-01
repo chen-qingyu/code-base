@@ -24,10 +24,8 @@ colors = {"Sapphire": "#005BBB", "Cyber Yellow": "#FFD500"}
 mytools.init_environment("乌克兰国旗", WIDTH * 1.1, HEIGHT * 1.1)
 
 # Draw
-index = 0
-for color in colors.keys():
-    mytools.draw_rect(-WIDTH / 2, HEIGHT * (1 / 2 - index / len(colors)), WIDTH, HEIGHT / len(colors), colors[color])
-    index += 1
+for (i, color) in enumerate(colors.keys()):
+    mytools.draw_rect(-WIDTH / 2, HEIGHT * (1 / 2 - i / 2), WIDTH, HEIGHT / 2, colors[color])
 
 # Done
 turtle.mainloop()

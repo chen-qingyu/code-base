@@ -44,8 +44,8 @@ for i in range(13):
 
 mytools.draw_rect(-WIDTH / 2, HEIGHT / 2, B_W, B_H, colors["American Blue"])
 
-for x, y in B_I:
-    mytools.draw_star(x, y, R, colors["White"])
+for c in B_I:
+    mytools.draw_star(c, R, colors["White"])
 
 # Done
 turtle.mainloop()

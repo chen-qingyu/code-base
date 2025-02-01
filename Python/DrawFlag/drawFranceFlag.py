@@ -24,10 +24,8 @@ colors = {"USAFA Blue": "#0055A4", "White": "#FFFFFF", "Cinnabar": "#EF4135"}
 mytools.init_environment("法国国旗", WIDTH * 1.1, HEIGHT * 1.1)
 
 # Draw
-index = 0
-for color in colors.keys():
-    mytools.draw_rect(WIDTH * (-1 / 2 + index / len(colors)), HEIGHT / 2, WIDTH / len(colors), HEIGHT, colors[color])
-    index += 1
+for (i, color) in enumerate(colors.keys()):
+    mytools.draw_rect(WIDTH * (-1 / 2 + i / 3), HEIGHT / 2, WIDTH / 3, HEIGHT, colors[color])
 
 # Done
 turtle.mainloop()

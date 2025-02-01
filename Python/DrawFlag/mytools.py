@@ -11,7 +11,7 @@ import turtle
 import math
 
 
-def my_range(start: float, stop: float, step: float = 1) -> list[float, ...]:
+def my_range(start: float, stop: float, step: float = 1) -> list[float]:
     """
     range函数拓展版，支持range函数所有功能加上浮点数。
 
@@ -73,17 +73,16 @@ def draw_rect(x: float, y: float, width: float, height: float, fillcolor: str, a
     turtle.end_fill()
 
 
-def draw_star(x: float, y: float, radius: float, fillcolor: str, angle: float = 0) -> None:
+def draw_star(center: tuple[float, float], radius: float, fillcolor: str, angle: float = 0) -> None:
     """
     画五角星。
 
-    :param x: 五角星外接圆圆心x坐标
-    :param y: 五角星外接圆圆心y坐标
+    :param center: 五角星外接圆圆心坐标
     :param radius: 五角星外接圆半径
     :param fillcolor: 填充颜色
     :param angle: 偏转角度 (五角星上顶点到中心的连线与y轴的夹角弧度)
     """
-    turtle.goto(x - radius * math.sin(angle), y + radius * math.cos(angle))
+    turtle.goto(center[0] - radius * math.sin(angle), center[1] + radius * math.cos(angle))
     turtle.fillcolor(fillcolor)
     turtle.begin_fill()
     for i in range(5):
@@ -92,19 +91,18 @@ def draw_star(x: float, y: float, radius: float, fillcolor: str, angle: float = 
     turtle.end_fill()
 
 
-def draw_circle(x: float, y: float, radius: float, fillcolor: str, extent: tuple[float, float] = (0, 2 * math.pi),
+def draw_circle(center: tuple[float, float], radius: float, fillcolor: str, extent: tuple[float, float] = (0, 2 * math.pi),
                 steps: int = None) -> None:
     """
     画圆形或圆弧。
 
-    :param x: 圆心x坐标
-    :param y: 圆心y坐标
+    :param center: 圆心坐标
     :param radius: 圆半径
     :param fillcolor: 填充颜色
     :param extent: 圆弧弧度
     :param steps: 分辨率
     """
-    turtle.goto(x + radius, y)
+    turtle.goto(center[0] + radius, center[1])
     turtle.setheading(math.pi / 2)
     turtle.circle(radius, extent[0])
     turtle.fillcolor(fillcolor)
@@ -113,7 +111,7 @@ def draw_circle(x: float, y: float, radius: float, fillcolor: str, extent: tuple
     turtle.end_fill()
 
 
-def draw_polygon(points: list[tuple[float, float], ...], fillcolor: str) -> None:
+def draw_polygon(points: list[tuple[float, float]], fillcolor: str) -> None:
     """
     画多边形。
 

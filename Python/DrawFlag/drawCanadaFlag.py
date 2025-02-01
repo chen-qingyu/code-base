@@ -49,7 +49,7 @@ mytools.draw_rect(480 * UNIT, 480 * UNIT, (960 - 480) * UNIT, HEIGHT, colors["Re
 mytools.draw_polygon(P, colors["Red"])
 
 for i in range(len(C)):
-    mytools.draw_circle(C[i][0], C[i][1], R[i], colors["White"])
+    mytools.draw_circle(C[i], R[i], colors["White"])
 
 # Done
 turtle.mainloop()

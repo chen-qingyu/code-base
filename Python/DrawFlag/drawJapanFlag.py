@@ -29,7 +29,7 @@ mytools.init_environment("日本国旗", WIDTH * 1.1, HEIGHT * 1.1)
 # Draw
 mytools.draw_rect(-WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, colors["White"])
 
-mytools.draw_circle(0, 0, R, colors["Crimson Glory"])
+mytools.draw_circle((0, 0), R, colors["Crimson Glory"])
 
 # Done
 turtle.mainloop()

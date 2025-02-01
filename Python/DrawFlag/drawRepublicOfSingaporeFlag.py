@@ -43,16 +43,14 @@ colors = {"Deep Carmine Pink": "#EF3340", "White": "#FFFFFF"}
 mytools.init_environment("新加坡国旗", WIDTH * 1.1, HEIGHT * 1.1)
 
 # Draw
-index = 0
-for color in colors.keys():
-    mytools.draw_rect(-WIDTH / 2, HEIGHT * (1 / 2 - index / len(colors)), WIDTH, HEIGHT / len(colors), colors[color])
-    index += 1
+for (i, color) in enumerate(colors.keys()):
+    mytools.draw_rect(-WIDTH / 2, HEIGHT * (1 / 2 - i / 2), WIDTH, HEIGHT / 2, colors[color])
 
-mytools.draw_circle(M[0], M[1], M_R, colors["White"], steps=720)
-mytools.draw_circle(R[0], R[1], M_R, colors["Deep Carmine Pink"], steps=720)
+mytools.draw_circle(M, M_R, colors["White"], steps=720)
+mytools.draw_circle(R, M_R, colors["Deep Carmine Pink"], steps=720)
 
 for i in range(len(S)):
-    mytools.draw_star(S[i][0], S[i][1], S_R, colors["White"])
+    mytools.draw_star(S[i], S_R, colors["White"])
 
 # Done
 turtle.mainloop()

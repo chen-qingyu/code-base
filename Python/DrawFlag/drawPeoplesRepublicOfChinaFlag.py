@@ -49,7 +49,7 @@ mytools.init_environment("五星红旗", WIDTH * 1.1, HEIGHT * 1.1)
 mytools.draw_rect(-WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, colors["Maximum Red"])
 
 for i in range(len(C)):
-    mytools.draw_star(C[i][0], C[i][1], R[i], colors["Golden Yellow"], A[i])
+    mytools.draw_star(C[i], R[i], colors["Golden Yellow"], A[i])
 
 # Done
 turtle.mainloop()
