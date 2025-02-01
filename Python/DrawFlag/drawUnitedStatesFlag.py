@@ -1,6 +1,6 @@
 """
 Copyright (c) 2022.
-FileName: drawUnitedStatesOfAmericaFlag.py
+FileName: drawUnitedStatesFlag.py
 Brief: 依据 https://en.wikipedia.org/wiki/Flag_of_the_United_States 绘制美国国旗。
 Author: 青羽
 Blog: https://chen-qingyu.github.io
