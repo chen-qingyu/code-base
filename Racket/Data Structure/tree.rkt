@@ -1,46 +1,21 @@
 #lang racket
 
-;; node: '(data left right)
+(require rackunit)
 
-(define (get-data node) (car node))
 
-(define (get-left node) (car (cdr node)))
+(define (tree-find tree item)
+  (define (root-data node) (car node))
+  (define (tree-left node) (car (cdr node)))
+  (define (tree-right node) (car (cdr (cdr node))))
+  (cond [(empty? tree) null]
+        [(eq? item (root-data tree)) item]
+        [(< item (root-data tree)) (tree-find (tree-left tree) item)]
+        [(> item (root-data tree)) (tree-find (tree-right tree) item)]))
 
-(define (get-right node) (car (cdr (cdr node))))
 
-(define (tree-find node data)
-  (cond [(empty? node) false]
-        [(= data (get-data node)) true]
-        [(< data (get-data node)) (tree-find (get-left node) data)]
-        [(> data (get-data node)) (tree-find (get-right node) data)]))
-
-(tree-find '()
-           1)
-
-(tree-find '(2
-             (1 () ()) (3 () ()))
-           1)
-
-(tree-find '(2
-             (1 () ()) (3 () ()))
-           2)
-
-(tree-find '(2
-             (1 () ()) (3 () ()))
-           3)
-
-(tree-find '(2
-             (1 () ()) (3 () ()))
-           4)
-
-(tree-find '(2
-             (1 () ()) (3 ()
-                          (4 () ())))
-           4)
-
-; #f
-; #t
-; #t
-; #t
-; #f
-; #t
+(check-equal? (tree-find '() 1) null)
+(check-equal? (tree-find '(2 (1 () ()) (3 () ())) 1) 1)
+(check-equal? (tree-find '(2 (1 () ()) (3 () ())) 2) 2)
+(check-equal? (tree-find '(2 (1 () ()) (3 () ())) 3) 3)
+(check-equal? (tree-find '(2 (1 () ()) (3 () ())) 4) null)
+(check-equal? (tree-find '(2 (1 () ()) (3 () (4 () ()))) 4) 4)
