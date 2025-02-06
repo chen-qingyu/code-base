@@ -55,6 +55,6 @@
        (cond
          [(empty? l) empty]
          [else (cons (/ (first l) n) (div-lst (rest l) n))]))]
-    
+
     (div-lst l (sum l))))
 

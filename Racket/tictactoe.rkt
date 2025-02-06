@@ -1,6 +1,6 @@
 #lang racket
 
- 
+
 (let*
     (
      [x (random 4)]

@@ -10,7 +10,7 @@
     [else (+ 1 (my-len (rest l)))]))
 
 ; Tail Recursion version
-(define (my-len-TR l)
+(define (my-len-tr l)
   (define (iter l len)
     (cond
       [(empty? l) len]
@@ -19,10 +19,10 @@
 
 ;; Examples:
 (my-len '(1 2 3 4)); => 4
-(my-len-TR '(1 2 3 4)); => 4
+(my-len-tr '(1 2 3 4)); => 4
 
 
-;; (my-map f l) Constructs a new list by applying a function to each item on list. 
+;; (my-map f l) Constructs a new list by applying a function to each item on list.
 
 ;; my-map: func (listof Any) -> (listof Any)
 (define (my-map f l)
@@ -31,7 +31,7 @@
     [else (cons (f (first l)) (my-map f (rest l)))]))
 
 ; Tail Recursion version
-(define (my-map-TR f l)
+(define (my-map-tr f l)
   (define (iter l backward-result)
     (cond
       [(empty? l) (reverse backward-result)]
@@ -40,7 +40,7 @@
 
 ;; Examples:
 (my-map string-upcase '("ready" "set" "go")); => '("READY" "SET" "GO")
-(my-map-TR string-upcase '("ready" "set" "go")); => '("READY" "SET" "GO")
+(my-map-tr string-upcase '("ready" "set" "go")); => '("READY" "SET" "GO")
 
 
 ;; (my-filter p? l) Constructs a list from all those items on a list for which the predicate holds.
@@ -95,7 +95,7 @@
 (my-sum '(1 2 3 4)); => 10
 
 
-;; (my-index l n) Extracts the n-th element from list. 
+;; (my-index l n) Extracts the n-th element from list.
 
 ;; my-index: (listof Any) Num -> Any
 (define (my-index l n)

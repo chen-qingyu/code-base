@@ -8,16 +8,16 @@
 
 (define (valid-date? date)
   (define ht (hash 1 31 2 28 3 31 4 30 5 31 6 30 7 31 8 31 9 30 10 31 11 30 12 31)) ; (hash key1 value1 key2 value2 ...)
-  
+
   (define day (remainder date 100)) ; get remainder of 100
   (define month (remainder (quotient date 100) 100)) ; (quotient 20200930 100) => 202009
   (define year (quotient date 10000)) ; (quotient 20200930 10000) => 2020
-  
+
   (if (leap-year? year)
       (set! ht (hash-set ht 2 29))
       '()
       )
-  
+
   (cond
     [(and
       (and (>= month 1) (<= month 12))
