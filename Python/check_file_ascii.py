@@ -1,3 +1,4 @@
+import sys
 import os
 
 
@@ -8,8 +9,8 @@ def check_file_ascii(file):
     non_ascii_lines = []
 
     try:
-        with open(file, 'r', encoding='utf-8') as file:
-            for line_number, line in enumerate(file, start=1):
+        with open(file, 'r', encoding='utf-8') as fo:
+            for line_number, line in enumerate(fo, start=1):
                 if not line.isascii():
                     non_ascii_lines.append((line_number, line.strip()))
     except FileNotFoundError:
@@ -38,8 +39,14 @@ def check_folder_ascii(folder):
     for root, dirs, files in os.walk(folder):
         for file in files:
             path = os.path.join(root, file)
+            if '.git' in path or 'check_file_ascii.py' in path:
+                continue
             print(f"正在检查文件：{path}")
             check_file_ascii(path)
 
 
-check_folder_ascii("./")
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        check_folder_ascii(sys.argv[1])
+    else:
+        print("使用参数指定目录")
