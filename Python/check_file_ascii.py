@@ -1,10 +1,17 @@
 import sys
 import os
+import colorama
+
+colorama.init(autoreset=True)
+COLOR_START = colorama.Fore.BLUE + colorama.Style.BRIGHT
+COLOR_INFO = colorama.Fore.CYAN + colorama.Style.BRIGHT
+COLOR_FINISH = colorama.Fore.GREEN + colorama.Style.BRIGHT
+COLOR_ERROR = colorama.Fore.RED + colorama.Style.BRIGHT
 
 
 def check_file_ascii(file):
     """
-    检测文件中是否存在非ASCII字符，并输出包含非ASCII字符的行
+    Check characters in the file and output lines containing non ASCII characters.
     """
     non_ascii_lines = []
 
@@ -14,34 +21,35 @@ def check_file_ascii(file):
                 if not line.isascii():
                     non_ascii_lines.append((line_number, line.strip()))
     except FileNotFoundError:
-        print(f"文件 {file} 未找到")
+        print(COLOR_ERROR+f"File {file} not found.")
         return
     except Exception as e:
-        print(f"读取文件 {file} 时发生错误：{e}")
+        print(COLOR_ERROR+f"Error while reading {file}: {e}.")
         return
 
     if non_ascii_lines:
-        print(f"文件 {file} 中包含非ASCII字符的行如下：")
+        print(COLOR_ERROR+f"File {file} contains non-ASCII lines:")
         for line_number, line in non_ascii_lines:
-            print(f"第 {line_number} 行：{line}")
+            print(COLOR_INFO+f"Line {line_number}:")
+            print(line)
     else:
-        print(f"文件 {file} 中全是ASCII字符")
+        print(COLOR_FINISH+f"File {file} all ASCII.")
 
 
 def check_folder_ascii(folder):
     """
-    遍历指定目录中的所有文件，并检测每个文件中是否存在非ASCII字符
+    Traverse all files in the specified directory and check each file.
     """
     if not os.path.isdir(folder):
-        print(f"路径 {folder} 不是一个有效的目录")
+        print(COLOR_ERROR+f"Invalid path: {folder}.")
         return
 
     for root, dirs, files in os.walk(folder):
         for file in files:
             path = os.path.join(root, file)
-            if '.git' in path or 'check_file_ascii.py' in path:
+            if '.git' in path:  # ignore .git/
                 continue
-            print(f"正在检查文件：{path}")
+            print(COLOR_START+f"Checking {path}:")
             check_file_ascii(path)
 
 
@@ -49,4 +57,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         check_folder_ascii(sys.argv[1])
     else:
-        print("使用参数指定目录")
+        print("useage: check_file_ascii.py <folder_path>")
