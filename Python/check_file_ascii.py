@@ -57,4 +57,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         check_folder_ascii(sys.argv[1])
     else:
-        print("useage: check_file_ascii.py <folder_path>")
+        print("usage: check_file_ascii.py <folder_path>")
