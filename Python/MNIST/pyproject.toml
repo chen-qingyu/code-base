@@ -1,0 +1,10 @@
+[project]
+name = "mnist"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["numpy", "torch", "torchvision", "matplotlib"]
+
+[tool.ruff]
+line-length = 120
