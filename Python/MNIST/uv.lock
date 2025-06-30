@@ -186,11 +186,10 @@ wheels = [
 
 [[package]]
 name = "mnist"
-version = "0.1.0"
+version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "matplotlib" },
-    { name = "numpy" },
     { name = "torch" },
     { name = "torchvision" },
 ]
@@ -198,7 +197,6 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "matplotlib" },
-    { name = "numpy" },
     { name = "torch" },
     { name = "torchvision" },
 ]
