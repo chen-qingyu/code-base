@@ -61,13 +61,54 @@
           this.dx = (this.targetX - this.startX) / ANIMATION_DURATION;
           this.dy = (this.targetY - this.startY) / ANIMATION_DURATION;
 
+          this.vx = 0;
+          this.vy = 0;
+
           this.size = Math.random() * 2 + 1;
           this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
         }
 
-        update() {
-          this.x += this.dx;
-          this.y += this.dy;
+        update(mouseX, mouseY) {
+          if (frame < ANIMATION_DURATION) {
+            // Initial formation animation
+            this.x += this.dx;
+            this.y += this.dy;
+          } else {
+            // Move towards target position
+            const dxTarget = this.targetX - this.x;
+            const dyTarget = this.targetY - this.y;
+            const distanceTarget = Math.sqrt(
+              dxTarget * dxTarget + dyTarget * dyTarget
+            );
+
+            // Apply a force to return to the target
+            if (distanceTarget > 0.1) {
+              this.vx += dxTarget * 0.001;
+              this.vy += dyTarget * 0.001;
+            }
+
+            // Repulsion from mouse
+            const dxMouse = this.x - mouseX;
+            const dyMouse = this.y - mouseY;
+            const distanceMouse = Math.sqrt(
+              dxMouse * dxMouse + dyMouse * dyMouse
+            );
+            const repulsionRadius = 60;
+
+            if (distanceMouse < repulsionRadius) {
+              const force = (repulsionRadius - distanceMouse) / repulsionRadius;
+              this.vx += (dxMouse / distanceMouse) * force * 0.5;
+              this.vy += (dyMouse / distanceMouse) * force * 0.5;
+            }
+
+            // Apply friction/damping
+            this.vx *= 0.95;
+            this.vy *= 0.95;
+
+            // Update position
+            this.x += this.vx;
+            this.y += this.vy;
+          }
         }
 
         draw() {
@@ -84,30 +125,23 @@
       }
 
       let frame = 0;
+      let mouseX = -1000;
+      let mouseY = -1000;
 
       function animate() {
+        ctx.fillStyle = BG_COLOR;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p) => {
+          p.update(mouseX, mouseY);
+          p.draw();
+        });
+
         if (frame < ANIMATION_DURATION) {
-          ctx.fillStyle = BG_COLOR;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-          particles.forEach((p) => {
-            p.update();
-            p.draw();
-          });
-
           frame++;
-          requestAnimationFrame(animate);
         } else {
-          // Final draw to ensure all particles are at target
-          ctx.fillStyle = BG_COLOR;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          particles.forEach((p) => {
-            p.x = p.targetX;
-            p.y = p.targetY;
-            p.draw();
-          });
-
-          // Add text
+          // Final draw is now part of the continuous loop
+          // Add text when animation is "done"
           ctx.fillStyle = "white";
           ctx.font = "italic 16px Arial";
           ctx.textAlign = "center";
@@ -122,13 +156,37 @@
             canvas.height / 2 + 10
           );
         }
+        requestAnimationFrame(animate);
       }
 
       animate();
 
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      window.addEventListener("mouseout", () => {
+        mouseX = -1000;
+        mouseY = -1000;
+      });
+
       window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // Re-center particles on resize
+        particles.forEach((p) => {
+          const t = Math.random() * 2 * Math.PI;
+          p.targetX = HEART_SCALE * (16 * Math.pow(Math.sin(t), 3));
+          p.targetY =
+            HEART_SCALE *
+            (13 * Math.cos(t) -
+              5 * Math.cos(2 * t) -
+              2 * Math.cos(3 * t) -
+              Math.cos(4 * t));
+          p.targetX += canvas.width / 2;
+          p.targetY = -p.targetY + canvas.height / 2;
+        });
       });
     </script>
   </body>
